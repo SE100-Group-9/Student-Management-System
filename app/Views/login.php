@@ -1,0 +1,1 @@
+<?= view("components/bar_chart.php") ?>
