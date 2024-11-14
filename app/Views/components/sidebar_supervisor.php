@@ -10,8 +10,8 @@
             <p>Thông tin chung</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none">
-        <path d="M5 18.75L12 10L19 18.75" stroke="#0C0C0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <path d="M5 18.75L12 10L19 18.75" stroke="#0C0C0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
     </div>
     <div class="general-deeper">
         <p>Tin tức</p>
@@ -99,8 +99,32 @@
         align-items: flex-start;
         justify-content: center;
         align-self: stretch;
+        cursor: default;
     }
 
+    .general-2, .general-deeper, .statics, .student, .conduct, .study-2, .list, .reverse, .conduct-2, .category, .fault{
+        cursor: pointer;
+    }
+
+    .general-2:hover,
+    .statics:hover,
+    .study-2:hover,
+    .conduct-2:hover {
+        background-color: rgba(108, 108, 108, 0.1);
+        border-radius: 4px;      
+    }
+
+    .general-2:hover .text p,
+    .statics:hover .text p,
+    .study-2:hover .text p,
+    .conduct-2:hover .text p {
+        color: #01B3EF;
+    }
+
+    .general-deeper:hover, .student:hover, .conduct:hover, .list:hover, .reverse:hover, .category:hover, .fault:hover {
+        background-color: rgba(108, 108, 108, 0.1);
+        border-radius: 4px;
+    }
     .general-2 {
         display: flex;
         height: 30px;
@@ -116,7 +140,7 @@
         align-items: flex-start;
         align-self: stretch;
         height: 30px;
-        padding: 0px 35px;
+        padding: 5px 30px;
     }
 
     .statics-deeper, .study-deeper, .fee-deeper {
