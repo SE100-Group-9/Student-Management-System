@@ -17,7 +17,7 @@
         <p>Tin tức</p>
     </div>
     <div class="study">
-        <h1>Học tập<</h1>
+        <h1>Học tập</h1>
     </div>
     <div class="study-2">
         <div class="text">
@@ -69,10 +69,10 @@
     .sidebar-student {
         display: flex;
         width: 250px;
-        height: 964px;
+        height: 100%;
         padding: 20px;
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         gap: 20px;
         background: var(--White, #FFF);
     }

@@ -10,7 +10,7 @@
 <style>
     .upload-container {
         position: relative;
-        width: 150px;
+        width: 120px;
         display: flex;
         align-items: center;
     }
@@ -20,7 +20,7 @@
         align-items: center;
         height: 40px;
         padding: 10px;
-        gap: 20px;
+        gap: 10px;
         border-radius: 10px;
         border: 1px solid rgba(0, 60, 60, 0.20);
         background-color: #FFF;

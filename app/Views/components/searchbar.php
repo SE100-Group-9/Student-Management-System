@@ -7,11 +7,11 @@
 
 <style>
     .search-bar {
-        display: flex;
+        display: inline-flex;
         width: 250px;
         height: 40px;
         padding: 10px;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         border-radius: 10px;
         border: 1px solid rgba(0, 60, 60, 0.20);
