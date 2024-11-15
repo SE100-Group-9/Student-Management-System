@@ -68,7 +68,7 @@
     </div>
     <div class="fee-deeper">
         <div class="payment">
-            <p>Thanh toán</p>
+            <p>Danh sách</p>
         </div>
         <div class="extend">
             <p>Gia hạn</p>
@@ -80,13 +80,12 @@
     .sidebar-cashier {
         display: flex;
         width: 250px;
-        height: 964px;
+        height: 100%;
         padding: 20px;
         flex-direction: column;
         align-items: center;
         gap: 20px;
-        background: var(--White, FFF);
-        box-sizing: border-box;
+        background: var(--White, #FFF);
     }
 
     .general {
