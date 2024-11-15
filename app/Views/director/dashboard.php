@@ -1,5 +1,6 @@
 <?= view('components/heading'); ?>
-<?= view('components/footer')  ?> 
+<?= view('components/footer')  ?>
+<?= view('components/dropdown') ?>
 
 <style>
     *,
