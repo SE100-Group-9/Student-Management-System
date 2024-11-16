@@ -10,4 +10,9 @@ class SupervisorController extends Controller
     {
         return view('supervisor/fault');
     }
+
+    public function profile()
+    {
+        return view('supervisor/profile');
+    }
 }

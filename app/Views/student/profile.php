@@ -5,29 +5,108 @@
         <div class="body-right">
             <div class="content">
                 <p>Thông tin cá nhân</p>
-                <div class="info-1">
-                    <div class="id">
-                        <h1>Mã học sinh</h1>
-                        <?= view('components/input'); ?>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="id">Mã học sinh</label>
+                        <?= view('components/input', [
+                            'id' => 'id',
+                            'value' => '22520857',
+                            'readonly' => true
+                        ]); ?>
                     </div>
-                    <div class="id">
-                        <h1>Mã học sinh</h1>
-                        <?= view('components/input'); ?>
+                    <div class="group">
+                        <label for="name">Họ tên</label>
+                        <?= view('components/input', [
+                            'id' => 'name',
+                            'value' => 'Nguyễn Văn A',
+                            'readonly' => true
+                        ]); ?>
                     </div>
                 </div>
-                <div class="info-2">
-                    <div class="id">
-                        <h1>Mã học sinh</h1>
-                        <?= view('components/input'); ?>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="email">Email</label>
+                        <?= view('components/input', [
+                            'id' => 'email',
+                            'value' => 'a@gmail.com',
+                            'readonly' => true
+                        ]); ?>
                     </div>
-                    <div class="id">
-                        <h1>Mã học sinh</h1>
-                        <?= view('components/input'); ?>
+                    <div class="group">
+                        <label for="phone">Số điện thoại</label>
+                        <?= view('components/input', [
+                            'id' => 'phone',
+                            'value' => '0123456789',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="sex">Giới tính</label>
+                        <?= view('components/input', [
+                            'id' => 'sex',
+                            'value' => 'Nam',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                    <div class="group">
+                        <label for="date-of-birth">Ngày sinh</label>
+                        <?= view('components/input', [
+                            'id' => 'date-of-birth',
+                            'value' => '01-01-2004',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="place-of-birth">Nơi sinh</label>
+                        <?= view('components/input', [
+                            'id' => 'place-of-birth',
+                            'value' => 'TPHCM',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                    <div class="group">
+                        <label for="ethnicity">Dân tộc</label>
+                        <?= view('components/input', [
+                            'id' => 'ethnicity',
+                            'value' => 'Kinh',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="address">Địa chỉ</label>
+                        <?= view('components/input', [
+                            'id'=> "address",
+                            'value' => 'Thủ Đức',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                </div>
+                <p>Học tập</p>
+                <div class="student-info">
+                    <div class="group">
+                        <label for="class">Lớp học</label>
+                        <?= view('components/input', [
+                            'id' => 'class',
+                            'value' => '12A1',
+                            'readonly' => true
+                        ]); ?>
+                    </div>
+                    <div class="group">
+                        <label for="status">Tình trạng học</label>
+                        <?= view('components/input', [
+                            'id' => 'ethnicity',
+                            'value' => 'Đang học',
+                        ]); ?>
                     </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 
@@ -80,23 +159,22 @@
     background: var(--White, #FFF);
 }
 
-
 .content p {
     color: #000;
     font-family: Inter;
-    font-size: 20px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
 
-.info-1, .info-2 {
+.student-info{
     display: flex;
     align-items: flex-start;
     gap: 20px;
 }
 
-.id {
+.group {
     display: flex;
     width: 500px;
     max-width: 500px;
@@ -105,13 +183,13 @@
     gap: 10px;
 }
 
-.id h1{
+.group label{
     color: #000;
     font-family: Inter;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-}
+} 
 
 </style>

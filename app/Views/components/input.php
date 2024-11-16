@@ -1,5 +1,11 @@
 <div class="input">
-    <input type="text" placeholder="Nhập nội dung..." />
+    <input 
+        type="text" 
+        id="<?= isset($id) ? $id : '' ?>" 
+        placeholder="<?= isset($placeholder) ? $placeholder : 'Nhập nội dung...' ?>" 
+        value="<?= isset($value) ? $value : '' ?>" 
+        <?= isset($readonly) && $readonly ? 'readonly="readonly"' : '' ?>
+    />
 </div>
 
 <style>
