@@ -31,7 +31,6 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    height: 100%;
 }
 
 .body {
@@ -68,7 +67,7 @@
 
 .extense-tool {
     display: flex;
-    padding: 15px;
+    padding: 10px;
     align-items: center;
     justify-content: space-between;
     align-self: stretch;
@@ -79,6 +78,7 @@
 .extense-filter {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 </style>

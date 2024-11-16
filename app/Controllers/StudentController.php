@@ -10,4 +10,9 @@ class StudentController extends Controller
     {
         return view('student/score');
     }
+
+    public function profile() 
+    {
+        return view('student/profile');
+    }
 }

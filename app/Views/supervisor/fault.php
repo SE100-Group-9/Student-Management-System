@@ -68,7 +68,7 @@
 
 .fault-tool {
     display: flex;
-    padding: 15px;
+    padding: 10px;
     align-items: center;
     justify-content: space-between;
     align-self: stretch;

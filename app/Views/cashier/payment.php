@@ -10,9 +10,9 @@
                     <?= view('components/searchbar'); ?>
                     <?= view('components/add'); ?>
                 </div>
-                <div class="payment-tool-2">
+                <div class="payment-tool-2">                   
                     <?= view('components/excel_export'); ?>
-                    <?= view('components/upload'); ?>
+                    <?= view('components/upload'); ?>                    
                 </div>
             </div>
         </div>
@@ -41,9 +41,6 @@
 .body {
     display: flex; 
     flex-direction: row; 
-    align-items: flex-start;
-    flex: 1 0 0;
-    align-self: stretch;
     background: #F0F2F5;
     height: 100%;
 }
@@ -75,24 +72,23 @@
 
 .payment-tool {
     display: flex;
-    padding: 15px;
+    padding: 10px;
     align-items: flex-start;
     align-self: stretch;
     justify-content: space-between;
-    align-self: stretch;
     border-radius: 10px;
     background: var(--White, #FFF);
 }
 
 .payment-filter {
     display: flex;   
-    align-items: flex-start;
+    align-items:flex-start;
     gap: 10px;
 }
 
 .payment-tool-2 {
     display: flex;
-align-items: center;
-gap: 5px;
+    align-items: center;
+    gap: 10px;gap: 10px;
 }
 </style>
