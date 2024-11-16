@@ -9,3 +9,5 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/director/dashboard', 'DirectorController::dashboard');
 
 $routes->get('supervisor/fault', 'SupervisorController::fault');
+
+$routes->get('/', 'Home::index');
