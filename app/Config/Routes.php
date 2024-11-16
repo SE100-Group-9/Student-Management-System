@@ -17,3 +17,4 @@ $routes->get('cashier/extense', 'CashierController::extense');
 $routes->get('supervisor/fault', 'SupervisorController::fault');
 
 $routes->get('/', 'Home::index');
+

@@ -23,7 +23,7 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        background: var(--Regal-Blue, #01427A);
+        background: var(--Cerulean, #01B3EF);
     }
 
     .footer p {
@@ -33,7 +33,6 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        background: var(--Regal-Blue, #01427A);
     }
 
     .footer h1 {
