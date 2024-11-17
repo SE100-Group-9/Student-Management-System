@@ -1,8 +1,5 @@
 <div class="heading">
     <div class="left">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M33.3334 30H6.66669M33.3334 23.3333H6.66669M33.3334 16.6667H6.66669M33.3334 10H6.66669" stroke="#01427A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
         <div class="logo">
             <img src="<?= base_url('public/image/banner_uit.png'); ?>" alt="Banner Image">
         </div>
@@ -57,6 +54,10 @@
         display: flex;
         align-items: center;
         gap: 51px;
+    }
+
+    .left svg:hover {
+        cursor: pointer;
     }
 
     .logo {
