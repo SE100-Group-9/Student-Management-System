@@ -45,6 +45,7 @@
         height: 60px;
         padding: 0px 20px;
         justify-content: space-between;
+        background-color: white;
         align-items: center;
         border-top: 1px solid rgba(0, 60, 60, 0.20);
         border-bottom: 1px solid rgba(0, 60, 60, 0.20);
