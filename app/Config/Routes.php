@@ -23,6 +23,7 @@ $routes->get('cashier/payment/list', 'CashierController::list');
 $routes->get('cashier/extense', 'CashierController::extense');
 $routes->get('cashier/profile', 'CashierController::profile');
 $routes->get('cashier/payment/viewinfo', 'CashierController::viewinfo');
+$routes->get('cashier/payment/add', 'CashierController::add');
 
 // supervisor
 $routes->get('supervisor/fault', 'SupervisorController::fault');

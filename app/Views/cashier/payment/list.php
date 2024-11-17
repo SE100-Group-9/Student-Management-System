@@ -1,16 +1,16 @@
-<div class="cashier-payment">
+<div class="payment-list">
     <?= view('components/heading'); ?>
     <div class="body">
         <?= view('components/sidebar_cashier'); ?>
-        <div class="payment-container">
+        <div class="list-container">
             <p>Học phí / Quản lý học phí / Danh sách</p>
-            <div class="payment-tool">
-                <div class="payment-filter">
+            <div class="list-tool">
+                <div class="list-filter">
                     <?= view('components/filter'); ?>
                     <?= view('components/searchbar'); ?>
                     <?= view('components/add'); ?>
                 </div>
-                <div class="payment-tool-2">                   
+                <div class="list-tool-2">                   
                     <?= view('components/excel_export'); ?>
                     <?= view('components/upload'); ?>                    
                 </div>
@@ -29,7 +29,7 @@
     box-sizing: border-box;
 }
 
-.cashier-payment {
+.payment-list {
     display: flex;
     flex-direction: column; 
     width: 100%;
@@ -51,7 +51,7 @@
     box-sizing: border-box;
 }
 
-.payment-container {
+.list-container {
     display: flex;
     padding: 20px;
     flex-direction: column;
@@ -61,7 +61,7 @@
     align-self: stretch;
 }
 
-.payment-container p {
+.list-container p {
     color: #000;
     font-family: Inter;
     font-size: 16px;
@@ -70,7 +70,7 @@
     line-height: normal;
 }
 
-.payment-tool {
+.list-tool {
     display: flex;
     padding: 10px;
     align-items: flex-start;
@@ -80,13 +80,13 @@
     background: var(--White, #FFF);
 }
 
-.payment-filter {
+.list-filter {
     display: flex;   
     align-items:flex-start;
     gap: 10px;
 }
 
-.payment-tool-2 {
+.list-tool-2 {
     display: flex;
     align-items: center;
     gap: 10px;gap: 10px;

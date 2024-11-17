@@ -14,6 +14,7 @@
                         <h2>Học kì:</h2>
                         <?= view('components/dropdown_semester'); ?> 
                     </div>
+                    <?= view('components/view_button'); ?>
                 </div>
                 <h3>Điểm trung bình</h3>
                 <div class="final-info">
