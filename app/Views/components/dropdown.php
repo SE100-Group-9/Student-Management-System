@@ -1,3 +1,7 @@
+<?php
+$options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
+?>
+
 <div class="dropdown">
     <div class="dropdown-inner">
         Select an option
@@ -6,24 +10,11 @@
             <path d="M1 3.72727L4 1L7 3.72727" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="dropdown-option">
-            <div class="option">
-                <p>Option 1</p>
-            </div>
-            <div class="option">
-                <p>Option 2</p>
-            </div>
-            <div class="option">
-                <p>Option 3</p>
-            </div>
-            <div class="option">
-                <p>Option 4</p>
-            </div>
-            <div class="option">
-                <p>Option 5</p>
-            </div>
-            <div class="option">
-                <p>Option 6</p>
-            </div>
+            <?php foreach ($options as $option): ?>
+                <div class="option">
+                    <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
@@ -67,7 +58,6 @@
         top: 100%;
         left: 0;
         /* Đảm bảo căn giữa từ bên trái */
-
     }
 
     .option {

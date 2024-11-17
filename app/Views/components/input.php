@@ -1,17 +1,16 @@
 <div class="input">
-    <input 
-        type="text" 
-        id="<?= isset($id) ? $id : '' ?>" 
-        placeholder="<?= isset($placeholder) ? $placeholder : 'Nhập nội dung...' ?>" 
-        value="<?= isset($value) ? $value : '' ?>" 
-        <?= isset($readonly) && $readonly ? 'readonly="readonly"' : '' ?>
-    />
+    <input
+        type="text"
+        id="<?= isset($id) ? $id : '' ?>"
+        placeholder="<?= isset($placeholder) ? $placeholder : 'Nhập nội dung...' ?>"
+        value="<?= isset($value) ? $value : '' ?>"
+        <?= isset($readonly) && $readonly ? 'readonly="readonly"' : '' ?> />
 </div>
 
 <style>
     .input {
         display: flex;
-        width: 500px;
+        width: 100%;
         height: 40px;
         padding: 0px 10px;
         align-items: center;
@@ -36,5 +35,12 @@
         outline: none;
         flex: 1;
         background: transparent;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 14px;
+        /* 87.5% */
     }
 </style>
