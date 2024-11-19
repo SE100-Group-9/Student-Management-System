@@ -58,6 +58,7 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 
         top: 100%;
         left: 0;
         /* Đảm bảo căn giữa từ bên trái */
+        z-index: 2000;
     }
 
     .option {
