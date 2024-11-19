@@ -12,6 +12,12 @@ $routes->get('/director/news', 'DirectorController::news');
 $routes->get('director/statics/conduct', 'DirectorController::staticsConduct');
 $routes->get('director/statics/student', 'DirectorController::staticsStudent');
 $routes->get('director/statics/grade', 'DirectorController::staticsGrade');
+$routes->get('director/student/add', 'DirectorController::studentAdd');
+$routes->get('director/student/update', 'DirectorController::studentUpdate');
+$routes->get('director/student/list', 'DirectorController::studentList');
+$routes->get('director/student/record', 'DirectorController::studentRecord');
+$routes->get('director/student/perserved', 'DirectorController::studentPerserved');
+$routes->get('director/student/payment', 'DirectorController::studentPayment');
 
 // student
 $routes->get('student/score', 'StudentController::score');
