@@ -5,7 +5,7 @@
         <div class="add-container">
             <h1>Học phí / Quản lý học phí / Danh sách / Tạo phiên thanh toán</h1>
             <div class="content">
-                <?= view('components/view_button'); ?>
+                <?= view('components/save_button'); ?>
             </div>
         </div>
     </div>

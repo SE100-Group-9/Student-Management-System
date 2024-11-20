@@ -15,6 +15,7 @@
                     <?= view('components/upload'); ?>                    
                 </div>
             </div>
+            <?= view('components/tables/cashierPaymentList') ?>
         </div>
     </div>
 </div>

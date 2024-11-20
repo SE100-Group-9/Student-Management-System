@@ -6,7 +6,6 @@
 <style>
     .datepicker-container {
         background-color: #fff;
-        padding: 20px;
         border-radius: 8px;
         text-align: center;
     }

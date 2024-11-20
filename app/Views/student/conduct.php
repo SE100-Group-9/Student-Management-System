@@ -1,16 +1,16 @@
-<div class="student-score">
+<div class="student-conduct">
     <?= view('components/heading'); ?>
     <div class="body">
         <?= view('components/sidebar_student'); ?>
-        <div class="score-container">
-            <h1>Học tập / Học tập / Xem điểm</h1>
-            <div class="score-tool">
-                <div class="score-dropdown">
-                    <div class="score-dropdown">
+        <div class="conduct-container">
+            <h1>Học tập / Học tập / Xem hạnh kiểm</h1>
+            <div class="conduct-tool">
+                <div class="conduct-dropdown">
+                    <div class="conduct-dropdown">
                         <h2>Năm học:</h2>
                         <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
                     </div>
-                    <div class="score-dropdown-semester">
+                    <div class="conduct-dropdown-semester">
                         <h2>Học kì:</h2>
                         <?= view('components/dropdown_semester', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
                     </div>
@@ -19,7 +19,7 @@
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <?= view('components/tables/studentSemesterResult') ?>
+            <?= view('components/tables/studentConduct') ?>
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
     box-sizing: border-box;
 }
 
-.student-score {
+.student-conduct {
     display: flex;
     flex-direction: column; 
     width: 100%;
@@ -56,7 +56,7 @@
     box-sizing: border-box;
 }
 
-.score-container {
+.conduct-container {
     display: flex;
     padding: 20px;
     flex-direction: column;
@@ -66,7 +66,7 @@
     align-self: stretch;
 }
 
-.score-container h1 {
+.conduct-container h1 {
     color: #000;
     font-family: Inter;
     font-size: 16px;
@@ -75,7 +75,7 @@
     line-height: normal;
 }
 
-.score-tool {
+.conduct-tool {
     display: flex;
     padding: 10px;
     align-items: flex-start;
@@ -85,20 +85,20 @@
     background: var(--White, #FFF);
 }
 
-.score-dropdown {
+.conduct-dropdown {
     display: flex;
     align-items: flex-start;
     gap: 10px;
     border-radius: 10px;
 }
 
-.score-dropdown, .score-dropdown-semester{
+.conduct-dropdown, .conduct-dropdown-semester{
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.score-dropdown h2, .score-dropdown-semester h2 {
+.conduct-dropdown h2, .conduct-dropdown-semester h2 {
     color: #000;
     font-family: Inter;
     font-size: 14px;

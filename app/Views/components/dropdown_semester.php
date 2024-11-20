@@ -1,3 +1,7 @@
+<?php
+$options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
+?>
+
 <div class="dropdown-semester">
     <div class="dropdown-semester-inner">
         Select an option
@@ -6,15 +10,11 @@
             <path d="M1 3.72727L4 1L7 3.72727" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="dropdown-semester-option">
-            <div class="option">
-                <p>Học kì 1</p>
-            </div>
-            <div class="option">
-                <p>Học kì 2</p>
-            </div>
-            <div class="option">
-                <p>Cả năm</p>
-            </div>
+            <?php foreach ($options as $option): ?>
+                <div class="option">
+                    <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@
         top: 100%;
         left: 0;
         /* Đảm bảo căn giữa từ bên trái */
-
+        z-index: 2000;
     }
 
     .option {
@@ -100,7 +100,6 @@
 
         // Toggle dropdown on click
         dropdownSemesterInner.addEventListener('click', function() {
-            // event.stopPropagation();  // Ngừng sự kiện click lan ra ngoài
             dropdownSemesterOptions.classList.toggle('show');
         });
 

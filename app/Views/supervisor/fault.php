@@ -11,6 +11,7 @@
                 </div>
                 <?= view('components/add'); ?>
             </div>
+            <?= view('components/tables/supervisorFault') ?>
         </div>
     </div>
 </div>

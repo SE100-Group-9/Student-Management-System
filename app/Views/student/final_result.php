@@ -8,14 +8,15 @@
                 <div class="final-tool">
                     <div class="final-dropdown">
                         <h2>Năm học:</h2>
-                        <?= view('components/dropdown'); ?>
+                        <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
                     </div>
                     <div class="final-dropdown-semester">
                         <h2>Học kì:</h2>
-                        <?= view('components/dropdown_semester'); ?> 
+                        <?= view('components/dropdown_semester', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
                     </div>
                     <?= view('components/view_button'); ?>
                 </div>
+                <?= view('components/tables/studentFinalResult') ?>
                 <h3>Điểm trung bình</h3>
                 <div class="final-info">
                     <div class="group">

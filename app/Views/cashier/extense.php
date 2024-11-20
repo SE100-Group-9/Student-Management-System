@@ -11,6 +11,7 @@
                 </div>
                 <?= view('components/excel_export'); ?>
             </div>
+            <?= view('components/tables/cashierExtense') ?>
         </div>
     </div>
 </div>

@@ -30,4 +30,9 @@ class CashierController extends Controller
     {
         return view('cashier/payment/add');
     }
+
+    public function addextense()
+    {
+        return view('cashier/payment/addextense');
+    }
 }

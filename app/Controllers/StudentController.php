@@ -20,4 +20,14 @@ class StudentController extends Controller
     {
         return view('student/final_result');
     }
+
+    public function fee_payment()
+    {
+        return view('student/fee_payment');
+    }
+
+    public function conduct()
+    {
+        return view('student/conduct');
+    }
 }

@@ -24,6 +24,7 @@ $routes->get('student/score', 'StudentController::score');
 $routes->get('student/profile', 'StudentController::profile');
 $routes->get('student/final_result', 'StudentController::final_result');
 $routes->get('student/fee_payment', 'StudentController::fee_payment');
+$routes->get('student/conduct', 'StudentController::conduct');
 
 // cashier
 $routes->get('cashier/payment/list', 'CashierController::list');
