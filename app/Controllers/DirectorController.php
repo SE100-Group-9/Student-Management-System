@@ -6,15 +6,6 @@ use CodeIgniter\Controller;
 
 class DirectorController extends Controller
 {
-    public function dashboard()
-    {
-        return view('director/dashboard');
-    }
-
-    public function news()
-    {
-        return view('director/news');
-    }
 
     public function staticsConduct()
     {
@@ -59,5 +50,20 @@ class DirectorController extends Controller
     public function studentRecord()
     {
         return view('director/student/record');
+    }
+
+    public function titleList()
+    {
+        return view('director/title/list');
+    }
+
+    public function titleAdd()
+    {
+        return view('director/title/add');
+    }
+
+    public function titleUpdate()
+    {
+        return view('director/title/update');
     }
 }

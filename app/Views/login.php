@@ -43,19 +43,19 @@
         Founders
         <div class="founder-pic">
             <div class="founder">
-                <img src="http://localhost:8080/sms/public/image/MinhKhoi.jpg" alt="Minh Khôi">
+                <img src="/sms/public/image/MinhKhoi.jpg" alt="Minh Khôi">
                 <p>Minh Khôi</p>
             </div>
             <div class="founder">
-                <img src="http://localhost:8080/sms/public/image/NgocMinh.jpg" alt="Ngọc Minh">
+                <img src="/sms/public/image/NgocMinh.jpg" alt="Ngọc Minh">
                 <p>Ngọc Minh</p>
             </div>
             <div class="founder">
-                <img src="http://localhost:8080/sms/public/image/PhuongLinhh.jpg" alt="Phương Linh">
+                <img src="/sms/public/image/PhuongLinhh.jpg" alt="Phương Linh">
                 <p>Phương Linh</p>
             </div>
             <div class="founder">
-                <img src="http://localhost:8080/sms/public/image/KhanhHuy.png" alt="Khánh Huy">
+                <img src="/sms/public/image/KhanhHuy.png" alt="Khánh Huy">
                 <p>Khánh Huy</p>
             </div>
         </div>

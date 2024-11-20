@@ -7,8 +7,6 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 //  director
-$routes->get('/director/dashboard', 'DirectorController::dashboard');
-$routes->get('/director/news', 'DirectorController::news');
 $routes->get('director/statics/conduct', 'DirectorController::staticsConduct');
 $routes->get('director/statics/student', 'DirectorController::staticsStudent');
 $routes->get('director/statics/grade', 'DirectorController::staticsGrade');
@@ -18,6 +16,11 @@ $routes->get('director/student/list', 'DirectorController::studentList');
 $routes->get('director/student/record', 'DirectorController::studentRecord');
 $routes->get('director/student/perserved', 'DirectorController::studentPerserved');
 $routes->get('director/student/payment', 'DirectorController::studentPayment');
+$routes->get('director/title/list', 'DirectorController::titleList');
+$routes->get('director/title/add', 'DirectorController::titleAdd');
+$routes->get('director/title/update', 'DirectorController::titleUpdate');
+
+
 
 // student
 $routes->get('student/score', 'StudentController::score');

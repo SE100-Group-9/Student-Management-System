@@ -1,57 +1,61 @@
 <?php
 
-function statusButton($status)
-{
-    $classes = '';
-    switch ($status) {
-        case 'Đang học':
-            $classes = 'third';
-            break;
-        case 'Giáo viên':
-            $classes = 'primary';
-            break;
-        case 'Đang bảo lưu':
-            $classes = 'primary';
-            break;
-        case 'Chưa thu':
-            $classes = 'third';
-            break;
-        case 'Đã thu':
-            $classes = 'primary';
-            break;
-        case 'Đang làm':
-            $classes = 'third';
-            break;
-        case 'Tổ trưởng':
-            $classes = 'third';
-            break;
-        case 'Trả 1 phần':
-            $classes = 'secondary';
-            break;
-        case 'Tổ phó':
-            $classes = 'secondary';
-            break;
-        case 'Thu ngân':
-            $classes = 'secondary';
-            break;
-        case 'Hết hạn bảo lưu':
-            $classes = 'fourth';
-            break;
-        case 'Giám thị':
-            $classes = 'fourth';
-            break;
-        default:
-            $classes = 'default';
-            break;
+if (!function_exists('statusButton')) {
+    function statusButton($status)
+    {
+        $classes = '';
+        switch ($status) {
+            case 'Đang học':
+                $classes = 'third';
+                break;
+            case 'Giáo viên':
+                $classes = 'primary';
+                break;
+            case 'Đang bảo lưu':
+                $classes = 'primary';
+                break;
+            case 'Chưa thu':
+                $classes = 'third';
+                break;
+            case 'Đã thu':
+                $classes = 'primary';
+                break;
+            case 'Đang làm':
+                $classes = 'third';
+                break;
+            case 'Tổ trưởng':
+                $classes = 'third';
+                break;
+            case 'Trả 1 phần':
+                $classes = 'secondary';
+                break;
+            case 'Tổ phó':
+                $classes = 'secondary';
+                break;
+            case 'Thu ngân':
+                $classes = 'secondary';
+                break;
+            case 'Hết hạn bảo lưu':
+                $classes = 'fourth';
+                break;
+            case 'Giám thị':
+                $classes = 'fourth';
+                break;
+            default:
+                $classes = 'default';
+                break;
+        }
+        return '<button class="' . $classes . '">' . $status . '</button>';
     }
-    return '<button class="' . $classes . '">' . $status . '</button>';
 }
 
-// Truyền giá trị trạng thái vào
+// Kiểm tra nếu có biến `$status` được truyền vào file
 if (isset($status)) {
     echo statusButton($status);
 }
 ?>
+
+
 
 
 <style>
@@ -86,6 +90,12 @@ if (isset($status)) {
         --label-color: var(--White, #FFF);
         --background-color: var(--Dark-Grey, #6C6C6C);
     }
+
+    button.default {
+        --label-color: var(--Black, #000);
+        --background-color: var(--Light-Grey, #E0E0E0);
+    }
+
 
     /* Thêm khoảng cách giữa các button */
     button:not(:last-of-type) {
