@@ -8,6 +8,42 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Học sinh
+            <!-- Dropdown -->
+            <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            <!-- Cards -->
+            <div class="student-cards">
+                <?= view('components/card_increase', [
+                    'title' => 'Số học sinh nhập học',
+                    'count' => '5000',
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_decrease', [
+                    'title' => 'Số học sinh bảo lưu',
+                    'count' => '200',
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_increase', [
+                    'title' => 'Tổng số học sinh',
+                    'count' => '20.000',
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_decrease', [
+                    'title' => 'Số học sinh bị cảnh báo',
+                    'count' => '2000',
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+            </div>
+            <!-- Chart -->
+            <div class="student-chart">
+                <div class="chart-text">
+                    Dữ liệu biểu diễn sự thay đổi của học sinh theo từng năm
+                </div>
+                <?= view('components/curve_chart') ?>
+            </div>
         </div>
     </div>
 </div>
@@ -66,5 +102,39 @@
         font-weight: 400;
         line-height: normal;
         overflow-y: auto;
+    }
+
+    .student-cards {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .student-chart {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        border-radius: 10px;
+        background: var(--White, #FFF);
+    }
+
+    .chart-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 31px;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        /* 120% */
     }
 </style>

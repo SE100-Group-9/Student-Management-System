@@ -8,6 +8,45 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Học lực
+            <!-- Dropdown -->
+            <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            <!-- Cards -->
+            <div class="grade-cards">
+                <?= view('components/card_increase', [
+                    'title' => 'Học lực giỏi',
+                    'count' => '5000',
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_decrease', [
+                    'title' => 'Học lực khá',
+                    'count' => '200',
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_increase', [
+                    'title' => 'Học lực trung bình',
+                    'count' => '20.000',
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+                <?= view('components/card_decrease', [
+                    'title' => 'Học lực yếu',
+                    'count' => '2000',
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
+                ]) ?>
+            </div>
+            <!-- Chart -->
+            <div class="grade-chart">
+                <div class="charts">
+                    <?= view('components/pie_chart') ?>
+                </div>
+                <div class="grade-statics">
+                    Danh sách học sinh đứng đầu khối
+                    <?= view('components/tables/directorStaticsGrade') ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -66,5 +105,41 @@
         font-weight: 400;
         line-height: normal;
         overflow-y: auto;
+    }
+
+    .grade-cards {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        align-self: stretch;
+    }
+
+    .grade-chart {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+    }
+
+    .charts {
+        width: 50%;
+    }
+
+    .grade-statics {
+        width: 50%;
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: #FFF;
+        color: #000;
+        font-family: Inter;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
     }
 </style>

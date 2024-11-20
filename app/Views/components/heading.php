@@ -104,7 +104,7 @@
     .info img {
         width: auto;
         /* Giữ tỉ lệ ảnh theo chiều rộng tự nhiên */
-        height: 60px;
+        height: 50px;
         /* Chiều cao cố định, tùy chỉnh theo ý muốn */
         max-width: 100%;
         /* Đảm bảo ảnh không vượt quá khung chứa */

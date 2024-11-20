@@ -8,42 +8,43 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Hạnh kiểm
-            <!-- Dropdown -->
             <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
-            <!-- Cards -->
-            <div class="conduct-cards">
-                <?= view('components/card_increase', [
-                    'title' => 'Số học sinh nhập học',
-                    'count' => '5000',
-                    'percentage' => '100.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Số học sinh bảo lưu',
-                    'count' => '200',
-                    'percentage' => '100.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
-                <?= view('components/card_increase', [
-                    'title' => 'Tổng số học sinh',
-                    'count' => '20.000',
-                    'percentage' => '50.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Số học sinh bị cảnh báo',
-                    'count' => '2000',
-                    'percentage' => '50.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
+            <div class="conduct-btns">
+                <button class="conduct-btn" onclick="loadChartData('excellent')">Xuất sắc</button>
+                <button class="conduct-btn" onclick="loadChartData('good')">Giỏi</button>
+                <button class="conduct-btn" onclick="loadChartData('bad')">Yếu</button>
             </div>
-            <!-- Chart -->
-            <div class="conduct-chart">
+            <div class="body-below">
+                <div id="excellent">
+                    <div class="conduct-chart">
+                        <?= view('components/column_chart') ?>
+                    </div>
+                </div>
+                <div class="conduct-table">
+                    Danh sách các học sinh vi phạm nhiều nhất
+                    <?= view('components/tables/directorStaticsConduct') ?>
+                </div>
+            </div>
+            <div class="body-below">
+                <div id="good" style="display:none">
+                    <div class="conduct-chart">
+                        <?= view('components/column_chart') ?>
+                    </div>
+                </div>
+            </div>
 
+            <div class="body-below">
+                <div id="bad" style="display:none">
+                    <div class="conduct-chart">
+                        <?= view('components/column_chart') ?>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
+
 
 <style>
     *,
@@ -98,17 +99,92 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-        overflow-y: auto;
-    }
-
-    .conduct-cards {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        align-self: stretch;
+        height: auto;
     }
 
     .conduct-chart {
         display: flex;
+        width: 500px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        background: var(--White, #FFF);
+        z-index: 0;
+    }
+
+    .conduct-btns {
+        display: inline-flex;
+        padding: 4px 5px;
+        align-items: flex-start;
+        border-radius: 6px;
+        border: 1px solid var(--slate-300, #CBD5E1);
+        background: var(--White, #FFF);
+    }
+
+    .conduct-btn {
+        display: flex;
+        padding: 6px 12px;
+        align-items: flex-start;
+        background: var(--White, #FFF);
+        border: none;
+        font-family: "Inter";
+        cursor: pointer;
+    }
+
+    .conduct-btn:hover {
+        background: var(--slate-100, #F1F5F9);
+    }
+
+    .conduct-btn:focus {
+        background: var(--slate-100, #F1F5F9);
+    }
+
+    .conduct-btn.active {
+        background: var(--slate-100, #F1F5F9);
+    }
+
+    .body-below {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        align-self: stretch;
+        width: 100%;
+        background-color: white;
+    }
+
+    #excellent {
+        width: 50%;
+    }
+
+    #good {
+        width: 50%;
+    }
+
+    #bad {
+        width: 50%;
+    }
+
+    .conduct-table {
+        display: flex;
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: #FFF;
     }
 </style>
+
+<script>
+    function openConduct(ConductName) {
+        var x = document.getElementsByClassName("Conduct");
+        for (var i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        document.getElementById(ConductName).style.display = "block";
+
+        loadChartData(ConductName); // Gọi hàm vẽ chart khi chuyển tab
+    }
+</script>

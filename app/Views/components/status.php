@@ -1,18 +1,58 @@
-<button class="primary">Đã thu</button>
-<button class="primary">Giáo viên</button>
-<button class="primary">Đang bảo lưu</button>
+<?php
 
-<button class="secondary">Trả một phần</button>
-<button class="secondary">Tổ phó</button>
-<button class="secondary">Thu ngân</button>
+function statusButton($status)
+{
+    $classes = '';
+    switch ($status) {
+        case 'Đang học':
+            $classes = 'third';
+            break;
+        case 'Giáo viên':
+            $classes = 'primary';
+            break;
+        case 'Đang bảo lưu':
+            $classes = 'primary';
+            break;
+        case 'Chưa thu':
+            $classes = 'third';
+            break;
+        case 'Đã thu':
+            $classes = 'primary';
+            break;
+        case 'Đang làm':
+            $classes = 'third';
+            break;
+        case 'Tổ trưởng':
+            $classes = 'third';
+            break;
+        case 'Trả 1 phần':
+            $classes = 'secondary';
+            break;
+        case 'Tổ phó':
+            $classes = 'secondary';
+            break;
+        case 'Thu ngân':
+            $classes = 'secondary';
+            break;
+        case 'Hết hạn bảo lưu':
+            $classes = 'fourth';
+            break;
+        case 'Giám thị':
+            $classes = 'fourth';
+            break;
+        default:
+            $classes = 'default';
+            break;
+    }
+    return '<button class="' . $classes . '">' . $status . '</button>';
+}
 
-<button class="third">Đang học</button>
-<button class="third">Đang làm</button>
-<button class="third">Tổ trưởng</button>
-<button class="third">Chưa thu</button> 
+// Truyền giá trị trạng thái vào
+if (isset($status)) {
+    echo statusButton($status);
+}
+?>
 
-<button class="fourth">Giám thị</button>
-<button class="fourth">Hết hạn bảo lưu</button>
 
 <style>
     button {
@@ -22,9 +62,11 @@
         padding: 10px 17px;
         border-radius: 40px;
         font-size: 16px;
-        width: 160px;
+        width: auto;
+        /* Chỉnh lại chiều rộng cho button */
     }
 
+    /* Các trạng thái cụ thể */
     button.primary {
         --label-color: var(--White, #FFF);
         --background-color: var(--Cerulean, #01B3EF);
@@ -45,18 +87,16 @@
         --background-color: var(--Dark-Grey, #6C6C6C);
     }
 
+    /* Thêm khoảng cách giữa các button */
     button:not(:last-of-type) {
         margin-right: 16px;
     }
 
-    html {
-        height: 100%;
-    }
-    
-    body {
+    /* Style chung cho container */
+    .status-container {
         display: flex;
-        justify-content: center;
-        align-items: center;  
-        height: 100%;
+        gap: 10px;
+        flex-wrap: wrap;
+        /* Cho phép bọc xuống dòng nếu cần */
     }
 </style>
