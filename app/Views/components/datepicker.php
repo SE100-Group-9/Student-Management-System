@@ -8,6 +8,7 @@
         background-color: #fff;
         border-radius: 8px;
         text-align: center;
+        width: 100%;
     }
 
     input[type="date"] {
@@ -17,7 +18,7 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         outline: none;
-        width: 160px;
+        width: 100%;
         height: 40px;
         box-sizing: border-box;
         transition: border-color 0.3s;
@@ -26,4 +27,4 @@
     input[type="date"]:focus {
         border-color: #6DCFFB;
     }
-</style> 
+</style>
