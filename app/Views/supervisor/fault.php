@@ -11,7 +11,8 @@
                 </div>
                 <?= view('components/add'); ?>
             </div>
-            <?= view('components/tables/supervisorFault') ?>
+            <?= view('components/tables/supervisorFault', ['tableId' => 'supervisorFault']) ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>
@@ -56,6 +57,7 @@
     gap: 20px;
     flex: 1 0 0;
     align-self: stretch;
+    width: 100%; 
 }
 
 .fault-container p {
@@ -65,6 +67,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.fault-container table {
+    width: 100%;
+    margin-bottom: 20px; /* Khoảng cách giữa table và pagination */
 }
 
 .fault-tool {

@@ -1,138 +1,122 @@
 <div id="pagination-container"></div>
 
 <style>
-    .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-}
+    #pagination-container {
+        display: flex;
+        justify-content: flex-end;  
+        align-items: center;
+        margin-top: 10px;  
+        width: 100%; 
+        margin-left: auto;
+    }
 
-.page-btn {
-    background-color: #FFF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 32px;
-    height: 32px;
-    border: 1px solid #DFE3E8;
-    color: #212B36;
-    font-size: 14px;
-    font-weight: 700;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    .page-btn {
+        padding: 5px 10px;
+        margin: 0 5px;
+        border: 1px solid #F9FAFB;
+        background-color: #F9FAFB;
+        cursor: pointer;
+    }
 
-.page-btn.active {
-    background-color: #E14177;
-    color: white;
-}
+    .page-btn.active {
+        background-color: #01B3EF;
+        color: white;
+        border-color: #01B3EF;
+    }
 
-.page-btn:hover:not(.active) {
-    background-color: #ddd;
-}
-
-.page-btn[disabled] {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
+    .page-btn:hover:not(.active) {
+        background-color: #F9FAFB;
+    }
 </style>
 
 <script>
-    function createPagination({
-    containerId,
-    totalItems,
-    itemsPerPage = 10,
-    onPageChange,
-}) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Container with ID "${containerId}" not found.`);
-        return;
+    function initializeTablePagination({ tableElement, paginationContainer, rowsPerPage = 10 }) {
+    const allRows = Array.from(tableElement.querySelectorAll('tbody tr')); // Lấy tất cả các dòng trong tbody
+    let currentPage = 1; // Trang hiện tại
+
+    // Hàm render dữ liệu cho bảng theo trang
+    function renderTable(page) {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    // Lấy tbody của bảng (không động đến thead)
+    const tbody = tableElement.querySelector('tbody');
+
+    // Xóa các dòng hiện tại trong tbody
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
     }
 
-    let currentPage = 1; // Trang hiện tại
-    const totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang
+    // Thêm các dòng dữ liệu của trang hiện tại vào tbody
+    allRows.slice(start, end).forEach(row => tbody.appendChild(row.cloneNode(true)));
+}
 
-    // Hàm render pagination
-    function createPagination({
-    containerId,
-    totalItems,
-    itemsPerPage = 10,
-    onPageChange,
-}) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error(`Container with ID "${containerId}" not found.`);
-        return;
-    }
 
-    let currentPage = 1; // Trang hiện tại
-    const totalPages = Math.ceil(totalItems / itemsPerPage); // Tổng số trang
-
-    // Hàm render pagination
-    function renderPagination() {
-        container.innerHTML = ''; // Xóa nội dung cũ
-        const pagination = document.createElement('div');
-        pagination.className = 'pagination';
+    // Hàm tạo pagination
+    function createPagination() {
+        const totalPages = Math.ceil(allRows.length / rowsPerPage);
+        paginationContainer.innerHTML = ''; // Xóa các nút cũ nếu có
 
         // Nút "Trước"
         const prevButton = document.createElement('button');
-        prevButton.className = 'page-btn';
         prevButton.textContent = '<';
+        prevButton.classList.add('page-btn');
         prevButton.disabled = currentPage === 1;
         prevButton.addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
                 updatePagination();
+                renderTable(currentPage);
             }
         });
-        pagination.appendChild(prevButton);
+        paginationContainer.appendChild(prevButton);
 
         // Các nút trang
         for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.className = 'page-btn';
-            if (i === currentPage) {
-                pageButton.classList.add('active');
-            }
-            pageButton.textContent = i;
-            pageButton.addEventListener('click', () => {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add('page-btn');
+            if (i === currentPage) button.classList.add('active');
+            button.addEventListener('click', () => {
                 currentPage = i;
                 updatePagination();
+                renderTable(currentPage);
             });
-            pagination.appendChild(pageButton);
+            paginationContainer.appendChild(button);
         }
 
         // Nút "Tiếp"
         const nextButton = document.createElement('button');
-        nextButton.className = 'page-btn';
         nextButton.textContent = '>';
+        nextButton.classList.add('page-btn');
         nextButton.disabled = currentPage === totalPages;
         nextButton.addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
                 updatePagination();
+                renderTable(currentPage);
             }
         });
-        pagination.appendChild(nextButton);
-
-        container.appendChild(pagination);
+        paginationContainer.appendChild(nextButton);
     }
 
-    // Hàm cập nhật pagination và gọi lại onPageChange
+    // Cập nhật pagination để đánh dấu trang active
     function updatePagination() {
-        renderPagination();
-        if (typeof onPageChange === 'function') {
-            onPageChange(currentPage); // Gọi callback khi trang thay đổi
-        }
+        const buttons = paginationContainer.querySelectorAll('.page-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        const activeButton = Array.from(buttons).find(btn => btn.textContent == currentPage);
+        if (activeButton) activeButton.classList.add('active');
+
+        const prevButton = paginationContainer.querySelector('.page-btn:first-child');
+        const nextButton = paginationContainer.querySelector('.page-btn:last-child');
+
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === Math.ceil(allRows.length / rowsPerPage);
     }
 
-    // Khởi tạo component
-    renderPagination();
-}
+    // Khởi tạo pagination và hiển thị trang đầu tiên
+    createPagination();
+    renderTable(currentPage);
 }
 
 </script>

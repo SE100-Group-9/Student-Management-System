@@ -19,7 +19,8 @@
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <?= view('components/tables/studentSemesterResult') ?>
+            <?= view('components/tables/studentSemesterResult', ['tableId' => 'studentSemesterResult']) ?>
+            <?= view('components/pagination'); ?> 
         </div>
     </div>
 </div>
@@ -73,6 +74,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.score-container table {
+    width: 100%;
+    margin-bottom: 20px; /* Khoảng cách giữa table và pagination */
 }
 
 .score-tool {
