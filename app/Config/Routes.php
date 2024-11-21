@@ -29,6 +29,8 @@ $routes->get('student/final_result', 'StudentController::final_result');
 $routes->get('student/fee_payment', 'StudentController::fee_payment');
 $routes->get('student/conduct', 'StudentController::conduct');
 
+
+
 // cashier
 $routes->get('cashier/payment/list', 'CashierController::list');
 $routes->get('cashier/extense', 'CashierController::extense');
@@ -37,9 +39,15 @@ $routes->get('cashier/payment/viewinfo', 'CashierController::viewinfo');
 $routes->get('cashier/payment/add', 'CashierController::add');
 $routes->get('cashier/payment/addextense', 'CashierController::addextense');
 
+
+
 // supervisor
 $routes->get('supervisor/fault', 'SupervisorController::fault');
 $routes->get('supervisor/profile', 'SupervisorController::profile');
+$routes->get('supervisor/category', 'SupervisorController::category');
+$routes->get('supervisor/addfault', 'SupervisorController::addfault');
+
+
 
 // login 
 $routes->get('/', 'Home::index');

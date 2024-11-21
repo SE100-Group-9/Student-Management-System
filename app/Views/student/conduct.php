@@ -12,7 +12,7 @@
                     </div>
                     <div class="conduct-dropdown-semester">
                         <h2>Học kì:</h2>
-                        <?= view('components/dropdown_semester', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
+                        <?= view('components/dropdown_2', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
                     </div>
                 </div>
                 <div class="tool-export">
@@ -20,6 +20,7 @@
                 </div>
             </div>
             <?= view('components/tables/studentConduct') ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>
@@ -73,6 +74,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.conduct-container table {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .conduct-tool {

@@ -15,4 +15,14 @@ class SupervisorController extends Controller
     {
         return view('supervisor/profile');
     }
+
+    public function category()
+    {
+        return view('supervisor/category');
+    }
+
+    public function addfault()
+    {
+        return view('supervisor/addfault');
+    }
 }

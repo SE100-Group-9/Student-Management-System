@@ -4,6 +4,10 @@
     </button>
 </div>
 
+<div class="info-container" style="display: none;">
+    <p>Thông tin chi tiết về mục này.</p>
+</div>
+
 <style>
     .view-container {
         position: relative;
@@ -33,3 +37,18 @@
         line-height: normal;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const buttonView = document.querySelector('.button-view');
+    const infoContainer = document.querySelector('.info-container');
+
+    buttonView.addEventListener('click', () => {
+        // Chỉ hiển thị thông tin nếu nó đang ẩn
+        if (infoContainer.style.display === 'none' || infoContainer.style.display === '') {
+            infoContainer.style.display = 'block';
+        }
+    });
+});
+
+</script>

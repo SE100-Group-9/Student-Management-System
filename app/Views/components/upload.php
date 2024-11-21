@@ -35,3 +35,30 @@
          background-color: #F5F5F5;
      }
  </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const uploadButton = document.querySelector('.button-upload');
+    const fileInput = document.createElement('input'); // Tạo input type="file"
+    fileInput.type = 'file';
+    fileInput.style.display = 'none'; // Ẩn input file
+
+    // Thêm input vào DOM
+    document.body.appendChild(fileInput);
+
+    // Khi người dùng nhấn vào nút Upload
+    uploadButton.addEventListener('click', () => {
+        fileInput.click(); // Kích hoạt input file
+    });
+
+    // Khi người dùng chọn tệp
+    fileInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        if (files.length > 0) {
+            const file = files[0];
+            console.log('Tệp đã chọn:', file.name); // Hiển thị tên tệp đã chọn
+        }
+    });
+});
+
+</script>

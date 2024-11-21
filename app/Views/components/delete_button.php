@@ -1,0 +1,47 @@
+<div class="delete-container">
+    <button class="button-delete">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M14 10V17M10 10L10 17M4 6H20M18 6V17.8C18 18.9201 18.0002 19.4802 17.7822 19.908C17.5905 20.2844 17.2841 20.5902 16.9078 20.782C16.48 21 15.9203 21 14.8002 21H9.2002C8.08009 21 7.51962 21 7.0918 20.782C6.71547 20.5902 6.40973 20.2844 6.21799 19.908C6 19.4802 6 18.9201 6 17.8V6H18ZM16 6H8C8 5.06812 8 4.60216 8.15224 4.23462C8.35523 3.74456 8.74432 3.35523 9.23438 3.15224C9.60192 3 10.0681 3 11 3H13C13.9319 3 14.3978 3 14.7654 3.15224C15.2554 3.35523 15.6447 3.74456 15.8477 4.23462C15.9999 4.60216 16 5.06812 16 6Z" stroke="#E14177" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+</div>
+
+<style>
+    .delete-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .button-delete {
+        display: inline-flex;
+        align-items: center;
+        height: 30px;
+        border: none;
+        cursor: pointer;
+        background: none;
+    }
+
+    .svg {
+        position: absolute;
+        top: 50%;
+        left: 100px;
+        transform: translateY(-50%);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButton = document.querySelector('.button-delete'); // Lấy button delete
+
+    deleteButton.addEventListener('click', function () {
+        // Bạn có thể lấy dòng cần xóa nếu button nằm trong một dòng cụ thể
+        const rowToDelete = this.closest('tr'); // Nếu button nằm trong tr, sẽ tìm tr cha
+        if (rowToDelete) {
+            rowToDelete.remove(); // Xóa dòng
+            alert('Dòng đã bị xóa');
+        }
+    });
+});
+
+</script>

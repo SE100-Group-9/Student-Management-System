@@ -16,6 +16,7 @@
                 </div>
             </div>
             <?= view('components/tables/cashierPaymentList') ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>
@@ -69,6 +70,11 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.list-container table {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .list-tool {

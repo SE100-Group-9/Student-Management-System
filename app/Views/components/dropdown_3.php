@@ -1,15 +1,15 @@
 <?php
-$options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
+$options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option4', 'Option 5', 'Option 6'];
 ?>
 
-<div class="dropdown-semester">
-    <div class="dropdown-semester-inner">
+<div class="dropdown-3">
+    <div class="dropdown-3-inner">
         Select an option
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
             <path d="M7 8.27271L4 11L1 8.27271" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M1 3.72727L4 1L7 3.72727" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <div class="dropdown-semester-option">
+        <div class="dropdown-3-option">
             <?php foreach ($options as $option): ?>
                 <div class="option">
                     <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
@@ -20,15 +20,15 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
 </div>
 
 <style>
-    .dropdown-semester {
+    .dropdown-3 {
         display: inline-flex;
         align-items: flex-start;
         position: relative;
     }
 
-    .dropdown-semester-inner {
+    .dropdown-3-inner {
         display: flex;
-        width: 160px;
+        width: 500px;
         padding: 6px 12px;
         justify-content: space-between;
         align-items: center;
@@ -44,9 +44,9 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
         /* 171.429% */
     }
 
-    .dropdown-semester-option {
+    .dropdown-3-option {
         display: none;
-        width: 160px;
+        width: 500px;
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
@@ -83,7 +83,7 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
         letter-spacing: 0.42px;
     }
 
-    .dropdown-semester-option.show {
+    .dropdown-3-option.show {
         display: flex;
         /* Show when toggled */
     }
@@ -95,18 +95,18 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3'];
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const dropdownSemesterInner = document.querySelector('.dropdown-semester-inner');
-        const dropdownSemesterOptions = document.querySelector('.dropdown-semester-option');
+        const dropdown3Inner = document.querySelector('.dropdown-3-inner');
+        const dropdown3Options = document.querySelector('.dropdown-3-option');
 
         // Toggle dropdown on click
-        dropdownSemesterInner.addEventListener('click', function() {
-            dropdownSemesterOptions.classList.toggle('show');
+        dropdown3Inner.addEventListener('click', function() {
+            dropdown3Options.classList.toggle('show');
         });
 
         // Hide dropdown when clicking outside
         document.addEventListener('click', function(event) {
-            if (!dropdownSemesterInner.contains(event.target)) {
-                dropdownSemesterOptions.classList.remove('show');
+            if (!dropdown3Inner.contains(event.target)) {
+                dropdown3Options.classList.remove('show');
             }
         });
     });

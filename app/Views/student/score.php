@@ -12,7 +12,7 @@
                     </div>
                     <div class="score-dropdown-semester">
                         <h2>Học kì:</h2>
-                        <?= view('components/dropdown_semester', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
+                        <?= view('components/dropdown_2', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
                     </div>
                 </div>
                 <div class="tool-export">

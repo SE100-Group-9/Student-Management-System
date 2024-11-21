@@ -52,3 +52,31 @@
         line-height: normal;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const searchButton = document.getElementById('search-icon');
+    const searchInput = document.getElementById('search-input');
+
+    // Sự kiện click vào biểu tượng tìm kiếm
+    searchButton.addEventListener('click', () => {
+        const searchTerm = searchInput.value.trim();
+
+        if (searchTerm) {
+            // Thực hiện tìm kiếm (in ra console hoặc gọi API)
+            console.log("Tìm kiếm với từ khóa: " + searchTerm);
+            // Ví dụ: gọi API tìm kiếm hoặc lọc dữ liệu ở đây.
+        } else {
+            alert("Vui lòng nhập từ khóa tìm kiếm");
+        }
+    });
+
+    // Thêm sự kiện enter để người dùng có thể tìm kiếm bằng phím Enter
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            searchButton.click();
+        }
+    });
+});
+
+</script>
