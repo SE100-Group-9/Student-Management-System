@@ -10,7 +10,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M20 17.0001V11.4521V11.4514C20 10.9176 20 10.6505 19.9351 10.402C19.8775 10.1816 19.7827 9.97268 19.6548 9.78425C19.5104 9.57162 19.3096 9.39574 18.9074 9.04387L14.1074 4.84387C13.3608 4.19059 12.9875 3.86399 12.5674 3.73975C12.1972 3.63027 11.8028 3.63027 11.4326 3.73975C11.0127 3.86392 10.6398 4.19023 9.894 4.8428L9.89278 4.84387L5.09277 9.04387L5.09182 9.04471C4.69032 9.39602 4.48944 9.57179 4.34521 9.78425C4.2173 9.97268 4.12255 10.1816 4.06497 10.402C4 10.6506 4 10.9178 4 11.4521V17.0001C4 17.932 4 18.3978 4.15224 18.7654C4.35523 19.2554 4.74481 19.6448 5.23486 19.8478C5.60241 20 6.06835 20 7.00023 20C7.93211 20 8.39782 20 8.76537 19.8478C9.25542 19.6448 9.64467 19.2554 9.84766 18.7654C9.9999 18.3978 10 17.9319 10 17V16C10 14.8954 10.8954 14 12 14C13.1046 14 14 14.8954 14 16V17C14 17.9319 14 18.3978 14.1522 18.7654C14.3552 19.2554 14.7448 19.6448 15.2349 19.8478C15.6024 20 16.0683 20 17.0002 20C17.9321 20 18.3978 20 18.7654 19.8478C19.2554 19.6448 19.6447 19.2554 19.8477 18.7654C19.9999 18.3978 20 17.932 20 17.0001Z" stroke="#E14177" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                Thông tin chung
+                Quy định
             </div>
             <svg id="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none">
                 <path d="M19 11.25L12 20L5 11.25" stroke="#0C0C0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -18,10 +18,7 @@
         </div>
         <div id="news-deeper" class="news-deeper">
             <div class="news-overall">
-                Tin tức
-            </div>
-            <div class="noti">
-                Thông báo
+                Danh hiệu
             </div>
         </div>
     </div>
@@ -81,12 +78,22 @@
             </div>
         </div>
     </div>
-    <div class="class">
-        <div class="class-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M17 21C17 18.2386 14.7614 16 12 16C9.23858 16 7 18.2386 7 21M12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10C15 11.6569 13.6569 13 12 13ZM21 6.19995V17.8C21 18.9201 21.0002 19.4802 20.7822 19.908C20.5905 20.2844 20.2841 20.5902 19.9078 20.782C19.48 21 18.9203 21 17.8002 21H6.2002C5.08009 21 4.51962 21 4.0918 20.782C3.71547 20.5902 3.40973 20.2844 3.21799 19.908C3 19.4802 3 18.9201 3 17.8V6.19995C3 5.07985 3 4.51986 3.21799 4.09204C3.40973 3.71572 3.71547 3.40973 4.0918 3.21799C4.51962 3 5.08009 3 6.2002 3H17.8002C18.9203 3 19.48 3 19.9078 3.21799C20.2841 3.40973 20.5905 3.71572 20.7822 4.09204C21.0002 4.51986 21 5.07985 21 6.19995Z" stroke="#01B3EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <div class="align">
+        <div class="class" id="class" onclick="toggleDeeperClass()">
+            <div class="class-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M17 21C17 18.2386 14.7614 16 12 16C9.23858 16 7 18.2386 7 21M12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10C15 11.6569 13.6569 13 12 13ZM21 6.19995V17.8C21 18.9201 21.0002 19.4802 20.7822 19.908C20.5905 20.2844 20.2841 20.5902 19.9078 20.782C19.48 21 18.9203 21 17.8002 21H6.2002C5.08009 21 4.51962 21 4.0918 20.782C3.71547 20.5902 3.40973 20.2844 3.21799 19.908C3 19.4802 3 18.9201 3 17.8V6.19995C3 5.07985 3 4.51986 3.21799 4.09204C3.40973 3.71572 3.71547 3.40973 4.0918 3.21799C4.51962 3 5.08009 3 6.2002 3H17.8002C18.9203 3 19.48 3 19.9078 3.21799C20.2841 3.40973 20.5905 3.71572 20.7822 4.09204C21.0002 4.51986 21 5.07985 21 6.19995Z" stroke="#01B3EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Lớp học
+            </div>
+            <svg id="arrow-icon-5" xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none">
+                <path d="M19 11.25L12 20L5 11.25" stroke="#0C0C0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            Lớp học
+        </div>
+        <div id="class-deeper" class="class-deeper">
+            <div class="class-overall">
+                Danh sách
+            </div>
         </div>
     </div>
     <div class="general">
@@ -231,6 +238,7 @@
     .news-deeper,
     .statics-deeper,
     .student-deeper,
+    .class-deeper,
     .employee-deeper {
         display: flex;
         height: auto;
@@ -246,6 +254,7 @@
     .news-deeper,
     .statics-deeper,
     .student-deeper,
+    .class-deeper,
     .employee-deeper {
         max-height: 0;
         /* Ban đầu ẩn */
@@ -272,9 +281,12 @@
         max-height: 300px;
     }
 
+    .class-deeper.open {
+        max-height: 300px;
+    }
 
     .news-overall,
-    .noti,
+    .class-overall,
     .grade,
     .students,
     .conducts,
@@ -301,8 +313,9 @@
     }
 
     .news-overall:hover,
-    .noti:hover,
+    :hover,
     .grade:hover,
+    .class-overall:hover,
     .students:hover,
     .conducts:hover,
     .student-list:hover,
@@ -329,6 +342,10 @@
     }
 
     #arrow-icon-4 {
+        transition: transform 0.3s ease;
+    }
+
+    #arrow-icon-5 {
         transition: transform 0.3s ease;
     }
 </style>
@@ -379,6 +396,20 @@
     function toggleDeeperEmployee() {
         const deeperElement = document.getElementById('employee-deeper');
         const arrowIcon = document.getElementById('arrow-icon-4');
+
+        // Toggle lớp 'open' để bật/tắt hiệu ứng
+        if (deeperElement.classList.contains('open')) {
+            deeperElement.classList.remove('open');
+            arrowIcon.style.transform = 'rotate(0deg)'; // Reset rotation
+        } else {
+            deeperElement.classList.add('open');
+            arrowIcon.style.transform = 'rotate(180deg)'; // Rotate arrow
+        }
+    }
+
+    function toggleDeeperClass() {
+        const deeperElement = document.getElementById('class-deeper');
+        const arrowIcon = document.getElementById('arrow-icon-5');
 
         // Toggle lớp 'open' để bật/tắt hiệu ứng
         if (deeperElement.classList.contains('open')) {

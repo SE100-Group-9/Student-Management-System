@@ -1,8 +1,9 @@
 <?php
 $options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
+$dropdown_id = $dropdown_id ?? 'default-dropdown'; // Đảm bảo ID mặc định nếu không có
 ?>
 
-<div class="dropdown">
+<div class="dropdown" data-dropdown-id="<?= htmlspecialchars($dropdown_id) ?>">
     <div class="dropdown-inner">
         Select an option
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
@@ -19,18 +20,22 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 
     </div>
 </div>
 
+
+
 <style>
     .dropdown {
         display: inline-flex;
         align-items: flex-start;
         position: relative;
+        width: 100%;
     }
 
     .dropdown-inner {
         display: flex;
-        width: 160px;
+        width: 100%;
         padding: 6px 12px;
         justify-content: space-between;
+        gap: 10px;
         align-items: center;
         border-radius: 5px;
         border: 1px solid #003C3C;
@@ -46,7 +51,7 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 
 
     .dropdown-option {
         display: none;
-        width: 160px;
+        width: 100%;
         flex-direction: column;
         align-items: flex-start;
         gap: 5px;
@@ -95,19 +100,49 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const dropdownInner = document.querySelector('.dropdown-inner');
-        const dropdownOptions = document.querySelector('.dropdown-option');
+        // Biến trạng thái để lưu dropdown đang mở
+        let activeDropdown = null;
 
-        // Toggle dropdown on click
-        dropdownInner.addEventListener('click', function() {
-            dropdownOptions.classList.toggle('show');
+        // Đóng tất cả các dropdown
+        function closeAllDropdowns() {
+            if (activeDropdown) {
+                const dropdownOptions = activeDropdown.querySelector('.dropdown-option');
+                if (dropdownOptions) {
+                    dropdownOptions.classList.remove('show');
+                }
+                activeDropdown = null;
+            }
+        }
+
+        // Hàm xử lý khi click vào một dropdown
+        function handleDropdownClick(dropdown) {
+            const dropdownOptions = dropdown.querySelector('.dropdown-option');
+            if (!dropdownOptions) return;
+
+            // Nếu dropdown này đang mở, đóng nó
+            if (activeDropdown === dropdown) {
+                dropdownOptions.classList.remove('show');
+                activeDropdown = null;
+            } else {
+                // Đóng các dropdown khác trước khi mở dropdown này
+                closeAllDropdowns();
+                dropdownOptions.classList.add('show');
+                activeDropdown = dropdown;
+            }
+        }
+
+        // Lắng nghe sự kiện click trên mỗi dropdown
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            const dropdownInner = dropdown.querySelector('.dropdown-inner');
+            dropdownInner.addEventListener('click', function(event) {
+                event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
+                handleDropdownClick(dropdown);
+            });
         });
 
-        // Hide dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!dropdownInner.contains(event.target)) {
-                dropdownOptions.classList.remove('show');
-            }
+        // Đóng tất cả dropdown khi click ra ngoài
+        document.addEventListener('click', function() {
+            closeAllDropdowns();
         });
     });
 </script>
