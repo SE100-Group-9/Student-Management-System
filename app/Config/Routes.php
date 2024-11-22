@@ -19,8 +19,11 @@ $routes->get('director/student/payment', 'DirectorController::studentPayment');
 $routes->get('director/title/list', 'DirectorController::titleList');
 $routes->get('director/title/add', 'DirectorController::titleAdd');
 $routes->get('director/title/update', 'DirectorController::titleUpdate');
-
-
+$routes->get('director/class/list', 'DirectorController::classList');
+$routes->get('director/class/add', 'DirectorController::classAdd');
+$routes->get('director/class/update', 'DirectorController::classUpdate');
+$routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
+$routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 
 // student
 $routes->get('student/score', 'StudentController::score');

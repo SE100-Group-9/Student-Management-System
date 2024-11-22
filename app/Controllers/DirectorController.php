@@ -66,4 +66,28 @@ class DirectorController extends Controller
     {
         return view('director/title/update');
     }
+
+    public function classList()
+    {
+        return view('director/class/list');
+    }
+
+    public function classAdd()
+    {
+        return view('director/class/add');
+    }
+    public function classUpdate()
+    {
+        return view('director/class/update');
+    }
+
+    public function classArrangeStudent()
+    {
+        return view('director/class/arrange/student');
+    }
+
+    public function classArrangeTeacher()
+    {
+        return view('director/class/arrange/teacher');
+    }
 }

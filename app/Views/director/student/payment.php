@@ -7,11 +7,14 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Học sinh / Bảo lưu
+            Học tập / Học sinh / Thông tin thanh toán
             <div class="studentpayment-tools">
                 <div class="tool-search">
                     <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
+                    <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>

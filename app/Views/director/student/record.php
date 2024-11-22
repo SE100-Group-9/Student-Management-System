@@ -1,0 +1,105 @@
+<div class="studentrecord">
+    <div class="studentrecord-heading">
+        <?= view('components/heading') ?>
+    </div>
+    <div class="body">
+        <div class="body-left">
+            <?= view('components/sidebar_director') ?>
+        </div>
+        <div class="body-right">
+            Học tập / Học sinh / Thông tin thanh toán
+            <div class="studentrecord-tools">
+                <div class="tool-search">
+                    <?= view('components/filter') ?>
+                    <?= view('components/searchbar') ?>
+                    <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
+                </div>
+                <div class="tool-add">
+                    <?= view('components/excel_export') ?>
+                </div>
+            </div>
+            <?= view('components/tables/directorStudentRecord') ?>
+        </div>
+    </div>
+</div>
+
+<style>
+    *,
+    *::before,
+    *::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .studentrecord {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #FFF;
+    }
+
+    .studentrecord-heading {
+        width: 100%;
+        height: 60px;
+        position: fixed;
+    }
+
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        margin-top: 60px;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
+
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        overflow-y: auto;
+    }
+
+    .studentrecord-tools {
+        display: flex;
+        width: 100%;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-radius: 10px;
+        background: #FFF;
+    }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tool-add {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+</style>

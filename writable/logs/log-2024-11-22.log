@@ -1,0 +1,16 @@
+CRITICAL - 2024-11-22 01:35:28 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "componets/dropdown.php"
+[Method: GET, Route: director/student/payment]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('componets/dropdown.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('componets/dropdown', [], true)
+ 3 APPPATH\Views\director\student\payment.php(15): view('componets/dropdown', [...])
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\director\\student\\payment.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('director/student/payment', [], true)
+ 7 APPPATH\Controllers\DirectorController.php(42): view('director/student/payment')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentPayment()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
