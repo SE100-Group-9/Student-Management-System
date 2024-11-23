@@ -1,18 +1,21 @@
 <?php
-$options = $options ?? ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
-$dropdown_id = $dropdown_id ?? 'default-dropdown'; // Đảm bảo ID mặc định nếu không có
+$options = $options ?? ['Option 1', 'Option 2', 'Option 3']; // Các tùy chọn mặc định
+$dropdown_id = $dropdown_id ?? 'default-dropdown'; // Đảm bảo có ID
+$name = $name ?? 'dropdown'; // Giá trị name mặc định cho form
+$selected_text = $selected_text ?? 'Select an option'; // Text mặc định khi dropdown chưa chọn
 ?>
 
 <div class="dropdown" data-dropdown-id="<?= htmlspecialchars($dropdown_id) ?>">
     <div class="dropdown-inner">
-        Select an option
+        <input type="hidden" name="<?= htmlspecialchars($name) ?>" value="" id="<?= htmlspecialchars($dropdown_id) ?>">
+        <span class="selected-text"><?= htmlspecialchars($selected_text) ?></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
             <path d="M7 8.27271L4 11L1 8.27271" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M1 3.72727L4 1L7 3.72727" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="dropdown-option">
             <?php foreach ($options as $option): ?>
-                <div class="option">
+                <div class="option" data-value="<?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?>">
                     <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
             <?php endforeach; ?>

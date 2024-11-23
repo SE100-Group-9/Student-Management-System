@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+
 <div class="titleadd">
     <div class="titleadd-heading">
         <?= view('components/heading') ?>
@@ -10,26 +12,43 @@
             Trung tâm / Quy định / Danh hiệu
             <h1>Tạo danh hiệu:</h1>
             <h2>Thông tin danh hiệu:</h2>
-            <div class="titleadd-fields">
-                <div class="titleadd-field">
-                    Tên danh hiệu
-                    <?= view('components/input') ?>
+            <form method="POST" action=" ">
+                <div class="titleadd-fields">
+                    <div class="titleadd-field">
+                        Tên danh hiệu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'title_name',
+                            'required' => true,
+                            'placeholder' => 'Học sinh Giỏi'
+                        ]) ?>
+                    </div>
+                    <div class="titleadd-field">
+                        Điểm TB tối thiểu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'min_grade',
+                            'required' => true,
+                            'placeholder' => '9.0'
+                        ]) ?>
+                    </div>
                 </div>
-                <div class="titleadd-field">
-                    Điểm TB tối thiểu
-                    <?= view('components/input') ?>
+                <div class="titleadd-fields">
+                    <div class="titleadd-field">
+                        Hạnh kiểm tối thiểu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'min_conduct',
+                            'required' => true,
+                            'placeholder' => '90'
+                        ]) ?>
+                    </div>
                 </div>
-            </div>
-            <div class="titleadd-fields">
-                <div class="titleadd-field">
-                    Điểm hạnh kiểm tối thiểu
-                    <?= view('components/input') ?>
+                <div class="titleadd-btns">
+                    <?= view('components/exit_button') ?>
+                    <?= view('components/save_button') ?>
                 </div>
-            </div>
-            <div class="titleadd-btns">
-                <?= view('components/exit_button') ?>
-                <?= view('components/save_button') ?>
-            </div>
+            </form>
         </div>
     </div>
 </div>

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+
 <div class="studentupdate">
     <div class="studentupdate-heading">
         <?= view('components/heading') ?>
@@ -9,79 +11,141 @@
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
             <h1>Tạo hồ sơ:</h1>
-            <h2>Thông tin tài khoản:</h2>
-            <div class="studentupdate-fields">
-                <div class="studentupdate-field">
-                    Tài khoản
-                    <?= view('components/input') ?>
-                </div>
-                <div class="studentupdate-field">
-                    Mật khẩu
-                    <?= view('components/input') ?>
-                </div>
-            </div>
-            <h2>Thông tin cá nhân:</h2>
-            <div class="studentupdate-fields">
-                <div class="studentupdate-field">
-                    Họ và tên
-                    <?= view('components/input') ?>
-                </div>
-                <div class="studentupdate-field">
-                    Email
-                    <?= view('components/input') ?>
-                </div>
-            </div>
-            <div class="studentupdate-fields">
-                <div class="studentupdate-field">
-                    Số điện thoại
-                    <?= view('components/input') ?>
-                </div>
-                <div class="studentupdate-field">
-                    Địa chỉ
-                    <?= view('components/input') ?>
-                </div>
-            </div>
-            <div class="studentupdate-fields">
-                <div class="studentupdate-specials">
-                    <div class="studentupdate-special">
-                        Giới tính
-                        <?= view('components/dropdown', ['options' => ['Nữ', 'Nam', 'Khác'], 'dropdown_id' => 'gender-dropdown']) ?>
+            <form method="POST" action=" ">
+                <h2>Thông tin tài khoản:</h2>
+                <div class="studentupdate-fields">
+                    <div class="studentupdate-field">
+                        Tài khoản
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_account',
+                            'required' => true,
+                            'placeholder' => 'NgocMinh'
+                        ]) ?>
                     </div>
-                    <div class="studentupdate-special">
-                        Ngày sinh
-                        <?= view('components/datepicker') ?>
+                    <div class="studentupdate-field">
+                        Mật khẩu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_password',
+                            'required' => true,
+                            'placeholder' => 'Minh'
+                        ]) ?>
                     </div>
+                </div>
+                <h2>Thông tin cá nhân:</h2>
+                <div class="studentupdate-fields">
+                    <div class="studentupdate-field">
+                        Họ và tên
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_name',
+                            'required' => true,
+                            'placeholder' => 'Đặng Thị Ngọc Minh'
+                        ]) ?>
+                    </div>
+                    <div class="studentupdate-field">
+                        Email
+                        <?= view('components/input', [
+                            'type' => 'email',
+                            'name' => 'student_email',
+                            'required' => true,
+                            'placeholder' => 'minh123@gmail.com'
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="studentupdate-fields">
+                    <div class="studentupdate-field">
+                        Số điện thoại
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_phone',
+                            'required' => true,
+                            'placeholder' => '0123456789'
+                        ]) ?>
+                    </div>
+                    <div class="studentupdate-field">
+                        Địa chỉ
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_address',
+                            'required' => true,
+                            'placeholder' => '123 Thủ Đức'
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="studentupdate-fields">
+                    <div class="studentupdate-specials">
+                        <div class="studentupdate-special">
+                            Giới tính
+                            <?= view('components/dropdown', [
+                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'dropdown_id' => 'gender-dropdown',
+                                'name' => 'student_gender',
+                                'selected_text' => 'Giới tính',
+                            ]) ?>
+                        </div>
+                        <div class="studentupdate-special">
+                            Ngày sinh
+                            <?= view('components/datepicker', [
+                                'datepicker_id' => 'birthday',
+                                'name' => 'student_birthday',
+                                'value' => '2024-01-01'
+                            ]) ?>
+                        </div>
 
 
-                </div>
-                <div class="studentupdate-onces">
-                    <div class="studentupdate-once">
-                        Dân tộc
-                        <?= view('components/input') ?>
                     </div>
-                    <div class="studentupdate-once">
-                        Nơi sinh
-                        <?= view('components/input') ?>
-                    </div>
-                </div>
-            </div>
-            <h2>Tình trạng học</h2>
-            <div class="studentupdate-fields">
-                <div class="studentupdate-specials">
-                    <div class="studentupdate-special">
-                        Lớp học
-                        <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
-                    </div>
-                    <div class="studentupdate-special">
-                        Tình trạng hiện tại
-                        <?= view('components/dropdown', ['options' => ['Đang học', 'Đang bảo lưu', 'Hết hạn bảo lưu'], 'dropdown_id' => 'state-dropdown']) ?>
+                    <div class="studentupdate-onces">
+                        <div class="studentupdate-once">
+                            Dân tộc
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'student_nation',
+                                'required' => true,
+                                'placeholder' => 'Kinh'
+                            ]) ?>
+                        </div>
+                        <div class="studentupdate-once">
+                            Nơi sinh
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'student_country',
+                                'required' => true,
+                                'placeholder' => 'TPHCM'
+                            ]) ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="studentupdate-btns">
-                <?= view('components/exit_button') ?>
-                <?= view('components/save_button') ?>
-            </div>
+                <h2>Tình trạng học</h2>
+                <div class="studentupdate-fields">
+                    <div class="studentupdate-specials">
+                        <div class="studentupdate-special">
+                            Lớp học
+                            <?= view('components/dropdown', [
+                                'options' => ['11A1', '11A2', '11A3'],
+                                'dropdown_id' => 'class-dropdown',
+                                'name' => 'student_class',
+                                'selected_text' => 'Lớp học',
+                            ]) ?>
+                        </div>
+                        <div class="studentupdate-special">
+                            Tình trạng hiện tại
+                            <?= view('components/dropdown', [
+                                'options' => ['Đang học', 'Đang bảo lưu', 'Hết hạn bảo lưu'],
+                                'dropdown_id' => 'class-dropdown',
+                                'name' => 'student_status',
+                                'selected_text' => 'Tình trạng hiện tại',
+                            ]) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="studentupdate-btns">
+                    <?= view('components/exit_button') ?>
+                    <?= view('components/save_button') ?>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

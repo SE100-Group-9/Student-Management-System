@@ -1,5 +1,16 @@
+<?php
+// Gán giá trị mặc định nếu chưa có
+$datepicker_id = $datepicker_id ?? 'default-datepicker'; // ID mặc định
+$name = $name ?? 'datepicker'; // Name mặc định
+$value = $value ?? ''; // Giá trị mặc định cho datepicker
+?>
+
 <div class="datepicker-container">
-    <input type="date" id="myDate" name="myDate">
+    <input
+        type="date"
+        id="<?= htmlspecialchars($datepicker_id) ?>"
+        name="<?= htmlspecialchars($name) ?>"
+        value="<?= htmlspecialchars($value) ?>">
 </div>
 
 

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+
 <div class="titleupdate">
     <div class="titleupdate-heading">
         <?= view('components/heading') ?>
@@ -8,28 +10,45 @@
         </div>
         <div class="body-right">
             Trung tâm / Quy định / Danh hiệu
-            <h1>Sửa danh hiệu:</h1>
+            <h1>Cập nhật danh hiệu:</h1>
             <h2>Thông tin danh hiệu:</h2>
-            <div class="titleupdate-fields">
-                <div class="titleupdate-field">
-                    Tên danh hiệu
-                    <?= view('components/input') ?>
+            <form method="POST" action=" ">
+                <div class="titleupdate-fields">
+                    <div class="titleupdate-field">
+                        Tên danh hiệu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'title_name',
+                            'required' => true,
+                            'placeholder' => 'Học sinh Giỏi'
+                        ]) ?>
+                    </div>
+                    <div class="titleupdate-field">
+                        Điểm TB tối thiểu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'min_grade',
+                            'required' => true,
+                            'placeholder' => '9.0'
+                        ]) ?>
+                    </div>
                 </div>
-                <div class="titleupdate-field">
-                    Điểm TB tối thiểu
-                    <?= view('components/input') ?>
+                <div class="titleupdate-fields">
+                    <div class="titleupdate-field">
+                        Hạnh kiểm tối thiểu
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'min_conduct',
+                            'required' => true,
+                            'placeholder' => '90'
+                        ]) ?>
+                    </div>
                 </div>
-            </div>
-            <div class="titleupdate-fields">
-                <div class="titleupdate-field">
-                    Điểm hạnh kiểm tối thiểu
-                    <?= view('components/input') ?>
+                <div class="titleupdate-btns">
+                    <?= view('components/exit_button') ?>
+                    <?= view('components/save_button') ?>
                 </div>
-            </div>
-            <div class="titleupdate-btns">
-                <?= view('components/exit_button') ?>
-                <?= view('components/save_button') ?>
-            </div>
+            </form>
         </div>
     </div>
 </div>

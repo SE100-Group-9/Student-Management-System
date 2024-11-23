@@ -65,6 +65,7 @@ textarea {
   border-radius: 5px;
   font-size: var(--font-size-base);
   font-family: var(--font-family);
+  color: #000;
   border: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
@@ -91,4 +92,26 @@ input[type="text"].success,
 input[type="email"].success,
 input[type="password"].success {
   border-color: var(--success-color);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 1 0 0;
+  align-self: stretch;
+  width: 100%;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  display: flex;
+  height: 40px;
+  padding: 5px;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  color: #000;
 }
