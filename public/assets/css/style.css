@@ -21,12 +21,13 @@
 
 /* Định dạng button */
 button {
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 10px;
   font-size: var(--font-size-base);
   font-family: var(--font-family);
   border: none;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 /* Các variant cho button */

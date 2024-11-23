@@ -6,7 +6,7 @@
     </div>
     <div class="right">
         <div class="info">
-            <img src="<?= base_url('public/image/ava.png') ?>" alt="avatar">
+            <img src="<?= base_url('public/assets/image/ava.png') ?>" alt="avatar">
             <div class="name">
                 Họ và tên
                 <p>Role</p>
