@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+
 <div class="searchbar">
     <input type="text" placeholder="Tìm kiếm" />
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -10,8 +12,13 @@
         display: flex;
         width: 100%;
         height: 40px;
-        padding: 0px 10px;
+        /* Chiều cao cố định */
+        padding: 0 10px;
+        /* Thêm padding cho khung bao quanh */
+        justify-content: space-between;
+        /* Giãn đều các phần tử */
         align-items: center;
+        /* Căn giữa các phần tử theo chiều dọc */
         border-radius: 10px;
         border: 1px solid rgba(0, 60, 60, 0.20);
         background: var(--White, #FFF);
@@ -22,61 +29,56 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
-    }
-
-    .searchbar:focus-within {
-        border-color: #6DCFFB;
+        /* Bao gồm padding và border trong kích thước tổng thể */
     }
 
     .searchbar input {
-        border: none;
-        outline: none;
         flex: 1;
+        /* Chiếm không gian còn lại trong .searchbar */
+        height: 100%;
+        /* Đảm bảo input chiếm toàn bộ chiều cao của .searchbar */
         background: transparent;
+        color: #000;
         font-family: Inter;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+        padding: 0px;
+        margin-top: 10px;
+        /* Padding trong input */
     }
 
     .searchbar svg {
         cursor: pointer;
-    }
-
-    .searchbar ::placeholder {
-        font-family: Inter;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
+        margin-left: 10px;
+        /* Khoảng cách giữa biểu tượng và input */
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const searchButton = document.getElementById('search-icon');
-    const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-icon');
+        const searchInput = document.getElementById('search-input');
 
-    // Sự kiện click vào biểu tượng tìm kiếm
-    searchButton.addEventListener('click', () => {
-        const searchTerm = searchInput.value.trim();
+        // Sự kiện click vào biểu tượng tìm kiếm
+        searchButton.addEventListener('click', () => {
+            const searchTerm = searchInput.value.trim();
 
-        if (searchTerm) {
-            // Thực hiện tìm kiếm (in ra console hoặc gọi API)
-            console.log("Tìm kiếm với từ khóa: " + searchTerm);
-            // Ví dụ: gọi API tìm kiếm hoặc lọc dữ liệu ở đây.
-        } else {
-            alert("Vui lòng nhập từ khóa tìm kiếm");
-        }
+            if (searchTerm) {
+                // Thực hiện tìm kiếm (in ra console hoặc gọi API)
+                console.log("Tìm kiếm với từ khóa: " + searchTerm);
+                // Ví dụ: gọi API tìm kiếm hoặc lọc dữ liệu ở đây.
+            } else {
+                alert("Vui lòng nhập từ khóa tìm kiếm");
+            }
+        });
+
+        // Thêm sự kiện enter để người dùng có thể tìm kiếm bằng phím Enter
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                searchButton.click();
+            }
+        });
     });
-
-    // Thêm sự kiện enter để người dùng có thể tìm kiếm bằng phím Enter
-    searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            searchButton.click();
-        }
-    });
-});
-
 </script>
