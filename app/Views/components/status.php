@@ -6,43 +6,43 @@ if (!function_exists('statusButton')) {
         $classes = '';
         switch ($status) {
             case 'Đang học':
-                $classes = 'third';
+                $classes = 'status-third';
                 break;
             case 'Giáo viên':
-                $classes = 'primary';
+                $classes = 'status-primary';
                 break;
             case 'Đang bảo lưu':
-                $classes = 'primary';
+                $classes = 'status-primary';
                 break;
             case 'Chưa thu':
-                $classes = 'third';
+                $classes = 'status-third';
                 break;
             case 'Đã thu':
-                $classes = 'primary';
+                $classes = 'status-primary';
                 break;
             case 'Đang làm':
-                $classes = 'third';
+                $classes = 'status-third';
                 break;
             case 'Tổ trưởng':
-                $classes = 'third';
+                $classes = 'status-third';
                 break;
             case 'Trả 1 phần':
-                $classes = 'secondary';
+                $classes = 'status-secondary';
                 break;
             case 'Tổ phó':
-                $classes = 'secondary';
+                $classes = 'status-secondary';
                 break;
             case 'Thu ngân':
-                $classes = 'secondary';
+                $classes = 'status-secondary';
                 break;
             case 'Hết hạn bảo lưu':
-                $classes = 'fourth';
+                $classes = 'status-fourth';
                 break;
             case 'Giám thị':
-                $classes = 'fourth';
+                $classes = 'status-fourth';
                 break;
             default:
-                $classes = 'default';
+                $classes = 'status-default';
                 break;
         }
         return '<button class="' . $classes . '">' . $status . '</button>';
@@ -55,47 +55,46 @@ if (isset($status)) {
 }
 ?>
 
-
-
-
 <style>
     button {
         color: var(--label-color);
         background-color: var(--background-color);
         border: none;
         padding: 10px 17px;
-        border-radius: 40px;
         font-size: 16px;
         width: auto;
-        /* Chỉnh lại chiều rộng cho button */
     }
 
-    /* Các trạng thái cụ thể */
-    button.primary {
+    /* Các trạng thái cụ thể với tiền tố status- */
+    button.status-primary {
         --label-color: var(--White, #FFF);
         --background-color: var(--Cerulean, #01B3EF);
+        border-radius: 40px;
     }
 
-    button.secondary {
+    button.status-secondary {
         --label-color: var(--White, #FFF);
         --background-color: var(--Regal-Blue, #01427A);
+        border-radius: 40px;
     }
 
-    button.third {
+    button.status-third {
         --label-color: var(--White, #FFF);
         --background-color: var(--Cerise-Red, #E14177);
+        border-radius: 40px;
     }
 
-    button.fourth {
+    button.status-fourth {
         --label-color: var(--White, #FFF);
         --background-color: var(--Dark-Grey, #6C6C6C);
+        border-radius: 40px;
     }
 
-    button.default {
+    button.status-default {
         --label-color: var(--Black, #000);
         --background-color: var(--Light-Grey, #E0E0E0);
+        border-radius: 40px;
     }
-
 
     /* Thêm khoảng cách giữa các button */
     button:not(:last-of-type) {
@@ -107,6 +106,5 @@ if (isset($status)) {
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
-        /* Cho phép bọc xuống dòng nếu cần */
     }
 </style>

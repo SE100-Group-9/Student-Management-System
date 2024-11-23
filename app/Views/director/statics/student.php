@@ -9,7 +9,9 @@
         <div class="body-right">
             Trung tâm / Thống kê / Học sinh
             <!-- Dropdown -->
-            <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            <div class="dropdown-edit">
+                <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            </div>
             <!-- Cards -->
             <div class="student-cards">
                 <?= view('components/card_increase', [
@@ -136,5 +138,9 @@
         font-weight: 400;
         line-height: 24px;
         /* 120% */
+    }
+
+    .dropdown-edit {
+        width: 180px;
     }
 </style>

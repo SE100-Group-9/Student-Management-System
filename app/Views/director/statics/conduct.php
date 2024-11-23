@@ -8,7 +8,9 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Hạnh kiểm
-            <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            <div class="dropdown-edit">
+                <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            </div>
             <div class="conduct-btns">
                 <button class="conduct-btn" onclick="loadChartData('excellent')">Xuất sắc</button>
                 <button class="conduct-btn" onclick="loadChartData('good')">Giỏi</button>
@@ -174,6 +176,10 @@
         flex: 1 0 0;
         align-self: stretch;
         background: #FFF;
+    }
+
+    .dropdown-edit {
+        width: 180px;
     }
 </style>
 

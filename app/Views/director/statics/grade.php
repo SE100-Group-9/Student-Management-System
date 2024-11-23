@@ -9,7 +9,9 @@
         <div class="body-right">
             Trung tâm / Thống kê / Học lực
             <!-- Dropdown -->
-            <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            <div class="dropdown-edit">
+                <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+            </div>
             <!-- Cards -->
             <div class="grade-cards">
                 <?= view('components/card_increase', [
@@ -141,5 +143,9 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+    }
+
+    .dropdown-edit {
+        width: 180px;
     }
 </style>

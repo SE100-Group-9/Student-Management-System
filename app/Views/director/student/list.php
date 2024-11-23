@@ -19,7 +19,10 @@
                     <?= view('components/upload') ?>
                 </div>
             </div>
-            <?= view('components/tables/directorStudentList') ?>
+            <div class="tabless">
+                <?= view('components/tables/directorStudentList', ['tableId' => 'directorStudentList']) ?>
+            </div>
+            <?= view('components/pagination') ?>
         </div>
     </div>
 </div>
@@ -100,5 +103,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+    .tabless {
+        width: 100%;
+        height: 100%;
     }
 </style>

@@ -14,3 +14,35 @@ in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
 11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
 12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-22 17:44:09 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/tables/directorclasslists.php"
+[Method: GET, Route: director/class/list]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/tables/directorclasslists.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/tables/directorclasslists', [], true)
+ 3 APPPATH\Views\director\class\list.php(17): view('components/tables/directorclasslists')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\director\\class\\list.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('director/class/list', [], true)
+ 7 APPPATH\Controllers\DirectorController.php(72): view('director/class/list')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-11-22 17:44:11 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/tables/directorclasslists.php"
+[Method: GET, Route: director/class/list]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/tables/directorclasslists.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/tables/directorclasslists', [], true)
+ 3 APPPATH\Views\director\class\list.php(17): view('components/tables/directorclasslists')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\director\\class\\list.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('director/class/list', [], true)
+ 7 APPPATH\Controllers\DirectorController.php(72): view('director/class/list')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

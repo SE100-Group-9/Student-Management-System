@@ -1,7 +1,7 @@
 <div class="heading">
     <div class="left">
         <div class="logo">
-            <img src="<?= base_url('public/image/banner_uit.png'); ?>" alt="Banner Image">
+            <img src="<?= base_url('public/assets/image/banner_uit.png'); ?>" alt="Banner Image">
         </div>
     </div>
     <div class="right">
