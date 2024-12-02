@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="titlelist">
     <div class="titlelist-heading">
         <?= view('components/heading') ?>

@@ -7,11 +7,16 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
+            Học tập / Lớp học / Danh sách
             <div class="classlists-tools">
                 <div class="tools">
                     <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
                     <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
+                </div>
+                <div class="tool-add">
+                    <?= view('components/excel_export') ?>
+                    <?= view('components/upload') ?>
                 </div>
             </div>
 
@@ -45,7 +50,6 @@
     .body {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
         flex: 1 0 0;
         align-self: stretch;
         background: #F9FAFB;
@@ -77,8 +81,8 @@
     .classlists-tools {
         display: flex;
         padding: 10px;
+        justify-content: space-between;
         align-items: flex-start;
-        gap: 10px;
         align-self: stretch;
         border-radius: 10px;
         background: #FFF;
@@ -87,6 +91,12 @@
     .tools {
         width: 50%;
         display: flex;
+        gap: 10px;
+    }
+
+    .tool-add {
+        display: flex;
+        align-items: center;
         gap: 10px;
     }
 </style>

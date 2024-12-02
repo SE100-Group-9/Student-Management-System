@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
 <div class="titleupdate">
     <div class="titleupdate-heading">

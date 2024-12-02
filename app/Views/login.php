@@ -2,11 +2,11 @@
     <?= view('components/footer') ?>
     <div class="above">
         <div class="picture">
-            <img src="/sms/public/assets/image/login.jpg" alt=" Sample Image">
+            <img src="assets/image/login.jpg" alt=" Sample Image">
         </div>
         <form action=" " method="post">
             <div class="right">
-                <img src="/sms/public/assets/image/banner_uit.png" alt=" Logo">
+                <img src="assets/image/banner_uit.png" alt=" Logo">
                 <h1>Xin chào quay lại!</h1>
                 <div class="account">
                     Tài khoản
@@ -43,19 +43,19 @@
         Founders
         <div class="founder-pic">
             <div class="founder">
-                <img src="/sms/public/assets/image/MinhKhoi.jpg" alt="Minh Khôi">
+                <img src="assets/image/MinhKhoi.jpg" alt="Minh Khôi">
                 <p>Minh Khôi</p>
             </div>
             <div class="founder">
-                <img src="/sms/public/assets/image/NgocMinh.jpg" alt="Ngọc Minh">
+                <img src="assets/image/NgocMinh.jpg" alt="Ngọc Minh">
                 <p>Ngọc Minh</p>
             </div>
             <div class="founder">
-                <img src="/sms/public/assets/image/PhuongLinhh.jpg" alt="Phương Linh">
+                <img src="assets/image/PhuongLinhh.jpg" alt="Phương Linh">
                 <p>Phương Linh</p>
             </div>
             <div class="founder">
-                <img src="/sms/public/assets/image/KhanhHuy.png" alt="Khánh Huy">
+                <img src="assets/image/KhanhHuy.png" alt="Khánh Huy">
                 <p>Khánh Huy</p>
             </div>
         </div>

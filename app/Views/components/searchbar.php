@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
-
 <div class="searchbar">
     <input type="text" placeholder="Tìm kiếm" />
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -46,6 +44,7 @@
         line-height: normal;
         padding: 0px;
         margin-top: 10px;
+        border: none;
         /* Padding trong input */
     }
 

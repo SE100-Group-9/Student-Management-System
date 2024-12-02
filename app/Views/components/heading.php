@@ -1,12 +1,12 @@
 <div class="heading">
     <div class="left">
         <div class="logo">
-            <img src="<?= base_url('public/assets/image/banner_uit.png'); ?>" alt="Banner Image">
+            <img src="<?= base_url('assets/image/banner_uit.png'); ?>" alt="Banner Image">
         </div>
     </div>
     <div class="right">
         <div class="info">
-            <img src="<?= base_url('public/assets/image/ava.png') ?>" alt="avatar">
+            <img src="<?= base_url('assets/image/ava.png') ?>" alt="avatar">
             <div class="name">
                 Họ và tên
                 <p>Role</p>
