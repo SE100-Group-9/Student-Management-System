@@ -9,7 +9,9 @@
                     <?= view('components/filter'); ?>
                     <?= view('components/searchbar'); ?>
                 </div>
-                <?= view('components/add'); ?>
+                <a href="/sms/public/supervisor/addfault">
+                    <?= view('components/add'); ?>
+                </a>
             </div>
             <?= view('components/tables/supervisorFault', ['tableId' => 'supervisorFault']) ?>
             <?= view('components/pagination'); ?>

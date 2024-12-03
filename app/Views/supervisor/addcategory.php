@@ -1,58 +1,44 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="payment-add">
+<div class="supervisor-add-category">
     <?= view('components/heading'); ?>
     <div class="body">
-        <?= view('components/sidebar_cashier'); ?>
-        <div class="add-container">
-            <h1>Học phí / Quản lý học phí / Danh sách / Tạo phiên thanh toán</h1>
-            <form method="POST" action=" " id="payment-form">
+        <?= view('components/sidebar_supervisor'); ?>
+        <div class="add-category-container">
+            <h1>Hạnh kiểm / Quản lý hạnh kiểm / Danh mục / Thêm lỗi vi phạm</h1>
+            <form method="POST" action=" ">
                 <div class="content">
                     <div class="add-info">
                         <div class="group">
-                            <label for="id">Mã học sinh</label>
+                            <label for="category-name">Tên vi phạm</label>
                             <?= view('components/input', [
-                                'id' => 'id',
-                                'value' => '22520xxx',
-                                'readonly' => true
+                                'id' => 'category-name',
+                                'readonly' => false
                             ]); ?>
                         </div>
                         <div class="group">
-                            <label for="name">Tên học sinh</label>
+                            <label for="minus-point">Điểm trừ</label>
                             <?= view('components/input', [
-                                'id' => 'name',
-                                'value' => 'Nguyễn Văn A',
-                                'readonly' => true
-                            ]); ?>
-                        </div>
-                    </div> 
-                    <div class="add-info">
-                        <div class="group">
-                            <label for="cash">Số tiền đã nhận</label>
-                            <?= view('components/input', [
-                                'id' => 'cash',
-                                'type' => 'text',
-                                'value' => '',
-                                'placeholder' => 'Nhập số tiền',
+                                'id' => 'minus-point',
                                 'readonly' => false
                             ]); ?>
                             <small id="error" style="color: red; display: none;">Vui lòng chỉ nhập số.</small>
                         </div>
                     </div> 
-                </div> 
+                </div>
             </form>
             <div class="add-button">
-                <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
+                <a href="/sms/public/supervisor/category" style="text-decoration: none";>
                     <?= view('components/exit_button') ?>
                 </a>
                 <?= view('components/save_button') ?>
             </div>
-        </div>  
+        </div>
     </div>
 </div>
 
 <style>
-       *,
+         *,
 *::before,
 *::after {
     margin: 0;
@@ -60,11 +46,11 @@
     box-sizing: border-box;
 }
 
-.payment-add {
+.supervisor-add-category {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh; /* Đảm bảo chiều cao luôn bằng chiều cao màn hình */
+    height: 100vh;
 }
 
 .body {
@@ -76,7 +62,7 @@
     overflow: hidden; /* Ngăn xuất hiện thanh cuộn không mong muốn */
 }
 
-.add-container {
+.add-category-container {
     display: flex;
     flex: 1; /* Cho phép giãn toàn bộ không gian */
     flex-direction: column;
@@ -88,7 +74,7 @@
     max-height: 100%;
 }
 
-.add-container h1 {
+.add-category-container h1 {
     color: #000;
     font-family: Inter;
     font-size: 16px;
@@ -142,7 +128,7 @@
 </style>
 
 <script>
-    document.getElementById('cash').addEventListener('input', function (e) {
+    document.getElementById('minus-point').addEventListener('input', function (e) {
         const errorMessage = document.getElementById('error');
         // Kiểm tra nếu người dùng nhập ký tự không hợp lệ
         if (/[^0-9]/.test(this.value)) {

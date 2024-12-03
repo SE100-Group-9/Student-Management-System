@@ -30,4 +30,9 @@ class StudentController extends Controller
     {
         return view('student/conduct');
     }
+
+    public function fee_info()
+    {
+        return view ('student/fee_info');
+    }
 }

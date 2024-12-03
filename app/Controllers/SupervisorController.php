@@ -25,4 +25,19 @@ class SupervisorController extends Controller
     {
         return view('supervisor/addfault');
     }
+
+    public function addcategory()
+    {
+        return view('supervisor/addcategory');
+    }
+
+    public function changepw()
+    {
+        return view('supervisor/changepw');
+    }
+
+    public function updatecategory()
+    {
+        return view('supervisor/updatecategory');
+    }
 }

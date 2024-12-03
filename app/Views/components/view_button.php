@@ -4,10 +4,6 @@
     </button>
 </div>
 
-<div class="info-container" style="display: none;">
-    <p>Thông tin chi tiết về mục này.</p>
-</div>
-
 <style>
     .view-container {
         position: relative;

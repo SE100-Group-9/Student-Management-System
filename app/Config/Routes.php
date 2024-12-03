@@ -31,6 +31,7 @@ $routes->get('student/profile', 'StudentController::profile');
 $routes->get('student/final_result', 'StudentController::final_result');
 $routes->get('student/fee_payment', 'StudentController::fee_payment');
 $routes->get('student/conduct', 'StudentController::conduct');
+$routes->get('student/fee_info', 'StudentController::fee_info');
 
 
 
@@ -49,6 +50,9 @@ $routes->get('supervisor/fault', 'SupervisorController::fault');
 $routes->get('supervisor/profile', 'SupervisorController::profile');
 $routes->get('supervisor/category', 'SupervisorController::category');
 $routes->get('supervisor/addfault', 'SupervisorController::addfault');
+$routes->get('supervisor/addcategory', 'SupervisorController::addcategory');
+$routes->get('supervisor/changepw', 'SupervisorController::changepw');
+$routes->get('supervisor/updatecategory', 'SupervisorController::updatecategory');
 
 
 

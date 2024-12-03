@@ -8,19 +8,22 @@
                 <div class="score-dropdown">
                     <div class="score-dropdown">
                         <h2>Năm học:</h2>
-                        <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+                        <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
                     </div>
-                    <div class="score-dropdown-semester">
+                    <div class="score-dropdown">
                         <h2>Học kì:</h2>
-                        <?= view('components/dropdown_2', ['options' => ['Học kì 1', 'Học kì 2', 'Cả năm']]) ?> 
+                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
                     </div>
-                </div>
+                    <?= view('components/view_button'); ?>
+                </div>             
                 <div class="tool-export">
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <?= view('components/tables/studentSemesterResult', ['tableId' => 'studentSemesterResult']) ?>
-            <?= view('components/pagination'); ?> 
+            <div class="table-container" style="display: none;">
+                <?= view('components/tables/studentSemesterResult', ['tableId' => 'studentSemesterResult']) ?>
+                <?= view('components/pagination'); ?> 
+            </div>
         </div>
     </div>
 </div>
@@ -41,7 +44,6 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    
 }
 
 .body {
@@ -76,40 +78,59 @@
     line-height: normal;
 }
 
-.score-container table {
+.table-container {
     width: 100%;
-    margin-bottom: 20px; /* Khoảng cách giữa table và pagination */
+    margin-bottom: 20px; 
+    transition: all 0.3s ease;
 }
 
 .score-tool {
     display: flex;
-    padding: 10px;
-    align-items: flex-start;
     justify-content: space-between;
     align-self: stretch;
-    border-radius: 10px;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    padding: 10px;
     background: var(--White, #FFF);
+    border-radius: 10px;
 }
 
 .score-dropdown {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    border-radius: 10px;
-}
-
-.score-dropdown, .score-dropdown-semester{
-    display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: nowrap;
 }
 
-.score-dropdown h2, .score-dropdown-semester h2 {
+.score-dropdown h2 {
     color: #000;
     font-family: Inter;
     font-size: 14px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
+    white-space: nowrap; /* Ngăn văn bản bị xuống dòng */
+    margin: 0; /* Xóa khoảng cách không cần thiết */
+}
+
+.score-dropdown select {
+    min-width: 120px;
+    max-width: 200px;
 }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const viewButton = document.querySelector('.button-view');
+        const tableContainer = document.querySelector('.table-container');
+
+        viewButton.addEventListener('click', () => {
+            // Toggle hiển thị bảng
+            if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
+                tableContainer.style.display = 'block'; // Hiển thị bảng
+            } else {
+                tableContainer.style.display = 'none'; // Ẩn bảng
+            }
+        });
+    });
+</script>
+

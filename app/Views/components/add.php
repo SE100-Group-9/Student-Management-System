@@ -20,6 +20,7 @@
         align-items: center;
         height: 40px;
         gap: 10px;
+        cursor: pointer;
     }
 
     .svg {

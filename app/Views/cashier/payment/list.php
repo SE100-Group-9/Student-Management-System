@@ -3,12 +3,12 @@
     <div class="body">
         <?= view('components/sidebar_cashier'); ?>
         <div class="list-container">
-            <p>Học phí / Quản lý học phí / Danh sách</p>
+            <h1>Học phí / Quản lý học phí / Danh sách</h1>
             <div class="list-tool">
                 <div class="list-filter">
-                    <?= view('components/filter'); ?>
                     <?= view('components/searchbar'); ?>
-                    <?= view('components/add'); ?>
+                    <?= view('components/dropdown', ['options' => ['Đã thanh toán', 'Thanh toán 1 phần', 'Chưa thanh toán'], 'dropdown_id' => 'pay-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
                 </div>
                 <div class="list-tool-2">                   
                     <?= view('components/excel_export'); ?>
@@ -63,7 +63,7 @@
     align-self: stretch;
 }
 
-.list-container p {
+.list-container h1 {
     color: #000;
     font-family: Inter;
     font-size: 16px;

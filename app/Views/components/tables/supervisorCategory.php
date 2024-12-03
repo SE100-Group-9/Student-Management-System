@@ -15,7 +15,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -26,7 +28,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -37,7 +41,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -48,7 +54,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -59,7 +67,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -70,7 +80,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -81,7 +93,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -92,7 +106,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -103,7 +119,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -114,7 +132,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
@@ -125,7 +145,9 @@
                 <td>3</td>
                 <td colspan="2">
                     <div class="button-container">
-                        <?= view('components/edit_button'); ?>
+                        <a href="/sms/public/supervisor/updatecategory">
+                            <?= view('components/edit_button'); ?>
+                        </a>
                         <?= view('components/delete_button'); ?>
                     </div>
                 </td>
