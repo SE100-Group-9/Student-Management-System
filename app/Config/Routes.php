@@ -24,6 +24,8 @@ $routes->get('director/class/add', 'DirectorController::classAdd');
 $routes->get('director/class/update', 'DirectorController::classUpdate');
 $routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
 $routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
+$routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
+$routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
 
 // student
 $routes->get('student/score', 'StudentController::score');

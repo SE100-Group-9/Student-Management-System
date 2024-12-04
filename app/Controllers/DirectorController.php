@@ -90,4 +90,14 @@ class DirectorController extends Controller
     {
         return view('director/class/arrange/teacher');
     }
+
+    public function employeeTeacherList ()
+    {
+        return view('director/employee/teacher/list');
+    }
+
+    public function employeeTeacherAdd()
+    {
+        return view('director/employee/teacher/add');
+    }
 }
