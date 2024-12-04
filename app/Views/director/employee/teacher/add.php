@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
 <div class="teacheradd">
     <div class="teacheradd-heading">
@@ -82,13 +82,13 @@
                         <div class="teacheradd-special">
                             Chức vụ
                             <?= view('components/dropdown', [
-                                'option' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
+                                'options' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
                                 'dropdown_id' => 'role-dropdown',
                                 'name' => 'teacher_role',
                                 'selected_text' => 'Chức vụ',
                             ]) ?>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
                 <div class="teacheradd-btns">
                     <?= view('components/exit_button') ?>

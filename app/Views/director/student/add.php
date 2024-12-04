@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
 <div class="studentadd">
     <div class="studentadd-heading">
@@ -90,7 +90,6 @@
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
                                 'name' => 'student_birthday',
-                                'value' => '2024-01-01'
                             ]) ?>
                         </div>
 
@@ -103,7 +102,7 @@
                                 'type' => 'text',
                                 'name' => 'student_nation',
                                 'required' => true,
-                                'placeholder' => 'Kinh'
+                                'placeholder' => 'Hoa'
                             ]) ?>
                         </div>
                         <div class="studentadd-once">

@@ -2,12 +2,13 @@
 
 <div class="input">
     <input
-        type="text"
+        type="<?= isset($type) ? $type : 'text' ?>"
         id="<?= isset($id) ? $id : '' ?>"
         placeholder="<?= isset($placeholder) ? $placeholder : 'Nhập nội dung...' ?>"
-        value="<?= isset($value) ? $value : '' ?>"
+        <?= isset($value) && $value !== '' ? 'value="' . $value . '"' : '' ?>
         <?= isset($readonly) && $readonly ? 'readonly="readonly"' : '' ?> />
 </div>
+
 
 <style>
     .input {

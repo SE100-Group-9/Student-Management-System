@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="statics-conduct">
     <div class="conduct-heading">
         <?= view('components/heading') ?>

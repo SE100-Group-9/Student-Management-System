@@ -90,7 +90,6 @@
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
                                 'name' => 'student_birthday',
-                                'value' => '2024-01-01'
                             ]) ?>
                         </div>
 
@@ -133,7 +132,7 @@
                             Tình trạng hiện tại
                             <?= view('components/dropdown', [
                                 'options' => ['Đang học', 'Đang bảo lưu', 'Hết hạn bảo lưu'],
-                                'dropdown_id' => 'class-dropdown',
+                                'dropdown_id' => 'status-dropdown',
                                 'name' => 'student_status',
                                 'selected_text' => 'Tình trạng hiện tại',
                             ]) ?>

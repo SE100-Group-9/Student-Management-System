@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="statics-grade">
     <div class="grade-heading">
         <?= view('components/heading') ?>
