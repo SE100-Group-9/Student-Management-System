@@ -64,7 +64,7 @@
             </svg>
         </div>
         <div class="student-deeper" id="student-deeper">
-            <div class="student-list">
+            <div class="student-list" onclick="linkToStudentList()" >
                 Danh sách học sinh
             </div>
             <div class="student-payment">
@@ -351,6 +351,15 @@
 </style>
 
 <script>
+    const baseURL = '<?= base_url() ?>';
+    function linkToStudentList() {
+        window.location.href = `${baseURL}director/student/list`;
+    }
+
+
+
+
+
     function toggleDeeperClasslist() {
         const deeperElement = document.getElementById('statics-deeper');
         const arrowIcon = document.getElementById('arrow-icon-2');

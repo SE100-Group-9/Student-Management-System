@@ -3,19 +3,22 @@ $options = $options ?? ['Option 1', 'Option 2', 'Option 3']; // Các tùy chọn
 $dropdown_id = $dropdown_id ?? 'default-dropdown'; // Đảm bảo có ID
 $name = $name ?? 'dropdown'; // Giá trị name mặc định cho form
 $selected_text = $selected_text ?? 'Select an option'; // Text mặc định khi dropdown chưa chọn
+$value = $value ?? '';
 ?>
 
 <div class="dropdown" data-dropdown-id="<?= htmlspecialchars($dropdown_id) ?>">
     <div class="dropdown-inner">
         <input type="hidden" name="<?= htmlspecialchars($name) ?>" value="" id="<?= htmlspecialchars($dropdown_id) ?>">
-        <span class="selected-text"><?= htmlspecialchars($selected_text) ?></span>
+        <span class="selected-text"><?= htmlspecialchars($value ?: $selected_text) ?></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
             <path d="M7 8.27271L4 11L1 8.27271" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M1 3.72727L4 1L7 3.72727" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="dropdown-option">
             <?php foreach ($options as $option): ?>
-                <div class="option" data-value="<?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?>">
+                <div 
+                    class="option <?= $option === $value ? 'selected' : '' ?>"
+                    data-value="<?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?>">
                     <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
                 </div>
             <?php endforeach; ?>
@@ -103,7 +106,6 @@ $selected_text = $selected_text ?? 'Select an option'; // Text mặc định khi
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Biến trạng thái để lưu dropdown đang mở
         let activeDropdown = null;
 
         // Đóng tất cả các dropdown
@@ -117,7 +119,26 @@ $selected_text = $selected_text ?? 'Select an option'; // Text mặc định khi
             }
         }
 
-        // Hàm xử lý khi click vào một dropdown
+        // Xử lý khi nhấn vào một tùy chọn
+        function handleOptionClick(option, dropdown) {
+            const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+            const selectedText = dropdown.querySelector('.selected-text');
+            const dropdownOptions = dropdown.querySelectorAll('.option');
+
+            // Cập nhật giá trị
+            const value = option.getAttribute('data-value');
+            hiddenInput.value = value;
+            selectedText.textContent = value;
+
+            // Đánh dấu tùy chọn được chọn
+            dropdownOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+
+            // Đóng dropdown
+            closeAllDropdowns();
+        }
+
+        // Xử lý khi nhấn vào dropdown
         function handleDropdownClick(dropdown) {
             const dropdownOptions = dropdown.querySelector('.dropdown-option');
             if (!dropdownOptions) return;
@@ -134,12 +155,23 @@ $selected_text = $selected_text ?? 'Select an option'; // Text mặc định khi
             }
         }
 
-        // Lắng nghe sự kiện click trên mỗi dropdown
+        // Thêm sự kiện cho dropdown và các tùy chọn
         document.querySelectorAll('.dropdown').forEach(dropdown => {
             const dropdownInner = dropdown.querySelector('.dropdown-inner');
+            const options = dropdown.querySelectorAll('.option');
+
+            // Xử lý sự kiện click vào dropdown
             dropdownInner.addEventListener('click', function(event) {
                 event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
                 handleDropdownClick(dropdown);
+            });
+
+            // Xử lý sự kiện click vào tùy chọn
+            options.forEach(option => {
+                option.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
+                    handleOptionClick(option, dropdown);
+                });
             });
         });
 

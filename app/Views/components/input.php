@@ -2,10 +2,12 @@
 
 <div class="input">
     <input
-        type="<?= isset($type) ? $type : 'text' ?>"
+        type="text"
+        name="<?= isset($name) ? $name : '' ?>"
         id="<?= isset($id) ? $id : '' ?>"
         placeholder="<?= isset($placeholder) ? $placeholder : 'Nhập nội dung...' ?>"
-        <?= isset($value) && $value !== '' ? 'value="' . $value . '"' : '' ?>
+        value="<?= isset($value) ? $value : '' ?>"
+        <?= isset($required) && $required ? 'required="required"' : '' ?>
         <?= isset($readonly) && $readonly ? 'readonly="readonly"' : '' ?> />
 </div>
 
