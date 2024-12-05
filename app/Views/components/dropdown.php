@@ -8,7 +8,7 @@ $value = $value ?? '';
 
 <div class="dropdown" data-dropdown-id="<?= htmlspecialchars($dropdown_id) ?>">
     <div class="dropdown-inner">
-        <input type="hidden" name="<?= htmlspecialchars($name) ?>" value="" id="<?= htmlspecialchars($dropdown_id) ?>">
+        <input type="hidden" name="<?= htmlspecialchars($name) ?>" value="<?= htmlspecialchars($value) ?>" id="<?= htmlspecialchars($dropdown_id) ?>">
         <span class="selected-text"><?= htmlspecialchars($value ?: $selected_text) ?></span>
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="12" viewBox="0 0 8 12" fill="none">
             <path d="M7 8.27271L4 11L1 8.27271" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -105,33 +105,28 @@ $value = $value ?? '';
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let activeDropdown = null;
-
+    document.addEventListener("DOMContentLoaded", function () {
         // Đóng tất cả các dropdown
         function closeAllDropdowns() {
-            if (activeDropdown) {
-                const dropdownOptions = activeDropdown.querySelector('.dropdown-option');
-                if (dropdownOptions) {
-                    dropdownOptions.classList.remove('show');
-                }
-                activeDropdown = null;
-            }
+            document.querySelectorAll('.dropdown-option.show').forEach((dropdownOptions) => {
+                dropdownOptions.classList.remove('show');
+            });
         }
 
         // Xử lý khi nhấn vào một tùy chọn
         function handleOptionClick(option, dropdown) {
             const hiddenInput = dropdown.querySelector('input[type="hidden"]');
             const selectedText = dropdown.querySelector('.selected-text');
-            const dropdownOptions = dropdown.querySelectorAll('.option');
 
-            // Cập nhật giá trị
+            // Cập nhật giá trị của dropdown
             const value = option.getAttribute('data-value');
             hiddenInput.value = value;
             selectedText.textContent = value;
 
             // Đánh dấu tùy chọn được chọn
-            dropdownOptions.forEach(opt => opt.classList.remove('selected'));
+            dropdown.querySelectorAll('.option').forEach((opt) => {
+                opt.classList.remove('selected');
+            });
             option.classList.add('selected');
 
             // Đóng dropdown
@@ -141,43 +136,39 @@ $value = $value ?? '';
         // Xử lý khi nhấn vào dropdown
         function handleDropdownClick(dropdown) {
             const dropdownOptions = dropdown.querySelector('.dropdown-option');
-            if (!dropdownOptions) return;
-
-            // Nếu dropdown này đang mở, đóng nó
-            if (activeDropdown === dropdown) {
+            if (dropdownOptions.classList.contains('show')) {
                 dropdownOptions.classList.remove('show');
-                activeDropdown = null;
             } else {
-                // Đóng các dropdown khác trước khi mở dropdown này
                 closeAllDropdowns();
                 dropdownOptions.classList.add('show');
-                activeDropdown = dropdown;
             }
         }
 
         // Thêm sự kiện cho dropdown và các tùy chọn
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
+        document.querySelectorAll('.dropdown').forEach((dropdown) => {
             const dropdownInner = dropdown.querySelector('.dropdown-inner');
             const options = dropdown.querySelectorAll('.option');
 
-            // Xử lý sự kiện click vào dropdown
-            dropdownInner.addEventListener('click', function(event) {
-                event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
+            // Sự kiện click vào dropdown
+            dropdownInner.addEventListener('click', function (event) {
+                event.stopPropagation();
                 handleDropdownClick(dropdown);
             });
 
-            // Xử lý sự kiện click vào tùy chọn
-            options.forEach(option => {
-                option.addEventListener('click', function(event) {
-                    event.stopPropagation(); // Ngăn không cho sự kiện lan ra ngoài
+            // Sự kiện click vào tùy chọn
+            options.forEach((option) => {
+                option.addEventListener('click', function (event) {
+                    event.stopPropagation();
                     handleOptionClick(option, dropdown);
                 });
             });
         });
 
         // Đóng tất cả dropdown khi click ra ngoài
-        document.addEventListener('click', function() {
+        document.addEventListener('click', function () {
             closeAllDropdowns();
         });
     });
+
+
 </script>
