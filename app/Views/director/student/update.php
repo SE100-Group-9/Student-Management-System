@@ -11,16 +11,19 @@
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/student/updateStudent">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="studentupdate-fields">
+                    <input type="hidden" name="MaHS" value="<?= $student['MaHS'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $student['MaTK'] ?? '' ?>">
                     <div class="studentupdate-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_account',
                             'required' => true,
-                            'placeholder' => 'NgocMinh'
+                            'placeholder' => 'Tên tài khoản',
+                            'value' => $student['TenTK'] ?? ''
                         ]) ?>
                     </div>
                     <div class="studentupdate-field">
@@ -29,7 +32,8 @@
                             'type' => 'text',
                             'name' => 'student_password',
                             'required' => true,
-                            'placeholder' => 'Minh'
+                            'placeholder' => 'Mật khẩu',
+                            'value' => $student['MatKhau'] ?? ''
                         ]) ?>
                     </div>
                 </div>
@@ -41,7 +45,8 @@
                             'type' => 'text',
                             'name' => 'student_name',
                             'required' => true,
-                            'placeholder' => 'Đặng Thị Ngọc Minh'
+                            'placeholder' => 'Họ tên học sinh',
+                            'value' => $student['HoTen'] ?? ''
                         ]) ?>
                     </div>
                     <div class="studentupdate-field">
@@ -50,7 +55,8 @@
                             'type' => 'email',
                             'name' => 'student_email',
                             'required' => true,
-                            'placeholder' => 'minh123@gmail.com'
+                            'placeholder' => 'Email',
+                            'value' => $student['Email'] ?? ''
                         ]) ?>
                     </div>
                 </div>
@@ -61,7 +67,8 @@
                             'type' => 'text',
                             'name' => 'student_phone',
                             'required' => true,
-                            'placeholder' => '0123456789'
+                            'placeholder' => 'Số điện thoại',
+                            'value' => $student['SoDienThoai'] ?? ''
                         ]) ?>
                     </div>
                     <div class="studentupdate-field">
@@ -70,7 +77,8 @@
                             'type' => 'text',
                             'name' => 'student_address',
                             'required' => true,
-                            'placeholder' => '123 Thủ Đức'
+                            'placeholder' => 'Địa chỉ',
+                            'value' => $student['DiaChi'] ?? ''
                         ]) ?>
                     </div>
                 </div>
@@ -79,10 +87,11 @@
                         <div class="studentupdate-special">
                             Giới tính
                             <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'student_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => $student['GioiTinh'] ?? ''
                             ]) ?>
                         </div>
                         <div class="studentupdate-special">
@@ -90,6 +99,7 @@
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
                                 'name' => 'student_birthday',
+                                'value' => $student['NgaySinh'] ?? ''
                             ]) ?>
                         </div>
 
@@ -102,7 +112,8 @@
                                 'type' => 'text',
                                 'name' => 'student_nation',
                                 'required' => true,
-                                'placeholder' => 'Kinh'
+                                'placeholder' => 'Dân tộc',
+                                'value' => $student['DanToc'] ?? ''
                             ]) ?>
                         </div>
                         <div class="studentupdate-once">
@@ -111,7 +122,8 @@
                                 'type' => 'text',
                                 'name' => 'student_country',
                                 'required' => true,
-                                'placeholder' => 'TPHCM'
+                                'placeholder' => 'Nơi sinh',
+                                'value' => $student['NoiSinh'] ?? ''
                             ]) ?>
                         </div>
                     </div>
@@ -131,10 +143,11 @@
                         <div class="studentupdate-special">
                             Tình trạng hiện tại
                             <?= view('components/dropdown', [
-                                'options' => ['Đang học', 'Đang bảo lưu', 'Hết hạn bảo lưu'],
-                                'dropdown_id' => 'status-dropdown',
+                                'options' => ['Đang học', 'Đã nghỉ học', 'Đã tốt nghiệp'],
+                                'dropdown_id' => 'class-dropdown',
                                 'name' => 'student_status',
                                 'selected_text' => 'Tình trạng hiện tại',
+                                'value' => $student['TinhTrang'] ?? ''
                             ]) ?>
                         </div>
                     </div>

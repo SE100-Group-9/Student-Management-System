@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorStudentList', ['tableId' => 'directorStudentList']) ?>
+                <?= view('components/tables/directorStudentList', ['studentlist' => $studentlist]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>

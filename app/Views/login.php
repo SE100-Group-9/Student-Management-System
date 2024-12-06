@@ -4,9 +4,9 @@
         <div class="picture">
             <img src="assets/image/login.jpg" alt=" Sample Image">
         </div>
-        <form action=" " method="post">
+        <form action="login/authenticate" method="POST">
             <div class="right">
-                <img src="assets/image/banner_uit.png" alt=" Logo">
+                <img src="/sms/public/assets/image/banner_uit.png" alt=" Logo">
                 <h1>Xin chào quay lại!</h1>
                 <div class="account">
                     Tài khoản
@@ -16,6 +16,9 @@
                     Mật khẩu
                     <?= view('components/password_input') ?>
                 </div>
+                <?php if (session()->getFlashdata('error')): ?>
+                    <div class="error"><?= session()->getFlashdata('error') ?></div>
+                <?php endif; ?>
                 <p>Quên mật khẩu?</p>
                 <div class="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">

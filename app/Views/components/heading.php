@@ -8,8 +8,8 @@
         <div class="info">
             <img src="<?= base_url('assets/image/ava.png') ?>" alt="avatar">
             <div class="name">
-                Họ và tên
-                <p>Role</p>
+                <?= session()->get('HoTen') ?>
+                <p><?= session()->get('TenVT') ?></p>
             </div>
             <svg id="dropdown-toggle" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M19 9L12 16L5 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
