@@ -9,14 +9,42 @@
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
             <div class="studentlist-tool">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm học sinh']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/student/list">
+                    <div class="tool-search">
+                            <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+
+                            <?= view('components/dropdown', [
+                                'options' => $yearList ?? [], // Thay bằng danh sách năm học từ controller
+                                'dropdown_id' => 'year-dropdown',
+                                'name' => 'year',
+                                'selected_text' => 'Chọn năm học',
+                                'value' => $selectedYear ?? ''
+                            ]) ?>
+
+                            <?= view('components/dropdown', [
+                                'options' => $classList ?? [], // Thay bằng danh sách lớp từ controller
+                                'dropdown_id' => 'class-dropdown',
+                                'name' => 'class',
+                                'selected_text' => 'Chọn lớp',
+                                'value' => $selectedClass ?? ''
+                            ]) ?>
+                            <?= view('components/dropdown', [
+                                'options' => [''], // Thay bằ'',
+                                'dropdown_id' => '',
+                                'name' => '',
+                                'selected_text' => '',
+                                'value' => '',
+                            ]) ?>
+                            <?= view('components/view_button') ?>
+                    </div>
+                </form>
                 <div class="tool-add">
+                    <a style="text-decoration: none" href="/sms/public/director/student/add">
+                        <?= view('components/add', ['button_text' => 'Thêm học sinh']) ?>
+                    </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
+                    
                 </div>
             </div>
             <div class="tabless">
@@ -109,4 +137,5 @@
         width: 100%;
         height: 100%;
     }
+    
 </style>

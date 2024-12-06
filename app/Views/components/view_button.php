@@ -1,5 +1,5 @@
 <div class="view-container">
-    <button class="button-view">
+    <button type="submit" class="button-view">
         <p>Xem<p>
     </button>
 </div>

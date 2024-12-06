@@ -11,7 +11,7 @@
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/student/add">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="studentadd-fields">
                     <div class="studentadd-field">
@@ -19,8 +19,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_account',
-                            'required' => true,
-                            'placeholder' => 'NgocMinh'
+                            'value' => $newMaHS ?? '', // Load mã HS tự động
+                            'readonly' => true, // Chỉ đọc để không cho sửa
+                            'placeholder' => 'Tên tài khoản'
                         ]) ?>
                     </div>
                     <div class="studentadd-field">
@@ -28,8 +29,10 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_password',
+                            'readonly' => false,
+                            'value' => '',
                             'required' => true,
-                            'placeholder' => 'Minh'
+                            'placeholder' => 'Mật khẩu'
                         ]) ?>
                     </div>
                 </div>
@@ -41,7 +44,7 @@
                             'type' => 'text',
                             'name' => 'student_name',
                             'required' => true,
-                            'placeholder' => 'Đặng Thị Ngọc Minh'
+                            'placeholder' => 'Họ tên học sinh'
                         ]) ?>
                     </div>
                     <div class="studentadd-field">
@@ -50,7 +53,7 @@
                             'type' => 'email',
                             'name' => 'student_email',
                             'required' => true,
-                            'placeholder' => 'minh123@gmail.com'
+                            'placeholder' => 'Email'
                         ]) ?>
                     </div>
                 </div>
@@ -61,7 +64,7 @@
                             'type' => 'text',
                             'name' => 'student_phone',
                             'required' => true,
-                            'placeholder' => '0123456789'
+                            'placeholder' => 'Số điện thoại'
                         ]) ?>
                     </div>
                     <div class="studentadd-field">
@@ -70,7 +73,7 @@
                             'type' => 'text',
                             'name' => 'student_address',
                             'required' => true,
-                            'placeholder' => '123 Thủ Đức'
+                            'placeholder' => 'Địa chỉ'
                         ]) ?>
                     </div>
                 </div>
@@ -79,7 +82,7 @@
                         <div class="studentadd-special">
                             Giới tính
                             <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'student_gender',
                                 'selected_text' => 'Giới tính',
@@ -102,7 +105,7 @@
                                 'type' => 'text',
                                 'name' => 'student_nation',
                                 'required' => true,
-                                'placeholder' => 'Hoa'
+                                'placeholder' => 'Dân tộc'
                             ]) ?>
                         </div>
                         <div class="studentadd-once">
@@ -111,26 +114,15 @@
                                 'type' => 'text',
                                 'name' => 'student_country',
                                 'required' => true,
-                                'placeholder' => 'TPHCM'
+                                'placeholder' => 'Nơi sinh'
                             ]) ?>
                         </div>
                     </div>
                 </div>
-                <h2>Tình trạng học</h2>
-                <div class="studentadd-fields">
-                    <div class="studentadd-specials">
-                        <div class="studentadd-special">
-                            Lớp học
-                            <?= view('components/dropdown', [
-                                'options' => ['11A1', '11A2', '11A3'],
-                                'dropdown_id' => 'class-dropdown',
-                                'name' => 'student_class',
-                                'selected_text' => 'Lớp học',
-                            ]) ?> </div>
-                    </div>
-                </div>
                 <div class="studentadd-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/student/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>

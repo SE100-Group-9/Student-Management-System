@@ -23,7 +23,8 @@
                             'name' => 'student_account',
                             'required' => true,
                             'placeholder' => 'Tên tài khoản',
-                            'value' => $student['TenTK'] ?? ''
+                            'value' => $student['TenTK'] ?? '',
+                            'readonly' => true
                         ]) ?>
                     </div>
                     <div class="studentupdate-field">
@@ -33,7 +34,8 @@
                             'name' => 'student_password',
                             'required' => true,
                             'placeholder' => 'Mật khẩu',
-                            'value' => $student['MatKhau'] ?? ''
+                            'value' => $student['MatKhau'] ?? '',
+                            'readonly' => false
                         ]) ?>
                     </div>
                 </div>
@@ -103,7 +105,6 @@
                             ]) ?>
                         </div>
 
-
                     </div>
                     <div class="studentupdate-onces">
                         <div class="studentupdate-once">
@@ -149,11 +150,14 @@
                                 'selected_text' => 'Tình trạng hiện tại',
                                 'value' => $student['TinhTrang'] ?? ''
                             ]) ?>
+                            
                         </div>
                     </div>
                 </div>
                 <div class="studentupdate-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/student/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>
