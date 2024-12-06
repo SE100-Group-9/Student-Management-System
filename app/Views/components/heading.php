@@ -31,7 +31,7 @@
         </svg>
         Đổi mật khẩu
     </div>
-    <div class="personal">
+    <div class="personal" onclick="logout()">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M12 15L15 12M15 12L12 9M15 12L4 12M4 17C4 17.9319 4 18.3978 4.15224 18.7654C4.35523 19.2554 4.74481 19.6448 5.23486 19.8478C5.6024 20 6.06812 20 7 20H16.8C17.9201 20 18.48 20 18.9078 19.782C19.2841 19.5902 19.5905 19.2844 19.7822 18.908C20.0002 18.4802 20 17.9201 20 16.8V7.19995C20 6.07985 20.0002 5.51986 19.7822 5.09204C19.5905 4.71572 19.2841 4.40973 18.9078 4.21799C18.48 4 17.9201 4 16.8 4H7C6.06812 4 5.60241 4 5.23486 4.15224C4.74481 4.35523 4.35523 4.74456 4.15224 5.23462C4 5.60216 4 6.0681 4 6.99999" stroke="#01B3EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
@@ -178,6 +178,33 @@
 </style>
 
 <script>
+
+    function logout() {
+        // Gửi yêu cầu đến URL logout
+        fetch('<?= base_url('logout') ?>', {
+            method: 'GET',
+        })
+        .then(response => {
+            if (response.ok) {
+                // Chuyển hướng về trang đăng nhập
+                window.location.href = '<?= base_url('/') ?>';
+            } else {
+                alert('Đăng xuất thất bại, vui lòng thử lại.');
+            }
+        })
+        .catch(error => {
+            console.error('Error during logout:', error);
+        });
+    }
+
+
+
+
+
+
+
+
+
     document.getElementById('dropdown-toggle').addEventListener('click', function() {
         var dropdown = document.getElementById('dropdown-heading');
         dropdown.classList.toggle('show'); // Toggle class 'show' thay vì dùng display trực tiếp

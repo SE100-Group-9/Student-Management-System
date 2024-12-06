@@ -26,7 +26,7 @@
                     <td><?= $student['GioiTinh'] ?></td>
                     <td><?= $student['Email'] ?></td>
                     <td><?= $student['SoDienThoai'] ?></td>
-                    <td><?= $student['MaLop'] ?></td>
+                    <td><?= $student['TenLop'] ?></td>
                     <td><?= $student['DanToc'] ?></td>
                     <td><?= date('d/m/Y', strtotime($student['NgaySinh'])) ?></td>
                     <td><?= $student['NoiSinh'] ?></td>
