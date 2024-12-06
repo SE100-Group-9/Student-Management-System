@@ -23,7 +23,8 @@
                             'name' => 'student_account',
                             'required' => true,
                             'placeholder' => 'Tên tài khoản',
-                            'value' => $student['TenTK'] ?? ''
+                            'value' => $student['TenTK'] ?? '',
+                            'readonly' => true
                         ]) ?>
                     </div>
                     <div class="studentupdate-field">
