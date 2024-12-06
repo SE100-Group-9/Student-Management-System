@@ -10,12 +10,16 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('director/statics/conduct', 'DirectorController::staticsConduct');
 $routes->get('director/statics/student', 'DirectorController::staticsStudent');
 $routes->get('director/statics/grade', 'DirectorController::staticsGrade');
-$routes->get('director/student/add', 'DirectorController::studentAdd');
 
+
+// Director - Trang Danh sách học sinh
+$routes->get('director/student/add', 'DirectorController::studentAdd');
+$routes->post('director/student/add', 'DirectorController::addStudent');
 $routes->get('director/student/update/(:segment)', 'DirectorController::studentUpdate/$1');
 $routes->post('/director/student/updateStudent', 'DirectorController::updateStudent');
-
 $routes->get('director/student/list', 'DirectorController::studentList');
+
+
 $routes->get('director/student/record', 'DirectorController::studentRecord');
 $routes->get('director/student/perserved', 'DirectorController::studentPerserved');
 $routes->get('director/student/payment', 'DirectorController::studentPayment');
