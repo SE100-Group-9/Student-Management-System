@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
-
 <div class="student-lists">
     <div class="lists-heading">
         <?= view('components/heading') ?>
