@@ -233,6 +233,11 @@ class DirectorController extends Controller
         return view('director/class/update');
     }
 
+    public function classArrangeList()
+    {
+        return view('director/class/arrange/list');
+    }
+
     public function classArrangeStudent()
     {
         return view('director/class/arrange/student');
@@ -251,5 +256,45 @@ class DirectorController extends Controller
     public function employeeTeacherAdd()
     {
         return view('director/employee/teacher/add');
+    }
+
+    public function employeeCashierList()
+    {
+        return view('director/employee/cashier/list');
+    }
+
+    public function employeeCashierAdd()
+    {
+        return view('director/employee/cashier/add');
+    }
+
+    public function employeeCashierUpdate()
+    {
+        return view('director/employee/cashier/update');
+    }
+
+    public function employeeSupervisorList()
+    {
+        return view('director/employee/supervisor/list');
+    }
+
+    public function employeeSupervisorAdd()
+    {
+        return view('director/employee/supervisor/add');
+    }
+
+    public function employeeSupervisorUpdate()
+    {
+        return view('director/employee/supervisor/update');
+    }
+    
+    public function profile()
+    {
+        return view('director/profile');
+    }
+
+    public function changepw()
+    {
+        return view('director/changepw');
     }
 }
