@@ -16,7 +16,7 @@
                     <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
                 </div>
             </div>
-            <?= view('components/tables/directorTitleList') ?>
+            <?= view('components/tables/directorTitleList', ['titleList' => $titleList]) ?>
         </div>
     </div>
 </div>
@@ -91,4 +91,5 @@
         display: flex;
         gap: 10px;
     }
+
 </style>

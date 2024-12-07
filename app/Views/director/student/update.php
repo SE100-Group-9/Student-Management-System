@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
 
 <div class="studentupdate">
     <div class="studentupdate-heading">
@@ -135,22 +135,31 @@
                         <div class="studentupdate-special">
                             Lớp học
                             <?= view('components/dropdown', [
-                                'options' => ['11A1', '11A2', '11A3'],
+                                'options' => [''],
                                 'dropdown_id' => 'class-dropdown',
                                 'name' => 'student_class',
                                 'selected_text' => 'Lớp học',
                             ]) ?>
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'student_class',
+                                'required' => true,
+                                'readonly' => true,
+                                'placeholder' => 'Nơi sinh',
+                                'value' => $student['TenLop'] ?? 'Chưa xếp lớp'
+                            ]) ?>
                         </div>
+                        
                         <div class="studentupdate-special">
                             Tình trạng hiện tại
                             <?= view('components/dropdown', [
-                                'options' => ['Đang học', 'Đã nghỉ học', 'Đã tốt nghiệp'],
+                                'options' => ['Đang học', 'Nghỉ học'],
                                 'dropdown_id' => 'class-dropdown',
                                 'name' => 'student_status',
                                 'selected_text' => 'Tình trạng hiện tại',
                                 'value' => $student['TinhTrang'] ?? ''
                             ]) ?>
-
+                            
                         </div>
                     </div>
                 </div>

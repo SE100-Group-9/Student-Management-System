@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 <div id="sidebar-director" class="sidebar-director">
     <div class="general">
         <div class="general-text">
@@ -18,7 +19,9 @@
         </div>
         <div id="news-deeper" class="news-deeper">
             <div class="news-overall">
+                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/title/list">
                 Danh hiệu
+                </a>
             </div>
         </div>
     </div>
@@ -64,8 +67,10 @@
             </svg>
         </div>
         <div class="student-deeper" id="student-deeper">
-            <div class="student-list" onclick="linkToStudentList()" >
-                Danh sách học sinh
+            <div class="student-list">
+                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/list">
+                    Danh sách học sinh
+                </a>
             </div>
             <div class="student-payment">
                 Thông tin thanh toán
@@ -129,6 +134,7 @@
 </div>
 
 <style>
+
     .sidebar-director {
         width: 250px;
         height: calc(100%);
@@ -351,14 +357,6 @@
 </style>
 
 <script>
-    const baseURL = '<?= base_url() ?>';
-    function linkToStudentList() {
-        window.location.href = `${baseURL}director/student/list`;
-    }
-
-
-
-
 
     function toggleDeeperClasslist() {
         const deeperElement = document.getElementById('statics-deeper');
