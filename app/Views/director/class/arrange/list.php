@@ -9,10 +9,17 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp / 11A1
+            Học tập / Lớp học / Xếp lớp
             <div class="classlists-tools">
                 <div class="tools">
-                    <?= view('components/add', data: ['button_text' => 'Thêm học sinh']) ?>
+                    <?= view('components/filter') ?>
+                    <?= view('components/dropdown', [
+                        'options' => ['2023 - 2024'],
+                        'dropdown_id' => 'semester-dropdown',
+                        'name' => 'dropdown',
+                        'selected_text' => 'Chọn năm học',
+                        'value' => '',
+                    ]) ?>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
@@ -20,7 +27,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorClassArrangeStudent') ?>
+                <?= view('components/tables/directorClassArrangeList') ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
