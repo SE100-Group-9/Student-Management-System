@@ -256,6 +256,21 @@ class DirectorController extends Controller
         return view('director/employee/teacher/add');
     }
 
+    public function employeeCashierList()
+    {
+        return view('director/employee/cashier/list');
+    }
+
+    public function employeeCashierAdd()
+    {
+        return view('director/employee/cashier/add');
+    }
+
+    public function employeeCashierUpdate()
+    {
+        return view('director/employee/cashier/update');
+    }
+
     public function employeeSupervisorList()
     {
         return view('director/employee/supervisor/list');

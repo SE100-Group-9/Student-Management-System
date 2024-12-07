@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="supervisoradd">
-    <div class="supervisoradd-heading">
+<div class="cashieradd">
+    <div class="cashieradd-heading">
         <?= view('components/heading') ?>
     </div>
     <div class="body">
@@ -9,12 +9,12 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Quản lý / Quản lý nhân viên / Giám thị
+            Quản lý / Quản lý nhân viên / Thu ngân
             <h1>Tạo hồ sơ:</h1>
             <form method="POST" action=" ">
                 <h2>Thông tin tài khoản:</h2>
-                <div class="supervisoradd-fields">
-                    <div class="supervisoradd-field">
+                <div class="cashieradd-fields">
+                    <div class="cashieradd-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
@@ -22,7 +22,7 @@
                             'required' => true,
                         ]) ?>
                     </div>
-                    <div class="supervisoradd-field">
+                    <div class="cashieradd-field">
                         Mật khẩu
                         <?= view('components/input', [
                             'type' => 'text',
@@ -32,8 +32,8 @@
                     </div>
                 </div>
                 <h2>Thông tin cá nhân:</h2>
-                <div class="supervisoradd-fields">
-                    <div class="supervisoradd-field">
+                <div class="cashieradd-fields">
+                    <div class="cashieradd-field">
                         Họ và tên
                         <?= view('components/input', [
                             'type' => 'text',
@@ -41,7 +41,7 @@
                             'required' => true,
                         ]) ?>
                     </div>
-                    <div class="supervisoradd-field">
+                    <div class="cashieradd-field">
                         Email
                         <?= view('components/input', [
                             'type' => 'email',
@@ -50,8 +50,8 @@
                         ]) ?>
                     </div>
                 </div>
-                <div class="supervisoradd-fields">
-                    <div class="supervisoradd-field">
+                <div class="cashieradd-fields">
+                    <div class="cashieradd-field">
                         Số điện thoại
                         <?= view('components/input', [
                             'type' => 'text',
@@ -59,7 +59,7 @@
                             'required' => true,
                         ]) ?>
                     </div>
-                    <div class="supervisoradd-field">
+                    <div class="cashieradd-field">
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
@@ -68,9 +68,9 @@
                         ]) ?>
                     </div>
                 </div>
-                <div class="supervisoradd-fields">
-                    <div class="supervisoradd-specials">
-                        <div class="supervisoradd-special">
+                <div class="cashieradd-fields">
+                    <div class="cashieradd-specials">
+                        <div class="cashieradd-special">
                             Giới tính
                             <?= view('components/dropdown', [
                                 'options' => ['Nữ', 'Nam', 'Khác'],
@@ -79,7 +79,7 @@
                                 'selected_text' => 'Giới tính',
                             ]) ?>
                         </div>
-                        <div class="supervisoradd-special">
+                        <div class="cashieradd-special">
                             Ngày sinh
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
@@ -87,29 +87,8 @@
                             ]) ?>
                         </div>
                     </div>
-                    <div class="supervisoradd-specials">
-                        <div class="supervisoradd-special">
-                            Tình trạng
-                            <?= view('components/dropdown', [
-                                'options' => ['Đang làm', 'Khóa'],
-                                'dropdown_id' => 'status-dropdown',
-                                'name' => 'supervisor_status',
-                                'selected_text' => 'Tình trạng',
-                            ]) ?>
-                        </div>
-                        <!-- Đừng đụng vào cái này -->
-                        <div class="supervisoradd-special" style="display:none">
-                            Tình trạng
-                            <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
-                                'dropdown_id' => 'gender-dropdown',
-                                'name' => 'teacher_gender',
-                                'selected_text' => 'Giới tính',
-                            ]) ?>
-                        </div>
-                    </div>
                 </div>
-                <div class="supervisoradd-btns">
+                <div class="cashieradd-btns">
                     <?= view('components/exit_button') ?>
                     <?= view('components/save_button') ?>
                 </div>
@@ -128,7 +107,7 @@
         box-sizing: border-box;
     }
 
-    .supervisoradd {
+    .cashieradd {
         display: flex;
         width: 100%;
         height: 100%;
@@ -137,7 +116,7 @@
         background: #FFF;
     }
 
-    .supervisoradd-heading {
+    .cashieradd-heading {
         width: 100%;
         height: 60px;
     }
@@ -191,14 +170,14 @@
         line-height: normal;
     }
 
-    .supervisoradd-fields {
+    .cashieradd-fields {
         display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: center;
     }
 
-    .supervisoradd-field {
+    .cashieradd-field {
         display: flex;
         width: 45%;
         flex-direction: column;
@@ -213,7 +192,7 @@
         line-height: normal;
     }
 
-    .supervisoradd-btns {
+    .cashieradd-btns {
         display: flex;
         width: 100%;
         justify-content: flex-end;
@@ -221,14 +200,14 @@
         gap: 20px;
     }
 
-    .supervisoradd-specials {
+    .cashieradd-specials {
         display: flex;
         width: 45%;
         justify-content: space-between;
         align-items: flex-start;
     }
 
-    .supervisoradd-special {
+    .cashieradd-special {
         display: flex;
         width: 45%;
         flex-direction: column;

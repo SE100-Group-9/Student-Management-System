@@ -10,6 +10,9 @@
         </div>
         <div class="body-right">
             Học tập / Lớp học / Xếp lớp / 11A1
+            <div>
+                <?= view('components/teacher_tab') ?>
+            </div>
             <div class="classlists-tools">
                 <div class="tools">
                     <?= view('components/add', data: ['button_text' => 'Thêm giáo viên']) ?>

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="classlists">
-    <div class="classlists-heading">
+<div class="employee-cashier-lists">
+    <div class="lists-heading">
         <?= view('components/heading') ?>
     </div>
     <div class="body">
@@ -9,17 +9,12 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp
-            <div class="classlists-tools">
-                <div class="tools">
+            Quản lý / Quản lý nhân viên / Thu ngân
+            <div class="employee-cashierlist-tool">
+                <div class="tool-search">
                     <?= view('components/filter') ?>
-                    <?= view('components/dropdown', [
-                        'options' => ['2023 - 2024'],
-                        'dropdown_id' => 'semester-dropdown',
-                        'name' => 'dropdown',
-                        'selected_text' => 'Chọn năm học',
-                        'value' => '',
-                    ]) ?>
+                    <?= view('components/searchbar') ?>
+                    <?= view('components/add', ['button_text' => 'Thêm thu ngân']) ?>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
@@ -27,7 +22,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorClassArrangeList') ?>
+                <?= view('components/tables/directorEmployeeCashier', ['tableId' => 'directorEmployeeCashier']) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -43,26 +38,28 @@
         box-sizing: border-box;
     }
 
-    .classlists {
+    .employee-cashier-lists {
         display: flex;
         width: 100%;
         height: 100%;
         flex-direction: column;
         align-items: flex-start;
-        background: #FFF;
+        background: var(--White, #FFF);
     }
 
-    .classlists-heading {
-        height: 60px;
+    .lists-heading {
         width: 100%;
+        height: 60px;
+        position: fixed;
     }
 
     .body {
         display: flex;
         align-items: flex-start;
         flex: 1 0 0;
+        margin-top: 60px;
         align-self: stretch;
-        background: #F9FAFB;
+        background: var(--light-grey, #F9FAFB);
         overflow: hidden;
     }
 
@@ -88,7 +85,7 @@
         overflow-y: auto;
     }
 
-    .classlists-tools {
+    .employee-cashierlist-tool {
         display: flex;
         padding: 10px;
         justify-content: space-between;
@@ -98,9 +95,9 @@
         background: #FFF;
     }
 
-    .tools {
-        width: 30%;
+    .tool-search {
         display: flex;
+        align-items: center;
         gap: 10px;
     }
 
