@@ -33,6 +33,14 @@ $routes->get('director/class/arrange/student', 'DirectorController::classArrange
 $routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 $routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
 $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
+$routes->get('director/employee/cashier/list', 'DirectorController::employeeCashierList');
+$routes->get('director/employee/cashier/add', 'DirectorController::employeeCashierAdd');
+$routes->get('director/employee/cashier/update', 'DirectorController::employeeCashierUpdate');
+$routes->get('director/employee/supervisor/list', 'DirectorController::employeeSupervisorList');
+$routes->get('director/employee/supervisor/add', 'DirectorController::employeeSupervisorAdd');
+$routes->get('director/employee/supervisor/update', 'DirectorController::employeeSupervisorUpdate');
+$routes->get('director/profile', 'DirectorController::profile');
+$routes->get('director/changepw', 'DirectorController::changepw');
 
 // student
 $routes->get('student/score', 'StudentController::score');
@@ -41,6 +49,7 @@ $routes->get('student/final_result', 'StudentController::final_result');
 $routes->get('student/fee_payment', 'StudentController::fee_payment');
 $routes->get('student/conduct', 'StudentController::conduct');
 $routes->get('student/fee_info', 'StudentController::fee_info');
+$routes->get('student/changepw', 'StudentController::changepw');
 
 
 
@@ -51,6 +60,7 @@ $routes->get('cashier/profile', 'CashierController::profile');
 $routes->get('cashier/payment/viewinfo', 'CashierController::viewinfo');
 $routes->get('cashier/payment/add', 'CashierController::add');
 $routes->get('cashier/payment/addextense', 'CashierController::addextense');
+$routes->get('cashier/changepw', 'cashierController::changepw');
 
 
 
