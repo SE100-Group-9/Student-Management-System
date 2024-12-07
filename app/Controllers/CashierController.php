@@ -35,4 +35,9 @@ class CashierController extends Controller
     {
         return view('cashier/payment/addextense');
     }
+
+    public function changepw()
+    {
+        return view('cashier/changepw');
+    }
 }

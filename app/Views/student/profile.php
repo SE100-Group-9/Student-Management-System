@@ -1,111 +1,117 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="student-profile">
-    <?= view('components/heading'); ?>
+    <div class="student-profile-heading">
+        <?= view('components/heading') ?>
+    </div>
     <div class="body">
-        <?= view('components/sidebar_student'); ?>
+        <div class="body-left">
+            <?= view('components/sidebar_student') ?>
+        </div>
         <div class="body-right">
-            <div class="content">
-                <p>Thông tin cá nhân</p>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="id">Mã học sinh</label>
+            <h2>Thông tin cá nhân:</h2>
+            <form method="POST" action=" ">
+                <div class="student-profile-fields">
+                    <div class="student-profile-field">
+                        Mã học sinh
                         <?= view('components/input', [
-                            'id' => 'id',
-                            'value' => '22520857',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_id',
+                            'readonly' => true,
+                            'value' => 'GT0001'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="name">Họ tên</label>
+                    <div class="student-profile-field">
+                        Họ tên
                         <?= view('components/input', [
-                            'id' => 'name',
-                            'value' => 'Nguyễn Văn A',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="email">Email</label>
-                        <?= view('components/input', [
-                            'id' => 'email',
-                            'value' => 'a@gmail.com',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                    <div class="group">
-                        <label for="phone">Số điện thoại</label>
-                        <?= view('components/input', [
-                            'id' => 'phone',
-                            'value' => '0123456789',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_name',
+                            'readonly' => true,
+                            'value' => 'Nguyễn Văn A'
+                        ]) ?>
                     </div>
                 </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="sex">Giới tính</label>
+                <div class="student-profile-fields">
+                    <div class="student-profile-field">
+                        Giới tính
                         <?= view('components/input', [
-                            'id' => 'sex',
-                            'value' => 'Nam',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_sex',
+                            'readonly' => true,
+                            'value' => 'Nam'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="date-of-birth">Ngày sinh</label>
+                    <div class="student-profile-field">
+                        Ngày sinh
                         <?= view('components/input', [
-                            'id' => 'date-of-birth',
-                            'value' => '01-01-2004',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="place-of-birth">Nơi sinh</label>
-                        <?= view('components/input', [
-                            'id' => 'place-of-birth',
-                            'value' => 'TPHCM',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                    <div class="group">
-                        <label for="ethnicity">Dân tộc</label>
-                        <?= view('components/input', [
-                            'id' => 'ethnicity',
-                            'value' => 'Kinh',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_date-of-birth',
+                            'readonly' => true,
+                            'value' => '01-01-2000'
+                        ]) ?>
                     </div>
                 </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="address">Địa chỉ</label>
+                <div class="student-profile-fields">
+                    <div class="student-profile-field">
+                        Địa chỉ
                         <?= view('components/input', [
-                            'id'=> "address",
-                            'value' => 'Thủ Đức',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_address',
+                            'readonly' => true,
+                            'value' => 'TPHCM'
+                        ]) ?>
+                    </div>
+                    <div class="student-profile-field">
+                        Số điện thoại
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_phone',
+                            'readonly' => true,
+                            'value' => '0123456789'
+                        ]) ?>
                     </div>
                 </div>
-                <p>Học tập</p>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="class">Lớp học</label>
+                <div class="student-profile-fields">
+                    <div class="student-profile-field">
+                        Email
                         <?= view('components/input', [
-                            'id' => 'class',
-                            'value' => '12A1',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_email',
+                            'readonly' => true,
+                            'value' => 'giamthi1@gmail.com'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="status">Tình trạng học</label>
+                    <div class="student-profile-field">
+                        Nơi sinh
                         <?= view('components/input', [
-                            'id' => 'ethnicity',
-                            'value' => 'Đang học',
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_country',
+                            'readonly' => true,
+                            'value' => 'TPHCM'
+                        ]) ?>
                     </div>
                 </div>
-            </div>
+                <div class="student-profile-fields">
+                    <div class="student-profile-field">
+                        Dân tộc
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_nation',
+                            'readonly' => true,
+                            'value' => 'Kinh'
+                        ]) ?>
+                    </div>
+                    <div class="student-profile-field">
+                        Tình trạng
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_status',
+                            'readonly' => true,
+                            'value' => 'Đang học'
+                        ]) ?>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -119,77 +125,88 @@
         box-sizing: border-box;
     }
 
-.student-profile {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    align-items: flex-start;
-    
-}
+    .student-profile {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #FFF;
+    }
 
-.body {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    align-self: stretch;
-    background: var(--light-grey, #F9FAFB);
-}
+    .student-profile-heading {
+        width: 100%;
+        height: 60px;
+    }
 
-.body-right {
-    display: flex;
-    padding: 0px 20px;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    flex: 1 0 0;
-    align-self: stretch;
-}
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
 
-.content {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    border-radius: 10px;
-    /* border: 1px solid var(--Silver, #AFAFAF); */
-    background: var(--White, #FFF);
-}
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-.content p {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
-}
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        overflow-y: auto;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 
-.student-info{
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
+    .body-right h1 {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 
-.group {
-    display: flex;
-    width: 500px;
-    max-width: 500px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-}
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 
-.group label{
-    color: #000;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-} 
+    .student-profile-fields {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
 
+    .student-profile-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 </style>

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="supervisor-category">
     <?= view('components/heading'); ?>
     <div class="body">
@@ -9,7 +11,7 @@
                     <?= view('components/filter'); ?>
                     <?= view('components/searchbar'); ?>
                 </div>
-                <a href="/sms/public/supervisor/addcategory">
+                <a style="text-decoration: none" href="/sms/public/supervisor/addcategory">
                     <?= view('components/add'); ?>
                 </a>
             </div>

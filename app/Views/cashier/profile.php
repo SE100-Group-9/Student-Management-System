@@ -1,76 +1,88 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="cashier-profile">
-    <?= view('components/heading'); ?>
+    <div class="cashier-profile-heading">
+        <?= view('components/heading') ?>
+    </div>
     <div class="body">
-        <?= view('components/sidebar_cashier'); ?>
+        <div class="body-left">
+            <?= view('components/sidebar_cashier') ?>
+        </div>
         <div class="body-right">
-            <div class="content">
-                <p>Thông tin cá nhân</p>
-                <div class="cashier-info">
-                    <div class="group">
-                        <label for="name">Họ tên</label>
+            <h2>Thông tin cá nhân:</h2>
+            <form method="POST" action=" ">
+                <div class="cashier-profile-fields">
+                    <div class="cashier-profile-field">
+                        Mã nhân viên
                         <?= view('components/input', [
-                            'id' => 'name',
-                            'value' => 'Lê Văn B',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_id',
+                            'readonly' => true,
+                            'value' => 'GT0001'
+                        ]) ?>
+                    </div>
+                    <div class="cashier-profile-field">
+                        Họ tên
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'cashier_name',
+                            'readonly' => true,
+                            'value' => 'Nguyễn Văn A'
+                        ]) ?>
                     </div>
                 </div>
-                <div class="cashier-info">
-                    <div class="group">
-                        <label for="id">Mã công nhân viên</label>
+                <div class="cashier-profile-fields">
+                    <div class="cashier-profile-field">
+                        Giới tính
                         <?= view('components/input', [
-                            'id' => 'id',
-                            'value' => '123',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_sex',
+                            'readonly' => true,
+                            'value' => 'Nam'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="email">Email</label>
+                    <div class="cashier-profile-field">
+                        Ngày sinh
                         <?= view('components/input', [
-                            'id' =>'email',
-                            'value' => 'b@gmail.com',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="cashier-info">
-                    <div class="group">
-                        <label for="sex">Giới tính</label>
-                        <?= view('components/input', [
-                            'id' => 'sex',
-                            'value' => 'Nam',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                    <div class="group">
-                        <label for="date-of-birth">Ngày sinh</label>
-                        <?= view('components/input', [
-                            'id' =>'date-of-birth',
-                            'value' => '01-01-2004',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_date-of-birth',
+                            'readonly' => true,
+                            'value' => '01-01-2000'
+                        ]) ?>
                     </div>
                 </div>
-                <p>Công tác</p>
-                <div class="cashier-info">
-                    <div class="group">
-                        <label for="department">Phòng ban</label>
+                <div class="cashier-profile-fields">
+                    <div class="cashier-profile-field">
+                        Địa chỉ
                         <?= view('components/input', [
-                            'id' => 'department',
-                            'value' => 'Bộ môn Toán',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_address',
+                            'readonly' => true,
+                            'value' => 'TPHCM'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="position">Chức vụ</label>
+                    <div class="cashier-profile-field">
+                        Số điện thoại
                         <?= view('components/input', [
-                            'id' =>'position',
-                            'value' => 'Giáo viên',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_phone',
+                            'readonly' => true,
+                            'value' => '0123456789'
+                        ]) ?>
                     </div>
                 </div>
-            </div>
+                <div class="cashier-profile-fields">
+                    <div class="cashier-profile-field">
+                        Email
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'cashier_email',
+                            'readonly' => true,
+                            'value' => 'thungan1@gmail.com'
+                        ]) ?>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -86,72 +98,86 @@
 
     .cashier-profile {
         display: flex;
-        flex-direction: column;
         width: 100%;
         height: 100%;
-        overflow: auto;
+        flex-direction: column;
         align-items: flex-start;
+        background: #FFF;
+    }
+
+    .cashier-profile-heading {
+        width: 100%;
+        height: 60px;
     }
 
     .body {
         display: flex;
         align-items: flex-start;
-        gap: 20px;
         flex: 1 0 0;
         align-self: stretch;
         background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
+
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
     }
 
     .body-right {
-        display: flex;
-        padding: 0px 20px;
-        flex-direction: column;
-        align-items: center;
-        gap: 30px;
-        flex: 1 0 0;
-        align-self: stretch;
-    }
-
-    .content {
         display: flex;
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        border-radius: 10px;
-        background: var(--White, #FFF);
-    }
-
-    .content p {
+        flex: 1 0 0;
+        align-self: stretch;
+        overflow-y: auto;
         color: #000;
         font-family: Inter;
         font-size: 16px;
         font-style: normal;
-        font-weight: 600;
+        font-weight: 400;
         line-height: normal;
     }
-    
-    .cashier-info{
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
-    }
 
-    .group {
-        display: flex;
-        width: 500px;
-        max-width: 500px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .group label{
+    .body-right h1 {
         color: #000;
         font-family: Inter;
-        font-size: 14px;
+        font-size: 16px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .cashier-profile-fields {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cashier-profile-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
         line-height: normal;
     }
 </style>

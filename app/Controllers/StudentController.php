@@ -35,4 +35,9 @@ class StudentController extends Controller
     {
         return view ('student/fee_info');
     }
+
+    public function changepw()
+    {
+        return view('student/changepw');
+    }
 }

@@ -14,14 +14,24 @@
                 <div class="tools">
                     <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
+                    <?= view('components/dropdown', [
+                        'options' => ['2023 - 2024'],
+                        'dropdown_id' => 'semester-dropdown',
+                        'name' => 'dropdown',
+                        'selected_text' => 'Chọn năm học',
+                        'value' => '',
+                    ]) ?>
+                    <?= view('components/add', ['button_text' => 'Thêm lớp học']) ?>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>
             </div>
-
+            <div class="tabless">
+                <?= view('components/tables/directorClassList') ?>
+            </div>
+            <?= view('components/pagination') ?>
         </div>
     </div>
 </div>
@@ -100,5 +110,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+    .tabless {
+        width: 100%;
+        height: 100%;
     }
 </style>

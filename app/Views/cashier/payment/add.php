@@ -1,156 +1,159 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
 <div class="payment-add">
-    <?= view('components/heading'); ?>
+    <div class="payment-add-heading">
+        <?= view('components/heading') ?>
+    </div>
     <div class="body">
-        <?= view('components/sidebar_cashier'); ?>
-        <div class="add-container">
-            <h1>Học phí / Quản lý học phí / Danh sách / Tạo phiên thanh toán</h1>
-            <form method="POST" action=" " id="payment-form">
-                <div class="content">
-                    <div class="add-info">
-                        <div class="group">
-                            <label for="id">Mã học sinh</label>
-                            <?= view('components/input', [
-                                'id' => 'id',
-                                'value' => '22520xxx',
-                                'readonly' => true
-                            ]); ?>
-                        </div>
-                        <div class="group">
-                            <label for="name">Tên học sinh</label>
-                            <?= view('components/input', [
-                                'id' => 'name',
-                                'value' => 'Nguyễn Văn A',
-                                'readonly' => true
-                            ]); ?>
-                        </div>
-                    </div> 
-                    <div class="add-info">
-                        <div class="group">
-                            <label for="cash">Số tiền đã nhận</label>
-                            <?= view('components/input', [
-                                'id' => 'cash',
-                                'type' => 'text',
-                                'value' => '',
-                                'placeholder' => 'Nhập số tiền',
-                                'readonly' => false
-                            ]); ?>
-                            <small id="error" style="color: red; display: none;">Vui lòng chỉ nhập số.</small>
-                        </div>
-                    </div> 
-                </div> 
+        <div class="body-left">
+            <?= view('components/sidebar_cashier') ?>
+        </div>
+        <div class="body-right">
+            <h1>Thêm thanh toán:</h1>
+            <h2>Thông tin thanh toán:</h2>
+            <form method="POST" action=" ">
+                <div class="payment-add-fields">
+                    <div class="payment-add-field">
+                        Mã học sinh 
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_id',
+                            'readonly' => true,
+                            'value' => '01'
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
+                        Tên học sinh
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_name',
+                            'required' => true,
+                            'readonly' => false,
+                            'value' => 'Nguyễn Văn A'
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="payment-add-fields">
+                    <div class="payment-add-field">
+                        Số tiền đã nhận
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_paid',
+                            'required' => true,
+                            'value' => '500,000'
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="payment-add-btns">
+                    <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
+                        <?= view('components/exit_button') ?>
+                    </a>
+                    <?= view('components/save_button') ?>
+                </div>
             </form>
-            <div class="add-button">
-                <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
-                    <?= view('components/exit_button') ?>
-                </a>
-                <?= view('components/save_button') ?>
-            </div>
-        </div>  
+        </div>
     </div>
 </div>
 
 <style>
-       *,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-.payment-add {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh; /* Đảm bảo chiều cao luôn bằng chiều cao màn hình */
-}
+    .payment-add {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #FFF;
+    }
 
-.body {
-    display: flex;
-    flex: 1; /* Chiếm toàn bộ không gian còn lại */
-    flex-direction: row;
-    align-self: stretch;
-    background: var(--light-grey, #F9FAFB);
-    overflow: hidden; /* Ngăn xuất hiện thanh cuộn không mong muốn */
-}
+    .payment-add-heading {
+        width: 100%;
+        height: 60px;
+    }
 
-.add-container {
-    display: flex;
-    flex: 1; /* Cho phép giãn toàn bộ không gian */
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
-    box-sizing: border-box; /* Đảm bảo padding không tăng kích thước */
-    overflow-y: auto; /* Cuộn nội dung nếu vượt quá không gian */
-    max-height: 100%;
-}
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
 
-.add-container h1 {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-    .content {
+    .body-right {
         display: flex;
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
         gap: 20px;
-        border-radius: 10px;
-    }
-
-    .add-info{
-        display: flex;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 20px;
-        width: 100%; 
-    }
-
-    .group {
-        display: flex;
-        width: 500px;
-        max-width: 500px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .group label {
+        flex: 1 0 0;
+        align-self: stretch;
+        overflow-y: auto;
         color: #000;
         font-family: Inter;
-        font-size: 14px;
+        font-size: 16px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 400;
         line-height: normal;
     }
 
-    .add-button {
+    .body-right h1 {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .payment-add-fields {
         display: flex;
         width: 100%;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .payment-add-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .payment-add-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
         align-items: center;
         gap: 20px;
     }
 </style>
-
-<script>
-    document.getElementById('cash').addEventListener('input', function (e) {
-        const errorMessage = document.getElementById('error');
-        // Kiểm tra nếu người dùng nhập ký tự không hợp lệ
-        if (/[^0-9]/.test(this.value)) {
-            errorMessage.style.display = 'block'; // Hiển thị thông báo lỗi
-        } else {
-            errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
-        }
-        // Chỉ giữ lại các ký tự số
-        this.value = this.value.replace(/[^0-9]/g, '');
-    });
-</script>

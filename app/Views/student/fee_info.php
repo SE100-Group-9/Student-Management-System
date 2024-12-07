@@ -1,91 +1,103 @@
-<div class="student-view-info">
-    <?= view('components/heading'); ?>
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
+<div class="student-fee-info">
+    <div class="student-fee-info-heading">
+        <?= view('components/heading') ?>
+    </div>
     <div class="body">
-        <?= view('components/sidebar_student'); ?>
+        <div class="body-left">
+            <?= view('components/sidebar_student') ?>
+        </div>
         <div class="body-right">
-            <p>Học phí / Học phí / Thông tin học phí</p>
-            <div class="content">
-                <div class="student-info">
-                    <div class="group">
-                        <label for="total">Tổng tiền</label>
+            <h2>Thông tin cá nhân:</h2>
+            <form method="POST" action=" ">
+                <div class="student-fee-info-fields">
+                    <div class="student-fee-info-field">
+                        Tổng tiền
                         <?= view('components/input', [
-                            'id' => 'total',
-                            'value' => '1,000,000',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_total',
+                            'readonly' => true,
+                            'value' => '1,000,000'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="paid">Đã thanh toán</label>
+                    <div class="student-fee-info-field">
+                        Đã thanh toán
                         <?= view('components/input', [
-                            'id' =>'paid',
-                            'value' => '1,000,000',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="not-paid">Chưa thanh toán</label>
-                        <?= view('components/input', [
-                            'id' => 'not-paid',
-                            'value' => ' ',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                    <div class="group">
-                        <label for="method">Phương thức thanh toán</label>
-                        <?= view('components/input', [
-                            'id' =>'method',
-                            'value' => 'Chuyển khoản',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_paid',
+                            'readonly' => true,
+                            'value' => '500,000'
+                        ]) ?>
                     </div>
                 </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="name">Người tạo</label>
+                <div class="student-fee-info-fields">
+                    <div class="student-fee-info-field">
+                        Chưa thanh toán
                         <?= view('components/input', [
-                            'id' => 'name',
-                            'value' => 'Nguyễn Văn A',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'student_notpaid',
+                            'readonly' => true,
+                            'value' => '500,000'
+                        ]) ?>
+                    </div>
+                    <div class="student-fee-info-field">
+                        Phương thức thanh toán
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_method',
+                            'readonly' => true,
+                            'value' => 'Chuyển khoản'
+                        ]) ?>
                     </div>
                 </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="payment-date">Ngày thanh toán</label>
+                <div class="student-fee-info-fields">
+                    <div class="student-fee-info-field">
+                        Người thu
                         <?= view('components/input', [
-                            'id' => 'payment-date',
-                            'value' => '01-01-2024',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'cashier_name',
+                            'readonly' => true,
+                            'value' => 'Trần Thị B'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="payment-date-next">Ngày thanh toán kế tiếp</label>
+                    <div class="student-fee-info-field">
+                        Ngày thanh toán
                         <?= view('components/input', [
-                            'id' =>'payment-date-next',
-                            'value' => ' ',
-                            'readonly' => true
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="student-info">
-                    <div class="group">
-                        <label for="note">Trạng thái</label>
-                        <?= view('components/input', [
-                            'id' => 'note',
-                            'value' => 'Đã thanh toán',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'day_paid',
+                            'readonly' => true,
+                            'value' => '01-01-2000'
+                        ]) ?>
                     </div>
                 </div>
-            </div>
+                <div class="student-fee-info-fields">
+                    <div class="student-fee-info-field">
+                        Ngày thanh toán kế tiếp
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'day_next',
+                            'readonly' => true,
+                            'value' => '01-03-2000'
+                        ]) ?>
+                    </div>
+                    <div class="student-fee-info-field">
+                        Trạng thái
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_state',
+                            'readonly' => true,
+                            'value' => 'Thanh toán 1 phần'
+                        ]) ?>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <style>
-        *,
+    *,
     *::before,
     *::after {
         margin: 0;
@@ -93,19 +105,32 @@
         box-sizing: border-box;
     }
 
-    .student-view-info {
+    .student-fee-info {
         display: flex;
-        flex-direction: column;
         width: 100%;
         height: 100%;
-        overflow: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #FFF;
+    }
+
+    .student-fee-info-heading {
+        width: 100%;
+        height: 60px;
     }
 
     .body {
         display: flex;
-        flex-direction: row;
-        height: 100%;
+        align-items: flex-start;
+        flex: 1 0 0;
+        align-self: stretch;
         background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
+
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
     }
 
     .body-right {
@@ -113,12 +138,10 @@
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 30px;
+        gap: 20px;
         flex: 1 0 0;
         align-self: stretch;
-    }
-
-    .body-right p {
+        overflow-y: auto;
         color: #000;
         font-family: Inter;
         font-size: 16px;
@@ -127,38 +150,43 @@
         line-height: normal;
     }
 
-    .content {
-        display: flex;
-        padding: 20px;
-        flex-direction: column;
-        /* align-self: stretch; */
-        align-items: flex-start;
-        gap: 20px;
-        border-radius: 10px;
-        background: var(--White, #FFF);
-    }
-
-    .student-info {
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .group {
-        display: flex;
-        width: 500px;
-        max-width: 500px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .group label {
+    .body-right h1 {
         color: #000;
         font-family: Inter;
-        font-size: 14px;
+        font-size: 16px;
         font-style: normal;
-        font-weight: 500;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    .student-fee-info-fields {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .student-fee-info-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
         line-height: normal;
     }
 </style>
