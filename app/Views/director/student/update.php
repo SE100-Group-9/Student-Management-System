@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url(relativePath: 'public/assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
 <div class="studentupdate">
     <div class="studentupdate-heading">
@@ -150,7 +150,7 @@
                                 'selected_text' => 'Tình trạng hiện tại',
                                 'value' => $student['TinhTrang'] ?? ''
                             ]) ?>
-                            
+
                         </div>
                     </div>
                 </div>

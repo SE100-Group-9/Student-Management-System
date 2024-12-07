@@ -13,31 +13,31 @@
             <div class="studentlist-tool">
                 <form method="GET" action="/sms/public/director/student/list">
                     <div class="tool-search">
-                            <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+                        <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
 
-                            <?= view('components/dropdown', [
-                                'options' => $yearList ?? [], // Thay bằng danh sách năm học từ controller
-                                'dropdown_id' => 'year-dropdown',
-                                'name' => 'year',
-                                'selected_text' => 'Chọn năm học',
-                                'value' => $selectedYear ?? ''
-                            ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [], // Thay bằng danh sách năm học từ controller
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
 
-                            <?= view('components/dropdown', [
-                                'options' => $classList ?? [], // Thay bằng danh sách lớp từ controller
-                                'dropdown_id' => 'class-dropdown',
-                                'name' => 'class',
-                                'selected_text' => 'Chọn lớp',
-                                'value' => $selectedClass ?? ''
-                            ]) ?>
-                            <?= view('components/dropdown', [
-                                'options' => [''], // Thay bằ'',
-                                'dropdown_id' => '',
-                                'name' => '',
-                                'selected_text' => '',
-                                'value' => '',
-                            ]) ?>
-                            <?= view('components/view_button') ?>
+                        <?= view('components/dropdown', [
+                            'options' => $classList ?? [], // Thay bằng danh sách lớp từ controller
+                            'dropdown_id' => 'class-dropdown',
+                            'name' => 'class',
+                            'selected_text' => 'Chọn lớp',
+                            'value' => $selectedClass ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => [''], // Thay bằ'',
+                            'dropdown_id' => '',
+                            'name' => '',
+                            'selected_text' => '',
+                            'value' => '',
+                        ]) ?>
+                        <?= view('components/view_button') ?>
                     </div>
                 </form>
                 <div class="tool-add">
@@ -46,7 +46,7 @@
                     </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
-                    
+
                 </div>
             </div>
             <div class="tabless">
@@ -139,5 +139,4 @@
         width: 100%;
         height: 100%;
     }
-    
 </style>

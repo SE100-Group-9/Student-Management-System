@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?= base_url('public/assets/css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('http://localhost/sms/public/assets/css/style.css') ?>">
 <div class="add-container">
     <button class="primary button-add">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
