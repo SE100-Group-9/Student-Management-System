@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorEmployeeCashier', ['tableId' => 'directorEmployeeCashier']) ?>
+                <?= view('components/tables/directorEmployeeCashier', ['cashierList' => $cashierList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>

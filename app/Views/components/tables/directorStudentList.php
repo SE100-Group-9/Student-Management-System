@@ -31,7 +31,7 @@
                     <td><?= date('d/m/Y', strtotime($student['NgaySinh'])) ?></td>
                     <td><?= $student['NoiSinh'] ?></td>
                     <td>
-                    <?= view('components/status', ['status' => $student['TinhTrang']]); ?>
+                        <?= view('components/status', ['status' => $student['TinhTrang']]); ?>
                     </td>
                     <td>
                         <a href="/sms/public/director/student/update/<?= $student['MaHS'] ?>">

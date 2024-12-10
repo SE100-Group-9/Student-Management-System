@@ -12,7 +12,7 @@
             Trung tâm / Quy định / Danh hiệu
             <h1>Tạo danh hiệu:</h1>
             <h2>Thông tin danh hiệu:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/title/add">
                 <div class="titleadd-fields">
                     <div class="titleadd-field">
                         Tên danh hiệu
@@ -24,7 +24,7 @@
                         ]) ?>
                     </div>
                     <div class="titleadd-field">
-                        Điểm TB tối thiểu
+                        Điểm trung bình tối thiểu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'min_grade',
@@ -35,7 +35,7 @@
                 </div>
                 <div class="titleadd-fields">
                     <div class="titleadd-field">
-                        Hạnh kiểm tối thiểu
+                        Điểm hạnh kiểm tối thiểu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'min_conduct',
@@ -44,14 +44,30 @@
                         ]) ?>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                </div>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
+
+
                 <div class="titleadd-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/title/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
+
 
 <style>
     *,

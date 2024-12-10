@@ -134,12 +134,10 @@
                     <div class="studentupdate-specials">
                         <div class="studentupdate-special">
                             Lớp học
-                            <?= view('components/dropdown', [
-                                'options' => [''],
-                                'dropdown_id' => 'class-dropdown',
-                                'name' => 'student_class',
-                                'selected_text' => 'Lớp học',
-                            ]) ?>
+                            <!-- Thêm dropdown ảo -->
+                            <div style="display: none;">
+                                <?= view('components/dropdown', []) ?>
+                            </div>
                             <?= view('components/input', [
                                 'type' => 'text',
                                 'name' => 'student_class',
@@ -163,6 +161,17 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                </div>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="studentupdate-btns">
                     <a style="text-decoration: none" href="/sms/public/director/student/list">
                         <?= view('components/exit_button') ?>

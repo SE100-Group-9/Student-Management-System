@@ -24,10 +24,12 @@ $routes->get('director/student/record', 'DirectorController::studentRecord');
 $routes->get('director/student/perserved', 'DirectorController::studentPerserved');
 $routes->get('director/student/payment', 'DirectorController::studentPayment');
 
+// Director - Danh hiệu
 $routes->get('director/title/list', 'DirectorController::titleList');
 $routes->get('director/title/add', 'DirectorController::titleAdd');
-$routes->get('director/title/update', 'DirectorController::titleUpdate');
-
+$routes->post('director/title/add', 'DirectorController::addTitle');
+$routes->get('director/title/update/(:num)', 'DirectorController::titleUpdate/$1');
+$routes->post('director/title/update', 'DirectorController::updateTitle');  
 
 $routes->get('director/class/list', 'DirectorController::classList');
 $routes->get('director/class/add', 'DirectorController::classAdd');
@@ -36,9 +38,13 @@ $routes->get('director/class/arrange/student', 'DirectorController::classArrange
 $routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 $routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
 $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
+
+// Director - Quản lý Thu ngân
 $routes->get('director/employee/cashier/list', 'DirectorController::employeeCashierList');
 $routes->get('director/employee/cashier/add', 'DirectorController::employeeCashierAdd');
 $routes->get('director/employee/cashier/update', 'DirectorController::employeeCashierUpdate');
+
+
 $routes->get('director/employee/supervisor/list', 'DirectorController::employeeSupervisorList');
 $routes->get('director/employee/supervisor/add', 'DirectorController::employeeSupervisorAdd');
 $routes->get('director/employee/supervisor/update', 'DirectorController::employeeSupervisorUpdate');

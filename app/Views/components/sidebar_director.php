@@ -123,7 +123,9 @@
                 Giáo viên
             </div>
             <div class="cashier">
-                Thu ngân
+                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/cashier/list">
+                    Thu ngân
+                </a>
             </div>
             <div class="supervisor">
                 Giám thị
