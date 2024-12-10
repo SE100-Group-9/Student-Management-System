@@ -78,3 +78,14 @@ $routes->get('supervisor/updatecategory', 'SupervisorController::updatecategory'
 $routes->get('/', 'LoginController::index');
 $routes->post('login/authenticate', 'LoginController::authenticate');
 $routes->get('logout', 'LoginController::logout');
+
+// Teacher
+$routes->get('teacher/student/list', 'TeacherController::studentList');
+$routes->get('teacher/statics/grade', 'TeacherController::statics');
+$routes->get('teacher/class/rate', 'TeacherController::classRate');
+$routes->get('teacher/class/rating', 'TeacherController::classRating');
+$routes->get('teacher/class/record/list', 'TeacherController::recordList');
+$routes->get('teacher/class/record/detail', 'TeacherController::recordDetail');
+$routes->get('teacher/class/enter/list', 'TeacherController::enterList');
+$routes->get('teacher/class/enter/next', 'TeacherController::enterNext');
+$routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
