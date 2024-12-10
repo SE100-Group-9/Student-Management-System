@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use CodeIgniter\Controller;
@@ -9,6 +8,7 @@ use App\Models\TaiKhoanModel;
 use App\Models\HocSinhModel;
 use App\Models\HocSinhLopModel;
 use App\Models\LopModel;
+use App\Models\DanhHieuModel;
 
 class DirectorController extends Controller
 {
@@ -28,13 +28,16 @@ class DirectorController extends Controller
         return view('director/statics/student');
     }
 
-    public function exportStudentList() {}
+    public function exportStudentList()
+    {
+ 
+    }
     public function studentAdd()
     {
         $HocSinhModel = new HocSinhModel();
         // Lấy mã học sinh lớn nhất hiện tại
         $lastStudent = $HocSinhModel->select('MaHS')->orderBy('MaHS', 'DESC')->first();
-
+        
         // Sinh mã học sinh mới
         $newMaHS = 'HS0001'; // Giá trị mặc định nếu chưa có mã nào
         if ($lastStudent && preg_match('/^HS(\d+)$/', $lastStudent['MaHS'], $matches)) {
@@ -67,7 +70,7 @@ class DirectorController extends Controller
             'MaTK' => $MaTK,
             'DanToc' => $this->request->getPost('student_nation'),
             'NoiSinh' => $this->request->getPost('student_country'),
-            'TinhTrang' => $this->request->getPost('student_status') ?? 'Đang học',
+            'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
         ]);
 
         $allPostData = $this->request->getPost();
@@ -82,15 +85,19 @@ class DirectorController extends Controller
         }
         $TaiKhoanModel = new TaiKhoanModel();
         $HocSinhModel = new HocSinhModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $LopModel = new LopModel();
         // Lấy thông tin học sinh theo id
         $data = $HocSinhModel
-            ->select('hocsinh.*, taikhoan.*')
+            ->select('hocsinh.*, taikhoan.*, hocsinh_lop.*, lop.TenLop')
             ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
+            ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
+            ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left')
             ->where('hocsinh.MaHS', $id)
             ->first();
         if (!$data) {
             return redirect()->to('director/student/list'); // Redirect nếu không tìm thấy học sinh
-        }
+        }    
         return view('director/student/update', ['student' => $data]);
     }
     public function updateStudent()
@@ -123,66 +130,71 @@ class DirectorController extends Controller
     }
 
 
-
     public function studentList()
-    {
+    {   
         $TaiKhoanModel = new TaiKhoanModel();
         $HocSinhModel = new HocSinhModel();
         $HocSinhLopModel = new HocSinhLopModel();
         $LopModel = new LopModel();
 
-        // Giá trị mặc định nếu không chọn
-        $defaultYear = '2024-2025';
-
-        // Nhận giá trị năm học và lớp từ query string
-        $selectedYear = $this->request->getVar('year') ?? $defaultYear;
+        // Nhận giá trị năm học, lớp học, từ khóa tìm kiếm và tình trạng từ query string
+        $selectedYear = $this->request->getVar('year');
         $selectedClass = $this->request->getVar('class');
-        $searchStudent = $this->request->getVar('search') ?? ''; // Nhận giá trị tìm kiếm
+        $searchStudent = $this->request->getVar('search') ?? ''; 
+        $selectedStatus = $this->request->getVar('status');
 
-        // Lấy danh sách các năm học và lớp
+        // Lấy danh sách các năm học, lớp học và tình trạng
         $classList = $LopModel->findColumn('TenLop');
+        $classList = array_merge(['Chọn lớp học'], $classList); // Thêm "Chọn lớp" vào danh sách lớp
+
         $yearListArray = $HocSinhLopModel
             ->distinct()
             ->select('NamHoc')
             ->orderBy('NamHoc', 'ASC')
             ->findAll();
         // Lấy các giá trị của trường 'NamHoc' từ mảng $yearListArray
-        $yearList = array_map(function ($year) {
+        $yearList = array_map(function($year) {
             return $year['NamHoc']; // Lấy giá trị NamHoc
         }, $yearListArray);
+        $yearList = array_merge(['Chọn năm học'], $yearList);
+        $statusList = ['Chọn trạng thái', 'Đang học', 'Mới tiếp nhận', 'Nghỉ học'];
 
         log_message('debug', 'Class List: ' . print_r($classList, true));
         log_message('debug', 'Class List: ' . print_r($yearList, true));
 
         $query = $HocSinhModel
-            ->select('hocsinh.*, taikhoan.HoTen, taikhoan.Email, taikhoan.SoDienThoai, taikhoan.GioiTinh, taikhoan.NgaySinh, hocsinh_lop.MaLop, lop.TenLop')
-            ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
-            ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS')
-            ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop');
+        ->select('hocsinh.*, taikhoan.*, hocsinh_lop.MaLop, lop.TenLop')
+        ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
+        ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
+        ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left');
 
-        // Lọc theo năm học và lớp
-        if ($selectedYear) {
+        // Lọc theo năm học, lớp và từ khóa tìm kiếm và tình trạng (nếu có)
+        if ($selectedYear && $selectedYear !== 'Chọn năm học') {
             $query->where('hocsinh_lop.NamHoc', $selectedYear);
         }
-        if ($selectedClass) {
+        if ($selectedClass && $selectedClass !== 'Chọn lớp học') {
             $query->where('lop.TenLop', $selectedClass);
         }
-        // Lọc theo từ khóa tìm kiếm
         if ($searchStudent) {
             $query->groupStart() // Tạo nhóm điều kiện tìm kiếm
                 ->like('hocsinh.MaHS', $searchStudent)
                 ->orLike('taikhoan.HoTen', $searchStudent)
                 ->groupEnd();
         }
+        if ($selectedStatus && $selectedStatus !== 'Chọn trạng thái'){
+            $query->where('hocsinh.TinhTrang', $selectedStatus);
+        }
 
         $studentList  = $query->findAll();
 
         return view('director/student/list', [
-            'studentlist' => $studentList,
+            'studentlist' => $studentList ,
             'yearList' => $yearList,
             'classList' => $classList,
+            'statusList' => $statusList,
             'selectedYear' => $selectedYear,
             'selectedClass' => $selectedClass,
+            'selectedStatus' => $selectedStatus,
             'searchTerm' => $searchStudent,
         ]);
     }
@@ -204,7 +216,15 @@ class DirectorController extends Controller
 
     public function titleList()
     {
-        return view('director/title/list');
+        $DanhHieuModel = new DanhHieuModel();
+
+        // Lấy danh sách danh hiệu từ cơ sở dữ liệu
+        $titleList = $DanhHieuModel->findAll();
+
+        // Truyền dữ liệu tới view
+        return view('director/title/list', [
+            'titleList' => $titleList
+        ]);
     }
 
     public function titleAdd()
@@ -231,11 +251,6 @@ class DirectorController extends Controller
         return view('director/class/update');
     }
 
-    public function classArrangeList()
-    {
-        return view('director/class/arrange/list');
-    }
-
     public function classArrangeStudent()
     {
         return view('director/class/arrange/student');
@@ -246,7 +261,7 @@ class DirectorController extends Controller
         return view('director/class/arrange/teacher');
     }
 
-    public function employeeTeacherList()
+    public function employeeTeacherList ()
     {
         return view('director/employee/teacher/list');
     }
@@ -254,21 +269,6 @@ class DirectorController extends Controller
     public function employeeTeacherAdd()
     {
         return view('director/employee/teacher/add');
-    }
-
-    public function employeeCashierList()
-    {
-        return view('director/employee/cashier/list');
-    }
-
-    public function employeeCashierAdd()
-    {
-        return view('director/employee/cashier/add');
-    }
-
-    public function employeeCashierUpdate()
-    {
-        return view('director/employee/cashier/update');
     }
 
     public function employeeSupervisorList()
@@ -294,5 +294,18 @@ class DirectorController extends Controller
     public function changepw()
     {
         return view('director/changepw');
+    }
+    
+    public function employeeCashierList()
+    {
+        return view('director/employee/cashier/list');
+    }
+    public function employeeCashierAdd()
+    {
+        return view('director/employee/cashier/add');
+    }
+    public function employeeCashierUpdate()
+    {
+        return view('director/employee/cashier/update');
     }
 }

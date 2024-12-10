@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th>STT</th>
-                <th>Mã số học sinh</th>
+                <th>Mã HS</th>
                 <th>Họ tên</th>
                 <th>Giới tính</th>
                 <th>Email</th>
@@ -26,7 +26,7 @@
                     <td><?= $student['GioiTinh'] ?></td>
                     <td><?= $student['Email'] ?></td>
                     <td><?= $student['SoDienThoai'] ?></td>
-                    <td><?= $student['TenLop'] ?></td>
+                    <td><?= $student['TenLop'] ?? 'Chưa xếp lớp' ?></td>
                     <td><?= $student['DanToc'] ?></td>
                     <td><?= date('d/m/Y', strtotime($student['NgaySinh'])) ?></td>
                     <td><?= $student['NoiSinh'] ?></td>

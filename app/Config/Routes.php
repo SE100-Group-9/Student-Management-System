@@ -12,7 +12,7 @@ $routes->get('director/statics/student', 'DirectorController::staticsStudent');
 $routes->get('director/statics/grade', 'DirectorController::staticsGrade');
 
 
-// Director - Trang Danh sách học sinh
+// Director - Danh sách học sinh
 $routes->get('director/student/add', 'DirectorController::studentAdd');
 $routes->post('director/student/add', 'DirectorController::addStudent');
 $routes->get('director/student/update/(:segment)', 'DirectorController::studentUpdate/$1');
@@ -23,9 +23,12 @@ $routes->get('director/student/list', 'DirectorController::studentList');
 $routes->get('director/student/record', 'DirectorController::studentRecord');
 $routes->get('director/student/perserved', 'DirectorController::studentPerserved');
 $routes->get('director/student/payment', 'DirectorController::studentPayment');
+
 $routes->get('director/title/list', 'DirectorController::titleList');
 $routes->get('director/title/add', 'DirectorController::titleAdd');
 $routes->get('director/title/update', 'DirectorController::titleUpdate');
+
+
 $routes->get('director/class/list', 'DirectorController::classList');
 $routes->get('director/class/add', 'DirectorController::classAdd');
 $routes->get('director/class/update', 'DirectorController::classUpdate');

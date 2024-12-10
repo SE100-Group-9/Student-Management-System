@@ -8,10 +8,10 @@ if (!function_exists('statusButton')) {
             case 'Đang học':
                 $classes = 'status-third';
                 break;
-            case 'Đã tốt nghiệp':
+            case 'Mới tiếp nhận':
                 $classes = 'status-secondary';
                 break;
-            case 'Đã nghỉ học':
+            case 'Nghỉ học':
                 $classes = 'status-primary';
                 break;  
 
