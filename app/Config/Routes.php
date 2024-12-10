@@ -46,7 +46,6 @@ $routes->get('director/changepw', 'DirectorController::changepw');
 $routes->get('student/score', 'StudentController::score');
 $routes->get('student/profile', 'StudentController::profile');
 $routes->get('student/final_result', 'StudentController::final_result');
-$routes->get('student/fee_payment', 'StudentController::fee_payment');
 $routes->get('student/conduct', 'StudentController::conduct');
 $routes->get('student/fee_info', 'StudentController::fee_info');
 $routes->get('student/changepw', 'StudentController::changepw');
@@ -55,12 +54,10 @@ $routes->get('student/changepw', 'StudentController::changepw');
 
 // cashier
 $routes->get('cashier/payment/list', 'CashierController::list');
-$routes->get('cashier/extense', 'CashierController::extense');
 $routes->get('cashier/profile', 'CashierController::profile');
-$routes->get('cashier/payment/viewinfo', 'CashierController::viewinfo');
 $routes->get('cashier/payment/add', 'CashierController::add');
-$routes->get('cashier/payment/addextense', 'CashierController::addextense');
 $routes->get('cashier/changepw', 'cashierController::changepw');
+$routes->get('cashier/statics/student', 'cashierController::staticStudent');
 
 
 
@@ -79,3 +76,14 @@ $routes->get('supervisor/updatecategory', 'SupervisorController::updatecategory'
 $routes->get('/', 'LoginController::index');
 $routes->post('login/authenticate', 'LoginController::authenticate');
 $routes->get('logout', 'LoginController::logout');
+
+// Teacher
+$routes->get('teacher/student/list', 'TeacherController::studentList');
+$routes->get('teacher/statics/grade', 'TeacherController::statics');
+$routes->get('teacher/class/rate', 'TeacherController::classRate');
+$routes->get('teacher/class/rating', 'TeacherController::classRating');
+$routes->get('teacher/class/record/list', 'TeacherController::recordList');
+$routes->get('teacher/class/record/detail', 'TeacherController::recordDetail');
+$routes->get('teacher/class/enter/list', 'TeacherController::enterList');
+$routes->get('teacher/class/enter/next', 'TeacherController::enterNext');
+$routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
