@@ -1,52 +1,52 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="statics-grade">
-    <div class="grade-heading">
+<div class="statics-student">
+    <div class="student-heading">
         <?= view('components/heading') ?>
     </div>
     <div class="body">
         <div class="body-left">
-            <?= view('components/sidebar_teacher') ?>
+            <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
-            Trung tâm / Thống kê / Học lực
+            Trung tâm / Thống kê / Học sinh
             <!-- Dropdown -->
             <div class="dropdown-edit">
                 <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024', '2022-2023']]) ?>
             </div>
             <!-- Cards -->
-            <div class="grade-cards">
+            <div class="student-cards">
                 <?= view('components/card_increase', [
-                    'title' => 'Học lực giỏi',
-                    'count' => '4500',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
+                    'title' => 'Số học sinh nhập học',
+                    'count' => '5000',
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
                 ]) ?>
                 <?= view('components/card_decrease', [
-                    'title' => 'Học lực khá',
+                    'title' => 'Số học sinh bảo lưu',
                     'count' => '200',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
+                    'percentage' => '100.00%',
+                    'comparison' => 'so với năm 2023'
                 ]) ?>
                 <?= view('components/card_increase', [
-                    'title' => 'Học lực trung bình',
+                    'title' => 'Tổng số học sinh',
                     'count' => '20.000',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
                 ]) ?>
                 <?= view('components/card_decrease', [
-                    'title' => 'Học lực yếu',
+                    'title' => 'Số học sinh bị cảnh báo',
                     'count' => '2000',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
+                    'percentage' => '50.00%',
+                    'comparison' => 'so với năm 2023'
                 ]) ?>
             </div>
             <!-- Chart -->
-            <div class="grade-chart">
-                <div class="charts">
-                    Dữ liệu biểu diễn sự thay đổi của học lực theo từng học kỳ
-                    <?= view('components/line_chart') ?>
+            <div class="student-chart">
+                <div class="chart-text">
+                    Dữ liệu biểu diễn sự thay đổi của học sinh theo từng năm
                 </div>
+                <?= view('components/curve_chart') ?>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
         box-sizing: border-box;
     }
 
-    .statics-grade {
+    .statics-student {
         display: flex;
         width: 100%;
         height: 100%;
@@ -70,7 +70,7 @@
         background: var(--White, #FFF);
     }
 
-    .grade-heading {
+    .student-heading {
         width: 100%;
         height: 60px;
         position: fixed;
@@ -108,22 +108,38 @@
         overflow-y: auto;
     }
 
-    .grade-cards {
+    .student-cards {
         display: flex;
         justify-content: space-between;
         align-items: center;
         align-self: stretch;
     }
 
-    .grade-chart {
+    .student-chart {
         display: flex;
+        padding: 20px;
+        flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 20px;
+        flex: 1 0 0;
         align-self: stretch;
+        border-radius: 10px;
+        background: var(--White, #FFF);
     }
 
-    .charts {
-        width: 100%;
+    .chart-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 31px;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        /* 120% */
     }
 
     .dropdown-edit {

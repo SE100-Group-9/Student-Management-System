@@ -8,9 +8,11 @@
             <h1>Học phí / Quản lý học phí / Danh sách</h1>
             <div class="list-tool">
                 <div class="list-filter">
+                    <?= view('components/filter') ?>
                     <?= view('components/searchbar'); ?>
                     <?= view('components/dropdown', ['options' => ['Đã thanh toán', 'Thanh toán 1 phần', 'Chưa thanh toán'], 'dropdown_id' => 'pay-dropdown']) ?>
-                    <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                    <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
                 </div>
                 <div class="list-tool-2">                   
                     <?= view('components/excel_export'); ?>

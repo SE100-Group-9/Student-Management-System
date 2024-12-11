@@ -8,22 +8,24 @@
         <div class="body-left">
             <?= view('components/sidebar_student') ?>
         </div>
-        <div class="body-right">
-            Học tập / Học tập / Xem hạnh kiểm
-            <div class="studentconduct-tools">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
-                    <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
-                   
+            <div class="body-right">
+                Học tập / Học tập / Xem hạnh kiểm
+                <div class="studentconduct-tools">
+                    <form method="POST" action=" ">
+                        <div class="tool-search">
+                            <?= view('components/filter') ?>
+                            <?= view('components/searchbar') ?>
+                            <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                            <?= view('components/dropdown', ['options' => ['Học kỳ 1', 'Học kỳ 2'], 'dropdown_id' => 'semester-dropdown']) ?>
+                        </div>
+                    </form>
+                    <div class="tool-add">
+                        <?= view('components/excel_export') ?>
+                    </div>
                 </div>
-                <div class="tool-add">
-                    <?= view('components/excel_export') ?>
-                </div>
+                <?= view('components/tables/StudentConduct') ?>
+                <?= view('components/pagination'); ?> 
             </div>
-            <?= view('components/tables/StudentConduct') ?>
-        </div>
     </div>
 </div>
 

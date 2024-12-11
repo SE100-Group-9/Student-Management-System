@@ -1,21 +1,4 @@
 <div id="sidebar-student" class="sidebar-student">
-    <div class="general">
-        <h1>Trung tâm</h1>
-    </div>
-    <div class="general-2 pointer" id="general-2" onclick="toggleDeeperGeneral()">
-        <div class="text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M20 17V11.4521V11.4513C20 10.9175 20 10.6505 19.9351 10.4019C19.8775 10.1816 19.7827 9.97263 19.6548 9.7842C19.5104 9.57158 19.3096 9.39569 18.9074 9.04383L14.1074 4.84383C13.3608 4.19054 12.9875 3.86394 12.5674 3.7397C12.1972 3.63022 11.8028 3.63022 11.4326 3.7397C11.0127 3.86387 10.6398 4.19019 9.894 4.84275L9.89278 4.84383L5.09277 9.04383L5.09182 9.04466C4.69032 9.39597 4.48944 9.57174 4.34521 9.7842C4.2173 9.97263 4.12255 10.1816 4.06497 10.4019C4 10.6506 4 10.9178 4 11.4521V17C4 17.9319 4 18.3978 4.15224 18.7653C4.35523 19.2554 4.74481 19.6447 5.23486 19.8477C5.60241 20 6.06835 20 7.00023 20C7.93211 20 8.39782 20 8.76537 19.8477C9.25542 19.6447 9.64467 19.2554 9.84766 18.7653C9.9999 18.3978 10 17.9318 10 17V16C10 14.8954 10.8954 14 12 14C13.1046 14 14 14.8954 14 16V17C14 17.9318 14 18.3978 14.1522 18.7653C14.3552 19.2554 14.7448 19.6447 15.2349 19.8477C15.6024 20 16.0683 20 17.0002 20C17.9321 20 18.3978 20 18.7654 19.8477C19.2554 19.6447 19.6447 19.2554 19.8477 18.7653C19.9999 18.3978 20 17.9319 20 17Z" stroke="#E14177" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <p>Thông tin chung</p>
-        </div>
-        <svg id="arrow-icon" class="svg-bottom" xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none">
-            <path d="M19 11.25L12 20L5 11.25" stroke="#0C0C0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-    </div>
-    <div id="general-deeper" class="general-deeper pointer">
-        <p>Tin tức</p>
-    </div>
     <div class="study">
         <h1>Học tập</h1>
     </div>
@@ -59,9 +42,6 @@
             </svg>
         </div>
         <div id="fee-deeper" class="fee-deeper">
-            <div class="tuition pointer">
-                <p>Thanh toán</p>
-            </div>
             <div class="fee-info pointer">
                 <p>Thông tin học phí</p>
             </div>
@@ -114,21 +94,21 @@
         cursor: pointer;
     }
 
-    .general-2:hover, .study-2:hover, .fee-2:hover {
+    .study-2:hover, .fee-2:hover {
         background: var(--Light-Blue, rgba(109, 207, 251, 0.20));
     }
 
-    .general-deeper:hover, .score:hover, .conduct:hover, .result:hover, .tuition:hover, .fee-info:hover {
+    .score:hover, .conduct:hover, .result:hover, .fee-info:hover {
         background: var(--Light-Blue, rgba(109, 207, 251, 0.20));
     }
 
-    .general-deeper, .study-deeper, .fee-deeper {
+    .study-deeper, .fee-deeper {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
     }
 
-    .general-deeper.open {
+    .open {
         max-height: 300px;
     }
 
@@ -141,7 +121,7 @@
     }
 
 
-    .general, .study, .fee {
+    .study, .fee {
         display: flex;
         height: 30px;
         align-items: center;
@@ -150,7 +130,7 @@
         cursor: default;
     }
 
-    .general-2, .study-2, .fee-2 {
+    .study-2, .fee-2 {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -164,8 +144,7 @@
         gap: 20px;
     }
 
-    .text p, .score, .conduct, .result, .tuition, .fee-info,
-    .general-deeper p {
+    .text p, .score p, .conduct p, .result p, .fee-info p {
         color: #000;
         font-family: Inter;
         font-size: 14px;
@@ -174,7 +153,7 @@
         line-height: normal;
     }
 
-    .general h1, .fee h1, 
+    .fee h1, 
     .study h1 {
         color: var(--Silver, #AFAFAF);
         font-family: Inter;
@@ -195,7 +174,7 @@
         overflow-y: auto;
     }
 
-    .general-deeper, .score, .conduct, .result, .tuition, .fee-info {
+    .score, .conduct, .result, .fee-info {
         display: flex;
         height: 30px;
         padding: 0px 0px 0px 45px;
@@ -204,14 +183,9 @@
         align-self: stretch;
     }
 
-    .general-2:hover .svg-bottom path,
     .study-2:hover .svg-bottom path,
     .fee-2:hover .svg-bottom path {
         stroke: #01B3EF;
-    }
-
-    #arrow-icon {
-        transition: transform 0.3s ease;
     }
 
     #arrow-icon-2 {
@@ -241,20 +215,6 @@
     function toggleDeeperFee() {
         const deeperElement = document.getElementById('fee-deeper');
         const arrowIcon = document.getElementById('arrow-icon-3');
-
-        // Toggle lớp 'open' để bật/tắt hiệu ứng
-        if (deeperElement.classList.contains('open')) {
-            deeperElement.classList.remove('open');
-            arrowIcon.style.transform = 'rotate(0deg)'; // Reset rotation
-        } else {
-            deeperElement.classList.add('open');
-            arrowIcon.style.transform = 'rotate(180deg)'; // Rotate arrow
-        }
-    }
-
-    function toggleDeeperGeneral() {
-        const deeperElement = document.getElementById('general-deeper');
-        const arrowIcon = document.getElementById('arrow-icon');
 
         // Toggle lớp 'open' để bật/tắt hiệu ứng
         if (deeperElement.classList.contains('open')) {

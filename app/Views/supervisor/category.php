@@ -5,7 +5,7 @@
     <div class="body">
         <?= view('components/sidebar_supervisor'); ?>
         <div class="category-container">
-            <p>Quản lý / Quản lý hạnh kiểm / Danh mục</p>
+            <p>Hạnh kiểm / Quản lý hạnh kiểm / Danh mục</p>
             <div class="category-tool">
                 <div class="category-filter">
                     <?= view('components/filter'); ?>

@@ -1,238 +1,253 @@
-<div class="student-final">
-    <?= view('components/heading'); ?>
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
+<div class="student-final-info">
+    <div class="student-final-info-heading">
+        <?= view('components/heading') ?>
+    </div>
     <div class="body">
-        <?= view('components/sidebar_student'); ?>
-        <div class="final-container">
-            <h1>Học tập / Học tập / Xem điểm</h1>
-            <div class="content">
-                <div class="final-tool">
+        <div class="body-left">
+            <?= view('components/sidebar_student') ?>
+        </div>
+        <div class="body-right">
+            <div class="final-tool">
+                <div class="final-dropdown">
                     <div class="final-dropdown">
-                        <div class="final-dropdown">
-                            <h2>Năm học:</h2>
-                            <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
-                        </div>
-                        <div class="final-dropdown">
-                            <h2>Học kì:</h2>
-                            <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
-                        </div>
-                        <?= view('components/view_button'); ?>
-                    </div>                   
-                </div>
-                <div class="table-container" style="display: none;">
-                    <?= view('components/tables/studentFinalResult', ['tableId' => 'studentFinalResult']) ?>
-                    <?= view('components/pagination'); ?> 
-                </div>
-                <h3>Điểm trung bình</h3>
-                <div class="final-info">
-                    <div class="group">
-                        <label for="score-1">Học kì 1</label>
-                        <?= view('components/input', [
-                            'id' => 'score-1',
-                            'value' => '10',
-                            'readonly' => true
-                        ]); ?>
+                        <h2>Năm học:</h2>
+                        <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
                     </div>
-                    <div class="group">
-                        <label for="score-2">Học kì 2</label>
+                    <div class="final-dropdown">
+                        <h2>Học kì:</h2>
+                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                    </div>
+                    <?= view('components/view_button'); ?>
+                </div>                   
+            </div>
+            <div class="table-container" style="display: none;">
+                <?= view('components/tables/studentFinalResult', ['tableId' => 'studentFinalResult']) ?>
+                <?= view('components/pagination'); ?> 
+            </div>
+            <form method="GET" action=" ">
+            <div class="student-final-fields">
+                    <div class="student-final-field">
+                        Học kỳ 1
                         <?= view('components/input', [
-                            'id' => 'score-2',
-                            'value' => '10',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'first_score',
+                            'readonly' => true,
+                            'value' => '10'
+                        ]) ?>
+                    </div>
+                    <div class="student-final-field">
+                        Học kỳ 2
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'second_score',
+                            'readonly' => true,
+                            'value' => '10'
+                        ]) ?>
                     </div>
                 </div>
                 <h3>Học lực</h3>
-                <div class="final-info">
-                    <div class="group">
-                        <label for="perform-1">Học kì 1</label>
+                <div class="student-final-fields">
+                    <div class="student-final-field">
+                        Học kỳ 1
                         <?= view('components/input', [
-                            'id' => 'perform-1',
-                            'value' => 'Giỏi',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'first_performance',
+                            'readonly' => true,
+                            'value' => 'Giỏi'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="perform-2">Học kì 2</label>
+                    <div class="student-final-field">
+                        Học kỳ 2
                         <?= view('components/input', [
-                            'id' => 'perform-2',
-                            'value' => 'Giỏi',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'second_performance',
+                            'readonly' => true,
+                            'value' => 'Giỏi'
+                        ]) ?>
                     </div>
                 </div>
                 <h3>Hạnh kiểm</h3>
-                <div class="final-info">
-                    <div class="group">
-                        <label for="conduct-1">Học kì 1</label>
+                <div class="student-final-fields">
+                    <div class="student-final-field">
+                        Học kỳ 1
                         <?= view('components/input', [
-                            'id' => 'first',
-                            'value' => 'Tốt',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'first_conduct',
+                            'readonly' => true,
+                            'value' => 'Tốt'
+                        ]) ?>
                     </div>
-                    <div class="group">
-                        <label for="conduct-2">Học kì 2</label>
+                    <div class="student-final-field">
+                        Học kỳ 2
                         <?= view('components/input', [
-                            'id' => 'second',
-                            'value' => 'Tốt',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'second_conduct',
+                            'readonly' => true,
+                            'value' => 'Tốt'
+                        ]) ?>
                     </div>
                 </div>
                 <h3>Danh hiệu</h3>
-                <div class="final-info">
-                    <div class="group">
+                <div class="student-final-fields">
+                    <div class="student-final-field">
                         <?= view('components/input', [
-                            'id' => 'title',
-                            'value' => 'Học sinh giỏi',
-                            'readonly' => true
-                        ]); ?>
+                            'type' => 'text',
+                            'name' => 'title',
+                            'readonly' => true,
+                            'value' => 'Học sinh giỏi'
+                        ]) ?>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
-
 <style>
    *,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-.student-final {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
+    .student-final-info {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #FFF;
+    }
 
-.body {
-    display: flex; 
-    flex-direction: row; 
-    background: #F0F2F5;
-    height: 100%;
-}
+    .student-final-info-heading {
+        width: 100%;
+        height: 60px;
+    }
 
-.heading {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
 
-.final-container {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    align-self: stretch;
-}
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-.final-container h1 {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        overflow-y: auto;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 
-.final-tool {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap: 20px;
-    padding: 10px;
-    justify-content: space-between;
-    align-self: stretch;
-    border-radius: 10px;
-    background: var(--White, #FFF);
-}
+    .body-right h1 {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 
-.final-dropdown{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap;
-}
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 
-.final-dropdown h2{
-    color: #000;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    white-space: nowrap; /* Ngăn văn bản bị xuống dòng */
-    margin: 0;
-}
+    .body-right h3 {
+        color: #000;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
 
-.final-dropdown select {
-    min-width: 120px;
-    max-width: 200px;
-}
+    .student-final-fields {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.tool-export {
-    margin-left: auto; /* Đẩy nút export sang phải */
-}
+    .student-final-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
 
-.content {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    align-self: stretch;
-    gap: 20px;
-    border-radius: 10px;
-    background: var(--White, #FFF);
-}
+    .final-tool {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 20px;
+        padding: 10px;
+        justify-content: space-between;
+        align-self: stretch;
+        border-radius: 10px;
+        background: var(--White, #FFF);
+    }
 
-.content h3 {
-    color: #000;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
+    .final-dropdown{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
 
-.final-info{
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
+    .final-dropdown h2{
+        color: #000;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        white-space: nowrap; /* Ngăn văn bản bị xuống dòng */
+        margin: 0;
+    }
 
-.group {
-    display: flex;
-    width: 500px;
-    max-width: 500px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-}
+    .final-dropdown select {
+        min-width: 120px;
+        max-width: 200px;
+    }
 
-.group label{
-    color: #000;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-} 
-
-.table-container {
-    width: 100%;
-    margin-top: 20px; /* Khoảng cách với các thành phần phía trên */
-    transition: all 0.3s ease; /* Hiệu ứng mượt khi hiển thị */
-}
+    .table-container {
+        width: 100%;
+        margin-top: 20px; /* Khoảng cách với các thành phần phía trên */
+        transition: all 0.3s ease; /* Hiệu ứng mượt khi hiển thị */
+    }
 </style>
 
 <script>
@@ -244,9 +259,7 @@
             // Toggle hiển thị bảng
             if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
                 tableContainer.style.display = 'block'; // Hiển thị bảng
-            } else {
-                tableContainer.style.display = 'none'; // Ẩn bảng
-            }
+            } 
         });
     });
 </script>

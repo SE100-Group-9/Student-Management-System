@@ -9,9 +9,10 @@
             <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
+            Học phí / Quản lý học phí / Danh sách
             <h1>Thêm thanh toán:</h1>
-            <h2>Thông tin thanh toán:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/cashier/payment/add">
+                <h2>Thông tin thanh toán:</h2>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
                         Mã học sinh 
@@ -27,8 +28,7 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_name',
-                            'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'value' => 'Nguyễn Văn A'
                         ]) ?>
                     </div>
@@ -40,7 +40,9 @@
                             'type' => 'text',
                             'name' => 'student_paid',
                             'required' => true,
-                            'value' => '500,000'
+                            'readonly' => false,
+                            'value' => '',
+                            'placeholder' => 'Nhập số tiền'
                         ]) ?>
                     </div>
                 </div>
@@ -152,7 +154,7 @@
     .payment-add-btns {
         display: flex;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         gap: 20px;
     }

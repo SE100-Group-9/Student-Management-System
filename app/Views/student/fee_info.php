@@ -9,8 +9,8 @@
             <?= view('components/sidebar_student') ?>
         </div>
         <div class="body-right">
-            <h2>Thông tin cá nhân:</h2>
-            <form method="POST" action=" ">
+            <h2>Thông tin học phí:</h2>
+            <form method="GET" action=" ">
                 <div class="student-fee-info-fields">
                     <div class="student-fee-info-field">
                         Tổng tiền
@@ -42,26 +42,6 @@
                         ]) ?>
                     </div>
                     <div class="student-fee-info-field">
-                        Phương thức thanh toán
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_method',
-                            'readonly' => true,
-                            'value' => 'Chuyển khoản'
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="student-fee-info-fields">
-                    <div class="student-fee-info-field">
-                        Người thu
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'cashier_name',
-                            'readonly' => true,
-                            'value' => 'Trần Thị B'
-                        ]) ?>
-                    </div>
-                    <div class="student-fee-info-field">
                         Ngày thanh toán
                         <?= view('components/input', [
                             'type' => 'text',
@@ -73,12 +53,12 @@
                 </div>
                 <div class="student-fee-info-fields">
                     <div class="student-fee-info-field">
-                        Ngày thanh toán kế tiếp
+                        Người thu
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'day_next',
+                            'name' => 'cashier_name',
                             'readonly' => true,
-                            'value' => '01-03-2000'
+                            'value' => 'Trần Thị B'
                         ]) ?>
                     </div>
                     <div class="student-fee-info-field">

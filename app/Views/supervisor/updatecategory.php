@@ -152,7 +152,7 @@
     .update-category-btns {
         display: flex;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
         gap: 20px;
     }

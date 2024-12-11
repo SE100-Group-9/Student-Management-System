@@ -10,7 +10,7 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="POST" action=" ">
+            <form method="GET" action=" ">
                 <div class="cashier-profile-fields">
                     <div class="cashier-profile-field">
                         Mã nhân viên

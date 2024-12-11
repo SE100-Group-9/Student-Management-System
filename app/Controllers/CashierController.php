@@ -11,19 +11,9 @@ class CashierController extends Controller
         return view('cashier/payment/list');
     }
 
-    public function extense()
-    {
-        return view('cashier/extense');
-    }
-
     public function profile() 
     {
         return view('cashier/profile');
-    }
-
-    public function viewinfo()
-    {
-        return view('cashier/payment/viewinfo');
     }
 
     public function add()
@@ -31,9 +21,9 @@ class CashierController extends Controller
         return view('cashier/payment/add');
     }
 
-    public function addextense()
+    public function staticStudent()
     {
-        return view('cashier/payment/addextense');
+        return view('cashier/statics/student');
     }
 
     public function changepw()
