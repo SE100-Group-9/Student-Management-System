@@ -34,7 +34,7 @@ if (!function_exists('statusButton')) {
             case 'Đã thu':
                 $classes = 'status-primary';
                 break;
-            case 'Đang làm':
+            case 'Đang làm việc':
                 $classes = 'status-third';
                 break;
             case 'Tổ trưởng':

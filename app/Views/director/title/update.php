@@ -12,7 +12,8 @@
             Trung tâm / Quy định / Danh hiệu
             <h1>Cập nhật danh hiệu:</h1>
             <h2>Thông tin danh hiệu:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/title/update">
+                <input type="hidden" name="id" value="<?= $title['MaDH'] ?>">
                 <div class="titleupdate-fields">
                     <div class="titleupdate-field">
                         Tên danh hiệu
@@ -20,7 +21,8 @@
                             'type' => 'text',
                             'name' => 'title_name',
                             'required' => true,
-                            'placeholder' => 'Học sinh Giỏi'
+                            'placeholder' => 'Học sinh Giỏi',
+                            'value' => $title['TenDH']
                         ]) ?>
                     </div>
                     <div class="titleupdate-field">
@@ -29,7 +31,8 @@
                             'type' => 'text',
                             'name' => 'min_grade',
                             'required' => true,
-                            'placeholder' => '9.0'
+                            'placeholder' => '9.0',
+                            'value' => $title['DiemTBToiThieu']
                         ]) ?>
                     </div>
                 </div>
@@ -40,12 +43,26 @@
                             'type' => 'text',
                             'name' => 'min_conduct',
                             'required' => true,
-                            'placeholder' => '90'
+                            'placeholder' => '90',
+                            'value' => $title['DiemHanhKiemToiThieu']
                         ]) ?>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                </div>
+                <?php elseif (session()->getFlashdata('error')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="titleupdate-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/title/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>

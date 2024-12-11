@@ -13,7 +13,9 @@
                 <div class="tools">
                     <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
+                    <a style="text-decoration: none" href="/sms/public/director/title/add">
+                        <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
+                    </a>
                 </div>
             </div>
             <?= view('components/tables/directorTitleList', ['titleList' => $titleList]) ?>

@@ -9,6 +9,7 @@ use App\Models\HocSinhModel;
 use App\Models\HocSinhLopModel;
 use App\Models\LopModel;
 use App\Models\DanhHieuModel;
+use App\Models\ThuNganModel;
 
 class DirectorController extends Controller
 {
@@ -126,7 +127,12 @@ class DirectorController extends Controller
         ]);
         $allPostData = $this->request->getPost();
         log_message('info', 'Received Data: ' . json_encode($allPostData));
-        return redirect()->back()->with('success', 'Cập nhật thành công!');
+            // Xử lý thông báo
+        if ($TaiKhoanModel && $HocSinhModel) {
+            return redirect()->back()->with('success', 'Cập nhật thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
     }
 
 
@@ -214,12 +220,13 @@ class DirectorController extends Controller
         return view('director/student/record');
     }
 
+    //Màn hình Danh hiệu
     public function titleList()
     {
         $DanhHieuModel = new DanhHieuModel();
 
-        // Lấy danh sách danh hiệu từ cơ sở dữ liệu
-        $titleList = $DanhHieuModel->findAll();
+        // Lấy danh sách danh hiệu và sắp xếp theo DiemTBToiThieu giảm dần
+        $titleList = $DanhHieuModel->orderBy('DiemTBToiThieu', 'DESC')->findAll();
 
         // Truyền dữ liệu tới view
         return view('director/title/list', [
@@ -232,10 +239,86 @@ class DirectorController extends Controller
         return view('director/title/add');
     }
 
-    public function titleUpdate()
+    public function addTitle()
     {
-        return view('director/title/update');
+        $DanhHieuModel = new DanhHieuModel();
+
+        // Lấy dữ liệu từ form
+        $TenDH = $this->request->getPost('title_name');
+        $DiemTBToiThieu = $this->request->getPost('min_grade');
+        $DiemHanhKiemToiThieu = $this->request->getPost('min_conduct');
+
+        // Kiểm tra tính hợp lệ của dữ liệu
+        if ($DiemTBToiThieu < 0 || $DiemTBToiThieu > 10) {
+            return redirect()->back()->with('error', 'Điểm trung bình tối thiểu phải nằm trong khoảng từ 0 đến 10.');
+        }
+
+        if ($DiemHanhKiemToiThieu < 0 || $DiemHanhKiemToiThieu > 100) {
+            return redirect()->back()->with('error', 'Điểm hạnh kiểm tối thiểu phải nằm trong khoảng từ 0 đến 100.');
+        }
+        // Lưu danh hiệu vào cơ sở dữ liệu
+        $MaDH = $DanhHieuModel->insert([
+            'TenDH' => $TenDH,
+            'DiemTBToiThieu' => $DiemTBToiThieu,
+            'DiemHanhKiemToiThieu' => $DiemHanhKiemToiThieu,
+        ]);
+
+        // Điều hướng sau khi lưu thành công/thất bại
+        if ($MaDH) {
+            return redirect()->back()->with('success', 'Danh hiệu đã được thêm thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Không thể thêm danh hiệu. Vui lòng thử lại.');
+        }
     }
+
+    public function titleUpdate($id)
+    {
+        $DanhHieuModel = new DanhHieuModel();
+        
+        // Lấy thông tin danh hiệu dựa trên ID
+        $title = $DanhHieuModel->find($id);
+
+        if (!$title) {
+            return redirect()->to('/sms/public/director/title/list')->with('error', 'Không tìm thấy danh hiệu.');
+        }
+
+        return view('director/title/update', ['title' => $title]);
+    }
+    public function updateTitle()
+    {
+        $DanhHieuModel = new DanhHieuModel();
+
+        // Lấy dữ liệu từ form
+        $MaDH = $this->request->getPost('id');
+        $TenDH = $this->request->getPost('title_name');
+        $DiemTBToiThieu = $this->request->getPost('min_grade');
+        $DiemHanhKiemToiThieu = $this->request->getPost('min_conduct');
+
+        // Kiểm tra tính hợp lệ của dữ liệu
+        if ($DiemTBToiThieu < 0 || $DiemTBToiThieu > 10) {
+            return redirect()->back()->with('error', 'Điểm trung bình tối thiểu phải nằm trong khoảng từ 0 đến 10.');
+        }
+
+        if ($DiemHanhKiemToiThieu < 0 || $DiemHanhKiemToiThieu > 100) {
+            return redirect()->back()->with('error', 'Điểm hạnh kiểm tối thiểu phải nằm trong khoảng từ 0 đến 100.');
+        }
+
+        // Cập nhật danh hiệu trong cơ sở dữ liệu
+        $DanhHieu = $DanhHieuModel->update($MaDH, [
+            'TenDH' => $TenDH,
+            'DiemTBToiThieu' => $DiemTBToiThieu,
+            'DiemHanhKiemToiThieu' => $DiemHanhKiemToiThieu,
+        ]);
+
+        // Điều hướng sau khi cập nhật
+        if ($DanhHieu) {
+            return redirect()->back()->with('success', 'Cập nhật danh hiệu thành công!');
+        } else {
+            return redirect()->back()->with('error', 'Không thể cập nhật danh hiệu. Vui lòng thử lại.');
+        }
+    }
+
+
 
     public function classList()
     {
@@ -296,9 +379,22 @@ class DirectorController extends Controller
         return view('director/changepw');
     }
     
+
+    // Màn hình quản lý thu ngân
     public function employeeCashierList()
     {
-        return view('director/employee/cashier/list');
+        $ThuNganModel = new ThuNganModel();
+
+        // Tạo query lấy danh sách thu ngân
+        $ThuNgan = $ThuNganModel
+            ->select('thungan.*, taikhoan.*')
+            ->join('taikhoan', 'taikhoan.MaTK = thungan.MaTK');
+        
+        $cashierList = $ThuNgan->findAll();
+        log_message('debug', 'Cashier List: ' . print_r($cashierList, true));
+        return view('director/employee/cashier/list', [
+            'cashierList' => $cashierList
+        ]);
     }
     public function employeeCashierAdd()
     {
