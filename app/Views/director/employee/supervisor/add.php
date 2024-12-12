@@ -11,23 +11,29 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giám thị
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/employee/supervisor/add">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="supervisoradd-fields">
                     <div class="supervisoradd-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_account',
-                            'required' => true,
+                            'name' => 'supervisor_account',
+                            'value' => $newMaGT ?? '', // Load mã GT tự động
+                            'readonly' => true, // Chỉ đọc để không cho sửa
+                            'placeholder' => 'Tên tài khoản',
                         ]) ?>
                     </div>
                     <div class="supervisoradd-field">
                         Mật khẩu
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_password',
+                            'name' => 'supervisor_password',
+                            'readonly' => false,
+                            'value' => '',
                             'required' => true,
+                            'placeholder' => 'Mật khẩu',
+                            'value' => old('supervisor_password'),
                         ]) ?>
                     </div>
                 </div>
@@ -37,16 +43,20 @@
                         Họ và tên
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_name',
+                            'name' => 'supervisor_name',
                             'required' => true,
+                            'placeholder' => 'Họ tên giám thị',
+                            'value' => old('supervisor_name'),
                         ]) ?>
                     </div>
                     <div class="supervisoradd-field">
                         Email
                         <?= view('components/input', [
                             'type' => 'email',
-                            'name' => 'teacher_email',
+                            'name' => 'supervisor_email',
                             'required' => true,
+                            'placeholder' => 'Email',
+                            'value' => old('supervisor_email'),
                         ]) ?>
                     </div>
                 </div>
@@ -55,16 +65,20 @@
                         Số điện thoại
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_phone',
+                            'name' => 'supervisor_phone',
                             'required' => true,
+                            'placeholder' => 'Số điện thoại',
+                            'value' => old('supervisor_phone'),
                         ]) ?>
                     </div>
                     <div class="supervisoradd-field">
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_address',
+                            'name' => 'supervisor_address',
                             'required' => true,
+                            'placeholder' => 'Địa chỉ',
+                            'value' => old('supervisor_address'),
                         ]) ?>
                     </div>
                 </div>
@@ -73,10 +87,11 @@
                         <div class="supervisoradd-special">
                             Giới tính
                             <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
-                                'name' => 'teacher_gender',
+                                'name' => 'supervisor_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => old('supervisor_gender'),
                             ]) ?>
                         </div>
                         <div class="supervisoradd-special">
@@ -84,16 +99,34 @@
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
                                 'name' => 'supervisor_birthday',
+                                'value' => old('supervisor_birthday'),
                             ]) ?>
                         </div>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?php foreach (session()->getFlashdata('errors') as $field => $message): ?>
+                            <p><?= $message ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+
                 <div class="supervisoradd-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/employee/supervisor/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>
-
         </div>
     </div>
 </div>

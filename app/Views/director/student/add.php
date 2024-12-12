@@ -32,7 +32,8 @@
                             'readonly' => false,
                             'value' => '',
                             'required' => true,
-                            'placeholder' => 'Mật khẩu'
+                            'placeholder' => 'Mật khẩu',
+                            'value' => old('student_password'),
                         ]) ?>
                     </div>
                 </div>
@@ -44,7 +45,8 @@
                             'type' => 'text',
                             'name' => 'student_name',
                             'required' => true,
-                            'placeholder' => 'Họ tên học sinh'
+                            'placeholder' => 'Họ tên học sinh',
+                            'value' => old('student_name'),
                         ]) ?>
                     </div>
                     <div class="studentadd-field">
@@ -53,7 +55,8 @@
                             'type' => 'email',
                             'name' => 'student_email',
                             'required' => true,
-                            'placeholder' => 'Email'
+                            'placeholder' => 'Email',
+                            'value' => old('student_email'),
                         ]) ?>
                     </div>
                 </div>
@@ -64,7 +67,8 @@
                             'type' => 'text',
                             'name' => 'student_phone',
                             'required' => true,
-                            'placeholder' => 'Số điện thoại'
+                            'placeholder' => 'Số điện thoại',
+                            'value' => old('student_phone')
                         ]) ?>
                     </div>
                     <div class="studentadd-field">
@@ -73,7 +77,8 @@
                             'type' => 'text',
                             'name' => 'student_address',
                             'required' => true,
-                            'placeholder' => 'Địa chỉ'
+                            'placeholder' => 'Địa chỉ',
+                            'value' => old('student_address')
                         ]) ?>
                     </div>
                 </div>
@@ -86,6 +91,7 @@
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'student_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => old('student_gender'),
                             ]) ?>
                         </div>
                         <div class="studentadd-special">
@@ -93,6 +99,7 @@
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
                                 'name' => 'student_birthday',
+                                'value' => old('student_birthday'),
                             ]) ?>
                         </div>
 
@@ -105,7 +112,8 @@
                                 'type' => 'text',
                                 'name' => 'student_nation',
                                 'required' => true,
-                                'placeholder' => 'Dân tộc'
+                                'placeholder' => 'Dân tộc',
+                                'value' => old('student_nation'),
                             ]) ?>
                         </div>
                         <div class="studentadd-once">
@@ -114,11 +122,27 @@
                                 'type' => 'text',
                                 'name' => 'student_country',
                                 'required' => true,
-                                'placeholder' => 'Nơi sinh'
+                                'placeholder' => 'Nơi sinh',
+                                'value' => old('student_country'),
                             ]) ?>
                         </div>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?php foreach (session()->getFlashdata('errors') as $field => $message): ?>
+                            <p><?= $message ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="studentadd-btns">
                     <a style="text-decoration: none" href="/sms/public/director/student/list">
                         <?= view('components/exit_button') ?>

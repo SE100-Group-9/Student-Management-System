@@ -163,12 +163,17 @@
                 </div>
 
                 <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success">
+                    <div class="alert alert-success">
                         <?= session()->getFlashdata('success') ?>
-                </div>
-                <?php elseif (session()->getFlashdata('error')): ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
                     <div class="alert alert-danger">
                         <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 

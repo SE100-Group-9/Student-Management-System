@@ -5,6 +5,7 @@ if (!function_exists('statusButton')) {
     {
         $classes = '';
         switch ($status) {
+            // Học sinh
             case 'Đang học':
                 $classes = 'status-third';
                 break;
@@ -15,8 +16,12 @@ if (!function_exists('statusButton')) {
                 $classes = 'status-primary';
                 break;  
 
-
-
+            case 'Đang làm việc':
+                $classes = 'status-third';
+                break;
+            case 'Đã nghĩ việc':
+                $classes = 'status-primary';
+                break;
 
 
 
@@ -34,9 +39,7 @@ if (!function_exists('statusButton')) {
             case 'Đã thu':
                 $classes = 'status-primary';
                 break;
-            case 'Đang làm việc':
-                $classes = 'status-third';
-                break;
+
             case 'Tổ trưởng':
                 $classes = 'status-third';
                 break;

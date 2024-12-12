@@ -75,9 +75,6 @@
             <div class="student-payment">
                 Thông tin thanh toán
             </div>
-            <div class="reserved">
-                Bảo lưu
-            </div>
             <div class="report">
                 Thông tin học bạ
             </div>
@@ -128,7 +125,9 @@
                 </a>
             </div>
             <div class="supervisor">
-                Giám thị
+                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/supervisor/list">
+                    Giám thị
+                </a>
             </div>
         </div>
     </div>

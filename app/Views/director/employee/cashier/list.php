@@ -11,12 +11,17 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Thu ngân
             <div class="employee-cashierlist-tool">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm thu ngân']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/employee/cashier/list">
+                    <div class="tool-search">
+                        <?= view('components/filter') ?>
+                        <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+                </form> 
+            </div>
+                
                 <div class="tool-add">
+                    <a style="text-decoration: none" href="/sms/public/director/employee/cashier/add">
+                        <?= view('components/add', ['button_text' => 'Thêm thu ngân']) ?>
+                    </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>

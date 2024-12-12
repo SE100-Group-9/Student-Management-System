@@ -11,23 +11,29 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Thu ngân
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/employee/cashier/update/<?= $cashier['MaTN'] ?>">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="cashierupdate-fields">
+                    <input type="hidden" name="MaTN" value="<?= $cashier['MaTN'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $cashier['MaTK'] ?? '' ?>">
                     <div class="cashierupdate-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_account',
+                            'name' => 'cashier_account',
                             'required' => true,
+                            'value' => $cashier['TenTK'],
+                            'readonly' => true,
                         ]) ?>
                     </div>
                     <div class="cashierupdate-field">
                         Mật khẩu
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_password',
+                            'name' => 'cashier_password',
                             'required' => true,
+                            'value' => $cashier['MatKhau'],
+                            'readonly' => false,
                         ]) ?>
                     </div>
                 </div>
@@ -37,16 +43,18 @@
                         Họ và tên
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_name',
+                            'name' => 'cashier_name',
                             'required' => true,
+                            'value' => $cashier['HoTen'],
                         ]) ?>
                     </div>
                     <div class="cashierupdate-field">
                         Email
                         <?= view('components/input', [
                             'type' => 'email',
-                            'name' => 'teacher_email',
+                            'name' => 'cashier_email',
                             'required' => true,
+                            'value' => $cashier['Email'],
                         ]) ?>
                     </div>
                 </div>
@@ -55,16 +63,18 @@
                         Số điện thoại
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_phone',
+                            'name' => 'cashier_phone',
                             'required' => true,
+                            'value' => $cashier['SoDienThoai'],
                         ]) ?>
                     </div>
                     <div class="cashierupdate-field">
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_address',
+                            'name' => 'cashier_address',
                             'required' => true,
+                            'value' => $cashier['DiaChi'],
                         ]) ?>
                     </div>
                 </div>
@@ -73,17 +83,19 @@
                         <div class="cashierupdate-special">
                             Giới tính
                             <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
-                                'name' => 'teacher_gender',
+                                'name' => 'cashier_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => $cashier['GioiTinh'],
                             ]) ?>
                         </div>
                         <div class="cashierupdate-special">
                             Ngày sinh
                             <?= view('components/datepicker', [
                                 'datepicker_id' => 'birthday',
-                                'name' => 'supervisor_birthday',
+                                'name' => 'cashier_birthday',
+                                'value' => $cashier['NgaySinh'],
                             ]) ?>
                         </div>
                     </div>
@@ -91,30 +103,42 @@
                         <div class="cashierupdate-special">
                             Tình trạng
                             <?= view('components/dropdown', [
-                                'options' => ['Đang làm', 'Khóa'],
+                                'options' => ['Đang làm việc', 'Đã nghỉ việc'],
                                 'dropdown_id' => 'status-dropdown',
-                                'name' => 'supervisor_status',
+                                'name' => 'cashier_status',
                                 'selected_text' => 'Tình trạng',
-                            ]) ?>
-                        </div>
-                        <!-- Đừng đụng vào cái này -->
-                        <div class="cashierupdate-special" style="display:none">
-                            Tình trạng
-                            <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
-                                'dropdown_id' => 'gender-dropdown',
-                                'name' => 'teacher_gender',
-                                'selected_text' => 'Giới tính',
+                                'value' => $cashier['TinhTrang'],
                             ]) ?>
                         </div>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="cashierupdate-btns">
-                    <?= view('components/exit_button') ?>
+                    <a style="text-decoration: none" href="/sms/public/director/employee/cashier/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>
-
+            <!-- Đừng đụng vào cái này -->
+            <div class="cashierupdate-special" style="display:none">
+                <?= view('components/dropdown', []) ?>
+            </div>
         </div>
     </div>
 </div>

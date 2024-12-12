@@ -30,6 +30,7 @@ $routes->get('director/title/add', 'DirectorController::titleAdd');
 $routes->post('director/title/add', 'DirectorController::addTitle');
 $routes->get('director/title/update/(:num)', 'DirectorController::titleUpdate/$1');
 $routes->post('director/title/update', 'DirectorController::updateTitle');  
+$routes->get('director/title/delete/(:num)', 'DirectorController::titleDelete/$1');
 
 $routes->get('director/class/list', 'DirectorController::classList');
 $routes->get('director/class/add', 'DirectorController::classAdd');
@@ -42,12 +43,17 @@ $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeach
 // Director - Quản lý Thu ngân
 $routes->get('director/employee/cashier/list', 'DirectorController::employeeCashierList');
 $routes->get('director/employee/cashier/add', 'DirectorController::employeeCashierAdd');
-$routes->get('director/employee/cashier/update', 'DirectorController::employeeCashierUpdate');
+$routes->post('director/employee/cashier/add', 'DirectorController::addEmployeeCashier');
+$routes->get('director/employee/cashier/update/(:segment)', 'DirectorController::employeeCashierUpdate/$1');
+$routes->post('director/employee/cashier/update/(:segment)', 'DirectorController::updateEmployeeCashier/$1');
 
-
+// Director - Quản lý Giám thị
 $routes->get('director/employee/supervisor/list', 'DirectorController::employeeSupervisorList');
 $routes->get('director/employee/supervisor/add', 'DirectorController::employeeSupervisorAdd');
-$routes->get('director/employee/supervisor/update', 'DirectorController::employeeSupervisorUpdate');
+$routes->post('director/employee/supervisor/add', 'DirectorController::addEmployeeSupervisor');
+$routes->get('director/employee/supervisor/update/(:segment)', 'DirectorController::employeeSupervisorUpdate/$1');
+$routes->post('director/employee/supervisor/update/(:segment)', 'DirectorController::updateEmployeeSupervisor/$1');
+
 $routes->get('director/profile', 'DirectorController::profile');
 $routes->get('director/changepw', 'DirectorController::changepw');
 

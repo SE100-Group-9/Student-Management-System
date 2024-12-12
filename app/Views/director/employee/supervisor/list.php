@@ -11,18 +11,22 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giám thị
             <div class="employee-teacherlist-tool">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm giám thị']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/employee/supervisor/list">
+                    <div class="tool-search">
+                        <?= view('components/filter') ?>
+                        <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+                    </div>
+                </form>
                 <div class="tool-add">
+                    <a style="text-decoration: none" href="/sms/public/director/employee/supervisor/add">
+                        <?= view('components/add', ['button_text' => 'Thêm giám thị']) ?>
+                    </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorEmployeeSupervisor', ['tableId' => 'directorEmployeeSupervisor']) ?>
+                <?= view('components/tables/directorEmployeeSupervisor', ['supervisorList' => $supervisorList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
