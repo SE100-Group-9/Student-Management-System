@@ -11,7 +11,7 @@
         <div class="body-right">
             <h1>Đổi mật khẩu:</h1>
             <h2>Thông tin mật khẩu:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/changepw">
                 <div class="changepw-fields">
                     <div class="changepw-field">
                         <div class="changepw-label">
@@ -24,7 +24,8 @@
                             'type' => 'text',
                             'name' => 'old_pw',
                             'required' => true,
-                            'placeholder' => 'Nhập mật khẩu cũ'
+                            'placeholder' => 'Nhập mật khẩu cũ',
+                            'value' => old('old_pw'),
                         ]) ?>
                     </div>
                     <div class="changepw-field">
@@ -38,7 +39,8 @@
                             'type' => 'text',
                             'name' => 'new_pw',
                             'required' => true,
-                            'placeholder' => 'Nhập mật khẩu mới'
+                            'placeholder' => 'Nhập mật khẩu mới',
+                            'value' => old('new_pw'),
                         ]) ?>
                     </div>
                 </div>
@@ -54,12 +56,29 @@
                             'type' => 'text',
                             'name' => 'confirm_pw',
                             'required' => true,
-                            'placeholder' => 'Nhập lại mật khẩu mới'
+                            'placeholder' => 'Nhập lại mật khẩu mới',
+                            'value' => old('confirm_pw'),
                         ]) ?>
                     </div>
                 </div>
+                <div class="changepw-fields">
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                </div>
                 <div class="changepw-btns">
-                    <a href="/sms/public/director/statics/conduct" style="text-decoration: none";>
+                    <a href="/sms/public/director/title/list" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>

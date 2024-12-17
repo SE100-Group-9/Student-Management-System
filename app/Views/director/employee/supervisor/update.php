@@ -83,7 +83,7 @@
                         <div class="supervisoradd-special">
                             Giới tính
                             <?= view('components/dropdown', [
-                                'options' => ['Nữ', 'Nam', 'Khác'],
+                                'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'supervisor_gender',
                                 'selected_text' => 'Giới tính',

@@ -47,7 +47,7 @@ class LoginController extends Controller
                     case '1': // Ban Giám Hiệu
                         return redirect()->to('/director/statics/conduct');
                     case '2': // Giáo Viên
-                        return redirect()->to('/teacher/dashboard');
+                        return redirect()->to('/teacher/statics/grade');
                     case '3': // Học Sinh
                         return redirect()->to('/student/conduct');
                     case '4': // Thu Ngân
@@ -58,10 +58,12 @@ class LoginController extends Controller
                         $session->destroy();
                         return redirect()->to('/')->with('error', 'Vai trò không hợp lệ!');
                 }
-            } 
-        } else {
+            }
+            else 
+                return redirect()->to('/')->with('error', 'Tên tài khoản hoặc mật khẩu không chính xác!');
+        } 
+        else 
             return redirect()->to('/')->with('error', 'Tên tài khoản hoặc mật khẩu không chính xác!');
-        }
     }
 
     public function logout()

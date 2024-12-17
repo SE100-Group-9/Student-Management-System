@@ -11,25 +11,29 @@
         <div class="body-right">
             Học tập / Lớp học / Danh sách
             <div class="classlists-tools">
-                <div class="tools">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', [
-                        'options' => ['2023 - 2024'],
-                        'dropdown_id' => 'semester-dropdown',
-                        'name' => 'dropdown',
-                        'selected_text' => 'Chọn năm học',
-                        'value' => '',
-                    ]) ?>
-                    <?= view('components/add', ['button_text' => 'Thêm lớp học']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/class/list">
+                    <div class="tools">
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['2023-2024', '2024-2025', '2025-2026'],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                        <?= view('components/view_button') ?>
+                    </div>
+                </form>
                 <div class="tool-add">
+                    <a style="text-decoration: none" href="/sms/public/director/class/add">
+                        <?= view('components/add', ['button_text' => 'Thêm lớp học']) ?>
+                    </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorClassList') ?>
+                <?= view('components/tables/directorClassList', ['classList' => $classList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>

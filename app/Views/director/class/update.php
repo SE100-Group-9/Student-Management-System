@@ -11,8 +11,9 @@
         <div class="body-right">
             Học tập / Lớp học / Danh sách
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action="/sms/public/director/class/add">
+            <form method="POST" action="/sms/public/director/class/update">
                 <h2>Thông tin lớp học:</h2>
+                <input type="hidden" name="MaLop" value="<?= $class['MaLop'] ?? '' ?>">
                 <div class="classupdate-fields">
                     <div class="classupdate-field">
                         Tên lớp
@@ -20,33 +21,38 @@
                             'type' => 'text',
                             'name' => 'class_name',
                             'required' => true,
-                            'placeholder' => '11A1'
+                            'placeholder' => '10_1',
+                            'value' => $class['TenLop'] ?? ''
                         ]) ?>
                     </div>
                     <div class="classupdate-field">
-                        Tên giáo viên chủ nhiệm
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'class_teacher',
-                            'required' => true,
-                            'placeholder' => 'Nguyễn Khánh Huy'
+                        Giáo viên chủ nhiệm
+                        <?= view('components/dropdown', [
+                            'options' => $teacherOptions,
+                            'dropdown_id' => 'teacher-dropdown',
+                            'name' => 'class-teacher',
+                            'selected_text' => 'Chọn giáo viên chủ nhiệm',
+                            'value' => $teacher['MaGV'] . ' - ' . $teacher['HoTen'] ?? '',
                         ]) ?>
                     </div>
                 </div>
-                <div class="classupdate-fields">
-                    <div class="classupdate-specials">
-                        <div class="classupdate-special">
-                            Khối
-                            <?= view('components/dropdown', [
-                                'options' => ['10', '11', '12'],
-                                'dropdown_id' => 'grade-dropdown',
-                                'name' => 'class-grade',
-                                'selected_text' => 'Khối',
-                            ]) ?>
-                        </div>
-                    </div>
 
-                </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+
                 <div class="classupdate-btns">
                     <a style="text-decoration: none" href="/sms/public/director/class/list">
                         <?= view('components/exit_button') ?>

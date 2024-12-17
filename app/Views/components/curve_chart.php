@@ -8,12 +8,9 @@
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Year', 'Nhập học', 'Bảo lưu', 'Bị cảnh báo'],
-            ['2020', 1000, 400, 500],
-            ['2021', 1170, 460, 650],
-            ['2022', 660, 1120, 600],
-            ['2023', 1030, 540, 265],
-            ['2024', 900, 840, 650]
+            ['Year', 'Nhập học', 'Bị cảnh báo'],
+            ['2023-2024', 60, 12],
+            ['2024-2025', 75, 11],
         ]);
 
         var options = {

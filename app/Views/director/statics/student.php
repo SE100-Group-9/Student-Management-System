@@ -22,12 +22,6 @@
                     'percentage' => '100.00%',
                     'comparison' => 'so với năm 2023'
                 ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Số học sinh bảo lưu',
-                    'count' => '200',
-                    'percentage' => '100.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
                 <?= view('components/card_increase', [
                     'title' => 'Tổng số học sinh',
                     'count' => '20.000',

@@ -10,15 +10,18 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/profile">
                 <div class="director-profile-fields">
+                    <input type="hidden" name="MaBGH" value="<?= $director['MaBGH'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $director['MaBGH'] ?? '' ?>">
+
                     <div class="director-profile-field">
-                        Mã nhân viên
+                        Mã Ban Giám Hiệu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'director_id',
                             'readonly' => true,
-                            'value' => 'GT0001'
+                            'value' => $director['MaBGH'],
                         ]) ?>
                     </div>
                     <div class="director-profile-field">
@@ -27,7 +30,7 @@
                             'type' => 'text',
                             'name' => 'director_name',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $director['HoTen'],
                         ]) ?>
                     </div>
                 </div>
@@ -36,18 +39,18 @@
                         Giới tính
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'director_sex',
+                            'name' => 'director_gender',
                             'readonly' => true,
-                            'value' => 'Nam'
+                            'value' => $director['GioiTinh'],
                         ]) ?>
                     </div>
                     <div class="director-profile-field">
                         Ngày sinh
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'director_date-of-birth',
+                            'name' => 'director_birthday',
                             'readonly' => true,
-                            'value' => '01-01-2000'
+                            'value' => date('d/m/Y', strtotime($director['NgaySinh'])),
                         ]) ?>
                     </div>
                 </div>
@@ -57,8 +60,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'director_address',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'readonly' => false,
+                            'required' => true,
+                            'value' => $director['DiaChi'],
                         ]) ?>
                     </div>
                     <div class="director-profile-field">
@@ -66,8 +70,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'director_phone',
-                            'readonly' => true,
-                            'value' => '0123456789'
+                            'required' => true,
+                            'readonly' => false,
+                            'value' => $director['SoDienThoai'],
                         ]) ?>
                     </div>
                 </div>
@@ -77,11 +82,35 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'director_email',
-                            'readonly' => true,
-                            'value' => 'hieutruong@gmail.com'
+                            'readonly' => false,
+                            'required' => true,
+                            'value' => $director['Email'],
                         ]) ?>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="directoradd-btns">
+                    <a style="text-decoration: none" href="/sms/public/director/title/list">
+                        <?= view('components/exit_button') ?>
+                    </a>
+                    <?= view('components/save_button') ?>
+                </div>
+
             </form>
         </div>
     </div>
@@ -157,6 +186,14 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+    }
+
+    .directoradd-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 
     .director-profile-fields {

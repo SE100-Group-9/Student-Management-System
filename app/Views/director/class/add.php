@@ -15,38 +15,55 @@
                 <h2>Thông tin lớp học:</h2>
                 <div class="classadd-fields">
                     <div class="classadd-field">
-                        Tên lớp
+                            Năm Học
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'year',
+                                'readonly' => true,
+                                'value' => $selectedYear,
+                            ]) ?>
+                    </div>
+                    <div class="classadd-field">
+                        Tên lớp học
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'class_name',
                             'required' => true,
-                            'placeholder' => '11A1'
-                        ]) ?>
-                    </div>
-                    <div class="classadd-field">
-                        Tên giáo viên chủ nhiệm
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'class_teacher',
-                            'required' => true,
-                            'placeholder' => 'Nguyễn Khánh Huy'
+                            'readonly' => false,
+                            'placeholder' => '10_1',
+                            'value' => old('class_name'),
                         ]) ?>
                     </div>
                 </div>
                 <div class="classadd-fields">
-                    <div class="classadd-specials">
                         <div class="classadd-special">
-                            Khối
+                            Giáo viên chủ nhiệm
                             <?= view('components/dropdown', [
-                                'options' => ['10', '11', '12'],
-                                'dropdown_id' => 'grade-dropdown',
-                                'name' => 'class-grade',
-                                'selected_text' => 'Khối',
+                                'options' => $teacherOptions,
+                                'dropdown_id' => 'teacher-dropdown',
+                                'name' => 'class-teacher',
+                                'selected_text' => 'Chọn giáo viên chủ nhiệm',
+                                'value' => old('class-teacher'),
                             ]) ?>
                         </div>
-                    </div>
 
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="classadd-btns">
                     <a style="text-decoration: none" href="/sms/public/director/class/list">
                         <?= view('components/exit_button') ?>

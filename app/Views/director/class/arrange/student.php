@@ -9,9 +9,9 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp / 11A1
+            Học tập / Lớp học / Lớp <?= esc($TenLop) ?> / Học sinh
             <div>
-                <?= view('components/student_tab') ?>
+                <?= view('components/tab', ['MaLop' => $MaLop, 'activeTab' => 'student']) ?>
             </div>
             <div class="classlists-tools">
                 <div class="tools">
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorClassArrangeStudent') ?>
+                <?= view('components/tables/directorClassArrangeStudent', ['studentList' => $studentList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
