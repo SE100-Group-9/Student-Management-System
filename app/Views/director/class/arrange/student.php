@@ -15,7 +15,9 @@
             </div>
             <div class="classlists-tools">
                 <div class="tools">
-                    <?= view('components/add', data: ['button_text' => 'Thêm học sinh']) ?>
+                    <a href="/sms/public/director/class/arrange/addstudent" style="text-decoration: none;">
+                        <?= view('components/add', data: ['button_text' => 'Thêm học sinh']) ?>
+                    </a>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>

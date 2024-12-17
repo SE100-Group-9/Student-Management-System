@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="teacheradd">
-    <div class="teacheradd-heading">
+<div class="teacherupdate">
+    <div class="teacherupdate-heading">
         <?= view('components/heading') ?>
     </div>
     <div class="body">
@@ -10,82 +10,90 @@
         </div>
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giáo viên
-            <h1>Tạo hồ sơ:</h1>
+            <h1>Cập nhật hồ sơ:</h1>
             <form method="POST" action=" ">
                 <h2>Thông tin tài khoản:</h2>
-                <div class="teacheradd-fields">
-                    <div class="teacheradd-field">
+                <div class="teacherupdate-fields">
+                    <div class="teacherupdate-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_account',
                             'required' => true,
+                            'value' => '01',
                         ]) ?>
                     </div>
-                    <div class="teacheradd-field">
+                    <div class="teacherupdate-field">
                         Mật khẩu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_password',
                             'required' => true,
+                            'value' => '123abc',
                         ]) ?>
                     </div>
                 </div>
                 <h2>Thông tin cá nhân:</h2>
-                <div class="teacheradd-fields">
-                    <div class="teacheradd-field">
+                <div class="teacherupdate-fields">
+                    <div class="teacherupdate-field">
                         Họ và tên
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_name',
                             'required' => true,
+                            'value' => 'Lê Nguyễn Hoài Thương',
                         ]) ?>
                     </div>
-                    <div class="teacheradd-field">
+                    <div class="teacherupdate-field">
                         Email
                         <?= view('components/input', [
                             'type' => 'email',
                             'name' => 'teacher_email',
                             'required' => true,
+                            'value' => 'a@gmail.com',
                         ]) ?>
                     </div>
                 </div>
-                <div class="teacheradd-fields">
-                    <div class="teacheradd-field">
+                <div class="teacherupdate-fields">
+                    <div class="teacherupdate-field">
                         Số điện thoại
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_phone',
                             'required' => true,
+                            'value' => '0123456789',
                         ]) ?>
                     </div>
-                    <div class="teacheradd-field">
+                    <div class="teacherupdate-field">
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_address',
+                            'name' => 'teacher_updateress',
                             'required' => true,
+                            'value' => '123 TPHCM',
                         ]) ?>
                     </div>
                 </div>
-                <div class="teacheradd-fields">
-                    <div class="teacheradd-specials">
-                        <div class="teacheradd-special">
+                <div class="teacherupdate-fields">
+                    <div class="teacherupdate-specials">
+                        <div class="teacherupdate-special">
                             Giới tính
                             <?= view('components/dropdown', [
                                 'options' => ['Nữ', 'Nam'],
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'teacher_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => 'Nữ',
                             ]) ?>
                         </div>
-                        <div class="teacheradd-special">
+                        <div class="teacherupdate-special">
                             Chức vụ
                             <?= view('components/dropdown', [
                                 'options' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
                                 'dropdown_id' => 'role-dropdown',
                                 'name' => 'teacher_role',
                                 'selected_text' => 'Chức vụ',
+                                'value' => 'Tổ trưởng',
                             ]) ?>
                         </div>
                         <div class="hidden-dropdown">
@@ -98,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="teacheradd-btns">
+                <div class="teacherupdate-btns">
                     <a href="/sms/public/director/employee/teacher/list" style="text-decoration: none;">
                         <?= view('components/exit_button') ?>
                     </a>
@@ -119,7 +127,7 @@
         box-sizing: border-box;
     }
 
-    .teacheradd {
+    .teacherupdate {
         display: flex;
         width: 100%;
         height: 100%;
@@ -132,7 +140,7 @@
         display: none;
     }
 
-    .teacheradd-heading {
+    .teacherupdate-heading {
         width: 100%;
         height: 60px;
     }
@@ -186,14 +194,14 @@
         line-height: normal;
     }
 
-    .teacheradd-fields {
+    .teacherupdate-fields {
         display: flex;
         width: 100%;
         justify-content: space-between;
         align-items: center;
     }
 
-    .teacheradd-field {
+    .teacherupdate-field {
         display: flex;
         width: 45%;
         flex-direction: column;
@@ -208,7 +216,7 @@
         line-height: normal;
     }
 
-    .teacheradd-btns {
+    .teacherupdate-btns {
         display: flex;
         width: 100%;
         justify-content: flex-end;
@@ -216,14 +224,14 @@
         gap: 20px;
     }
 
-    .teacheradd-specials {
+    .teacherupdate-specials {
         display: flex;
         width: 45%;
         justify-content: space-between;
         align-items: flex-start;
     }
 
-    .teacheradd-special {
+    .teacherupdate-special {
         display: flex;
         width: 45%;
         flex-direction: column;

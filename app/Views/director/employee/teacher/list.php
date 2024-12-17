@@ -12,7 +12,9 @@
                 <div class="tool-search">
                     <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
-                    <?= view('components/add', ['button_text' => 'Thêm giáo viên']) ?>
+                    <a href="/sms/public/director/employee/teacher/add" style="text-decoration: none";>
+                        <?= view('components/add', ['button_text' => 'Thêm giáo viên']) ?>
+                    </a>
                 </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>

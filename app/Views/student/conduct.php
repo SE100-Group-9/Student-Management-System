@@ -11,14 +11,15 @@
             <div class="body-right">
                 Học tập / Học tập / Xem hạnh kiểm
                 <div class="studentconduct-tools">
-                    <form method="POST" action=" ">
-                        <div class="tool-search">
-                            <?= view('components/filter') ?>
-                            <?= view('components/searchbar') ?>
-                            <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
-                            <?= view('components/dropdown', ['options' => ['Học kỳ 1', 'Học kỳ 2'], 'dropdown_id' => 'semester-dropdown']) ?>
+                    <div class="tool-search">
+                        <?= view('components/filter') ?>
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                        <div class="hidden-dropdown">
+                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown']) ?>
                         </div>
-                    </form>
+                    </div>
                     <div class="tool-add">
                         <?= view('components/excel_export') ?>
                     </div>
@@ -106,4 +107,9 @@
         align-items: center;
         gap: 10px;
     }
+
+    .hidden-dropdown {
+        display: none;
+    }
 </style>
+

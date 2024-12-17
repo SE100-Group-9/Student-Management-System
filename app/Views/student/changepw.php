@@ -11,7 +11,7 @@
         <div class="body-right">
             <h1>Đổi mật khẩu:</h1>
             <h2>Thông tin mật khẩu:</h2>
-            <form method="GET" action=" ">
+            <form method="POST" action=" ">
                 <div class="changepw-fields">
                     <div class="changepw-field">
                         <div class="changepw-label">

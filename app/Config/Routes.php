@@ -36,9 +36,11 @@ $routes->get('director/class/list', 'DirectorController::classList');
 $routes->get('director/class/add', 'DirectorController::classAdd');
 $routes->get('director/class/update', 'DirectorController::classUpdate');
 $routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
+$routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
 $routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 $routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
 $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
+$routes->get('director/employee/teacher/update', 'DirectorController::employeeTeacherupdate');
 
 // Director - Quản lý Thu ngân
 $routes->get('director/employee/cashier/list', 'DirectorController::employeeCashierList');

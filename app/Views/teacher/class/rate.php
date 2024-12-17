@@ -11,13 +11,11 @@
             <div class="body-right">
                 Học tập / Lớp học / Đánh giá kết quả học
                 <div class="teacherclassrate-tools">
-                    <form method="POST" action=" ">
-                        <div class="tool-search">
-                            <?= view('components/filter') ?>
-                            <?= view('components/searchbar') ?>
-                            <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
-                        </div>
-                    </form>
+                    <div class="tool-search">
+                        <?= view('components/filter') ?>
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
+                    </div>
                     <div class="tool-add">
                         <?= view('components/excel_export') ?>
                     </div>

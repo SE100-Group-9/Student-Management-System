@@ -16,6 +16,9 @@
                         <h2>Học kì:</h2>
                         <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
                     </div>
+                    <div class="hidden-dropdown">
+                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
+                    </div>
                     <?= view('components/view_button'); ?>
                 </div>             
                 <div class="tool-export">
@@ -118,6 +121,10 @@
     min-width: 120px;
     max-width: 200px;
 }
+
+.hidden-dropdown {
+    display: none;
+}
 </style>
 
 <script>
@@ -129,8 +136,6 @@
             // Toggle hiển thị bảng
             if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
                 tableContainer.style.display = 'block'; // Hiển thị bảng
-            } else {
-                tableContainer.style.display = 'none'; // Ẩn bảng
             }
         });
     });

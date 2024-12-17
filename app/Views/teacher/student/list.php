@@ -8,24 +8,21 @@
         <div class="body-left">
             <?= view('components/sidebar_teacher') ?>
         </div>
-            <div class="body-right">
-                Học tập / Học sinh / Danh sách học sinh
-                <div class="teacherstudentlist-tools">
-                    <form method="POST" action=" ">
-                        <div class="tool-search">
-                            <?= view('components/filter') ?>
-                            <?= view('components/searchbar') ?>
-                            <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
-                        </div>
-                    </form>
-                    <div class="tool-add">
-                        <?= view('components/excel_export') ?>
-                    </div>
+        <div class="body-right">
+            Học tập / Học sinh / Danh sách học sinh
+            <div class="teacherstudentlist-tools">
+                <div class="tool-search">
+                    <?= view('components/filter') ?>
+                    <?= view('components/searchbar') ?>
+                    <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
                 </div>
-                <?= view('components/tables/teacherStudentList', ['tableId' => 'teacherStudentList']) ?>
-                <?= view('components/pagination'); ?>
+                <div class="tool-add">
+                    <?= view('components/excel_export') ?>
+                </div>
             </div>
-        </form>
+            <?= view('components/tables/teacherStudentList', ['tableId' => 'teacherStudentList']) ?>
+            <?= view('components/pagination'); ?>
+        </div>
     </div>
 </div>
 

@@ -4,12 +4,9 @@
             <tr>
                 <th>Mã học sinh</th>
                 <th>Họ tên</th>
-                <th>Giới tính</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
                 <th>Lớp</th>
                 <th>Điểm trung bình</th>
-                <th>Tình trạng</th>
+                <th>Nhận xét</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -17,14 +14,141 @@
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
                 <td>11A1</td>
                 <td>9</td>
+                <td>Chăm</td>
                 <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
                 </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
+                <td>
+                    <a href="">
+                        <?= view('components/edit_button'); ?>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HS0001</td>
+                <td>Nguyễn Văn A</td>
+                <td>11A1</td>
+                <td>9</td>
+                <td>Chăm</td>
                 <td>
                     <a href="">
                         <?= view('components/edit_button'); ?>

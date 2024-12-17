@@ -437,6 +437,11 @@ class DirectorController extends Controller
         return view('director/class/arrange/student');
     }
 
+    public function classArrangeAddStudent()
+    {
+        return view('director/class/arrange/addstudent');
+    }
+
     public function classArrangeTeacher()
     {
         return view('director/class/arrange/teacher');
@@ -450,6 +455,10 @@ class DirectorController extends Controller
     public function employeeTeacherAdd()
     {
         return view('director/employee/teacher/add');
+    }
+    public function employeeTeacherUpdate()
+    {
+        return view('director/employee/teacher/update');
     }
     // Màn hình quản lý giám thị
     public function employeeSupervisorList()

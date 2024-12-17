@@ -9,6 +9,7 @@
             <?= view('components/sidebar_student') ?>
         </div>
         <div class="body-right">
+            <h1>Học tập / Học tập / Xem điểm</h1>
             <div class="final-tool">
                 <div class="final-dropdown">
                     <div class="final-dropdown">
@@ -18,6 +19,9 @@
                     <div class="final-dropdown">
                         <h2>Học kì:</h2>
                         <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                    </div>
+                    <div class="hidden-dropdown">
+                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
                     </div>
                     <?= view('components/view_button'); ?>
                 </div>                   
@@ -89,14 +93,24 @@
                         ]) ?>
                     </div>
                 </div>
-                <h3>Danh hiệu</h3>
+                <h3>Tổng kết</h3>
                 <div class="student-final-fields">
                     <div class="student-final-field">
+                        Danh hiệu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'title',
                             'readonly' => true,
                             'value' => 'Học sinh giỏi'
+                        ]) ?>
+                    </div>
+                    <div class="student-final-field">
+                        Nhận xét của giáo viên
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'title',
+                            'readonly' => true,
+                            'value' => 'Chăm'
                         ]) ?>
                     </div>
                 </div>
@@ -164,7 +178,7 @@
         font-family: Inter;
         font-size: 16px;
         font-style: normal;
-        font-weight: 700;
+        font-weight: 400;
         line-height: normal;
     }
 
@@ -247,6 +261,10 @@
         width: 100%;
         margin-top: 20px; /* Khoảng cách với các thành phần phía trên */
         transition: all 0.3s ease; /* Hiệu ứng mượt khi hiển thị */
+    }
+
+    .hidden-dropdown {
+        display: none;
     }
 </style>
 

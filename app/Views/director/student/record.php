@@ -9,7 +9,7 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Học sinh / Thông tin thanh toán
+            Học tập / Học sinh / Thông tin học bạ
             <div class="studentrecord-tools">
                 <div class="tool-search">
                     <?= view('components/filter') ?>
@@ -23,6 +23,7 @@
                 </div>
             </div>
             <?= view('components/tables/directorStudentRecord') ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>

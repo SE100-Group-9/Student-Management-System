@@ -175,9 +175,11 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-        flex: 1 0 0;
+        flex: 1; 
         align-self: stretch;
         background: #FFF;
+        overflow: auto; 
+        max-height: 500px; 
     }
 
     .dropdown-edit {
