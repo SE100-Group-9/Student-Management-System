@@ -10,15 +10,11 @@
         </div>
         <div class="body-right">
             <div class="titlelist-tools">
-            <form method="GET" action="/sms/public/director/title/list">
                 <div class="tools">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
-
+                    <?= view('components/searchbar') ?>
                 </div>
-                </form>
                 <a style="text-decoration: none" href="/sms/public/director/title/add">
-                        <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
+                    <?= view('components/add', ['button_text' => 'Thêm danh hiệu']) ?>
                 </a>
             </div>
             <?= view('components/tables/directorTitleList', ['titleList' => $titleList]) ?>
@@ -96,5 +92,4 @@
         display: flex;
         gap: 10px;
     }
-
 </style>
