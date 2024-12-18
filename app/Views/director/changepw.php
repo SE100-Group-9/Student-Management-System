@@ -59,9 +59,6 @@
                     </div>
                 </div>
                 <div class="changepw-btns">
-                    <a href="/sms/public/director/statics/conduct" style="text-decoration: none";>
-                        <?= view('components/exit_button') ?>
-                    </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>

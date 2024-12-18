@@ -1,3 +1,4 @@
+
 <?php
 
 use CodeIgniter\Router\RouteCollection;
@@ -32,16 +33,27 @@ $routes->get('director/title/update/(:num)', 'DirectorController::titleUpdate/$1
 $routes->post('director/title/update', 'DirectorController::updateTitle');  
 $routes->get('director/title/delete/(:num)', 'DirectorController::titleDelete/$1');
 
+// Director - Quản lý lớp học
 $routes->get('director/class/list', 'DirectorController::classList');
 $routes->get('director/class/add', 'DirectorController::classAdd');
-$routes->get('director/class/update', 'DirectorController::classUpdate');
-$routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
-$routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
+$routes->post('director/class/add', 'DirectorController::addClass');
+$routes->get('director/class/update/(:num)', 'DirectorController::classUpdate/$1');
+$routes->post('director/class/update', 'DirectorController::updateClass');
+
+// Director - Xếp lớp
+$routes->get('director/class/arrange/student/(:num)', 'DirectorController::classArrangeStudent/$1');
+$routes->post('director/class/arrange/student', 'DirectorController::addStudentToClass');
+$routes->get('director/class/arrange/teacher/(:num)', 'DirectorController::classArrangeTeacher/$1');
 $routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
 $routes->get('director/class/arrange/addteacher', 'DirectorController::classArrangeAddTeacher');
+
+// Director - Quản lý giáo viên
+$routes->get('director/class/update', 'DirectorController::classUpdate');
+$routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
 $routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 $routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
 $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
+$routes->post('director/employee/teacher/add', 'DirectorController::addEmployeeTeacher');
 $routes->get('director/employee/teacher/update', 'DirectorController::employeeTeacherupdate');
 
 // Director - Quản lý Thu ngân
@@ -58,8 +70,11 @@ $routes->post('director/employee/supervisor/add', 'DirectorController::addEmploy
 $routes->get('director/employee/supervisor/update/(:segment)', 'DirectorController::employeeSupervisorUpdate/$1');
 $routes->post('director/employee/supervisor/update/(:segment)', 'DirectorController::updateEmployeeSupervisor/$1');
 
+// Director - Thanh Header
 $routes->get('director/profile', 'DirectorController::profile');
+$routes->post('director/profile', 'DirectorController::updateProfile');
 $routes->get('director/changepw', 'DirectorController::changepw');
+$routes->post('director/changepw', 'DirectorController::updatePassword');
 
 // student
 $routes->get('student/score', 'StudentController::score');
