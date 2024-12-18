@@ -85,4 +85,47 @@ class CashierController extends Controller
     {
         return view('cashier/changepw');
     }
+
+    public function updatePassword()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaTK = session('MaTK');
+        $oldPassword = $this->request->getPost('old_pw');
+        $newPassword = $this->request->getPost('new_pw');
+        $confirmPassword = $this->request->getPost('confirm_pw');
+
+        // Kiểm tra mật khẩu cũ
+        $TaiKhoanModel = new TaiKhoanModel();
+        $TaiKhoan = $TaiKhoanModel->find($MaTK);
+        if ($TaiKhoan['MatKhau'] !== $oldPassword) {
+            $errors['old_pw'] = 'Mật khẩu cũ không chính xác.';
+        }
+
+        // Kiểm tra mật khẩu mới
+        if (strlen($newPassword) < 6) {
+            $errors['new_pw'] = 'Mật khẩu mới phải có ít nhất 6 ký tự.';
+        }
+
+        // Kiểm tra mật khẩu xác nhận
+        if ($newPassword !== $confirmPassword) {
+            $errors['confirm_pw'] = 'Mật khẩu xác nhận không khớp.';
+        }
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        // Cập nhật mật khẩu mới
+        $TaiKhoanModel->update($MaTK, [
+            'MatKhau' => $this->request->getPost('new_pw'),
+        ]);
+
+        if ($TaiKhoanModel) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+        } else {
+            return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
+    }
 }
