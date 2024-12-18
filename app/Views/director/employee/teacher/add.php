@@ -11,7 +11,7 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giáo viên
             <h1>Tạo hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/employee/teacher/add">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="teacheradd-fields">
                     <div class="teacheradd-field">
@@ -19,7 +19,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_account',
-                            'required' => true,
+                            'value' => $newMaGV ?? '',
+                            'readonly' => true,
+                            'placeholder' => 'Tên tài khoản',
                         ]) ?>
                     </div>
                     <div class="teacheradd-field">
@@ -27,7 +29,10 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_password',
+                            'readonly' => false,
                             'required' => true,
+                            'placeholder' => 'Mật khẩu',
+                            'value' => old('teacher_password'),
                         ]) ?>
                     </div>
                 </div>
@@ -39,6 +44,8 @@
                             'type' => 'text',
                             'name' => 'teacher_name',
                             'required' => true,
+                            'placeholder' => 'Họ tên giáo viên',
+                            'value' => old('teacher_name'),
                         ]) ?>
                     </div>
                     <div class="teacheradd-field">
@@ -47,6 +54,8 @@
                             'type' => 'email',
                             'name' => 'teacher_email',
                             'required' => true,
+                            'placeholder' => 'Email',
+                            'value' => old('teacher_email'),
                         ]) ?>
                     </div>
                 </div>
@@ -57,6 +66,8 @@
                             'type' => 'text',
                             'name' => 'teacher_phone',
                             'required' => true,
+                            'placeholder' => 'Số điện thoại',
+                            'value' => old('teacher_phone'),
                         ]) ?>
                     </div>
                     <div class="teacheradd-field">
@@ -65,6 +76,8 @@
                             'type' => 'text',
                             'name' => 'teacher_address',
                             'required' => true,
+                            'placeholder' => 'Địa chỉ',
+                            'value' => old('teacher_address'),
                         ]) ?>
                     </div>
                 </div>
@@ -77,8 +90,19 @@
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'teacher_gender',
                                 'selected_text' => 'Giới tính',
+                                'value' => old('teacher_gender'),
                             ]) ?>
                         </div>
+                        <div class="teacheradd-special">
+                            Ngày sinh
+                            <?= view('components/datepicker', [
+                                'datepicker_id' => 'birthday',
+                                'name' => 'teacher_birthday',
+                                'value' => old('teacher_birthday'),
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="teacheradd-special">
                         <div class="teacheradd-special">
                             Chức vụ
                             <?= view('components/dropdown', [
@@ -86,26 +110,39 @@
                                 'dropdown_id' => 'role-dropdown',
                                 'name' => 'teacher_role',
                                 'selected_text' => 'Chức vụ',
-                            ]) ?>
-                        </div>
-                        <div class="hidden-dropdown">
-                            <?= view('components/dropdown', [
-                                'options' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
-                                'dropdown_id' => 'roles-dropdown',
-                                'name' => 'teacher_roles',
-                                'selected_text' => 'Chức vụ',
+                                'value' => old('teacher_role'),
                             ]) ?>
                         </div>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?php foreach (session()->getFlashdata('errors') as $field => $error): ?>
+                            <p><?= $error ?>
+                            <p>
+                            <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+
                 <div class="teacheradd-btns">
-                    <a href="/sms/public/director/employee/teacher/list" style="text-decoration: none;">
+                    <a style="text-decoration: none" href="/sms/public/director/employee/teacher/list">
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>
                 </div>
             </form>
-
+            <!-- Đừng đụng vào cái này -->
+            <div class="supervisoradd-special" style="display:none">
+                <?= view('components/dropdown', []) ?>
+            </div>
         </div>
     </div>
 </div>

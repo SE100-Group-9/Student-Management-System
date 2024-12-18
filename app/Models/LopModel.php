@@ -8,9 +8,4 @@ class LopModel extends Model
     protected $table = 'lop';
     protected $primaryKey = 'MaLop';
     protected $allowedFields = ['MaLop', 'TenLop'];
-
-    public function getClassList()
-    {
-        return $this->findAll();
-    }
 }

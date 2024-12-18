@@ -19,8 +19,8 @@
         </div>
         <div id="news-deeper" class="news-deeper">
             <div class="news-overall">
-                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/title/list">
-                Danh hiệu
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/title/list">
+                    Danh hiệu
                 </a>
             </div>
         </div>
@@ -39,13 +39,19 @@
         </div>
         <div id="statics-deeper" class="statics-deeper">
             <div class="grade">
-                Học lực
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/statics/grade">
+                    Học lực
+                </a>
             </div>
             <div class="students">
-                Học sinh
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/statics/student">
+                    Học sinh
+                </a>
             </div>
             <div class="conducts">
-                Hạnh kiểm
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/statics/conduct">
+                    Hạnh kiểm
+                </a>
             </div>
         </div>
         <div class="general">
@@ -68,7 +74,7 @@
         </div>
         <div class="student-deeper" id="student-deeper">
             <div class="student-list">
-                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/list">
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/list">
                     Danh sách học sinh
                 </a>
             </div>
@@ -94,7 +100,9 @@
         </div>
         <div id="class-deeper" class="class-deeper">
             <div class="class-overall">
-                Danh sách
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/class/list">
+                    Danh sách lớp học
+                </a>
             </div>
         </div>
     </div>
@@ -117,15 +125,17 @@
         </div>
         <div class="employee-deeper" id="employee-deeper">
             <div class="teacher">
-                Giáo viên
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/teacher/list">
+                    Giáo viên
+                </a>
             </div>
             <div class="cashier">
-                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/cashier/list">
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/cashier/list">
                     Thu ngân
                 </a>
             </div>
             <div class="supervisor">
-                <a style = "text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/supervisor/list">
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/employee/supervisor/list">
                     Giám thị
                 </a>
             </div>
@@ -135,7 +145,6 @@
 </div>
 
 <style>
-
     .sidebar-director {
         width: 250px;
         height: calc(100%);
@@ -358,7 +367,6 @@
 </style>
 
 <script>
-
     function toggleDeeperClasslist() {
         const deeperElement = document.getElementById('statics-deeper');
         const arrowIcon = document.getElementById('arrow-icon-2');

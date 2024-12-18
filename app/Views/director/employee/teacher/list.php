@@ -9,20 +9,22 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giáo viên
             <div class="employee-teacherlist-tool">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <a href="/sms/public/director/employee/teacher/add" style="text-decoration: none";>
+                <form method="GET" action="/sms/public/director/employee/teacher/list">
+                    <div class="tool-search">
+                        <?= view('components/filter') ?>
+                        <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+                    </div>
+                </form>
+                <div class="tool-add">
+                    <a style="text-decoration: none" href="/sms/public/director/employee/teacher/add">
                         <?= view('components/add', ['button_text' => 'Thêm giáo viên']) ?>
                     </a>
-                </div>
-                <div class="tool-add">
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorEmployeeTeacher', ['tableId' => 'directorEmployeeTeacher']) ?>
+                <?= view('components/tables/directorEmployeeTeacher', ['teacherList' => $teacherList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>

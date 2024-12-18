@@ -86,6 +86,7 @@
         justify-content: center;
         align-items: flex-end;
         gap: 38px;
+        white-space: nowrap;
     }
 
     .right svg:hover {
@@ -99,6 +100,7 @@
         justify-content: space-between;
         align-items: center;
         flex-shrink: 0;
+        white-space: nowrap;
     }
 
     .info img {
@@ -114,7 +116,7 @@
 
     .name {
         display: flex;
-        width: 74px;
+        width: auto;
         padding: 10px 0px;
         flex-direction: column;
         justify-content: space-between;
@@ -127,6 +129,7 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        white-space: nowrap;
     }
 
     .name p {
@@ -136,6 +139,7 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+        white-space: nowrap;
     }
 
     .dropdown-heading {
@@ -178,32 +182,23 @@
 </style>
 
 <script>
-
     function logout() {
         // Gửi yêu cầu đến URL logout
         fetch('<?= base_url('logout') ?>', {
-            method: 'GET',
-        })
-        .then(response => {
-            if (response.ok) {
-                // Chuyển hướng về trang đăng nhập
-                window.location.href = '<?= base_url('/') ?>';
-            } else {
-                alert('Đăng xuất thất bại, vui lòng thử lại.');
-            }
-        })
-        .catch(error => {
-            console.error('Error during logout:', error);
-        });
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Chuyển hướng về trang đăng nhập
+                    window.location.href = '<?= base_url('/') ?>';
+                } else {
+                    alert('Đăng xuất thất bại, vui lòng thử lại.');
+                }
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
+            });
     }
-
-
-
-
-
-
-
-
 
     document.getElementById('dropdown-toggle').addEventListener('click', function() {
         var dropdown = document.getElementById('dropdown-heading');

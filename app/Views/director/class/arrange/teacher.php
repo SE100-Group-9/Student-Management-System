@@ -9,21 +9,32 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp / 11A1
+            Học tập / Lớp học / Năm học <?= esc($selectedYear) ?> / Lớp <?= esc($TenLop) ?>
             <div>
-                <?= view('components/teacher_tab') ?>
+                <?= view('components/tab', ['MaLop' => $MaLop, 'activeTab' => 'teacher']) ?>
             </div>
             <div class="classlists-tools">
-                <div class="tools">
-                    <?= view('components/add', data: ['button_text' => 'Thêm giáo viên']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/class/arrange/teacher/<?= $MaLop ?>">
+                    <div class="tools">
+                        <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemester ?? ''
+                        ]) ?>
+                        <?= view('components/view_button') ?>
+                    </div>
+                </form>
                 <div class="tool-add">
+                    <?= view('components/add', data: ['button_text' => 'Thêm giáo viên']) ?>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorClassArrangeTeacher') ?>
+                <?= view('components/tables/directorClassArrangeTeacher', ['teacherList' => $teacherList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -95,7 +106,7 @@
     }
 
     .tools {
-        width: 30%;
+        width: 60%;
         display: flex;
         gap: 10px;
     }
