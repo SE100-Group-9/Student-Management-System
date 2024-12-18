@@ -14,8 +14,16 @@
                     <div class="tool-search">
                         <?= view('components/filter') ?>
                         <?= view('components/searchbar') ?>
-                        <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
-                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['2024-2025','2023-2024'],
+                            'dropdown_id' => 'year-dropdown',
+                            'selected_text' => 'Năm học',
+                            ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ I', 'Học kỳ II'], 
+                            'dropdown_id' => 'semester-dropdown',
+                            'selected_text' => 'Học kỳ',
+                            ]) ?>
                         <div class="hidden-dropdown">
                         <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown']) ?>
                         </div>

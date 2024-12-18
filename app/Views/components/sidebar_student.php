@@ -16,13 +16,19 @@
         </div>
         <div id="study-deeper" class="study-deeper">
             <div class="score pointer">
-                <p>Xem điểm</p>
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/student/score">
+                    <p>Xem điểm</p>
+                </a>
             </div>
             <div class="conduct pointer">
-                <p>Xem hạnh kiểm</p>
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/student/conduct">
+                    <p>Xem hạnh kiểm</p>
+                </a>
             </div>
             <div class="result pointer">
-                <p>Kết quả tổng kết</p>
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/student/final_result">
+                    <p>Kết quả tổng kết</p>
+                </a>
             </div>
         </div>
     </div>
@@ -43,7 +49,9 @@
         </div>
         <div id="fee-deeper" class="fee-deeper">
             <div class="fee-info pointer">
-                <p>Thông tin học phí</p>
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/student/fee_info">
+                    <p>Thông tin học phí</p>
+                </a>
             </div>
         </div>
     </div>

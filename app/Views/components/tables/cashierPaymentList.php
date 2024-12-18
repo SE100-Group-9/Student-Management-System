@@ -2,6 +2,7 @@
     <table id="cashierPaymentList">
         <thead>
             <tr>
+                <th>Mã thanh toán</th>
                 <th>Mã học sinh</th>
                 <th>Tên học sinh</th>
                 <th>Lớp</th>
@@ -9,6 +10,7 @@
                 <th>Học kỳ</th>
                 <th>Tổng tiền</th>
                 <th>Đã thanh toán</th>
+                <th>Ngày thanh toán</th>
                 <th>Còn nợ</th>
                 <th>Trạng thái</th>
                 <th></th>
@@ -16,6 +18,7 @@
         </thead>
         <tbody>
             <tr>
+                <td>HD0001</td>
                 <td>22520xxx</td>
                 <td>Nguyễn Văn A</td>
                 <td>11</td>
@@ -23,6 +26,7 @@
                 <td>1</td>
                 <td>1,000,000</td>
                 <td>500,000</td>
+                <td>01-01-2024</td>
                 <td>500,000</td>
                 <td>Thanh toán 1 phần</td>
                 <td>
@@ -44,11 +48,11 @@
         max-width: 100%;
         overflow: auto;
         margin: 0 auto;
-        max-height: 400px;
     }
 
     #cashierPaymentList {
         width: 100%;
+        table-layout: auto;
         font-family: "Inter";
         border-collapse: collapse;
         color: black;
@@ -59,6 +63,7 @@
         text-align: left;
         background-color: rgba(185, 185, 185, 0.50);
         color: black;
+        white-space: nowrap;
     }
 
     #cashierPaymentList td {
@@ -67,6 +72,7 @@
         color: black;
         background-color: white;
         border-top: 1px solid rgba(0, 60, 60, 0.50);
+        white-space: nowrap;
     }
 
     #pagination-container {

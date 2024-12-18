@@ -10,7 +10,7 @@
                 <div class="score-dropdown">
                     <div class="score-dropdown">
                         <h2>Năm học:</h2>
-                        <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
+                        <?= view('components/dropdown', ['options' => ['2024-2025','2023-2024'], 'dropdown_id' => 'year-dropdown']) ?>
                     </div>
                     <div class="score-dropdown">
                         <h2>Học kì:</h2>
