@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use CodeIgniter\Controller;
@@ -11,6 +12,11 @@ use App\Models\LopModel;
 use App\Models\DanhHieuModel;
 use App\Models\ThuNganModel;
 use App\Models\GiamThiModel;
+use App\Models\GiaoVienModel;
+use App\Models\BanGiamHieuModel;
+use App\Models\GiaoVienLopModel;
+use App\Models\MonHocModel;
+use App\Models\PhanCongModel;
 
 class DirectorController extends Controller
 {
@@ -30,16 +36,19 @@ class DirectorController extends Controller
         return view('director/statics/student');
     }
 
-    public function exportStudentList()
+    public function classArrangeAddTeacher()
     {
- 
+        return view('director/class/arrange/addteacher');
     }
+    
+    public function exportStudentList() {}
+
     public function studentAdd()
     {
         $HocSinhModel = new HocSinhModel();
         // Lấy mã học sinh lớn nhất hiện tại
         $lastStudent = $HocSinhModel->select('MaHS')->orderBy('MaHS', 'DESC')->first();
-        
+
         // Sinh mã học sinh mới
         $newMaHS = 'HS0001'; // Giá trị mặc định nếu chưa có mã nào
         if ($lastStudent && preg_match('/^HS(\d+)$/', $lastStudent['MaHS'], $matches)) {
@@ -59,28 +68,28 @@ class DirectorController extends Controller
         $phone = $this->request->getPost('student_phone');
         $gender = $this->request->getPost('student_gender');
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['student_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['student_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['student_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['student_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['student_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -135,7 +144,7 @@ class DirectorController extends Controller
             ->first();
         if (!$data) {
             return redirect()->to('director/student/list'); // Redirect nếu không tìm thấy học sinh
-        }    
+        }
         return view('director/student/update', ['student' => $data]);
     }
     public function updateStudent()
@@ -150,28 +159,28 @@ class DirectorController extends Controller
         $phone = $this->request->getPost('student_phone');
         $gender = $this->request->getPost('student_gender');
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['student_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['student_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['student_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['student_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['student_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -202,7 +211,7 @@ class DirectorController extends Controller
         ]);
         $allPostData = $this->request->getPost();
         log_message('info', 'Received Data: ' . json_encode($allPostData));
-            // Xử lý thông báo
+        // Xử lý thông báo
         if ($TaiKhoanModel && $HocSinhModel) {
             return redirect()->back()->with('success', 'Cập nhật thành công!');
         } else {
@@ -212,7 +221,7 @@ class DirectorController extends Controller
 
 
     public function studentList()
-    {   
+    {
         $TaiKhoanModel = new TaiKhoanModel();
         $HocSinhModel = new HocSinhModel();
         $HocSinhLopModel = new HocSinhLopModel();
@@ -221,7 +230,7 @@ class DirectorController extends Controller
         // Nhận giá trị năm học, lớp học, từ khóa tìm kiếm và tình trạng từ query string
         $selectedYear = $this->request->getVar('year');
         $selectedClass = $this->request->getVar('class');
-        $searchStudent = $this->request->getVar('search') ?? ''; 
+        $searchStudent = $this->request->getVar('search') ?? '';
         $selectedStatus = $this->request->getVar('status');
 
         // Lấy danh sách các năm học, lớp học và tình trạng
@@ -234,7 +243,7 @@ class DirectorController extends Controller
             ->orderBy('NamHoc', 'ASC')
             ->findAll();
         // Lấy các giá trị của trường 'NamHoc' từ mảng $yearListArray
-        $yearList = array_map(function($year) {
+        $yearList = array_map(function ($year) {
             return $year['NamHoc']; // Lấy giá trị NamHoc
         }, $yearListArray);
         $yearList = array_merge(['Chọn năm học'], $yearList);
@@ -244,10 +253,10 @@ class DirectorController extends Controller
         log_message('debug', 'Class List: ' . print_r($yearList, true));
 
         $query = $HocSinhModel
-        ->select('hocsinh.*, taikhoan.*, hocsinh_lop.MaLop, lop.TenLop')
-        ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
-        ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
-        ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left');
+            ->select('hocsinh.*, taikhoan.*, hocsinh_lop.MaLop, lop.TenLop')
+            ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
+            ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
+            ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left');
 
         // Lọc theo năm học, lớp và từ khóa tìm kiếm và tình trạng (nếu có)
         if ($selectedYear && $selectedYear !== 'Chọn năm học') {
@@ -262,14 +271,14 @@ class DirectorController extends Controller
                 ->orLike('taikhoan.HoTen', $searchStudent)
                 ->groupEnd();
         }
-        if ($selectedStatus && $selectedStatus !== 'Chọn trạng thái'){
+        if ($selectedStatus && $selectedStatus !== 'Chọn trạng thái') {
             $query->where('hocsinh.TinhTrang', $selectedStatus);
         }
 
         $studentList  = $query->findAll();
 
         return view('director/student/list', [
-            'studentlist' => $studentList ,
+            'studentlist' => $studentList,
             'yearList' => $yearList,
             'classList' => $classList,
             'statusList' => $statusList,
@@ -358,7 +367,7 @@ class DirectorController extends Controller
     public function titleUpdate($id)
     {
         $DanhHieuModel = new DanhHieuModel();
-        
+
         // Lấy thông tin danh hiệu dựa trên ID
         $title = $DanhHieuModel->find($id);
 
@@ -417,24 +426,275 @@ class DirectorController extends Controller
         }
     }
 
-
+    // Màn hình quản lý lớp học
     public function classList()
     {
-        return view('director/class/list');
+        $LopModel = new LopModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+
+
+        //Nhận giá trị tìm kiếm từ query string
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+        $searchTerm = $this->request->getVar('search') ?? '';
+
+        //Lấy danh sách các năm học
+        $yearListArray = $HocSinhLopModel
+            ->distinct()
+            ->select('NamHoc')
+            ->orderBy('NamHoc', 'ASC')
+            ->findAll();
+        //Lấy các giá trị của trường 'NamHoc' từ mảng $yearListArray
+        $yearList = array_map(function ($year) {
+            return $year['NamHoc']; //Lấy giá trị NamHoc
+        }, $yearListArray);
+
+        //Câu truy vấn SQL để lấy danh sách lớp học
+        $SQL = "
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = '$selectedYear'
+        WHERE phancong.NamHoc = '$selectedYear' AND phancong.VaiTro = 'Giáo viên chủ nhiệm'
+        ";
+
+        // Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
+        if ($searchTerm) {
+            $SQL .= " AND (lop.TenLop LIKE '%$searchTerm%' OR taikhoan.HoTen LIKE '%$searchTerm%')";
+        }
+
+        //Nhóm kết quả theo mã lớp, tên lớp, mã giáo viên và tên giáo viên
+        $SQL .= " GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC";
+
+        //Thực thi câu truy vấn
+        $classList = $LopModel->query($SQL)->getResultArray();
+
+        // Lưu năm học vào session để truyền giữa các trang (classAdd)
+        if ($selectedYear) {
+            session()->set('selectedYear', $selectedYear);
+        }
+
+        return view('director/class/list', [
+            'classList' => $classList,
+            'yearList' => $yearList,
+            'selectedYear' => $selectedYear,
+            'searchTerm' => $searchTerm,
+        ]);
     }
 
     public function classAdd()
     {
-        return view('director/class/add');
-    }
-    public function classUpdate()
-    {
-        return view('director/class/update');
+        // Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
+
+        // Lấy danh sách giáo viên chưa chủ nhiệm lớp nào trong năm học đã chọn
+        $GiaoVienModel = new GiaoVienModel();
+
+        // Tạo query lấy danh sách giáo viên chưa chủ nhiệm lớp nào trong năm học đã chọn
+        $SQL = "SELECT giaovien.MaGV, taikhoan.HoTen
+        FROM giaovien
+        JOIN taikhoan ON taikhoan.MaTK = giaovien.MaTK
+        WHERE giaovien.MaGV NOT IN (
+            SELECT MaGV FROM phancong WHERE NamHoc = '$selectedYear' AND VaiTro = 'Giáo viên chủ nhiệm'
+        )";
+
+        $GiaoVien = $GiaoVienModel->query($SQL)->getResultArray();
+
+
+        //Chuẩn bị mảng options cho dropdown chọn giáo viên
+        $GiaoVien = array_map(function ($teacher) {
+            return $teacher['MaGV'] . ' - ' . $teacher['HoTen'];
+        }, $GiaoVien);
+
+        return view('director/class/add', [
+            'selectedYear' => $selectedYear,
+            'teacherOptions' => $GiaoVien,
+        ]);
     }
 
-    public function classArrangeStudent()
+    public function addClass()
     {
-        return view('director/class/arrange/student');
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $selectedYear = $this->request->getPost('year');
+        $className = $this->request->getPost('class_name');
+        $classTeacher = $this->request->getPost('class-teacher');
+
+        //Kiểm tra giáo viên chủ nhiệm
+        if (empty($classTeacher)) {
+            $errors['class-teacher'] = 'Vui lòng chọn giáo viên chủ nhiệm.';
+        }
+
+        //Kiểm tra tên lớp
+        if (empty($className)) {
+            $errors['class_name'] = 'Vui lòng nhập tên lớp.';
+        }
+
+        //Kiểm tra tên lớp đã tồn tại chưa
+        $LopModel = new LopModel();
+        $classExists = $LopModel->where('TenLop', $className)->first();
+        if ($classExists) {
+            $errors['class_name'] = 'Tên lớp đã tồn tại.';
+        }
+
+        //Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $LopModel = new LopModel();
+        $PhanCongModel = new PhanCongModel();
+
+        //Lưu thông tin lớp học
+        $MaLop = $LopModel->insert([
+            'TenLop' => $className,
+        ]);
+
+        //Lưu thông tin giáo viên chủ nhiệm
+        $MaGV = explode(' - ', $classTeacher)[0];
+        $PhanCongModel->insert([
+            'MaGV' => $MaGV,
+            'MaLop' => $MaLop,
+            'NamHoc' => $selectedYear,
+            'VaiTro' => 'Giáo viên chủ nhiệm',
+        ]);
+
+        return redirect()->back()->with('success', 'Thêm lớp học mới thành công!');
+    }
+
+    public function classUpdate($MaLop)
+    {
+        $LopModel = new LopModel();
+        $GiaoVienModel = new GiaoVienModel();
+        $PhanCongModel = new PhanCongModel();
+
+        // Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
+
+        // Lấy thông tin lớp học theo mã lớp
+        $class = $LopModel->find($MaLop);
+
+        // Lấy thông tin giáo viên chủ nhiệm
+        $teacher = $PhanCongModel
+            ->select('giaovien.MaGV, taikhoan.HoTen')
+            ->join('giaovien', 'giaovien.MaGV = phancong.MaGV')
+            ->join('taikhoan', 'taikhoan.MaTK = giaovien.MaTK')
+            ->where('phancong.MaLop', $MaLop)
+            ->where('phancong.NamHoc', $selectedYear)
+            ->where('phancong.VaiTro', 'Giáo viên chủ nhiệm')
+            ->first();
+
+        // Lấy danh sách giáo viên chưa chủ nhiệm lớp nào trong năm học đã chọn
+        $SQL = "SELECT giaovien.MaGV, taikhoan.HoTen
+        FROM giaovien
+        JOIN taikhoan ON taikhoan.MaTK = giaovien.MaTK
+        WHERE giaovien.MaGV NOT IN (
+            SELECT MaGV FROM phancong WHERE NamHoc = '$selectedYear' AND VaiTro = 'Giáo viên chủ nhiệm'
+        )";
+
+        $GiaoVien = $GiaoVienModel->query($SQL)->getResultArray();
+
+        //Gộp giáo viên đang chủ nhiệm lớp đó vào danh sách giáo viên chưa chủ nhiệm
+        if ($teacher) {
+            array_unshift($GiaoVien, [
+                'MaGV' => $teacher['MaGV'],
+                'HoTen' => $teacher['HoTen']
+            ]);
+        }
+
+        //Chuẩn bị mảng options cho dropdown chọn giáo viên
+        $GiaoVien = array_map(function ($teacher) {
+            return $teacher['MaGV'] . ' - ' . $teacher['HoTen'];
+        }, $GiaoVien);
+
+        return view('director/class/update', [
+            'class' => $class,
+            'teacher' => $teacher,
+            'teacherOptions' => $GiaoVien,
+        ]);
+    }
+
+    public function updateClass()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaLop = $this->request->getPost('MaLop');
+        $className = $this->request->getPost('class_name');
+        $classTeacher = $this->request->getPost('class-teacher');
+
+        //Kiểm tra giáo viên chủ nhiệm
+        if (empty($classTeacher)) {
+            $errors['class-teacher'] = 'Vui lòng chọn giáo viên chủ nhiệm.';
+        }
+
+        //Kiểm tra tên lớp
+        if (empty($className)) {
+            $errors['class_name'] = 'Vui lòng nhập tên lớp.';
+        }
+
+        //Kiểm tra tên lớp đã tồn tại chưa, nếu tên lớp thay đổi
+        $LopModel = new LopModel();
+        $currentClass = $LopModel->find($MaLop);
+        if ($currentClass['TenLop'] !== $className) {
+            $classExists = $LopModel->where('TenLop', $className)->first();
+            if ($classExists) {
+                $errors['class_name'] = 'Tên lớp đã tồn tại.';
+            }
+        }
+
+        //Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+        //Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
+
+        $LopModel = new LopModel();
+        $PhanCongModel = new PhanCongModel();
+
+        //Lưu thông tin lớp học
+        $LopModel->update($MaLop, [
+            'TenLop' => $className,
+        ]);
+
+        //Lưu thông tin giáo viên chủ nhiệm
+        $MaGV = explode(' - ', $classTeacher)[0];
+
+        $SQL = "UPDATE phancong
+        SET MaGV = '$MaGV'
+        WHERE MaLop = '$MaLop' AND NamHoc = '$selectedYear' AND VaiTro = 'Giáo viên chủ nhiệm'";
+        $PhanCongModel->query($SQL);
+
+
+        return redirect()->back()->with('success', 'Cập nhật lớp học thành công!');
+    }
+
+    public function classArrangeStudent($MaLop)
+    {
+        //Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
+
+        //Lấy danh sách học sinh trong lớp theo năm học
+        $HocSinhModel = new HocSinhModel();
+
+        $SQL = "SELECT hocsinh.*, taikhoan.*, lop.TenLop
+        FROM hocsinh
+        JOIN taikhoan ON taikhoan.MaTK = hocsinh.MaTK
+        JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS
+        JOIN lop ON lop.MaLop = hocsinh_lop.MaLop
+        WHERE hocsinh_lop.MaLop = '$MaLop' AND hocsinh_lop.NamHoc = '$selectedYear'";
+        $studentList = $HocSinhModel->query($SQL)->getResultArray();
+
+        // Nếu danh sách không rổng, lấy tên lớp từ bản ghi đầu tiên
+        $TenLop = $studentList ? $studentList[0]['TenLop'] : '';
+        return view('director/class/arrange/student', [
+            'MaLop' => $MaLop,
+            'TenLop' => $TenLop,
+            'studentList' => $studentList,
+            'selectedYear' => $selectedYear,
+        ]);
     }
 
     public function classArrangeAddStudent()
@@ -442,29 +702,178 @@ class DirectorController extends Controller
         return view('director/class/arrange/addstudent');
     }
 
-    public function classArrangeTeacher()
+    public function classArrangeTeacher($MaLop)
     {
-        return view('director/class/arrange/teacher');
-    }
+        //Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
 
-    public function employeeTeacherList ()
+        //Nhận giá trị học kỳ , từ khóa tìm kiếm từ query string
+        $searchTerm = $this->request->getVar('search') ?? '';
+        $selectedSemester = $this->request->getVar('semester') ?? 'Học kỳ 1';
+
+        // Tách tên học kỳ để lấy số
+        $semesterNumber = preg_replace('/\D/', '', $selectedSemester);
+
+        //Lấy thông tin giáo viên dạy lớp được chọn
+        $GiaoVienModel = new GiaoVienModel();
+
+        $SQL = "SELECT giaovien.*, taikhoan.*, lop.TenLop, monhoc.TenMH
+        FROM giaovien
+        JOIN taikhoan ON taikhoan.MaTK = giaovien.MaTK
+        JOIN phancong ON phancong.MaGV = giaovien.MaGV
+        JOIN lop ON lop.MaLop = phancong.MaLop
+        JOIN monhoc ON monhoc.MaMH = phancong.MaMH
+        WHERE phancong.MaLop = '$MaLop' AND phancong.NamHoc = '$selectedYear'";
+
+        // Lọc theo học kỳ được chọn nếu có
+        if ($selectedSemester) {
+            $SQL .= " AND phancong.HocKy = $semesterNumber";
+        }
+
+        // Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
+        if ($searchTerm) {
+            $SQL .= " AND (taikhoan.HoTen LIKE '%$searchTerm%' OR giaovien.MaGV LIKE '%$searchTerm%')";
+        }
+
+        //Nhóm kết quả theo mã giáo viên, tên giáo viên, tên lớp và tên môn học
+        $SQL .= " GROUP BY giaovien.MaGV, taikhoan.HoTen, lop.TenLop, monhoc.TenMH
+        ORDER BY monhoc.maMH ASC";
+
+        //Thực thi câu truy vấn
+        $teacherList = $GiaoVienModel->query($SQL)->getResultArray();
+
+        // Nếu danh sách không rổng, lấy tên lớp từ bản ghi đầu tiên
+        $TenLop = $teacherList ? $teacherList[0]['TenLop'] : '';
+
+        return view('director/class/arrange/teacher', [
+            'MaLop' => $MaLop,
+            'TenLop' => $TenLop,
+            'teacherList' => $teacherList,
+            'selectedYear' => $selectedYear,
+            'selectedSemester' => $selectedSemester,
+            'searchTerm' => $searchTerm,
+        ]);
+
+    }
+    // Màn hình quản lý giáo viên
+    public function employeeTeacherList()
     {
-        return view('director/employee/teacher/list');
+        $GiaoVienModel = new GiaoVienModel();
+
+        //Nhận giá trị tìm kiếm từ query string
+        $searchTerm = $this->request->getVar('search') ?? '';
+
+        //Tạo query lấy danh sách giáo viên
+        $GiaoVien = $GiaoVienModel
+            ->select('giaovien.*, taikhoan.*')
+            ->join('taikhoan', 'taikhoan.MaTK = giaovien.MaTK');
+
+        //Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
+        if ($searchTerm) {
+            $GiaoVien->groupStart()
+                ->like('taikhoan.HoTen', $searchTerm)
+                ->orLike('giaovien.MaGV', $searchTerm)
+                ->groupEnd();
+        }
+        $teacherList = $GiaoVien->findAll();
+        return view('director/employee/teacher/list', [
+            'teacherList' => $teacherList,
+            'searchTerm' => $searchTerm,
+        ]);
     }
 
     public function employeeTeacherAdd()
     {
-        return view('director/employee/teacher/add');
+        $GiaoVienModel = new GiaoVienModel();
+
+        // Lấy mã giáo viên lớn nhất hiện tại
+        $lastTeacher = $GiaoVienModel->select('MaGV')->orderBy('MaGV', 'DESC')->first();
+
+        // Sinh mã giáo viên mới
+        $newMaGV = 'GV0001'; // Giá trị mặc định nếu chưa có mã nào
+        if ($lastTeacher && preg_match('/^GV(\d+)$/', $lastTeacher['MaGV'], $matches)) {
+            $newIndex = (int)$matches[1] + 1;
+            $newMaGV = 'GV' . str_pad($newIndex, 4, '0', STR_PAD_LEFT);
+        }
+        return view('director/employee/teacher/add', ['newMaGV' => $newMaGV]);
     }
+
+    public function addEmployeeTeacher()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $birthday = $this->request->getPost('teacher_birthday');
+        $email = $this->request->getPost('teacher_email');
+        $password = $this->request->getPost('teacher_password');
+        $phone = $this->request->getPost('teacher_phone');
+        $gender = $this->request->getPost('teacher_gender');
+        $role = $this->request->getPost('teacher_role');
+        //Kiểm tra giới tính
+        if (empty($gender))
+            $errors['teacher_gender'] = 'Vui lòng chọn giới tính.';
+
+        //Kiểm tra chức vụ
+        if (empty($role))
+            $errors['teacher_role'] = 'Vui lòng chọn chức vụ.';
+
+        // Kiểm tra ngày sinh
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+            $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+
+        if (empty($birthday))
+            $errors['teacher_birthday'] = 'Vui lòng nhập ngày sinh.';
+
+        // Kiểm tra email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors['teacher_email'] = 'Email không đúng định dạng.';
+
+        // Kiểm tra mật khẩu
+        if (strlen($password) < 6)
+            $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+
+        // Kiểm tra số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone))
+            $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $TaiKhoanModel = new TaiKhoanModel();
+        $GiaoVienModel = new GiaoVienModel();
+
+        $MaTK = $TaiKhoanModel->insert([
+            'TenTK' => $this->request->getPost('teacher_account'),
+            'MatKhau' => $this->request->getPost('teacher_password'),
+            'Email' => $this->request->getPost('teacher_email'),
+            'HoTen' => $this->request->getPost('teacher_name'),
+            'SoDienThoai' => $this->request->getPost('teacher_phone'),
+            'DiaChi' => $this->request->getPost('teacher_address'),
+            'GioiTinh' => $this->request->getPost('teacher_gender'),
+            'NgaySinh' => $this->request->getPost('teacher_birthday'),
+            'MaVT' => 2, // Mã vai trò giáo viên
+        ]);
+
+        // Lưu thông tin giáo viên
+        $GiaoVienModel->insert([
+            'MaTK' => $MaTK,
+            'ChucVu' => $this->request->getPost('teacher_role'),
+            'TinhTrang' => $this->request->getPost('teacher_status') ?? 'Đang giảng dạy',
+        ]);
+
+        return redirect()->back()->with('success', 'Thêm giáo viên mới thành công!');
+    }
+
     public function employeeTeacherUpdate()
     {
         return view('director/employee/teacher/update');
     }
     // Màn hình quản lý giám thị
     public function employeeSupervisorList()
-    {   
+    {
         $GiamThiModel = new GiamThiModel();
-        
+
         //Nhận giá trị tìm kiếm từ query string
         $searchTerm = $this->request->getVar('search') ?? '';
 
@@ -472,7 +881,7 @@ class DirectorController extends Controller
         $GiamThi = $GiamThiModel
             ->select('giamthi.*, taikhoan.*')
             ->join('taikhoan', 'taikhoan.MaTK = giamthi.MaTK');
-        
+
         //Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
         if ($searchTerm) {
             $GiamThi->groupStart()
@@ -514,28 +923,28 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('supervisor_gender');
 
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['cashier_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -559,11 +968,10 @@ class DirectorController extends Controller
         // Lưu thông tin giám thị
         $GiamThiModel->insert([
             'MaTK' => $MaTK,
-            'TinhTrang' => $this->request->getPost('supervisor_status')?? 'Đang làm việc',
+            'TinhTrang' => $this->request->getPost('supervisor_status') ?? 'Đang làm việc',
         ]);
 
         return redirect()->back()->with('success', 'Thêm giám thị mới thành công!');
-
     }
 
     public function employeeSupervisorUpdate($MaGT)
@@ -577,7 +985,7 @@ class DirectorController extends Controller
             ->join('taikhoan', 'taikhoan.MaTK = giamthi.MaTK')
             ->where('giamthi.MaGT', $MaGT)
             ->first();
-        
+
         if (!$GiamThi) {
             return redirect()->back()->with('error', 'Không tìm thấy giám thị.');
         }
@@ -597,28 +1005,28 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('supervisor_gender');
 
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['cashier_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -650,13 +1058,65 @@ class DirectorController extends Controller
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
         }
-        
     }
 
-
+    // Màn hình thông tin cá nhân
     public function profile()
     {
-        return view('director/profile');
+        $BanGiamHieuModel = new BanGiamHieuModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+
+        // Lấy thông tin tài khoản hiện tại
+        $MaTK = session('MaTK');
+
+        // Lấy thông tin ban giám hiệu
+        $BanGiamHieu = $BanGiamHieuModel
+            ->select('bangiamhieu.*, taikhoan.*')
+            ->join('taikhoan', 'taikhoan.MaTK = bangiamhieu.MaTK')
+            ->where('bangiamhieu.MaTK', $MaTK)
+            ->first();
+
+        return view('director/profile', [
+            'director' => $BanGiamHieu,
+        ]);
+    }
+
+    public function updateProfile()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaBGH = $this->request->getPost('MaBGH');
+        $MaTK = $this->request->getPost('MaTK');
+        $email = $this->request->getPost('director_email');
+        $phone = $this->request->getPost('director_phone');
+
+        // Kiểm tra email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors['director_email'] = 'Email không đúng định dạng.';
+        // Kiểm tra số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone))
+            $errors['director_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $BanGiamHieuModel = new BanGiamHieuModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+
+        // Cập nhật thông tin tài khoản
+        $TaiKhoanModel->update($MaTK, [
+            'Email' => $this->request->getPost('director_email'),
+            'SoDienThoai' => $this->request->getPost('director_phone'),
+            'DiaChi' => $this->request->getPost('director_address'),
+        ]);
+
+        // Xử lý thông báo
+        if ($TaiKhoanModel) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+        } else {
+            return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
     }
 
     public function changepw()
@@ -664,6 +1124,44 @@ class DirectorController extends Controller
         return view('director/changepw');
     }
 
+    public function updatePassword()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaTK = session('MaTK');
+        $oldPassword = $this->request->getPost('old_pw');
+        $newPassword = $this->request->getPost('new_pw');
+        $confirmPassword = $this->request->getPost('confirm_pw');
+
+        // Kiểm tra mật khẩu cũ
+        $TaiKhoanModel = new TaiKhoanModel();
+        $TaiKhoan = $TaiKhoanModel->find($MaTK);
+        if ($TaiKhoan['MatKhau'] !== $oldPassword) {
+            $errors['old_pw'] = 'Mật khẩu cũ không chính xác.';
+        }
+
+        // Kiểm tra mật khẩu mới
+        if (strlen($newPassword) < 6) {
+            $errors['new_pw'] = 'Mật khẩu mới phải có ít nhất 6 ký tự.';
+        }
+
+        // Kiểm tra mật khẩu xác nhận
+        if ($newPassword !== $confirmPassword) {
+            $errors['confirm_pw'] = 'Mật khẩu xác nhận không khớp.';
+        }
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        // Cập nhật mật khẩu mới
+        $TaiKhoanModel->update($MaTK, [
+            'MatKhau' => $this->request->getPost('new_pw'),
+        ]);
+
+        return redirect()->back()->with('success', 'Đổi mật khẩu thành công!');
+    }
 
     // Màn hình quản lý thu ngân
     public function employeeCashierList()
@@ -672,12 +1170,12 @@ class DirectorController extends Controller
 
         // Nhận giá trị tìm kiếm từ query string
         $searchTerm = $this->request->getVar('search') ?? '';
-        
+
         // Tạo query lấy danh sách thu ngân
         $ThuNgan = $ThuNganModel
             ->select('thungan.*, taikhoan.*')
             ->join('taikhoan', 'taikhoan.MaTK = thungan.MaTK');
-        
+
         // Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
         if ($searchTerm) {
             $ThuNgan->groupStart()
@@ -718,30 +1216,30 @@ class DirectorController extends Controller
         $password = $this->request->getPost('cashier_password');
         $phone = $this->request->getPost('cashier_phone');
         $gender = $this->request->getPost('cashier_gender');
-        
+
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['cashier_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -808,28 +1306,28 @@ class DirectorController extends Controller
         log_message('debug', 'Dữ liệu Tình trạng nhận được: ' . print_r($status, true));
 
         //Kiểm tra giới tính
-        if (empty($gender)) 
+        if (empty($gender))
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) 
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        
-        if (empty($birthday)) 
+
+        if (empty($birthday))
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        
+
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['cashier_email'] = 'Email không đúng định dạng.';
-        
+
         // Kiểm tra mật khẩu
         if (strlen($password) < 6)
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        
+
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) 
+        if (!preg_match('/^\d{10}$/', $phone))
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        
+
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
