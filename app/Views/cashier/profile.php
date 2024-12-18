@@ -10,15 +10,17 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="GET" action=" ">
+            <form method="POST" action="/sms/public/cashier/profile">
                 <div class="cashier-profile-fields">
+                <input type="hidden" name="MaTN" value="<?= $cashier['MaTN'] ?? '' ?>">
+                <input type="hidden" name="MaTK" value="<?= $cashier['MaTK'] ?? '' ?>">
                     <div class="cashier-profile-field">
-                        Mã nhân viên
+                        Mã Thu Ngân
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'cashier_id',
                             'readonly' => true,
-                            'value' => 'GT0001'
+                            'value' => $cashier['MaTN']
                         ]) ?>
                     </div>
                     <div class="cashier-profile-field">
@@ -27,7 +29,7 @@
                             'type' => 'text',
                             'name' => 'cashier_name',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $cashier['HoTen']
                         ]) ?>
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                             'type' => 'text',
                             'name' => 'cashier_sex',
                             'readonly' => true,
-                            'value' => 'Nam'
+                            'value' => $cashier['GioiTinh']
                         ]) ?>
                     </div>
                     <div class="cashier-profile-field">
@@ -47,7 +49,7 @@
                             'type' => 'text',
                             'name' => 'cashier_date-of-birth',
                             'readonly' => true,
-                            'value' => '01-01-2000'
+                            'value' => date('d/m/Y', strtotime($cashier['NgaySinh'])),
                         ]) ?>
                     </div>
                 </div>
@@ -57,8 +59,8 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'cashier_address',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'readonly' => false,
+                            'value' => $cashier['DiaChi']
                         ]) ?>
                     </div>
                     <div class="cashier-profile-field">
@@ -66,8 +68,8 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'cashier_phone',
-                            'readonly' => true,
-                            'value' => '0123456789'
+                            'readonly' => false,
+                            'value' => $cashier['SoDienThoai']
                         ]) ?>
                     </div>
                 </div>
@@ -77,10 +79,31 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'cashier_email',
-                            'readonly' => true,
-                            'value' => 'thungan1@gmail.com'
+                            'readonly' => false,
+                            'value' => $cashier['Email']
                         ]) ?>
                     </div>
+                </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="cashieradd-btns">
+                    <a style="text-decoration: none" href="/sms/public/cashier/payment/list">
+                        <?= view('components/exit_button') ?>
+                    </a href="/sms/public/cashier/profile">
+                    <?= view('components/save_button') ?>
                 </div>
             </form>
         </div>
@@ -157,6 +180,14 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+    }
+
+    .cashieradd-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 
     .cashier-profile-fields {

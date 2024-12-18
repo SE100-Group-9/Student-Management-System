@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
+use App\Models\ThuNganModel;
+use App\Models\TaiKhoanModel;
 
 class CashierController extends Controller
 {
@@ -13,7 +15,60 @@ class CashierController extends Controller
 
     public function profile() 
     {
-        return view('cashier/profile');
+        $ThuNganModel = new ThuNganModel();
+
+        // Lấy thông tin tài khoản hiện tại
+        $MaTK = session('MaTK');
+
+        // Lấy thông tin ban giám hiệu
+        $ThuNgan = $ThuNganModel
+            ->select('thungan.*, taikhoan.*')
+            ->join('taikhoan', 'taikhoan.MaTK = thungan.MaTK')
+            ->where('thungan.MaTK', $MaTK)
+            ->first();
+
+
+        return view('cashier/profile', [
+            'cashier' => $ThuNgan,
+        ]);
+    }
+
+    public function updateProfile()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaTN = $this->request->getPost('MaTN');
+        $MaTK = $this->request->getPost('MaTK');
+        $email = $this->request->getPost('cashier_email');
+        $phone = $this->request->getPost('cashier_phone');
+
+        // Kiểm tra email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors['cashier_email'] = 'Email không đúng định dạng.';
+        // Kiểm tra số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone))
+            $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $ThuNganModel = new ThuNganModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+
+        // Cập nhật thông tin tài khoản
+        $TaiKhoanModel->update($MaTK, [
+            'Email' => $this->request->getPost('cashier_email'),
+            'SoDienThoai' => $this->request->getPost('cashier_phone'),
+            'DiaChi' => $this->request->getPost('cashier_address'),
+        ]);
+
+        // Xử lý thông báo
+        if ($TaiKhoanModel) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+        } else {
+            return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
     }
 
     public function add()
@@ -29,5 +84,48 @@ class CashierController extends Controller
     public function changepw()
     {
         return view('cashier/changepw');
+    }
+
+    public function updatePassword()
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaTK = session('MaTK');
+        $oldPassword = $this->request->getPost('old_pw');
+        $newPassword = $this->request->getPost('new_pw');
+        $confirmPassword = $this->request->getPost('confirm_pw');
+
+        // Kiểm tra mật khẩu cũ
+        $TaiKhoanModel = new TaiKhoanModel();
+        $TaiKhoan = $TaiKhoanModel->find($MaTK);
+        if ($TaiKhoan['MatKhau'] !== $oldPassword) {
+            $errors['old_pw'] = 'Mật khẩu cũ không chính xác.';
+        }
+
+        // Kiểm tra mật khẩu mới
+        if (strlen($newPassword) < 6) {
+            $errors['new_pw'] = 'Mật khẩu mới phải có ít nhất 6 ký tự.';
+        }
+
+        // Kiểm tra mật khẩu xác nhận
+        if ($newPassword !== $confirmPassword) {
+            $errors['confirm_pw'] = 'Mật khẩu xác nhận không khớp.';
+        }
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        // Cập nhật mật khẩu mới
+        $TaiKhoanModel->update($MaTK, [
+            'MatKhau' => $this->request->getPost('new_pw'),
+        ]);
+
+        if ($TaiKhoanModel) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+        } else {
+            return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
     }
 }

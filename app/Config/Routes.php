@@ -89,9 +89,11 @@ $routes->get('student/changepw', 'StudentController::changepw');
 // cashier
 $routes->get('cashier/payment/list', 'CashierController::list');
 $routes->get('cashier/profile', 'CashierController::profile');
+$routes->post('cashier/profile', 'CashierController::updateProfile');
 $routes->get('cashier/payment/add', 'CashierController::add');
-$routes->get('cashier/changepw', 'cashierController::changepw');
-$routes->get('cashier/statics/student', 'cashierController::staticStudent');
+$routes->get('cashier/changepw', 'CashierController::changepw');
+$routes->post('cashier/changepw', 'CashierController::updatePassword');
+//$routes->get('cashier/statics/student', 'cashierController::staticStudent');
 
 
 
