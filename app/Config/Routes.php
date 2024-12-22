@@ -1,3 +1,4 @@
+
 <?php
 
 use CodeIgniter\Router\RouteCollection;
@@ -44,6 +45,7 @@ $routes->get('director/class/arrange/student/(:num)', 'DirectorController::class
 $routes->post('director/class/arrange/student', 'DirectorController::addStudentToClass');
 $routes->get('director/class/arrange/teacher/(:num)', 'DirectorController::classArrangeTeacher/$1');
 $routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
+$routes->get('director/class/arrange/addteacher', 'DirectorController::classArrangeAddTeacher');
 
 // Director - Quản lý giáo viên
 $routes->get('director/class/update', 'DirectorController::classUpdate');
@@ -121,3 +123,5 @@ $routes->get('teacher/class/record/detail', 'TeacherController::recordDetail');
 $routes->get('teacher/class/enter/list', 'TeacherController::enterList');
 $routes->get('teacher/class/enter/next', 'TeacherController::enterNext');
 $routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
+$routes->get('teacher/profile', 'TeacherController::profile');
+$routes->get('teacher/changepw', 'TeacherController::changepw');

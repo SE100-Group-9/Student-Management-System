@@ -50,4 +50,14 @@ class TeacherController extends Controller
     {
         return view('teacher/class/enter/student');
     }
+
+    public function profile()
+    {
+        return view('teacher/profile');
+    }
+
+    public function changepw()
+    {
+        return view('teacher/changepw');
+    }
 }

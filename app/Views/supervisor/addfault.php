@@ -14,16 +14,65 @@
             <form method="POST" action=" ">
                 <div class="add-fault-fields">
                     <div class="add-fault-field">
-                        <label>Khối</label>
-                        <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
-                        <label>Lớp</label>
-                        <?= view('components/dropdown', ['options' => ['10A1', '10A2', '10A3'], 'dropdown_id' => 'class-dropdown']) ?>
+                        Mã học sinh
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student-id',
+                            'required' => true,
+                            'value' => old('student-id'),
+                        ]) ?>
                     </div>
                     <div class="add-fault-field">
-                            <label>Mã học sinh</label>
-                            <?= view('components/dropdown', ['options' => ['HS001', 'HS002', 'HS003', 'HS004', 'HS005', 'HS006'], 'dropdown_id' => 'id-dropdown']) ?> 
-                            <label>Tên học sinh</label>
-                            <?= view('components/dropdown', ['options' => ['Nguyễn Văn A', 'Trần Thị B', 'Lê Văn C', 'Trần Văn D', 'Lê Thị E', 'Nguyễn Thị G'], 'dropdown_id' => 'name-dropdown']) ?> 
+                        Tên học sinh
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student-name',
+                            'required' => true,
+                            'readonly'=> true,
+                            'value' => 'Nguyễn Văn A',
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="add-fault-fields">
+                    <div class="add-fault-field">
+                        Khối
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'grade',
+                            'readonly' => true,
+                            'value' => '11',
+                        ]) ?>
+                    </div>
+                    <div class="add-fault-field">
+                        Lớp
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'class',
+                            'readonly' => true,
+                            'value' => '11A1',
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="add-fault-fields">
+                    <div class="add-fault-field">
+                        Học kỳ
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ I', 'Học kỳ II'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Học kỳ',
+                            'value' => old('semester'),
+                        ]) ?>
+                    </div>
+                    <div class="add-fault-field">
+                        Lỗi vi phạm
+                        <?= view('components/dropdown', [
+                            'options' => ['1 - Đi trễ', '2 - Không mang phù hiệu', '3 - Không thuộc bài'],
+                            'dropdown_id' => 'category-dropdown',
+                            'name' => 'student_category',
+                            'selected_text' => 'Lỗi vi phạm',
+                            'value' => old('student_category'),
+                        ]) ?>
                     </div>
                     <div class="hidden-dropdown">
                         <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>

@@ -36,6 +36,11 @@ class DirectorController extends Controller
         return view('director/statics/student');
     }
 
+    public function classArrangeAddTeacher()
+    {
+        return view('director/class/arrange/addteacher');
+    }
+    
     public function exportStudentList() {}
 
     public function studentAdd()
