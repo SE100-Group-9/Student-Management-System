@@ -1,0 +1,666 @@
+CRITICAL - 2024-12-22 00:00:12 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/footer.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/footer.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/footer', [], true)
+ 3 APPPATH\Views\login.php(2): view('components/footer')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\login.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('login', [], true)
+ 7 APPPATH\Controllers\LoginController.php(13): view('login')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-12-22 00:00:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-12-22 00:00:24 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: cashier/profile]
+in APPPATH\Views\cashier\profile.php on line 23.
+ 1 APPPATH\Views\cashier\profile.php(23): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\sms\\app\\Views\\cashier\\profile.php', 23)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\cashier\\profile.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('cashier/profile', [], true)
+ 5 APPPATH\Controllers\CashierController.php(31): view('cashier/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\CashierController->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\CashierController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-12-22 00:01:35 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/footer.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/footer.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/footer', [], true)
+ 3 APPPATH\Views\login.php(2): view('components/footer')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\login.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('login', [], true)
+ 7 APPPATH\Controllers\LoginController.php(13): view('login')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-12-22 00:03:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:03:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-12-22 00:06:16 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/footer.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/footer.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/footer', [], true)
+ 3 APPPATH\Views\login.php(2): view('components/footer')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\login.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('login', [], true)
+ 7 APPPATH\Controllers\LoginController.php(13): view('login')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-12-22 00:09:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2024-12-22 00:09:31 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "components/footer.php"
+[Method: GET, Route: /]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 41.
+ 1 SYSTEMPATH\View\View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('components/footer.php')
+ 2 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('components/footer', [], true)
+ 3 APPPATH\Views\login.php(2): view('components/footer')
+ 4 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\login.php')
+ 5 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 6 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('login', [], true)
+ 7 APPPATH\Controllers\LoginController.php(13): view('login')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->index()
+ 9 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+10 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-12-22 00:11:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:12:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:12:07 --> Username: TN0001
+DEBUG - 2024-12-22 00:12:07 --> Password: 123abc
+DEBUG - 2024-12-22 00:12:07 --> User found: Array
+(
+    [MaTK] => 63
+    [TenTK] => TN0001
+    [MatKhau] => 111111
+    [Email] => thungan1@example1.com
+    [HoTen] => Phạm Thị Minh Thư
+    [SoDienThoai] => 0914567890
+    [DiaChi] => 124 Bạch Đằng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1990-01-10
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:12:07 --> Username: TN0001
+INFO - 2024-12-22 00:12:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:12:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:12:28 --> Username: TN0001
+DEBUG - 2024-12-22 00:12:28 --> Password: 123abc
+DEBUG - 2024-12-22 00:12:28 --> User found: Array
+(
+    [MaTK] => 63
+    [TenTK] => TN0001
+    [MatKhau] => 111111
+    [Email] => thungan1@example1.com
+    [HoTen] => Phạm Thị Minh Thư
+    [SoDienThoai] => 0914567890
+    [DiaChi] => 124 Bạch Đằng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1990-01-10
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:12:28 --> Username: TN0001
+INFO - 2024-12-22 00:12:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:13:03 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:03 --> Password: 123abc
+DEBUG - 2024-12-22 00:13:03 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:13:03 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:03 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:03 --> Login successful for user: TN0002
+INFO - 2024-12-22 00:13:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:13:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:13:55 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:55 --> Password: 123abc
+DEBUG - 2024-12-22 00:13:55 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:13:55 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:55 --> Username: TN0002
+DEBUG - 2024-12-22 00:13:55 --> Login successful for user: TN0002
+INFO - 2024-12-22 00:13:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:15:17 --> Username: TN0002
+DEBUG - 2024-12-22 00:15:17 --> Password: 124abc
+DEBUG - 2024-12-22 00:15:17 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:15:17 --> Username: TN0002
+INFO - 2024-12-22 00:15:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:15:25 --> Username: TN0002
+DEBUG - 2024-12-22 00:15:25 --> Password: 123abc
+DEBUG - 2024-12-22 00:15:25 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:15:25 --> Username: TN0002
+DEBUG - 2024-12-22 00:15:25 --> Username: TN0002
+DEBUG - 2024-12-22 00:15:25 --> Login successful for user: TN0002
+INFO - 2024-12-22 00:15:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:17:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:17:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:17:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:17:53 --> Username: TN0002
+DEBUG - 2024-12-22 00:17:53 --> Password: 123abc
+DEBUG - 2024-12-22 00:17:53 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:17:53 --> Username: TN0002
+DEBUG - 2024-12-22 00:17:53 --> Username: TN0002
+DEBUG - 2024-12-22 00:17:53 --> Login successful for user: TN0002
+INFO - 2024-12-22 00:17:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:18:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:18:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:22:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:22:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:24:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:24:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:24:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:24:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:26:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:26:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:27:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:27:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:34:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:35:08 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:08 --> Password: 123abc
+DEBUG - 2024-12-22 00:35:08 --> User found: Array
+(
+    [MaTK] => 1
+    [TenTK] => BGH0001
+    [MatKhau] => 123abc
+    [Email] => hieu.truong@example.com
+    [HoTen] => Trần Đình Phương Linh
+    [SoDienThoai] => 0901234567
+    [DiaChi] => 123 Lê Lợi, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1970-05-12
+    [MaVT] => 1
+    [TenVT] => Ban giám hiệu
+)
+
+DEBUG - 2024-12-22 00:35:08 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:08 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:08 --> Login successful for user: BGH0001
+INFO - 2024-12-22 00:35:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:35:20 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:20 --> Password: 123abc
+DEBUG - 2024-12-22 00:35:21 --> User found: Array
+(
+    [MaTK] => 1
+    [TenTK] => BGH0001
+    [MatKhau] => 123abc
+    [Email] => hieu.truong@example.com
+    [HoTen] => Trần Đình Phương Linh
+    [SoDienThoai] => 0901234567
+    [DiaChi] => 123 Lê Lợi, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1970-05-12
+    [MaVT] => 1
+    [TenVT] => Ban giám hiệu
+)
+
+DEBUG - 2024-12-22 00:35:21 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:21 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:21 --> Login successful for user: BGH0001
+INFO - 2024-12-22 00:35:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:35:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:35:32 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:32 --> Password: 123abc
+DEBUG - 2024-12-22 00:35:32 --> User found: Array
+(
+    [MaTK] => 1
+    [TenTK] => BGH0001
+    [MatKhau] => 123abc
+    [Email] => hieu.truong@example.com
+    [HoTen] => Trần Đình Phương Linh
+    [SoDienThoai] => 0901234567
+    [DiaChi] => 123 Lê Lợi, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1970-05-12
+    [MaVT] => 1
+    [TenVT] => Ban giám hiệu
+)
+
+DEBUG - 2024-12-22 00:35:32 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:32 --> Username: BGH0001
+DEBUG - 2024-12-22 00:35:32 --> Login successful for user: BGH0001
+INFO - 2024-12-22 00:35:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:35:53 --> Class List: Array
+(
+    [0] => Chọn lớp học
+    [1] => 10_1
+    [2] => 10_2
+    [3] => 11_1
+    [4] => 11_2
+    [5] => 12_1
+    [6] => 12_2
+)
+
+DEBUG - 2024-12-22 00:35:53 --> Class List: Array
+(
+    [0] => Chọn năm học
+    [1] => 2023-2024
+    [2] => 2024-2025
+)
+
+INFO - 2024-12-22 00:35:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-12-22 00:35:59 --> mysqli_sql_exception: Table 'sms.phancong' doesn't exist in C:\xampp\htdocs\sms\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\sms\system\Database\MySQLi\Connection.php(312): mysqli->query('\r\n        SELEC...', 0)
+#1 C:\xampp\htdocs\sms\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\r\n        SELEC...')
+#2 C:\xampp\htdocs\sms\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\r\n        SELEC...')
+#3 C:\xampp\htdocs\sms\system\Model.php(926): CodeIgniter\Database\BaseConnection->query('\r\n        SELEC...')
+#4 C:\xampp\htdocs\sms\app\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', Array)
+#5 C:\xampp\htdocs\sms\system\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+#6 C:\xampp\htdocs\sms\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+#7 C:\xampp\htdocs\sms\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sms\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sms\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\sms\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2024-12-22 00:35:59 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'sms.phancong' doesn't exist
+[Method: GET, Route: director/class/list]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 2 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-12-22 00:35:59 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'sms.phancong' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 3 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 4 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-12-22 00:35:59 --> [Caused by] mysqli_sql_exception: Table 'sms.phancong' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 4 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 5 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+DEBUG - 2024-12-22 00:36:02 --> Class List: Array
+(
+    [0] => Chọn lớp học
+    [1] => 10_1
+    [2] => 10_2
+    [3] => 11_1
+    [4] => 11_2
+    [5] => 12_1
+    [6] => 12_2
+)
+
+DEBUG - 2024-12-22 00:36:02 --> Class List: Array
+(
+    [0] => Chọn năm học
+    [1] => 2023-2024
+    [2] => 2024-2025
+)
+
+INFO - 2024-12-22 00:36:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:36:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2024-12-22 00:36:09 --> mysqli_sql_exception: Table 'sms.phancong' doesn't exist in C:\xampp\htdocs\sms\system\Database\MySQLi\Connection.php:312
+Stack trace:
+#0 C:\xampp\htdocs\sms\system\Database\MySQLi\Connection.php(312): mysqli->query('\r\n        SELEC...', 0)
+#1 C:\xampp\htdocs\sms\system\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('\r\n        SELEC...')
+#2 C:\xampp\htdocs\sms\system\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('\r\n        SELEC...')
+#3 C:\xampp\htdocs\sms\system\Model.php(926): CodeIgniter\Database\BaseConnection->query('\r\n        SELEC...')
+#4 C:\xampp\htdocs\sms\app\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', Array)
+#5 C:\xampp\htdocs\sms\system\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+#6 C:\xampp\htdocs\sms\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+#7 C:\xampp\htdocs\sms\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\sms\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\sms\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\sms\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2024-12-22 00:36:09 --> CodeIgniter\Database\Exceptions\DatabaseException: Table 'sms.phancong' doesn't exist
+[Method: GET, Route: director/class/list]
+in SYSTEMPATH\Database\BaseConnection.php on line 688.
+ 1 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 2 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 4 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 5 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-12-22 00:36:09 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Table 'sms.phancong' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 317.
+ 1 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 3 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 4 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2024-12-22 00:36:09 --> [Caused by] mysqli_sql_exception: Table 'sms.phancong' doesn't exist
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 312.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(312): mysqli->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(734): CodeIgniter\Database\MySQLi\Connection->execute('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(648): CodeIgniter\Database\BaseConnection->simpleQuery('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 4 SYSTEMPATH\Model.php(926): CodeIgniter\Database\BaseConnection->query('
+        SELECT lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen, COUNT(hocsinh_lop.MaHS) as SiSo
+        FROM lop
+        JOIN phancong ON lop.MaLop = phancong.MaLop
+        JOIN giaovien ON phancong.MaGV = giaovien.MaGV
+        JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+        LEFT JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop AND hocsinh_lop.NamHoc = \'2024-2025\'
+        WHERE phancong.NamHoc = \'2024-2025\' AND phancong.VaiTro = \'Giáo viên chủ nhiệm\'
+         GROUP BY lop.MaLop, lop.TenLop, giaovien.MaGV, taikhoan.HoTen
+        ORDER BY lop.TenLop ASC')
+ 5 APPPATH\Controllers\DirectorController.php(467): CodeIgniter\Model->__call('query', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->classList()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2024-12-22 00:36:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:36:18 --> Class List: Array
+(
+    [0] => Chọn lớp học
+    [1] => 10_1
+    [2] => 10_2
+    [3] => 11_1
+    [4] => 11_2
+    [5] => 12_1
+    [6] => 12_2
+)
+
+DEBUG - 2024-12-22 00:36:18 --> Class List: Array
+(
+    [0] => Chọn năm học
+    [1] => 2023-2024
+    [2] => 2024-2025
+)
+
+INFO - 2024-12-22 00:36:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:36:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:36:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2024-12-22 00:43:38 --> Username: TN0002
+DEBUG - 2024-12-22 00:43:38 --> Password: 123abc
+DEBUG - 2024-12-22 00:43:38 --> User found: Array
+(
+    [MaTK] => 64
+    [TenTK] => TN0002
+    [MatKhau] => 123abc
+    [Email] => thungan2@example.com
+    [HoTen] => Nguyễn Minh Phương
+    [SoDienThoai] => 0904567891
+    [DiaChi] => 45 Lý Tự Trọng, Quận 1, Hồ Chí Minh
+    [GioiTinh] => Nữ
+    [NgaySinh] => 1988-06-22
+    [MaVT] => 4
+    [TenVT] => Thu ngân
+)
+
+DEBUG - 2024-12-22 00:43:38 --> Username: TN0002
+DEBUG - 2024-12-22 00:43:38 --> Username: TN0002
+DEBUG - 2024-12-22 00:43:38 --> Login successful for user: TN0002
+INFO - 2024-12-22 00:43:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2024-12-22 00:43:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

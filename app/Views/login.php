@@ -1,5 +1,5 @@
 <div class="login">
-    <?= view('components/footer') ?>
+    
     <div class="above">
         <div class="picture">
             <img src="assets/image/login.jpg" alt=" Sample Image">
