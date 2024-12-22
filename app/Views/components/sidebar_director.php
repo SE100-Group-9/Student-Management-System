@@ -79,10 +79,14 @@
                 </a>
             </div>
             <div class="student-payment">
-                Thông tin thanh toán
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/payment">
+                    Thông tin thanh toán
+                </a>
             </div>
             <div class="report">
-                Thông tin học bạ
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/record">
+                    Thông tin học bạ
+                </a>
             </div>
         </div>
     </div>

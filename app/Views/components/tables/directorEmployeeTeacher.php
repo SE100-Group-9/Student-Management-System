@@ -8,7 +8,6 @@
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-                    <th>Địa chỉ</th>
                     <th>Giới tính</th>
                     <th>Ngày sinh</th>
                     <th>Chức vụ</th>
@@ -24,7 +23,6 @@
                         <td><?= $teacher['HoTen'] ?></td>
                         <td><?= $teacher['Email'] ?></td>
                         <td><?= $teacher['SoDienThoai'] ?></td>
-                        <td><?= $teacher['DiaChi'] ?></td>
                         <td><?= $teacher['GioiTinh'] ?></td>
                         <td><?= date('d/m/Y', strtotime($teacher['NgaySinh'])) ?></td>
                         <td>

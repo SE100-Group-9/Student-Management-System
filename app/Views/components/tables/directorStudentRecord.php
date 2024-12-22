@@ -1,156 +1,46 @@
-<div class="table-container">
-    <table id="directorStaticsConduct">
-        <thead>
-            <tr>
-                <th>Mã số học sinh</th>
-                <th>Họ tên</th>
-                <th>Lớp</th>
-                <th>Toán</th>
-                <th>Lý</th>
-                <th>Hóa</th>
-                <th>Sinh</th>
-                <th>Hạnh kiểm</th>
-                <th>Xếp loại</th>
-                <th>Nhận xét</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>01</td>
-                <td>Lê Nguyễn Hoài Thương</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>02</td>
-                <td>Đoàn Ngọc Hoàng</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>03</td>
-                <td>Vũ Thị Oanh</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>04</td>
-                <td>Phan Huỳnh Thành Khương</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>05</td>
-                <td>Bùi Nhựt Tân</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>06</td>
-                <td>Huỳnh Tuyết Nhi</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>07</td>
-                <td>Hà Cẩm Tú</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>08</td>
-                <td>Nguyễn Lê Trung</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>09</td>
-                <td>Cao Long Nhựt</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>Bùi Nhựt Tân</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-            <tr>
-                <td>11</td>
-                <td>Bùi Nhựt Tân</td>
-                <td>11A1</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>Xuất sắc</td>
-                <td>Xuất sắc</td>
-                <td>Chăm</td>
-            </tr>
-        </tbody>
-    </table>
-    <div id="pagination-container"></div>
-</div>
+<?php if (!empty($studentList) && is_array($studentList)): ?>
+    <div class="table-container">
+        <table id="directorStaticsConduct">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã HS</th>
+                    <th>Họ tên</th>
+                    <th>Lớp</th>
+                    <th>Toán học</th>
+                    <th>Vật lý</th>
+                    <th>Hóa học</th>
+                    <th>Sinh học</th>
+                    <th>Điểm trung bình</th>
+                    <th>Học lực</th>
+                    <th>Hạnh kiểm</th>
+                    <th>Danh hiệu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach (array_values($studentList) as $index => $student): ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
+                        <td><?= $student['MaHS'] ?></td>
+                        <td><?= $student['HoTen'] ?></td>
+                        <td><?= $student['TenLop'] ?></td>
+                        <td><?= $student['1'] ?></td>
+                        <td><?= $student['2'] ?></td>
+                        <td><?= $student['3'] ?></td>
+                        <td><?= $student['4'] ?></td>
+                        <td><?= $student['DiemTBHocKy'] ?></td>
+                        <td><?= $student['HocLuc'] ?></td>
+                        <td><?= $student['DiemHK'] ?></td>
+                        <td><?= $student['DanhHieu'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div id="pagination-container"></div>
+    </div>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
 
 <style>
     .table-container {
@@ -187,22 +77,22 @@
 
     #pagination-container {
         display: flex;
-        justify-content: flex-end;  
+        justify-content: flex-end;
         align-items: center;
-        margin-top: 10px;  
-        width: 100%; 
+        margin-top: 10px;
+        width: 100%;
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const tableElement = document.getElementById('directorStaticsConduct'); 
-    const paginationContainer = document.getElementById('pagination-container');
+        const tableElement = document.getElementById('directorStaticsConduct');
+        const paginationContainer = document.getElementById('pagination-container');
 
-    initializeTablePagination({
-        tableElement,
-        paginationContainer,
-        rowsPerPage: 10, 
+        initializeTablePagination({
+            tableElement,
+            paginationContainer,
+            rowsPerPage: 10,
+        });
     });
-});
 </script>

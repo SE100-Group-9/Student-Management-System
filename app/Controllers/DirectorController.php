@@ -17,6 +17,8 @@ use App\Models\BanGiamHieuModel;
 use App\Models\GiaoVienLopModel;
 use App\Models\MonHocModel;
 use App\Models\PhanCongModel;
+use App\Models\DiemModel;
+use App\Models\HanhKiemModel;
 
 class DirectorController extends Controller
 {
@@ -40,7 +42,7 @@ class DirectorController extends Controller
     {
         return view('director/class/arrange/addteacher');
     }
-    
+
     public function exportStudentList() {}
 
     public function studentAdd()
@@ -119,7 +121,7 @@ class DirectorController extends Controller
             'NoiSinh' => $this->request->getPost('student_country'),
             'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
         ]);
-
+        
         $allPostData = $this->request->getPost();
         log_message('info', 'Received Data: ' . json_encode($allPostData));
         return redirect()->back()->with('success', 'Thêm học sinh mới thành công!');
@@ -249,9 +251,6 @@ class DirectorController extends Controller
         $yearList = array_merge(['Chọn năm học'], $yearList);
         $statusList = ['Chọn trạng thái', 'Đang học', 'Mới tiếp nhận', 'Nghỉ học'];
 
-        log_message('debug', 'Class List: ' . print_r($classList, true));
-        log_message('debug', 'Class List: ' . print_r($yearList, true));
-
         $query = $HocSinhModel
             ->select('hocsinh.*, taikhoan.*, hocsinh_lop.MaLop, lop.TenLop')
             ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
@@ -301,8 +300,123 @@ class DirectorController extends Controller
 
     public function studentRecord()
     {
-        return view('director/student/record');
+        $HocSinhModel = new HocSinhModel();
+        $LopModel = new LopModel();
+
+        // Nhận giá trị năm học, học kỳ và lớp học từ query string
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+        //Nhận giá trị học kỳ sau khi chuyển từ text sang số
+        $selectedSemesterText = $this->request->getVar('semester') ?? 'Học kỳ 1';
+        $selectedSemester = $selectedSemesterText === 'Học kỳ 1' ? 1 : 2;
+        $selectedClass = $this->request->getVar('class') ?? '10_1';
+
+        // Lấy danh sách các tên lớp học trong năm học được chọn
+        $classList = $LopModel->getClassList($selectedYear, $selectedSemester);
+
+        // Lấy danh sách học sinh theo năm học, học kỳ và lớp học
+        $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
+
+        $students = [];
+        foreach ($studentList as $student) {
+            $MaHS = $student['MaHS'];
+            
+            //Khởi tạo dữ liệu học sinh nếu chưa có
+            if (!isset($students[$MaHS])) {
+                $students[$MaHS] = [
+                    'MaHS' => $MaHS,
+                    'HoTen' => $student['HoTen'],
+                    'TenLop' => $student['TenLop'],
+                    'Diem' => [],
+                    'DiemHK' => $student['DiemHK'],
+                ];
+            }
+
+            // Lưu điểm của từng môn học
+            if ($student['MaMH']) {
+                $students[$MaHS]['Diem'][$student['MaMH']] = [
+                    'Diem15P_1' => $student['Diem15P_1'],
+                    'Diem15P_2' => $student['Diem15P_2'],
+                    'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+                    'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+                    'DiemCK' => $student['DiemCK'],
+                ];
+            }
+        }
+
+        // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và xếp loại học lực, danh hiệu
+        foreach ($students as &$student) {
+            $DiemTBHocKy = 0;
+            $TongDiemTB = 0;
+            $SoMon = 0;
+
+            foreach ($student['Diem'] as $MaMH => $Diem) {
+                $DiemTBMonHoc = $this->getAverageScore($Diem);
+                $student[$MaMH] = $DiemTBMonHoc;
+
+                if ($DiemTBMonHoc !== null) {
+                    $TongDiemTB += $DiemTBMonHoc;
+                    $SoMon++;
+                }
+            }
+            // Tính điểm trung bình học kỳ
+            if ($SoMon > 0) 
+                $DiemTBHocKy = round($TongDiemTB / $SoMon, 1);
+            else $DiemTBHocKy = null;
+            $student['DiemTBHocKy'] = $DiemTBHocKy;
+
+            // Xếp loại học lực
+            $student['HocLuc'] = $this->getAcademicPerformance($DiemTBHocKy);
+
+            // Xếp loại danh hiệu
+            $DanhHieuModel = new DanhHieuModel();
+            $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTBHocKy, $student['DiemHK']); 
+            $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+        }
+        log_message('debug', 'Student Data: ' . print_r($students, true));
+        return view('director/student/record', [
+            'studentList' => $students,
+            'classList' => $classList,
+            'selectedYear' => $selectedYear,
+            'selectedSemesterText' => $selectedSemesterText,
+            'selectedClass' => $selectedClass,
+        ]);
     }
+
+    //Hàm xếp loại học lực
+    private function getAcademicPerformance($DiemTBHocKy)
+    {
+        if ($DiemTBHocKy === null) {
+            return null;
+        }
+
+        if ($DiemTBHocKy >= 8.0) {
+            return 'Giỏi';
+        } elseif ($DiemTBHocKy >= 6.5) {
+            return 'Khá';
+        } elseif ($DiemTBHocKy >= 5.0) {
+            return 'Trung bình';
+        } else {
+            return 'Yếu';
+        }
+    }
+    //Hàm tính điểm trung bình
+    private function getAverageScore($Diem)
+    {
+        $Diem15P_1 = $Diem['Diem15P_1'];
+        $Diem15P_2 = $Diem['Diem15P_2'];
+        $Diem1Tiet_1 = $Diem['Diem1Tiet_1'];
+        $Diem1Tiet_2 = $Diem['Diem1Tiet_2'];
+        $DiemCK = $Diem['DiemCK'];
+
+        if ($Diem15P_1 === null || $Diem15P_2 === null || $Diem1Tiet_1 === null || $Diem1Tiet_2 === null || $DiemCK === null) {
+            return null;
+        }
+
+        $DiemTB = (($Diem15P_1 + $Diem15P_2) + 2 * ($Diem1Tiet_1 + $Diem1Tiet_2) + 3 * $DiemCK ) / 9;
+        return round($DiemTB, 1);
+    }
+
+    //
 
     //Màn hình Danh hiệu
     public function titleList()
@@ -753,7 +867,6 @@ class DirectorController extends Controller
             'selectedSemester' => $selectedSemester,
             'searchTerm' => $searchTerm,
         ]);
-
     }
     // Màn hình quản lý giáo viên
     public function employeeTeacherList()
@@ -865,10 +978,75 @@ class DirectorController extends Controller
         return redirect()->back()->with('success', 'Thêm giáo viên mới thành công!');
     }
 
-    public function employeeTeacherUpdate()
+    public function employeeTeacherUpdate($MaGV)
     {
-        return view('director/employee/teacher/update');
+        $GiaoVienModel = new GiaoVienModel();
+
+        // Lấy thông tin giáo viên dựa trên MaGV
+        $SQL = "SELECT giaovien.*, taikhoan.*
+        FROM giaovien
+        JOIN taikhoan ON taikhoan.MaTK = giaovien.MaTK
+        WHERE giaovien.MaGV = '$MaGV'";
+
+        // Thực thi câu truy vấn
+        $teacher = $GiaoVienModel->query($SQL)->getRowArray();
+
+        return view('director/employee/teacher/update', ['teacher' => $teacher]);
     }
+
+    public function updateEmployeeTeacher($MaGV)
+    {
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaGV = $this->request->getPost('MaGV');
+        $MaTK = $this->request->getPost('MaTK');
+        $password = $this->request->getPost('teacher_password');
+        $birthday = $this->request->getPost('teacher_birthday');
+        $email = $this->request->getPost('teacher_email');
+        $phone = $this->request->getPost('teacher_phone');
+        $gender = $this->request->getPost('teacher_gender');
+        $role = $this->request->getPost('teacher_role');
+        $status = $this->request->getPost('teacher_status');
+
+        // Kiểm tra ngày sinh
+        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+            $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+
+        // Kiểm tra email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors['teacher_email'] = 'Email không đúng định dạng.';
+
+        // Kiểm tra số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone))
+            $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+
+        //Kiểm tra mật khẩu
+        if (strlen($password) < 6)
+            $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        $TaiKhoanModel = new TaiKhoanModel();
+        $GiaoVienModel = new GiaoVienModel();
+
+        // Cập nhật thông tin tài khoản
+        $TaiKhoan = "UPDATE taikhoan
+        SET MatKhau = '$password' , Email = '$email', SoDienThoai = '$phone', GioiTinh = '$gender', NgaySinh = '$birthday'
+        WHERE MaTK = '$MaTK'";
+        $TaiKhoanModel->query($TaiKhoan);
+
+        // Cập nhật thông tin giáo viên
+        $GiaoVien = "UPDATE giaovien
+        SET ChucVu = '$role', TinhTrang = '$status'
+        WHERE MaGV = '$MaGV'";
+        $GiaoVienModel->query($GiaoVien);
+
+        return redirect()->back()->with('success', 'Cập nhật thông tin giáo viên thành công!');
+    }
+
     // Màn hình quản lý giám thị
     public function employeeSupervisorList()
     {
@@ -1064,7 +1242,6 @@ class DirectorController extends Controller
     public function profile()
     {
         $BanGiamHieuModel = new BanGiamHieuModel();
-        $TaiKhoanModel = new TaiKhoanModel();
 
         // Lấy thông tin tài khoản hiện tại
         $MaTK = session('MaTK');

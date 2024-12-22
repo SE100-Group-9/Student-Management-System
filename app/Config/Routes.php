@@ -20,7 +20,7 @@ $routes->get('director/student/update/(:segment)', 'DirectorController::studentU
 $routes->post('/director/student/updateStudent', 'DirectorController::updateStudent');
 $routes->get('director/student/list', 'DirectorController::studentList');
 
-
+// Director - Thông tin học bạ
 $routes->get('director/student/record', 'DirectorController::studentRecord');
 $routes->get('director/student/perserved', 'DirectorController::studentPerserved');
 $routes->get('director/student/payment', 'DirectorController::studentPayment');
@@ -47,14 +47,13 @@ $routes->get('director/class/arrange/teacher/(:num)', 'DirectorController::class
 $routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
 $routes->get('director/class/arrange/addteacher', 'DirectorController::classArrangeAddTeacher');
 
+
 // Director - Quản lý giáo viên
-$routes->get('director/class/update', 'DirectorController::classUpdate');
-$routes->get('director/class/arrange/student', 'DirectorController::classArrangeStudent');
-$routes->get('director/class/arrange/teacher', 'DirectorController::classArrangeTeacher');
 $routes->get('director/employee/teacher/list', 'DirectorController::employeeTeacherList');
 $routes->get('director/employee/teacher/add', 'DirectorController::employeeTeacherAdd');
 $routes->post('director/employee/teacher/add', 'DirectorController::addEmployeeTeacher');
-$routes->get('director/employee/teacher/update', 'DirectorController::employeeTeacherupdate');
+$routes->get('director/employee/teacher/update/(:segment)', 'DirectorController::employeeTeacherUpdate/$1');
+$routes->post('director/employee/teacher/update/(:segment)', 'DirectorController::updateEmployeeTeacher/$1');
 
 // Director - Quản lý Thu ngân
 $routes->get('director/employee/cashier/list', 'DirectorController::employeeCashierList');
