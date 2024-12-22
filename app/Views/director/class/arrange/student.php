@@ -26,8 +26,9 @@
             </div>
             <div class="tabless">
                 <?= view('components/tables/directorClassArrangeStudent', ['studentList' => $studentList]) ?>
+                
             </div>
-            <?= view('components/pagination') ?>
+                <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>

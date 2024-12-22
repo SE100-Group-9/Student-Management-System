@@ -11,16 +11,20 @@
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giáo viên
             <h1>Cập nhật hồ sơ:</h1>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/director/employee/teacher/update/<?= $teacher['MaGV'] ?>">
                 <h2>Thông tin tài khoản:</h2>
                 <div class="teacherupdate-fields">
+                    <input type="hidden" name="MaTN" value="<?= $teacher['MaGV'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $teacher['MaTK'] ?? '' ?>">
+
                     <div class="teacherupdate-field">
                         Tài khoản
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_account',
                             'required' => true,
-                            'value' => '01',
+                            'value' => $teacher['TenTK'],
+                            'readonly' => true,
                         ]) ?>
                     </div>
                     <div class="teacherupdate-field">
@@ -29,7 +33,8 @@
                             'type' => 'text',
                             'name' => 'teacher_password',
                             'required' => true,
-                            'value' => '123abc',
+                            'value' => $teacher['MatKhau'],
+                            'readonly' => false,
                         ]) ?>
                     </div>
                 </div>
@@ -41,7 +46,7 @@
                             'type' => 'text',
                             'name' => 'teacher_name',
                             'required' => true,
-                            'value' => 'Lê Nguyễn Hoài Thương',
+                            'value' => $teacher['HoTen'],
                         ]) ?>
                     </div>
                     <div class="teacherupdate-field">
@@ -50,7 +55,7 @@
                             'type' => 'email',
                             'name' => 'teacher_email',
                             'required' => true,
-                            'value' => 'a@gmail.com',
+                            'value' => $teacher['Email'],
                         ]) ?>
                     </div>
                 </div>
@@ -61,16 +66,16 @@
                             'type' => 'text',
                             'name' => 'teacher_phone',
                             'required' => true,
-                            'value' => '0123456789',
+                            'value' => $teacher['SoDienThoai'],
                         ]) ?>
                     </div>
                     <div class="teacherupdate-field">
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_updateress',
+                            'name' => 'teacher_address',
                             'required' => true,
-                            'value' => '123 TPHCM',
+                            'value' => $teacher['DiaChi'],
                         ]) ?>
                     </div>
                 </div>
@@ -83,9 +88,19 @@
                                 'dropdown_id' => 'gender-dropdown',
                                 'name' => 'teacher_gender',
                                 'selected_text' => 'Giới tính',
-                                'value' => 'Nữ',
+                                'value' => $teacher['GioiTinh'],
                             ]) ?>
                         </div>
+                        <div class="teacherupdate-special">
+                            Ngày sinh
+                            <?= view('components/datepicker', [
+                                'datepicker_id' => 'birthday',
+                                'name' => 'teacher_birthday',
+                                'value' => $teacher['NgaySinh'],
+                            ]) ?>
+                        </div>
+                    </div>
+                    <div class="teacherupdate-specials">
                         <div class="teacherupdate-special">
                             Chức vụ
                             <?= view('components/dropdown', [
@@ -93,19 +108,40 @@
                                 'dropdown_id' => 'role-dropdown',
                                 'name' => 'teacher_role',
                                 'selected_text' => 'Chức vụ',
-                                'value' => 'Tổ trưởng',
+                                'value' => $teacher['ChucVu'],
                             ]) ?>
                         </div>
-                        <div class="hidden-dropdown">
+                        <div class="teacherupdate-special">
+                            Tình trạng
                             <?= view('components/dropdown', [
-                                'options' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
-                                'dropdown_id' => 'roles-dropdown',
-                                'name' => 'teacher_roles',
-                                'selected_text' => 'Chức vụ',
+                                'options' => ['Đang giảng dạy', 'Đã nghỉ việc'],
+                                'dropdown_id' => 'status-dropdown',
+                                'name' => 'teacher_status',
+                                'selected_text' => 'Tình trạng',
+                                'value' => $teacher['TinhTrang'],
                             ]) ?>
                         </div>
                     </div>
                 </div>
+
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+
+
                 <div class="teacherupdate-btns">
                     <a href="/sms/public/director/employee/teacher/list" style="text-decoration: none;">
                         <?= view('components/exit_button') ?>
@@ -113,6 +149,8 @@
                     <?= view('components/save_button') ?>
                 </div>
             </form>
+
+
 
         </div>
     </div>
