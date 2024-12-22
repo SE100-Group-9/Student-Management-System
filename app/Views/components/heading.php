@@ -222,7 +222,7 @@
                 window.location.href = "<?= base_url('cashier/profile') ?>";
                 break;
             case "Giám thị":
-                window.location.href = "<?= base_url('monitor/profile') ?>";
+                window.location.href = "<?= base_url('supervisor/profile') ?>";
                 break;
             default:
                 alert("Không thể xác định vai trò của bạn!");
@@ -246,7 +246,7 @@
                 window.location.href = "<?= base_url('cashier/changepw') ?>";
                 break;
             case "Giám thị":
-                window.location.href = "<?= base_url('monitor/changepw') ?>";
+                window.location.href = "<?= base_url('supervisor/changepw') ?>";
                 break;
             default:
                 alert("Không thể xác định vai trò của bạn!");

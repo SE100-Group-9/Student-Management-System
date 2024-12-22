@@ -10,15 +10,17 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="GET" action=" ">
+            <form method="POST" action="/sms/public/supervisor/profile">
                 <div class="supervisor-profile-fields">
+                <input type="hidden" name="MaGT" value="<?= $supervisor['MaGT'] ?? '' ?>">
+                <input type="hidden" name="MaTK" value="<?= $supervisor['MaTK'] ?? '' ?>">
                     <div class="supervisor-profile-field">
-                        Mã nhân viên
+                        Mã Giám Thị
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'supervisor_id',
                             'readonly' => true,
-                            'value' => 'GT0001'
+                            'value' => $supervisor['MaGT']
                         ]) ?>
                     </div>
                     <div class="supervisor-profile-field">
@@ -27,7 +29,7 @@
                             'type' => 'text',
                             'name' => 'supervisor_name',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $supervisor['HoTen']
                         ]) ?>
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                             'type' => 'text',
                             'name' => 'supervisor_sex',
                             'readonly' => true,
-                            'value' => 'Nam'
+                            'value' => $supervisor['GioiTinh']
                         ]) ?>
                     </div>
                     <div class="supervisor-profile-field">
@@ -47,7 +49,7 @@
                             'type' => 'text',
                             'name' => 'supervisor_date-of-birth',
                             'readonly' => true,
-                            'value' => '01-01-2000'
+                            'value' => date('d/m/Y', strtotime($supervisor['NgaySinh'])),
                         ]) ?>
                     </div>
                 </div>
@@ -57,8 +59,8 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'supervisor_address',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'readonly' => false,
+                            'value' => $supervisor['DiaChi']
                         ]) ?>
                     </div>
                     <div class="supervisor-profile-field">
@@ -66,8 +68,8 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'supervisor_phone',
-                            'readonly' => true,
-                            'value' => '0123456789'
+                            'readonly' => false,
+                            'value' => $supervisor['SoDienThoai']
                         ]) ?>
                     </div>
                 </div>
@@ -77,10 +79,31 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'supervisor_email',
-                            'readonly' => true,
-                            'value' => 'giamthi1@gmail.com'
+                            'readonly' => false,
+                            'value' => $supervisor['Email']
                         ]) ?>
                     </div>
+                </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="supervisoradd-btns">
+                    <a style="text-decoration: none" href="/sms/public/supervisor/fault">
+                        <?= view('components/exit_button') ?>
+                    </a>
+                    <?= view('components/save_button') ?>
                 </div>
             </form>
         </div>
@@ -157,6 +180,15 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+    }
+
+    
+    .supervisoradd-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 
     .supervisor-profile-fields {

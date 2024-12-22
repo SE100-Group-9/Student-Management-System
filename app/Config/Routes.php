@@ -100,10 +100,12 @@ $routes->post('cashier/changepw', 'CashierController::updatePassword');
 // supervisor
 $routes->get('supervisor/fault', 'SupervisorController::fault');
 $routes->get('supervisor/profile', 'SupervisorController::profile');
+$routes->post('supervisor/profile', 'SupervisorController::updateProfile');
 $routes->get('supervisor/category', 'SupervisorController::category');
 $routes->get('supervisor/addfault', 'SupervisorController::addfault');
 $routes->get('supervisor/addcategory', 'SupervisorController::addcategory');
 $routes->get('supervisor/changepw', 'SupervisorController::changepw');
+$routes->post('supervisor/changepw', 'SupervisorController::updatePassword');
 $routes->get('supervisor/updatecategory', 'SupervisorController::updatecategory');
 
 

@@ -41,7 +41,8 @@ class CashierController extends Controller
         $MaTK = $this->request->getPost('MaTK');
         $email = $this->request->getPost('cashier_email');
         $phone = $this->request->getPost('cashier_phone');
-
+        $address = $this->request->getPost('cashier_address');
+        
         // Kiểm tra email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             $errors['cashier_email'] = 'Email không đúng định dạng.';
@@ -49,9 +50,10 @@ class CashierController extends Controller
         if (!preg_match('/^\d{10}$/', $phone))
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
         // Nếu có lỗi, trả về cùng thông báo
-        if (!empty($errors)) {
+        if (empty(trim($address)))
+            $errors['cashier_address'] = 'Địa chỉ không được để trống';
+        if (!empty($errors))
             return redirect()->back()->withInput()->with('errors', $errors);
-        }
 
         $ThuNganModel = new ThuNganModel();
         $TaiKhoanModel = new TaiKhoanModel();
