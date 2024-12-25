@@ -8,7 +8,6 @@
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
                 <th>Giới tính</th>
                 <th>Ngày sinh</th>
                 <th>Tình trạng</th>
@@ -23,7 +22,6 @@
                 <td><?= $cashier['HoTen'] ?></td>
                 <td><?= $cashier['Email'] ?></td>
                 <td><?= $cashier['SoDienThoai'] ?></td>
-                <td><?= $cashier['DiaChi'] ?></td>
                 <td><?= $cashier['GioiTinh'] ?></td>
                 <td><?= date('d/m/Y', strtotime($cashier['NgaySinh'])) ?></td>
                 <td>

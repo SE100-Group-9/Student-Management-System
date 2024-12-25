@@ -5,16 +5,14 @@ if (!function_exists('statusButton')) {
     {
         $classes = '';
         switch ($status) {
-            // Học sinh
+                // Học sinh
             case 'Đang học':
                 $classes = 'status-third';
                 break;
-            case 'Mới tiếp nhận':
-                $classes = 'status-secondary';
-                break;
+
             case 'Nghỉ học':
                 $classes = 'status-primary';
-                break;  
+                break;
 
             case 'Đang làm việc':
                 $classes = 'status-third';
@@ -23,6 +21,15 @@ if (!function_exists('statusButton')) {
                 $classes = 'status-primary';
                 break;
 
+            case 'Chưa thanh toán':
+                $classes = 'status-third';
+                break;
+            case 'Đã thanh toán':
+                $classes = 'status-primary';
+                break;
+            case 'Thanh toán một phần':
+                $classes = 'status-secondary';
+                break;
 
 
 
@@ -33,12 +40,7 @@ if (!function_exists('statusButton')) {
             case 'Đang bảo lưu':
                 $classes = 'status-primary';
                 break;
-            case 'Chưa thu':
-                $classes = 'status-third';
-                break;
-            case 'Đã thu':
-                $classes = 'status-primary';
-                break;
+
 
             case 'Tổ trưởng':
                 $classes = 'status-third';

@@ -12,13 +12,13 @@ class LopModel extends Model
     //Lấy danh sách lớp dựa vào năm học được chọn
     public function getClassList($year)
     {
-        $SQL = "SELECT lop.TenLop
+        $SQL = "SELECT DISTINCT lop.TenLop
                 FROM lop
                 JOIN hocsinh_lop ON lop.MaLop = hocsinh_lop.MaLop
                 JOIN hocsinh ON hocsinh_lop.MaHS = hocsinh.MaHS
-                WHERE hocsinh_lop.NamHoc = $year
+                WHERE hocsinh_lop.NamHoc = ?
                 GROUP BY lop.TenLop
                 ORDER BY lop.TenLop";
-        return $this->db->query($SQL)->getResultArray();
-    }
+        return $this->db->query($SQL, [$year])->getResultArray();
+    }    
 }

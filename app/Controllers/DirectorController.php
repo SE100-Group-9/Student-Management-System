@@ -19,6 +19,9 @@ use App\Models\MonHocModel;
 use App\Models\PhanCongModel;
 use App\Models\DiemModel;
 use App\Models\HanhKiemModel;
+use App\Models\CTPTTModel;
+use App\Models\ThamSoModel;
+use PhpCsFixer\Tokenizer\CT;
 
 class DirectorController extends Controller
 {
@@ -36,11 +39,6 @@ class DirectorController extends Controller
     public function staticsStudent()
     {
         return view('director/statics/student');
-    }
-
-    public function classArrangeAddTeacher()
-    {
-        return view('director/class/arrange/addteacher');
     }
 
     public function exportStudentList() {}
@@ -121,9 +119,7 @@ class DirectorController extends Controller
             'NoiSinh' => $this->request->getPost('student_country'),
             'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
         ]);
-        
-        $allPostData = $this->request->getPost();
-        log_message('info', 'Received Data: ' . json_encode($allPostData));
+
         return redirect()->back()->with('success', 'Thêm học sinh mới thành công!');
     }
 
@@ -290,7 +286,34 @@ class DirectorController extends Controller
 
     public function studentPayment()
     {
-        return view('director/student/payment');
+        $LopModel = new LopModel();
+        $CTPTTModel = new CTPTTModel();
+
+        // Nhận giá trị năm học và lớp học từ query string
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+        //Nhận giá trị học kỳ sau khi chuyển từ text sang số
+        $selectedSemesterText = $this->request->getVar('semester') ?? 'Học kỳ 1';
+        $selectedSemester = $selectedSemesterText === 'Học kỳ 1' ? 1 : 2;
+
+        $selectedClass = $this->request->getVar('class') ?? '10_1';
+
+        // Lấy danh sách tên lớp học
+        $classList = $LopModel->findColumn('TenLop');
+
+        // Lấy MaLop từ tên lớp học
+        $MaLop = $LopModel->where('TenLop', $selectedClass)->first()['MaLop'];
+
+        // Lấy thông tin học phí của học sinh
+        $tuitionList = $CTPTTModel->getTuitionInfo($MaLop, $selectedSemester, $selectedYear);
+
+
+        return view('director/student/payment', [
+            'tuitionList' => $tuitionList,
+            'classList' => $classList,
+            'selectedYear' => $selectedYear,
+            'selectedSemesterText' => $selectedSemesterText,
+            'selectedClass' => $selectedClass,
+        ]);
     }
 
     public function studentPerserved()
@@ -302,6 +325,8 @@ class DirectorController extends Controller
     {
         $HocSinhModel = new HocSinhModel();
         $LopModel = new LopModel();
+        $DiemModel = new DiemModel();
+        $PhanCongModel = new PhanCongModel();
 
         // Nhận giá trị năm học, học kỳ và lớp học từ query string
         $selectedYear = $this->request->getVar('year') ?? '2024-2025';
@@ -310,8 +335,8 @@ class DirectorController extends Controller
         $selectedSemester = $selectedSemesterText === 'Học kỳ 1' ? 1 : 2;
         $selectedClass = $this->request->getVar('class') ?? '10_1';
 
-        // Lấy danh sách các tên lớp học trong năm học được chọn
-        $classList = $LopModel->getClassList($selectedYear, $selectedSemester);
+        // Lấy danh sách các tên lớp học
+        $classList = $LopModel->findColumn('TenLop');
 
         // Lấy danh sách học sinh theo năm học, học kỳ và lớp học
         $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
@@ -319,7 +344,7 @@ class DirectorController extends Controller
         $students = [];
         foreach ($studentList as $student) {
             $MaHS = $student['MaHS'];
-            
+
             //Khởi tạo dữ liệu học sinh nếu chưa có
             if (!isset($students[$MaHS])) {
                 $students[$MaHS] = [
@@ -345,34 +370,37 @@ class DirectorController extends Controller
 
         // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và xếp loại học lực, danh hiệu
         foreach ($students as &$student) {
-            $DiemTBHocKy = 0;
+            $DiemTBHocKy = null;
             $TongDiemTB = 0;
-            $SoMon = 0;
+            $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
+            $SoMonDuCotDiem = 0; // Số môn có đủ cột điểm để tính điểm trung bình môn học
 
             foreach ($student['Diem'] as $MaMH => $Diem) {
-                $DiemTBMonHoc = $this->getAverageScore($Diem);
+                $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
+
+                // Lưu điểm trung bình môn học vào mảng
                 $student[$MaMH] = $DiemTBMonHoc;
 
                 if ($DiemTBMonHoc !== null) {
                     $TongDiemTB += $DiemTBMonHoc;
-                    $SoMon++;
+                    $SoMonDuCotDiem++;
                 }
             }
-            // Tính điểm trung bình học kỳ
-            if ($SoMon > 0) 
+            // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
+            if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
                 $DiemTBHocKy = round($TongDiemTB / $SoMon, 1);
-            else $DiemTBHocKy = null;
+            }
             $student['DiemTBHocKy'] = $DiemTBHocKy;
 
             // Xếp loại học lực
-            $student['HocLuc'] = $this->getAcademicPerformance($DiemTBHocKy);
+            $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTBHocKy);
 
             // Xếp loại danh hiệu
             $DanhHieuModel = new DanhHieuModel();
-            $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTBHocKy, $student['DiemHK']); 
+            $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTBHocKy, $student['DiemHK']);
             $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
         }
-        log_message('debug', 'Student Data: ' . print_r($students, true));
+
         return view('director/student/record', [
             'studentList' => $students,
             'classList' => $classList,
@@ -381,42 +409,6 @@ class DirectorController extends Controller
             'selectedClass' => $selectedClass,
         ]);
     }
-
-    //Hàm xếp loại học lực
-    private function getAcademicPerformance($DiemTBHocKy)
-    {
-        if ($DiemTBHocKy === null) {
-            return null;
-        }
-
-        if ($DiemTBHocKy >= 8.0) {
-            return 'Giỏi';
-        } elseif ($DiemTBHocKy >= 6.5) {
-            return 'Khá';
-        } elseif ($DiemTBHocKy >= 5.0) {
-            return 'Trung bình';
-        } else {
-            return 'Yếu';
-        }
-    }
-    //Hàm tính điểm trung bình
-    private function getAverageScore($Diem)
-    {
-        $Diem15P_1 = $Diem['Diem15P_1'];
-        $Diem15P_2 = $Diem['Diem15P_2'];
-        $Diem1Tiet_1 = $Diem['Diem1Tiet_1'];
-        $Diem1Tiet_2 = $Diem['Diem1Tiet_2'];
-        $DiemCK = $Diem['DiemCK'];
-
-        if ($Diem15P_1 === null || $Diem15P_2 === null || $Diem1Tiet_1 === null || $Diem1Tiet_2 === null || $DiemCK === null) {
-            return null;
-        }
-
-        $DiemTB = (($Diem15P_1 + $Diem15P_2) + 2 * ($Diem1Tiet_1 + $Diem1Tiet_2) + 3 * $DiemCK ) / 9;
-        return round($DiemTB, 1);
-    }
-
-    //
 
     //Màn hình Danh hiệu
     public function titleList()
@@ -785,6 +777,7 @@ class DirectorController extends Controller
         return redirect()->back()->with('success', 'Cập nhật lớp học thành công!');
     }
 
+    // Màn hình xếp lớp
     public function classArrangeStudent($MaLop)
     {
         //Lấy giá trị năm học từ session
@@ -811,13 +804,14 @@ class DirectorController extends Controller
         ]);
     }
 
-    public function classArrangeAddStudent()
-    {
-        return view('director/class/arrange/addstudent');
-    }
-
     public function classArrangeTeacher($MaLop)
     {
+        //Lưu học kỳ vào session
+        $semester = $this->request->getVar('semester');
+        if ($semester) {
+            session()->set('selectedSemester', $semester);
+        }
+
         //Lấy giá trị năm học từ session
         $selectedYear = session()->get('selectedYear');
 
@@ -868,6 +862,206 @@ class DirectorController extends Controller
             'searchTerm' => $searchTerm,
         ]);
     }
+
+    public function classArrangeAddStudent($MaLop)
+    {
+        $HocSinhLopModel = new HocSinhLopModel();
+        $LopModel = new LopModel();
+
+        //Lấy giá trị năm học từ session
+        $selectedYear = session()->get('selectedYear');
+
+
+        //Lấy danh sách học sinh chưa được xếp lớp trong năm học đã chọn (loại bỏ những học sinh lớp 12 năm trước đó)
+        $studentList = $HocSinhLopModel->getStudentNotInClass($selectedYear);
+
+        //Chuẩn bị mảng options cho dropdown chọn học sinh
+        $studentOptions = array_map(function ($student) {
+            return $student['MaHS'] . ' - ' . $student['HoTen'] . ' - ' . date('d/m/Y', strtotime($student['NgaySinh']));
+        }, $studentList);
+
+        //Lấy tên lớp dựa vào mã lớp được chọn
+        $TenLop = $LopModel->find($MaLop)['TenLop'];
+
+        return view(
+            'director/class/arrange/addstudent',
+            [
+                'studentOptions' => $studentOptions,
+                'MaLop' => $MaLop,
+                'TenLop' => $TenLop,
+                'selectedYear' => $selectedYear,
+            ]
+        );
+    }
+
+    public function addStudentToClass()
+    {
+        $errors = [];
+
+        //Bắt đầu transaction
+        $db = \Config\Database::connect();
+        $db->transStart();
+
+        $LopModel = new LopModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $ThamSoModel = new ThamSoModel();
+        $PhanCongModel = new PhanCongModel();
+        $HanhKiemModel = new HanhKiemModel();
+        $CTPTTModel = new CTPTTModel();
+
+        //Lấy TenLop, NamHoc, MaHS từ form
+        $className = $this->request->getPost('student_classname');
+        $year = $this->request->getPost('student_year');
+        $studentInfo = $this->request->getPost('student_studentInfo');
+
+        //Tách MaHS từ chuỗi studentInfo
+        $MaHS = explode(' - ', $studentInfo)[0];
+
+        //Lấy MaLop từ TenLop
+        $MaLop = $LopModel->where('TenLop', $className)->first()['MaLop'];
+
+        // Kiểm tra đã chọn học sinh chưa
+        if (empty($studentInfo)) {
+            $errors['student_studentInfo'] = 'Vui lòng chọn học sinh.';
+        }
+
+        // Kiểm tra xem học sinh đã được xếp lớp chưa
+        if ($HocSinhLopModel->checkStudentInClass($MaHS, $MaLop, $year)) {
+            $errors['student_StudentInClass'] = 'Học sinh đã được xếp lớp trong năm học này.';
+        }
+        // Kiểm tra giới hạn sĩ số của lớp
+        $maxClassSize = $ThamSoModel->getGiaTriThamSo('SiSoLopToiDa');
+        $currentClassSize = $HocSinhLopModel->countStudentInClass($MaLop, $year);
+        if ($currentClassSize >= $maxClassSize) {
+            $errors['student_ClassSize'] = 'Lớp đã đạt giới hạn sĩ số tối đa.';
+        }
+
+        //Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        try {
+            // Thêm học sinh vào lớp học trong năm học
+            $HocSinhLopModel->addStudentToClass($MaHS, $MaLop, $year);
+
+            // Thêm thông tin hạnh kiểm của học sinh
+            $HanhKiemModel->addConduct($MaHS, $year);
+
+            // Thêm thông tin học phí cho học sinh
+            $tuitionFee = $ThamSoModel->getGiaTriThamSo('MucHocPhiNamHoc');
+            $CTPTTModel->addTuition($MaHS, $year, $tuitionFee);
+
+            // Kiểm tra nếu tất cả thành công
+            if ($db->transStatus() === FALSE) {
+                throw new \Exception('Transaction failed');
+            }
+
+            // Xác nhận transaction
+            $db->transCommit();
+            return redirect()->back()->with('success', 'Thêm học sinh vào lớp học thành công!');
+        } catch (\Exception $e) {
+            // Nếu có lỗi, rollback transaction
+            $db->transRollback();
+            return redirect()->back()->with('error', 'Không thể thêm học sinh vào lớp học. Vui lòng thử lại.');
+        }
+    }
+
+    public function classArrangeAddTeacher($MaLop)
+    {
+        $GiaoVienModel = new GiaoVienModel();
+        $MonHocModel = new MonHocModel();
+        $LopModel = new LopModel();
+
+        // Lấy giá trị năm học, học kỳ từ session
+        $selectedYear = session()->get('selectedYear');
+        $selectedSemester = session()->get('selectedSemester');
+
+        //Lấy tên lớp dựa vào mã lớp được chọn
+        $TenLop = $LopModel->find($MaLop)['TenLop'];
+
+        // Lấy danh sách giáo viên chưa dạy lớp đã chọn trong năm học
+        $teacherList = $GiaoVienModel->getTeacherList();
+
+        // Chuẩn bị mảng options cho dropdown chọn giáo viên
+        $teacherOptions = array_map(function ($teacher) {
+            return $teacher['MaGV'] . ' - ' . $teacher['HoTen'];
+        }, $teacherList);
+
+        $subjectList = array_column($MonHocModel->getSubjectList(), 'TenMH');
+
+        return view('director/class/arrange/addteacher', [
+            'teacherOptions' => $teacherOptions,
+            'subjectList' => $subjectList,
+            'MaLop' => $MaLop,
+            'TenLop' => $TenLop,
+            'selectedYear' => $selectedYear,
+            'selectedSemester' => $selectedSemester,
+        ]);
+    }
+
+    public function addTeacherToClass()
+    {
+        $errors = [];
+
+        $PhanCongModel = new PhanCongModel();
+        $LopModel = new LopModel();
+        $MonHocModel = new MonHocModel();
+
+        // Lấy dữ liệu từ form
+        $className = $this->request->getPost('teacher_classname');
+        $year = $this->request->getPost('teacher_year');
+        $semester = $this->request->getPost('teacher_semester');
+        $teacherInfo = $this->request->getPost('teacher_teacherInfo');
+        $subjectName = $this->request->getPost('teacher_subject');
+
+        // Tách tên học kỳ để lấy số
+        $HocKy = preg_replace('/\D/', '', $semester);
+        // Lấy MaLop từ tên lớp
+        $MaLop = $LopModel->where('TenLop', $className)->first()['MaLop'];
+
+        // Kiểm tra đã chọn giáo viên chưa
+        if (empty($teacherInfo)) {
+            $errors['teacher_teacherInfo'] = 'Vui lòng chọn giáo viên.';
+        }
+
+        // Kiểm tra đã chọn môn học chưa
+        if (empty($subjectName)) {
+            $errors['teacher_subject'] = 'Vui lòng chọn môn học.';
+        }
+
+        // Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        // Lấy MaMH từ tên môn học
+        $MaMH = $MonHocModel->where('TenMH', $subjectName)->first()['MaMH'];
+        // Tách MaGV từ chuỗi teacherInfo
+        $MaGV = explode(' - ', $teacherInfo)[0];
+
+        // Kiểm tra giáo viên đã được phân công dạy môn học 
+        // trong năm học, học kỳ và lớp học đó chưa
+        if ($PhanCongModel->isTeacherAssigned($MaGV, $MaMH, $MaLop, $HocKy, $year)) {
+            $errors['teacher_TeacherAssigned'] = 'Giáo viên đã được phân công dạy môn học này trong lớp học.';
+        }
+
+        // Kiểm tra môn học đã có giáo viên phân công dạy trong năm học, học kỳ và lớp học đó chưa
+        if ($PhanCongModel->isSubjectAssigned($MaMH, $MaLop, $HocKy, $year)) {
+            $errors['teacher_SubjectAssigned'] = 'Môn học đã có giáo viên phân công dạy trong lớp học.';
+        }
+
+        //Nếu có lỗi, trả về cùng thông báo
+        if (!empty($errors)) {
+            return redirect()->back()->withInput()->with('errors', $errors);
+        }
+
+        //Lưu thông tin phân công giáo viên dạy môn học trong lớp học
+        $PhanCongModel->addTeacherToAssign($MaGV, $MaMH, $MaLop, $HocKy, $year);
+
+        return redirect()->back()->with('success', 'Phân công giáo viên dạy môn học thành công!');
+    }
+
     // Màn hình quản lý giáo viên
     public function employeeTeacherList()
     {

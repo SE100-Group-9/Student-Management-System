@@ -15,7 +15,7 @@
             </div>
             <div class="classlists-tools">
                 <div class="tools">
-                    <a href="/sms/public/director/class/arrange/addstudent" style="text-decoration: none;">
+                    <a " style="text-decoration: none;" href="/sms/public/director/class/arrange/addstudent/<?= $MaLop ?>">
                         <?= view('components/add', data: ['button_text' => 'Thêm học sinh']) ?>
                     </a>
                 </div>
@@ -26,9 +26,8 @@
             </div>
             <div class="tabless">
                 <?= view('components/tables/directorClassArrangeStudent', ['studentList' => $studentList]) ?>
-                
             </div>
-                <?= view('components/pagination'); ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>
