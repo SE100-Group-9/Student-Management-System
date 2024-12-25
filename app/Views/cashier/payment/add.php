@@ -35,6 +35,35 @@
                 </div>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
+                        Lớp 
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_class',
+                            'readonly' => true,
+                            'value' => '11A1'
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
+                        Năm học
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_year',
+                            'readonly' => true,
+                            'value' => '2024-2025'
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="payment-add-fields">
+                    <div class="payment-add-field">
+                        Tổng tiền
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_total',
+                            'readonly' => true,
+                            'value' => '1,000,000'
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
                         Số tiền đã nhận
                         <?= view('components/input', [
                             'type' => 'text',

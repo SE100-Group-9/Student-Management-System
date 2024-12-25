@@ -11,12 +11,12 @@
         <div class="body-right">
             Trung tâm / Thống kê / Hạnh kiểm
             <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
             </div>
             <div class="conduct-btns">
-                <button class="conduct-btn" onclick="loadChartData('excellent')">Xuất sắc</button>
-                <button class="conduct-btn" onclick="loadChartData('good')">Giỏi</button>
-                <button class="conduct-btn" onclick="loadChartData('bad')">Yếu</button>
+                <button class="conduct-btn" onclick="loadChartData('grade-10')">Khối 10</button>
+                <button class="conduct-btn" onclick="loadChartData('grade-11')">Khối 11</button>
+                <button class="conduct-btn" onclick="loadChartData('grade-12')">Khối 12</button>
             </div>
             <div class="body-below">
                 <div id="excellent">

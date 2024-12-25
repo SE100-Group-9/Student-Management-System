@@ -7,7 +7,6 @@
                 <th>Lớp</th>
                 <th>Điểm trung bình</th>
                 <th>Nhận xét</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -16,144 +15,84 @@
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
             <tr>
                 <td>HS0001</td>
                 <td>Nguyễn Văn A</td>
                 <td>11A1</td>
                 <td>9</td>
-                <td>Chăm</td>
-                <td>
-                    <a href="">
-                        <?= view('components/edit_button'); ?>
-                    </a>
-                </td>
+                <td><input type="text" name="comment" value="Chăm"></td>
             </tr>
         </tbody>
     </table>

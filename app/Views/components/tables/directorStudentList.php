@@ -47,6 +47,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div id="pagination-container"></div>
 </div>
 <?php else: ?>
     <p>Không có dữ liệu học sinh.</p>

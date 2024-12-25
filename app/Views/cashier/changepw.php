@@ -6,7 +6,7 @@
     </div>
     <div class="body">
         <div class="body-left">
-            <?= view('components/sidebar_director') ?>
+            <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
             <h1>Đổi mật khẩu:</h1>

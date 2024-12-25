@@ -8,6 +8,7 @@
             <h1>Học phí / Quản lý học phí / Danh sách</h1>
             <div class="list-tool">
                 <div class="list-filter">
+                    <?= view('components/filter'); ?>
                     <?= view('components/searchbar'); ?>
                     <?= view('components/dropdown', [
                         'options' => ['Đã thanh toán', 'Thanh toán 1 phần', 'Chưa thanh toán'], 
@@ -20,9 +21,9 @@
                         'selected_text' => 'Năm học',
                         ]) ?>
                     <?= view('components/dropdown', [
-                        'options' => ['Học kỳ I', 'Học kỳ II'], 
-                        'dropdown_id' => 'semester-dropdown',
-                        'selected_text' => 'Học kỳ',
+                        'options' => ['11A1', '11A2', '11A3'], 
+                        'dropdown_id' => 'class-dropdown',
+                        'selected_text' => 'Lớp',
                         ]) ?>
                 </div>
                 <div class="list-tool-2">                   
@@ -35,7 +36,6 @@
         </div>
     </div>
 </div>
-
 
 <style>
    *,
@@ -51,8 +51,7 @@
     flex-direction: column; 
     width: 100%;
     height: 100%;
-    overflow: auto;
-    
+    overflow: auto;  
 }
 
 .body {
@@ -111,6 +110,6 @@
 .list-tool-2 {
     display: flex;
     align-items: center;
-    gap: 10px;gap: 10px;
+    gap: 10px;
 }
 </style>

@@ -20,7 +20,7 @@
         <div id="news-deeper" class="news-deeper">
             <div class="news-overall">
                 <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/title/list">
-                    Danh hiệu
+                    Danh hiệu & Quy định
                 </a>
             </div>
         </div>

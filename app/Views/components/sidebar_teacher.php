@@ -19,7 +19,9 @@
         </div>
         <div id="statics-deeper" class="statics-deeper">
             <div class="grade">
-                Học lực
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/teacher/statics/grade">
+                    Học lực
+                </a>
             </div>
         </div>
         <div class="general">
@@ -42,7 +44,7 @@
         </div>
         <div class="student-deeper" id="student-deeper">
             <div class="student-list">
-                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/director/student/list">
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/teacher/student/list">
                     Danh sách học sinh
                 </a>
             </div>
@@ -62,13 +64,19 @@
         </div>
         <div id="class-deeper" class="class-deeper">
             <div class="class-overall">
-                Đánh giá kết quả học
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/teacher/class/rate">
+                    Đánh giá kết quả học
+                </a>
             </div>
             <div class="enter-score">
-                Nhập điểm
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/teacher/class/enter/list">
+                    Nhập điểm
+                </a>
             </div>
             <div class="reportt">
-                Báo cáo học lực lớp
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/teacher/class/record/list">
+                    Báo cáo học lực lớp
+                </a>
             </div>
         </div>
     </div>

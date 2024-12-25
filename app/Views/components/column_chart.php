@@ -3,7 +3,7 @@
     google.charts.load("current", {
         packages: ['corechart']
     });
-    google.charts.setOnLoadCallback(() => loadChartData('excellent'));
+    google.charts.setOnLoadCallback(() => loadChartData('grade-10'));
 
     function drawChart(dataArray) {
         var data = google.visualization.arrayToDataTable(dataArray);
@@ -38,7 +38,7 @@
     // Lấy dữ liệu khi gọi các tab
     function loadChartData(tabName) {
         var data = [];
-        if (tabName === 'excellent') {
+        if (tabName === 'grade-10') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"
@@ -47,7 +47,7 @@
                 ["Giỏi", 600, "#01B3EF"],
                 ["Yếu", 200, "#E14177"]
             ];
-        } else if (tabName === 'good') {
+        } else if (tabName === 'grade-11') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"
@@ -56,7 +56,7 @@
                 ["Giỏi", 900, "#01B3EF"],
                 ["Yếu", 100, "#E14177"]
             ];
-        } else if (tabName === 'bad') {
+        } else if (tabName === 'grade-12') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"

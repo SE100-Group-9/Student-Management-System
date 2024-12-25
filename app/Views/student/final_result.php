@@ -9,7 +9,7 @@
             <?= view('components/sidebar_student') ?>
         </div>
         <div class="body-right">
-            <h1>Học tập / Học tập / Xem điểm</h1>
+            <h1>Học tập / Học tập / Xem kết quả tổng kết</h1>
             <div class="final-tool">
                 <div class="final-dropdown">
                     <div class="final-dropdown">
