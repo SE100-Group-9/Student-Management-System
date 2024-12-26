@@ -9,7 +9,7 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Năm học <?= esc($selectedYear) ?> / Lớp <?= esc($TenLop) ?>
+            Học tập / Lớp học / Lớp <?= esc($TenLop) ?> / Giáo viên
             <div>
                 <?= view('components/tab', ['MaLop' => $MaLop, 'activeTab' => 'teacher']) ?>
             </div>
@@ -28,7 +28,9 @@
                     </div>
                 </form>
                 <div class="tool-add">
-                    <?= view('components/add', data: ['button_text' => 'Thêm giáo viên']) ?>
+                    <a " style=" text-decoration: none;" href="/sms/public/director/class/arrange/addteacher/<?= $MaLop ?>">
+                        <?= view('components/add', data: ['button_text' => 'Thêm giáo viên']) ?>
+                    </a>
                     <?= view('components/excel_export') ?>
                     <?= view('components/upload') ?>
                 </div>

@@ -9,56 +9,60 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp
-            <h1>Thêm học sinh:</h1>
-            <h2>Thông tin học sinh:</h2>
-            <form method="POST" action="/sms/public/director/arrangestudent/add">
+        Học tập / Lớp học / Lớp <?= esc($TenLop) ?> / Học sinh / Thêm học sinh
+            <h2>Thêm học sinh</h2>
+            <form method="POST" action="/sms/public/director/class/arrange/addstudent">
                 <div class="arrangestudentadd-fields">
                     <div class="arrangestudentadd-field">
-                        Mã học sinh
-                        <?= view('components/dropdown', [
-                            'options' => ['HS0001', 'HS0002', 'HS0003'],
-                            'dropdown_id' => 'studentid-dropdown',
-                            'name' => 'student_studentid',
-                            'selected_text' => 'Mã học sinh',
-                            'value' => old('student_studentid'),
+                        Năm học
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_year',
+                            'readonly' => true,
+                            'value' => $selectedYear ?? '',
                         ]) ?>
                     </div>
                     <div class="arrangestudentadd-field">
-                        Mã lớp
-                        <?= view('components/dropdown', [
-                            'options' => ['11A1', '11A2','11A3'],
-                            'dropdown_id' => 'class-dropdown',
-                            'name' => 'student_class',
-                            'selected_text' => 'Mã lớp',
-                            'value' => old('student_class'),
+                        Tên lớp
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_classname',
+                            'readonly' => true,
+                            'value' => $TenLop ?? '',
                         ]) ?>
                     </div>
                 </div>
                 <div class="arrangestudentadd-fields">
                     <div class="arrangestudentadd-field">
-                        Năm học
+                        Thông tin Học sinh
                         <?= view('components/dropdown', [
-                            'options' => ['2023-2024', '2022-2023', '2021-2022'],
-                            'dropdown_id' => 'year-dropdown',
-                            'selected_text' => 'Năm học',
+                            'options' => $studentOptions ?? [],
+                            'dropdown_id' => 'studentid-dropdown',
+                            'name' => 'student_studentInfo',
+                            'selected_text' => 'Mã học sinh - Họ tên - Ngày sinh',
+                            'value' => old('student_studentid'),
                         ]) ?>
                     </div>
                 </div>
 
                 <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success">
+                    <div class="alert alert-success">
                         <?= session()->getFlashdata('success') ?>
-                </div>
-                <?php elseif (session()->getFlashdata('error')): ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
                     <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $field => $error): ?>
+                            <p><?= $error ?>
+                            <p>
+                            <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 
 
                 <div class="arrangestudentadd-btns">
-                    <a style="text-decoration: none" href="/sms/public/director/class/arrange/student">
+                    <a style="text-decoration: none" href="/sms/public/director/class/arrange/student/<?= $MaLop ?>">
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>
@@ -167,7 +171,7 @@
     .arrangestudentadd-btns {
         display: flex;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         gap: 20px;
     }

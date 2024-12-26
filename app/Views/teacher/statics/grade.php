@@ -12,7 +12,7 @@
             Trung tâm / Thống kê / Học lực
             <!-- Dropdown -->
             <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024', '2022-2023']]) ?>
+                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
             </div>
             <!-- Cards -->
             <div class="grade-cards">

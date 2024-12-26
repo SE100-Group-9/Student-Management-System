@@ -11,97 +11,121 @@
         <div class="body-right">
             Học tập / Học sinh / Thông tin thanh toán
             <div class="studentpayment-tools">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', ['options' => ['2023-2024', '2022-2023', '2021-2022'], 'dropdown_id' => 'year-dropdown']) ?>
-                    <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
-                    <?= view('components/dropdown', ['options' => ['Khối 10', 'Khối 11', 'Khối 12'], 'dropdown_id' => 'grade-dropdown']) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/student/payment">
+                    <div class="tool-search">
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['2023-2024', '2024-2025', '2025-2026'],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemesterText ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $classList ?? [],
+                            'dropdown_id' => 'class-dropdown',
+                            'name' => 'class',
+                            'selected_text' => 'Chọn lớp học',
+                            'value' => $selectedClass ?? ''
+                        ]) ?>
+                        <?= view('components/view_button') ?>
+
+                    </div>
+                </form>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <?= view('components/tables/directorStudentPayment') ?>
+            <?= view('components/tables/directorStudentPayment', ['tuitionList' => $tuitionList]) ?>
+            <?= view('components/pagination'); ?>
         </div>
     </div>
 </div>
 
-<style>
-    *,
-    *::before,
-    *::after {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
 
-    .studentpayment {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        background: #FFF;
-    }
 
-    .studentpayment-heading {
-        width: 100%;
-        height: 60px;
-        position: fixed;
-    }
+    <style>
+        *,
+        *::before,
+        *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-    .body {
-        display: flex;
-        align-items: flex-start;
-        flex: 1 0 0;
-        margin-top: 60px;
-        align-self: stretch;
-        background: var(--light-grey, #F9FAFB);
-        overflow: hidden;
-    }
+        .studentpayment {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: flex-start;
+            background: #FFF;
+        }
 
-    .body-left {
-        height: 100%;
-        overflow-y: auto;
-    }
+        .studentpayment-heading {
+            width: 100%;
+            height: 60px;
+            position: fixed;
+        }
 
-    .body-right {
-        display: flex;
-        padding: 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        flex: 1 0 0;
-        align-self: stretch;
-        color: #000;
-        font-family: Inter;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-        overflow-y: auto;
-    }
+        .body {
+            display: flex;
+            align-items: flex-start;
+            flex: 1 0 0;
+            margin-top: 60px;
+            align-self: stretch;
+            background: var(--light-grey, #F9FAFB);
+            overflow: hidden;
+        }
 
-    .studentpayment-tools {
-        display: flex;
-        width: 100%;
-        padding: 10px;
-        justify-content: space-between;
-        align-items: flex-start;
-        border-radius: 10px;
-        background: #FFF;
-    }
+        .body-left {
+            height: 100%;
+            overflow-y: auto;
+        }
 
-    .tool-search {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .body-right {
+            display: flex;
+            padding: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            flex: 1 0 0;
+            align-self: stretch;
+            color: #000;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            overflow-y: auto;
+        }
 
-    .tool-add {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-</style>
+        .studentpayment-tools {
+            display: flex;
+            width: 100%;
+            padding: 10px;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-radius: 10px;
+            background: #FFF;
+        }
+
+        .tool-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-add {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>

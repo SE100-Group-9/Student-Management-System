@@ -42,10 +42,13 @@ $routes->post('director/class/update', 'DirectorController::updateClass');
 
 // Director - Xếp lớp
 $routes->get('director/class/arrange/student/(:num)', 'DirectorController::classArrangeStudent/$1');
-$routes->post('director/class/arrange/student', 'DirectorController::addStudentToClass');
 $routes->get('director/class/arrange/teacher/(:num)', 'DirectorController::classArrangeTeacher/$1');
-$routes->get('director/class/arrange/addstudent', 'DirectorController::classArrangeAddStudent');
-$routes->get('director/class/arrange/addteacher', 'DirectorController::classArrangeAddTeacher');
+// Director - Xếp lớp - Thêm học sinh    
+$routes->get('director/class/arrange/addstudent/(:num)', 'DirectorController::classArrangeAddStudent/$1');
+$routes->post('director/class/arrange/addstudent', 'DirectorController::addStudentToClass');
+// Director - Xếp lớp - Thêm giáo viên
+$routes->get('director/class/arrange/addteacher/(:num)', 'DirectorController::classArrangeAddTeacher/$1');
+$routes->post('director/class/arrange/addteacher', 'DirectorController::addTeacherToClass');
 
 
 // Director - Quản lý giáo viên

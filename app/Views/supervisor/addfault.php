@@ -11,72 +11,75 @@
         <div class="body-right">
             <h1>Thêm vi phạm</h1>
             <h2>Thông tin vi phạm</h2>
-            <form method="POST" action=" ">
-                <div class="add-fault-fields">
-                    <div class="add-fault-field">
-                        Mã học sinh
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student-id',
-                            'required' => true,
-                            'value' => old('student-id'),
-                        ]) ?>
-                    </div>
-                    <div class="add-fault-field">
-                        Tên học sinh
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student-name',
-                            'required' => true,
-                            'readonly'=> true,
-                            'value' => 'Nguyễn Văn A',
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="add-fault-fields">
-                    <div class="add-fault-field">
-                        Khối
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'grade',
-                            'readonly' => true,
-                            'value' => '11',
-                        ]) ?>
-                    </div>
-                    <div class="add-fault-field">
-                        Lớp
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'class',
-                            'readonly' => true,
-                            'value' => '11A1',
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="add-fault-fields">
-                    <div class="add-fault-field">
-                        Học kỳ
-                        <?= view('components/dropdown', [
-                            'options' => ['Học kỳ I', 'Học kỳ II'],
-                            'dropdown_id' => 'semester-dropdown',
-                            'name' => 'semester',
-                            'selected_text' => 'Học kỳ',
-                            'value' => old('semester'),
-                        ]) ?>
-                    </div>
-                    <div class="add-fault-field">
-                        Lỗi vi phạm
-                        <?= view('components/dropdown', [
-                            'options' => ['1 - Đi trễ', '2 - Không mang phù hiệu', '3 - Không thuộc bài'],
-                            'dropdown_id' => 'category-dropdown',
-                            'name' => 'student_category',
-                            'selected_text' => 'Lỗi vi phạm',
-                            'value' => old('student_category'),
-                        ]) ?>
-                    </div>
-                    <div class="hidden-dropdown">
-                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
-                    </div>
+            <form method="POST" action="/sms/public/supervisor/addfault">
+            <div class="add-fault-fields">
+            <div class="add-fault-field">
+                Mã học sinh
+                <?= view('components/input', [
+                    'type' => 'text',
+                    'name' => 'student-id',
+                    'id' => 'student-id', 
+                    'required' => true,
+                ]) ?>
+            </div>
+            <div class="add-fault-field">
+                Tên học sinh
+                <?= view('components/input', [
+                    'type' => 'text',
+                    'name' => 'student-name',
+                    'id' => 'student-name',
+                    'readonly' => true,
+                    'placeholder' => 'Tên học sinh',
+                    'value' => '',
+                ]) ?>
+            </div>
+        </div>
+        <div class="add-fault-fields">
+            <div class="add-fault-field">
+                Khối
+                <?= view('components/input', [
+                    'type' => 'text',
+                    'name' => 'grade',
+                    'id' => 'grade', 
+                    'readonly' => true,
+                    'placeholder' => 'Khối',
+                    'value' => '',
+                ]) ?>
+            </div>
+            <div class="add-fault-field">
+                Lớp
+                <?= view('components/input', [
+                    'type' => 'text',
+                    'name' => 'class',
+                    'id' => 'class', 
+                    'readonly' => true,
+                    'placeholder' => 'Lớp',
+                    'value' => '',
+                ]) ?>
+            </div>
+        </div>
+        <div class="add-fault-fields">
+            <div class="add-fault-field">
+                Học kỳ
+                <?= view('components/dropdown', [
+                    'options' => ['Học kỳ I', 'Học kỳ II'],
+                    'dropdown_id' => 'semester-dropdown',
+                    'name' => 'semester',
+                    'selected_text' => 'Học kỳ',
+                ]) ?>
+            </div>
+            <div class="add-fault-field">
+                Lỗi vi phạm
+                <?= view('components/dropdown', [
+                    'options' => ['1 - Đi trễ', '2 - Không mang phù hiệu', '3 - Không thuộc bài'],
+                    'dropdown_id' => 'category-dropdown',
+                    'name' => 'student_category',
+                    'selected_text' => 'Lỗi vi phạm',
+                ]) ?>
+            </div>
+            <div class="hidden-dropdown">
+                <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
+            </div>
                 </div>
                 <div class="add-button">
                     <a href="/sms/public/supervisor/fault" style="text-decoration: none";>
@@ -193,4 +196,38 @@
     .hidden-dropdown {
         display: none;
     }
+
+    #student-id:focus {
+        outline: none;
+        box-shadow: none;
+    }
 </style>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Ngăn gửi form khi nhấn Enter
+    });
+
+    document.getElementById('student-id').addEventListener('change', function () {
+        const studentId = this.value;
+
+        // Mô phỏng dữ liệu trả về dựa trên mã học sinh
+        const studentData = {
+            '12345': { name: 'Nguyễn Văn A', grade: '11', class: '11A1' },
+            '67890': { name: 'Trần Thị B', grade: '12', class: '12B2' },
+        };
+
+        // Kiểm tra xem mã học sinh có tồn tại không
+        if (studentData[studentId]) {
+            document.getElementById('student-name').value = studentData[studentId].name;
+            document.getElementById('grade').value = studentData[studentId].grade;
+            document.getElementById('class').value = studentData[studentId].class;
+        } else {
+            // Xóa các trường nếu mã học sinh không hợp lệ
+            document.getElementById('student-name').value = '';
+            document.getElementById('grade').value = '';
+            document.getElementById('class').value = '';
+            alert('Mã học sinh không hợp lệ!');
+        }
+    });
+</script>

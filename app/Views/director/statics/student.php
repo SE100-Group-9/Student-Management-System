@@ -12,7 +12,7 @@
             Trung tâm / Thống kê / Học sinh
             <!-- Dropdown -->
             <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2020', '2021', '2022', '2023', '2024']]) ?>
+                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
             </div>
             <!-- Cards -->
             <div class="student-cards">

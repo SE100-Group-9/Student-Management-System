@@ -11,7 +11,7 @@
         <div class="body-right">
             <h1>Thêm lỗi vi phạm:</h1>
             <h2>Thông tin lỗi vi phạm:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/supervisor/addcategory">
                 <div class="add-category-fields">
                     <div class="add-category-field">
                         Tên vi phạm

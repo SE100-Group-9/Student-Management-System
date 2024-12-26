@@ -9,83 +9,88 @@
             <?= view('components/sidebar_director') ?>
         </div>
         <div class="body-right">
-            Học tập / Lớp học / Xếp lớp
-            <h1>Thêm giáo viên:</h1>
-            <h2>Thông tin giáo viên:</h2>
-            <form method="POST" action="/sms/public/director/arrangeteacher/add">
+            Học tập / Lớp học / Lớp <?= esc($TenLop) ?> / Giáo viên / Thêm giáo viên
+            <h1>Thêm giáo viên</h1>
+            <h2>Thông tin lớp học</h2>
+            <form method="POST" action="/sms/public/director/class/arrange/addteacher">
                 <div class="arrangeteacheradd-fields">
-                    <div class="arrangeteacheradd-field">
-                        Mã phân công
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'assignment',
-                            'required' => true,
-                            'value' => 'PC0001',
-                        ]) ?>
+                    <div class="arrangeteacheradd-specials">
+                        <div class="arrangeteacheradd-special">
+                            Năm học
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'teacher_year',
+                                'readonly' => true,
+                                'value' => $selectedYear ?? '',
+                            ]) ?>
+                        </div>
+                        <div class="arrangeteacheradd-special">
+                            Học kỳ
+                            <?= view('components/dropdown', [
+                                'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                                'dropdown_id' => 'semester-dropdown',
+                                'selected_text' => 'Chọn học kỳ',
+                                'name' => 'teacher_semester',
+                                'value' => $selectedSemester ?? ''
+                            ]) ?>
+                        </div>
                     </div>
-                    <div class="arrangeteacheradd-field">
-                        Mã giáo viên
-                        <?= view('components/dropdown', [
-                            'options' => ['GV0001', 'GV0002','GV0003'],
-                            'dropdown_id' => 'teacheid-dropdown',
-                            'name' => 'teacher_teacheid',
-                            'selected_text' => 'Mã giáo viên',
-                            'value' => old('teacher_teacheid'),
-                        ]) ?>
+                    <div class="arrangeteacheradd-specials">
+                        <div class="arrangeteacheradd-special">
+                            Tên lớp
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'teacher_classname',
+                                'readonly' => true,
+                                'value' => $TenLop ?? '',
+                            ]) ?>
+                        </div>
                     </div>
                 </div>
+                <h2>Thông tin giáo viên</h2>
                 <div class="arrangeteacheradd-fields">
                     <div class="arrangeteacheradd-field">
-                        Mã lớp
+                        Giáo viên
                         <?= view('components/dropdown', [
-                            'options' => ['11A1', '11A2','11A3'],
-                            'dropdown_id' => 'class-dropdown',
-                            'name' => 'teacher_class',
-                            'selected_text' => 'Mã lớp',
-                            'value' => old('teacher_class'),
+                            'options' => $teacherOptions ?? [],
+                            'dropdown_id' => 'teacherid-dropdown',
+                            'name' => 'teacher_teacherInfo',
+                            'selected_text' => 'Mã giáo viên - Họ tên',
+                            'value' => old('teacher_teacherInfo'),
                         ]) ?>
                     </div>
-                    <div class="arrangeteacheradd-field">
-                        Học kỳ
-                        <?= view('components/dropdown', [
-                            'options' => ['Học kỳ I', 'Học kỳ II'],
-                            'dropdown_id' => 'semester-dropdown',
-                            'selected_text' => 'Học kỳ',
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="arrangeteacheradd-fields">
-                    <div class="arrangeteacheradd-field">
-                        Năm học
-                        <?= view('components/dropdown', [
-                            'options' => ['2023-2024', '2022-2023', '2021-2022'],
-                            'dropdown_id' => 'year-dropdown',
-                            'selected_text' => 'Năm học',
-                        ]) ?>
-                    </div>
-                    <div class="arrangeteacheradd-field">
-                        Vai trò
-                        <?= view('components/dropdown', [
-                            'options' => ['Tổ trưởng', 'Tổ phó', 'Giáo viên'],
-                            'dropdown_id' => 'role-dropdown',
-                            'selected_text' => 'Vai trò',
-                        ]) ?>
+                    <div class="arrangeteacheradd-specials">
+                        <div class="arrangeteacheradd-special">
+                            Môn học
+                            <?= view('components/dropdown', [
+                                'options' => $subjectList ?? [],
+                                'dropdown_id' => 'subject-dropdown',
+                                'selected_text' => 'Môn học',
+                                'name' => 'teacher_subject',
+                                'value' => old('teacher_subject'),
+                            ]) ?>
+                        </div>
                     </div>
                 </div>
 
                 <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success">
+                    <div class="alert alert-success">
                         <?= session()->getFlashdata('success') ?>
-                </div>
-                <?php elseif (session()->getFlashdata('error')): ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
                     <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $field => $error): ?>
+                            <p><?= $error ?>
+                            <p>
+                            <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
 
 
                 <div class="arrangeteacheradd-btns">
-                    <a style="text-decoration: none" href="/sms/public/director/class/arrange/teacher">
+                    <a style="text-decoration: none" href="/sms/public/director/class/arrange/teacher/<?= $MaLop ?>">
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>
@@ -191,10 +196,26 @@
         line-height: normal;
     }
 
+    .arrangeteacheradd-specials {
+        display: flex;
+        width: 45%;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .arrangeteacheradd-special {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+    }
+
     .arrangeteacheradd-btns {
         display: flex;
         width: 100%;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
         gap: 20px;
     }

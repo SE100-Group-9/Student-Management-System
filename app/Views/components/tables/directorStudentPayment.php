@@ -1,131 +1,55 @@
-<div class="table-container">
-    <table id="directorStaticsConduct">
-        <tr>
-            <th>Mã số học sinh</th>
-            <th>Họ tên</th>
-            <th>Thông tin liên hệ</th>
-            <th>Lớp học</th>
-            <th>Tình trạng</th>
-            <th>Tiền nợ</th>
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>Lê Nguyễn Hoài Thương</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>02</td>
-            <td>Đoàn Ngọc Hoàng</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>03</td>
-            <td>Vũ Thị Oanh</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>04</td>
-            <td>Phan Huỳnh Thành Khương</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>05</td>
-            <td>Bùi Nhựt Tân</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>06</td>
-            <td>Huỳnh Tuyết Nhi</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>07</td>
-            <td>Bạch Nguyệt Quang</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>08</td>
-            <td>Nguyễn Lê Trung</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>09</td>
-            <td>Cao Long Nhựt</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>Bùi Nhựt Tân</td>
-            <td>lnht@gmail.com</td>
-            <td>11A1</td>
-            <td>
-                <?= view('components/status', ['status' => 'Đã thu']); ?>
-            </td>
-            <td>1.000.000</td>
-        </tr>
-    </table>
-</div>
+<?php if (!empty($tuitionList) && is_array($tuitionList)): ?>
+    <div class="table-container">
+        <table id="directorStaticsConduct">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã học sinh</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Lớp học</th>
+                    <th>Trạng thái</th>
+                    <th>Tiền nợ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tuitionList as $index => $tuition): ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
+                        <td><?= $tuition['MaHS'] ?></td>
+                        <td><?= $tuition['HoTen'] ?></td>
+                        <td><?= $tuition['Email'] ?></td>
+                        <td><?= $tuition['TenLop'] ?></td>
+                        <td>
+                            <?= view('components/status', ['status' => $tuition['TrangThai']]); ?>
+                        </td>
+                        <td><?= $tuition['TienNo'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+        </table>
+        <div id="pagination-container"></div>
+    </div>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
+
 
 <style>
     .table-container {
         display: block;
-        /* Đảm bảo container là block */
+        margin: 0 auto;
         overflow-x: auto;
         width: 100%;
         height: 100%;
     }
 
     #directorStaticsConduct {
-        min-width: 100%;
+        width: 100%;
         font-family: "Inter";
         border-collapse: collapse;
         color: black;
-        height: 100%;
     }
 
     #directorStaticsConduct th {
@@ -145,15 +69,24 @@
         white-space: nowrap;
     }
 
-    #directorStaticsConduct a {
-        text-decoration: none;
-    }
-
-    #directorStaticsConduct a:hover {
-        background-color: transparent;
-    }
-
-    #directorStaticsConduct svg {
-        cursor: pointer;
+    #pagination-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 10px;
+        width: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tableElement = document.getElementById('directorStaticsConduct');
+        const paginationContainer = document.getElementById('pagination-container');
+
+        initializeTablePagination({
+            tableElement,
+            paginationContainer,
+            rowsPerPage: 10,
+        });
+    });
+</script>

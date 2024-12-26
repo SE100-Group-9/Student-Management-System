@@ -11,30 +11,33 @@
         <div class="body-right">
             Học tập / Học sinh / Thông tin học bạ
             <div class="studentrecord-tools">
-                <div class="tool-search">
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', [
-                        'options' => ['2023-2024', '2024-2025', '2025-2026'],
-                        'dropdown_id' => 'year-dropdown',
-                        'name' => 'year',
-                        'selected_text' => 'Chọn năm học',
-                        'value' => $selectedYear ?? ''
-                    ]) ?>
-                    <?= view('components/dropdown', [
-                        'options' => ['Học kỳ 1', 'Học kỳ 2'], 
-                        'dropdown_id' => 'semester-dropdown',
-                        'name' => 'semester',
-                        'selected_text' => 'Chọn học kỳ',
-                        'value' => $selectedSemesterText ?? ''
-                    ]) ?>
-                    <?= view('components/dropdown', [
-                        'options' => $classList ?? [],
-                        'dropdown_id' => 'class-dropdown',
-                        'name' => 'class',
-                        'selected_text' => 'Chọn lớp học',
-                        'value' => $selectedClass ?? ''
-                    ]) ?>
-                </div>
+                <form method="GET" action="/sms/public/director/student/record">
+                    <div class="tool-search">
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['2023-2024', '2024-2025', '2025-2026'],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemesterText ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $classList ?? [],
+                            'dropdown_id' => 'class-dropdown',
+                            'name' => 'class',
+                            'selected_text' => 'Chọn lớp học',
+                            'value' => $selectedClass ?? ''
+                        ]) ?>
+                        <?= view('components/view_button') ?>
+                    </div>
+                </form>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
                 </div>

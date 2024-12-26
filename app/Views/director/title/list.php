@@ -18,6 +18,33 @@
                 </a>
             </div>
             <?= view('components/tables/directorTitleList', ['titleList' => $titleList]) ?>
+            <form method="POST" action="/sms/public/director/title/list">
+            <h2>Cập nhật quy định:</h2>
+                <div class="rule-update-fields">
+                    <div class="rule-update-field">
+                        Học phí trong năm học (triệu)
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_fee',
+                            'placeholder' => '1,000,000',
+                            'value' => '1,000,000'
+                        ]) ?>
+                    </div>
+                    <div class="rule-update-field">
+                        Số học sinh tối đa trong một lớp
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_quantity',
+                            'readonly' => false,
+                            'placeholder' => '40',
+                            'value' => '40',
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="rule-update-btns">
+                    <?= view('components/save_button') ?>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -77,6 +104,15 @@
         overflow-y: auto;
     }
 
+    .body-right h2 {
+        color: var(--Cerulean, #01B3EF);
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+
     .titlelist-tools {
         display: flex;
         padding: 10px;
@@ -87,9 +123,39 @@
         background: #FFF;
     }
 
+    .rule-update-fields {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .rule-update-field {
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex-shrink: 0;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
     .tools {
         width: 50%;
         display: flex;
         gap: 10px;
+    }
+
+    .rule-update-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 </style>

@@ -35,19 +35,48 @@
                 </div>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
+<<<<<<< HEAD
+=======
+                        Lớp 
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_class',
+                            'readonly' => true,
+                            'value' => '11A1'
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
+>>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
                         Năm học
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_year',
+<<<<<<< HEAD
                             'required' => true,
                             'readonly' => false,
                             'value' => '',
                             'placeholder' => 'Nhập số tiền'
+=======
+                            'readonly' => true,
+                            'value' => '2024-2025'
+>>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
                         ]) ?>
                     </div>
                 </div>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
+<<<<<<< HEAD
+=======
+                        Tổng tiền
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_total',
+                            'readonly' => true,
+                            'value' => '1,000,000'
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
+>>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
                         Số tiền đã nhận
                         <?= view('components/input', [
                             'type' => 'text',

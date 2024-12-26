@@ -8,7 +8,6 @@
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
                 <th>Giới tính</th>
                 <th>Ngày sinh</th>
                 <th>Tình trạng</th>
@@ -23,7 +22,6 @@
                     <td><?= $supervisor['HoTen'] ?></td>
                     <td><?= $supervisor['Email'] ?></td>
                     <td><?= $supervisor['SoDienThoai'] ?></td>
-                    <td><?= $supervisor['DiaChi'] ?></td>
                     <td><?= $supervisor['GioiTinh'] ?></td>
                     <td><?= date('d/m/Y', strtotime($supervisor['NgaySinh'])) ?></td>
                     <td>
