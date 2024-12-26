@@ -51,7 +51,7 @@ class LoginController extends Controller
                     case '3': // Học Sinh
                         return redirect()->to('/student/conduct');
                     case '4': // Thu Ngân
-                        return redirect()->to('/cashier/payment/list');
+                        return redirect()->to('/cashier/invoice/list');
                     case '5': // Giám Thị
                         return redirect()->to('/supervisor/fault');
                     default:

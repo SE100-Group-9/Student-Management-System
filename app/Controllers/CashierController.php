@@ -8,9 +8,9 @@ use App\Models\TaiKhoanModel;
 
 class CashierController extends Controller
 {
-    public function list()
+    public function listInvoice()
     {
-        return view('cashier/payment/list');
+        return view('cashier/invoice/list');
     }
 
     public function profile() 
@@ -73,9 +73,50 @@ class CashierController extends Controller
         }
     }
 
-    public function add()
+    public function invoice()
     {
-        return view('cashier/payment/add');
+        return view('cashier/invoice/add');
+    }
+
+
+    public function addInvoice()
+    {   
+        $errors = [];
+        // Lấy dữ liệu từ form
+        $MaTN = $this->request->getPost('student_id');
+        $MaTK = $this->request->getPost('phase_dropdown'); // lấy dữ liệu của dropdown
+        $email = $this->request->getPost('student_total');
+        $phone = $this->request->getPost('student_paid');
+        $address = $this->request->getPost('cashier_address');
+        
+        // Kiểm tra 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            $errors['cashier_email'] = 'Email không đúng định dạng.';
+        // Kiểm tra số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone))
+            $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        // Nếu có lỗi, trả về cùng thông báo
+        if (empty(trim($address)))
+            $errors['cashier_address'] = 'Địa chỉ không được để trống';
+        if (!empty($errors))
+            return redirect()->back()->withInput()->with('errors', $errors);
+
+        $ThuNganModel = new ThuNganModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+
+        // Thêm tài khoản
+        $TaiKhoanModel->update($MaTK, [
+            'Email' => $this->request->getPost('cashier_email'),
+            'SoDienThoai' => $this->request->getPost('cashier_phone'),
+            'DiaChi' => $this->request->getPost('cashier_address'),
+        ]);
+
+        // Xử lý thông báo
+        if ($TaiKhoanModel) {
+            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+        } else {
+            return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
     }
 
     public function staticStudent()

@@ -9,9 +9,9 @@
             <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
-            Học phí / Quản lý học phí / Danh sách hóa đơn
+            Học phí / Quản lý học phí / Danh sách
             <h1>Thêm hóa đơn:</h1>
-            <form method="POST" action="">
+            <form method="POST" action="/sms/public/cashier/invoice/add">
                 <h2>Thông tin hóa đơn:</h2>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
@@ -19,30 +19,40 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_id',
-                            'readonly' => true,
-                            'value' => '01'
+                            'required' => true,
+                            'readonly' => false,
+                            'value' => 'HS001',
+                            'placeholder' => 'Nhập mã hs'
                         ]) ?>
                     </div>
+
                     <div class="payment-add-field">
-                        Tên học sinh
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_name',
-                            'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                        Đợt
+                        <?= view('components/dropdown', [
+                            'name' => 'phase_dropdown'
+                            'options' => 
+                            [
+                                'Học kì 1, năm học 2022 - 2023', 
+                                'Học kì 2, năm học 2022 - 2023', 
+                                'Học kì 1, năm học 2023 - 2024', 
+                                'Học kì 2, năm học 2023 - 2024',              
+                            ], 
+                            'dropdown_id' => 'pay-dropdown',
+                            'value' => '',
+                            'required' => true,
                         ]) ?>
                     </div>
                 </div>
+
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
-                        Năm học
+                        Tổng tiền
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_year',
+                            'name' => 'student_total',
                             'required' => true,
-                            'readonly' => false,
-                            'value' => '',
-                            'placeholder' => 'Nhập số tiền'
+                            'readonly' => true,
+                            'value' => '16.000.000',
                         ]) ?>
                     </div>
                 </div>
@@ -59,8 +69,25 @@
                         ]) ?>
                     </div>
                 </div>
+
+                <div class="payment-add-fields">
+                    <div class="payment-add-field">
+                        Thời gian đóng
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'student_time',
+                            'required' => true,
+                            'readonly' => false,
+                            'value' => '',
+                            'placeholder' => 'Nhập ngày thanh toán'
+                        ]) ?>
+                    </div>
+                </div>
+
+               
+               
                 <div class="payment-add-btns">
-                    <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
+                    <a href="/sms/public/cashier/invoice/list" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>

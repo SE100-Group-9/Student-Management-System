@@ -2,17 +2,16 @@
     <table id="cashierPaymentList">
         <thead>
             <tr>
-                <th>Mã thanh toán</th>
+                <th>Mã hóa đơn</th>
                 <th>Mã học sinh</th>
                 <th>Tên học sinh</th>
                 <th>Lớp</th>
-                <th>Năm học</th>
-                <th>Học kỳ</th>
+                <th>Đợt</th>
                 <th>Tổng tiền</th>
                 <th>Đã thanh toán</th>
-                <th>Ngày thanh toán</th>
                 <th>Còn nợ</th>
-                <th>Trạng thái</th>
+                <th>Thời gian đóng</th>
+                <th>Trạng thái</th>             
                 <th></th>
             </tr>
         </thead>
@@ -22,12 +21,11 @@
                 <td>22520xxx</td>
                 <td>Nguyễn Văn A</td>
                 <td>11</td>
-                <td>2024-2025</td>
-                <td>1</td>
+                <td>Học kì 1, năm học 2024 - 2025</td>
                 <td>1,000,000</td>
+                <td>500,000</td>              
                 <td>500,000</td>
                 <td>01-01-2024</td>
-                <td>500,000</td>
                 <td>Thanh toán 1 phần</td>
                 <td>
                     <a href="/sms/public/cashier/payment/add">
