@@ -11,7 +11,7 @@
         <div class="body-right">
             Học tập / Học sinh / Thông tin học bạ
             <div class="studentrecord-tools">
-                <form method="GET" action="/sms/public/director/student/record">
+                <form method="GET" action="/sms/public/director/student/record" id="form">
                     <div class="tool-search">
                         <?= view('components/searchbar') ?>
                         <?= view('components/dropdown', [
@@ -35,7 +35,7 @@
                             'selected_text' => 'Chọn lớp học',
                             'value' => $selectedClass ?? ''
                         ]) ?>
-                        <?= view('components/view_button') ?>
+                        <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>
                 <div class="tool-add">
@@ -126,3 +126,68 @@
         gap: 10px;
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form
+        const form = document.getElementById('form'); // Đảm bảo form có id="form"
+
+        // Lấy các dropdown
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]');
+        const classDropdown = document.querySelector('[data-dropdown-id="class-dropdown"]');
+
+        // Xử lý sự kiện click cho yearDropdown
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option');
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+
+        // Xử lý sự kiện click cho semesterDropdown
+        if (semesterDropdown) {
+            const semesterOptions = semesterDropdown.querySelectorAll('.option');
+            semesterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    semesterDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    semesterDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+
+        // Xử lý sự kiện click cho classDropdown
+        if (classDropdown) {
+            const classOptions = classDropdown.querySelectorAll('.option');
+            classOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    classDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    classDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>

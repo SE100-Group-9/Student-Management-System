@@ -11,7 +11,7 @@
         <div class="body-right">
             Học tập / Lớp học / Danh sách
             <div class="classlists-tools">
-                <form method="GET" action="/sms/public/director/class/list">
+                <form method="GET" action="/sms/public/director/class/list" id="form">
                     <div class="tools">
                         <?= view('components/searchbar') ?>
                         <?= view('components/dropdown', [
@@ -21,7 +21,7 @@
                             'selected_text' => 'Chọn năm học',
                             'value' => $selectedYear ?? ''
                         ]) ?>
-                        <?= view('components/view_button') ?>
+                        <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>
                 <div class="tool-add">
@@ -121,3 +121,29 @@
         height: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và dropdown "year"
+        const form = document.getElementById('form'); // Đảm bảo form có id="form"
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+
+        // Kiểm tra nếu dropdown year tồn tại
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option'); // Lấy tất cả các option trong dropdown
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>

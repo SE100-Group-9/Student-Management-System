@@ -13,7 +13,7 @@
             <form method="POST" action="/sms/public/director/profile">
                 <div class="director-profile-fields">
                     <input type="hidden" name="MaBGH" value="<?= $director['MaBGH'] ?? '' ?>">
-                    <input type="hidden" name="MaTK" value="<?= $director['MaBGH'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $director['MaTK'] ?? '' ?>">
 
                     <div class="director-profile-field">
                         Mã Ban Giám Hiệu

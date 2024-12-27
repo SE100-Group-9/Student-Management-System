@@ -14,7 +14,7 @@
                 <?= view('components/tab', ['MaLop' => $MaLop, 'activeTab' => 'teacher']) ?>
             </div>
             <div class="classlists-tools">
-                <form method="GET" action="/sms/public/director/class/arrange/teacher/<?= $MaLop ?>">
+                <form method="GET" action="/sms/public/director/class/arrange/teacher/<?= $MaLop ?>" id="form">
                     <div class="tools">
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
                         <?= view('components/dropdown', [
@@ -24,7 +24,7 @@
                             'selected_text' => 'Chọn học kỳ',
                             'value' => $selectedSemester ?? ''
                         ]) ?>
-                        <?= view('components/view_button') ?>
+                        <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>
                 <div class="tool-add">
@@ -124,3 +124,29 @@
         height: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và dropdown "semester"
+        const form = document.getElementById('form'); // Đảm bảo form có id="form"
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]'); // Lấy dropdown bằng data-dropdown-id
+
+        // Kiểm tra nếu dropdown semester tồn tại
+        if (semesterDropdown) {
+            const semesterOptions = semesterDropdown.querySelectorAll('.option'); // Lấy tất cả các option trong dropdown
+            semesterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    semesterDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    semesterDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>

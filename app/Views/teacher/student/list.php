@@ -10,24 +10,94 @@
         </div>
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
-            <div class="teacherstudentlist-tools">
-                <div class="tool-search">
-                    <?= view('components/filter') ?>
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', ['options' => ['11A1', '11A2', '11A3'], 'dropdown_id' => 'class-dropdown']) ?>
-                </div>
-                <div class="tool-add">
-                    <?= view('components/excel_export') ?>
-                </div>
+
+            <form method="GET" action="/sms/public/teacher/student/list" id="form">
+                <div class="teacherstudentlist-tools">
+                    <div class="tool-search">
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $classList ?? [],
+                            'dropdown_id' => 'class-dropdown',
+                            'name' => 'class',
+                            'selected_text' => 'Chọn lớp học',
+                            'value' => $selectedClass ?? ''
+                        ]) ?>
+                        <button type="submit" style="display: none;">Submit</button>
+                    </div>
+            </form>
+            <div class="tool-add">
+                <?= view('components/excel_export') ?>
             </div>
-            <?= view('components/tables/teacherStudentList', ['tableId' => 'teacherStudentList']) ?>
-            <?= view('components/pagination'); ?>
         </div>
+        <div class="tabless">
+            <?= view('components/tables/teacherStudentList', ['studentList' => $studentList]) ?>
+            <?php if (isset($error) && $error): ?>
+                <p><?= $error ?></p>
+            <?php endif; ?>
+        </div>
+        <?= view('components/pagination'); ?>
+
     </div>
+
+</div>
+<div style="display: none;">
+    <?= view('components/dropdown', []) ?>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và các dropdown
+        const form = document.getElementById('form');
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const classDropdown = document.querySelector('[data-dropdown-id="class-dropdown"]');
+
+        // Bắt sự kiện click cho dropdown "year"
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option');
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+
+        // Bắt sự kiện click cho dropdown "class"
+        if (classDropdown) {
+            const classOptions = classDropdown.querySelectorAll('.option');
+            classOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    classDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    classDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>
+
 <style>
-     *,
+    *,
     *::before,
     *::after {
         padding: 0;
@@ -102,5 +172,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+    .tabless {
+        width: 100%;
+        height: 100%;
     }
 </style>

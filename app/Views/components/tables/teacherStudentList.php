@@ -1,142 +1,40 @@
+<?php if (!empty($studentList) && is_array($studentList)): ?>
 <div id="table-container">
     <table id="teacherStudentList">
         <thead>
             <tr>
+                <th>STT</th>
+                <th>Mã học sinh</th>
                 <th>Họ tên</th>
                 <th>Giới tính</th>
-                <th>Email</th>
+                <th>Ngày sinh</th>
                 <th>Số điện thoại</th>
-                <th>Lớp</th>
-                <th>Điểm trung bình</th>
+                <th>Email</th>
                 <th>Tình trạng</th>
             </tr>
         </thead>
         <tbody>
+        <?php foreach ($studentList as $index => $student): ?>
             <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
+                <td><?= $index + 1 ?></td>
+                <td><?= $student['MaHS'] ?></td>
+                <td><?= $student['HoTen'] ?></td>
+                <td><?= $student['GioiTinh'] ?></td>
+                <td><?= date('d/m/Y', strtotime($student['NgaySinh'])) ?></td>
+                <td><?= $student['SoDienThoai'] ?></td>
+                <td><?= $student['Email'] ?></td>
                 <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
+                    <?= view('components/status', ['status' => $student['TinhTrang']]); ?>
                 </td>
             </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang bảo lưu']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang bảo lưu']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang bảo lưu']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Đang học']); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>Nguyễn Văn A</td>
-                <td>Nam</td>
-                <td>nam@gmail.com</td>
-                <td>0123456789</td>
-                <td>11A1</td>
-                <td>9</td>
-                <td>
-                    <?= view('components/status', ['status' => 'Hết hạn bảo lưu']); ?>
-                </td>
-            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
     <div id="pagination-container"></div>
 </div>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
 
 <style>
     #table-container {

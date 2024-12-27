@@ -26,13 +26,10 @@ class LoginController extends Controller
 
         // Kiểm tra tài khoản
         $user = $model->findByUsernameWithRole($username);
-        log_message('debug', 'User found: ' . print_r($user, true)); 
         if ($user) {
             // Xác thực mật khẩu
-            log_message('debug', 'Username: ' . $username); // Log tên tài khoản
             if ($password === $user['MatKhau']) {
                 // Lưu thông tin người dùng vào session
-                log_message('debug', 'Username: ' . $username); // Log tên tài khoản
                 $session->set([
                     'MaTK'     => $user['MaTK'],
                     'TenTK'    => $user['TenTK'],
@@ -41,7 +38,6 @@ class LoginController extends Controller
                     'TenVT'    => $user['TenVT'], // Tên vai trò
                     'loggedIn' => true,
                 ]);
-                log_message('debug', 'Login successful for user: ' . $username);
                 // Điều hướng dựa trên vai trò
                 switch ($user['MaVT']) {
                     case '1': // Ban Giám Hiệu

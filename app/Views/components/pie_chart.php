@@ -11,14 +11,14 @@
 
         var data = google.visualization.arrayToDataTable([
             ['Loại', 'Số lượng'],
-            ['Giỏi', 1100],
-            ['Khá', 6500],
-            ['Trung bình', 2604],
-            ['Yếu', 1105]
+            ['Giỏi', <?php echo $excellentCount; ?>],
+            ['Khá', <?php echo $goodCount; ?>],
+            ['Trung bình', <?php echo $averageCount; ?>],
+            ['Yếu', <?php echo $weakCount; ?>]
         ]);
 
         var options = {
-            title: 'Học lực',
+            title: 'Học lực của học sinh',
             fontName: "Inter",
             colors: ['#01427A', '#01B3EF', '#E14177', '#6C6C6C']
         };

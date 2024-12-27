@@ -1,83 +1,25 @@
-<table id="directorStaticsConduct">
-    <tr>
-        <th>Hạng</th>
-        <th>Mã học sinh</th>
-        <th>Tên học sinh</th>
-        <th>Lớp</th>
-        <th>Điểm trung bình</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>01</td>
-        <td>Hề Bích Thảo</td>
-        <td>11A1</td>
-        <td>9.8</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>02</td>
-        <td>Võ Khánh Ly</td>
-        <td>11A3</td>
-        <td>9.7</td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>11</td>
-        <td>Tôn Minh Quang</td>
-        <td>11A2</td>
-        <td>9.6</td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>19</td>
-        <td>Liên Quỳnh Hoa</td>
-        <td>11A2</td>
-        <td>9.5</td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>23</td>
-        <td>Hồng Minh Quân</td>
-        <td>11A5</td>
-        <td>9.4</td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>03</td>
-        <td>Thịnh Tuấn Hùng</td>
-        <td>11A4</td>
-        <td>9.3</td>
-    </tr>
-    <tr>
-        <td>7</td>
-        <td>37</td>
-        <td>Đỗ Trọng Khánh
-        </td>
-        <td>11A4</td>
-        <td>9.2</td>
-    </tr>
-    <tr>
-        <td>8</td>
-        <td>08</td>
-        <td>Võ Thị Thu Hồng</td>
-        <td>11A7</td>
-        <td>9.1</td>
-    </tr>
-    <tr>
-        <td>9</td>
-        <td>07</td>
-        <td>Phạm Ngọc Hân</td>
-        <td>11A8</td>
-        <td>9.0</td>
-    </tr>
-    <tr>
-        <td>10</td>
-        <td>09</td>
-        <td>Hoàng Đức Long</td>
-        <td>11A6</td>
-        <td>9.0</td>
-    </tr>
-</table>
+<?php if (!empty($topStudents) && is_array($topStudents)): ?>
+    <table id="directorStaticsConduct">
+        <tr>
+            <th>Hạng</th>
+            <th>Mã học sinh</th>
+            <th>Họ tên</th>
+            <th>Lớp</th>
+            <th>Điểm trung bình</th>
+        </tr>
+        <?php foreach ($topStudents as $index => $student): ?>
+            <tr>
+                <td><?= $index + 1 ?></td>
+                <td><?= $student['MaHS'] ?></td>
+                <td><?= $student['HoTen'] ?></td>
+                <td><?= $student['TenLop'] ?></td>
+                <td><?= $student['DiemTB'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
 
 <style>
     #directorStaticsConduct {

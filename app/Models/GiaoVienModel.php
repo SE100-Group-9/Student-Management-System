@@ -20,5 +20,15 @@ class GiaoVienModel extends Model
         return $this->db->query($SQL)->getResultArray();
     }
 
+    // Lấy thông tin giáo viên dựa vào MaTK
+    public function getTeacherInfo($MaTK)
+    {
+        $SQL = "SELECT giaovien.*, taikhoan.*
+                FROM giaovien
+                JOIN taikhoan ON giaovien.MaTK = taikhoan.MaTK
+                WHERE giaovien.MaTK = ?";
+        return $this->db->query($SQL, [$MaTK])->getRowArray();
+    }
+
 
 }

@@ -1,118 +1,42 @@
-<div id="table-container">
-    <table id="directorStaticsConduct">
-        <thead>
-            <tr>
-                <th>Hạng</th>
-                <th>Mã học sinh</th>
-                <th>Tên học sinh</th>
-                <th>Lớp</th>
-                <th>Số lần vi phạm</th>
-                <th>Điểm</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>01</td>
-                <td>Hề Bích Thảo</td>
-                <td>11A1</td>
-                <td>15</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>02</td>
-                <td>Võ Khánh Ly</td>
-                <td>11A3</td>
-                <td>13</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>11</td>
-                <td>Tôn Minh Quang</td>
-                <td>11A2</td>
-                <td>12</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>19</td>
-                <td>Liên Quỳnh Hoa</td>
-                <td>11A2</td>
-                <td>12</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>23</td>
-                <td>Hồng Minh Quân</td>
-                <td>11A5</td>
-                <td>12</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>03</td>
-                <td>Thịnh Tuấn Hùng</td>
-                <td>11A4</td>
-                <td>12</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>03</td>
-                <td>Đỗ Trọng Khánh
-                </td>
-                <td>11A4</td>
-                <td>12</td>
-                <td>40</td>
-                <td>Cảnh cáo</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>03</td>
-                <td>Võ Thị Thu Hồng</td>
-                <td>11A4</td>
-                <td>12</td>
-                <td>80</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>03</td>
-                <td>Phạm Ngọc Hân</td>
-                <td>11A4</td>
-                <td>12</td>
-                <td>90</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>03</td>
-                <td>Hoàng Đức Long</td>
-                <td>11A4</td>
-                <td>12</td>
-                <td>80</td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<?php if (!empty($worstStudents) && is_array($worstStudents)): ?>
+    <div id="table-container">
+        <table id="directorStaticsConduct">
+            <thead>
+                <tr>
+                    <th>Hạng</th>
+                    <th>Mã học sinh</th>
+                    <th>Họ tên</th>
+                    <th>Lớp</th>
+                    <th>Điểm hạnh kiểm</th>
+                    <th>Số lần vi phạm</th>
+                    <th>Ghi chú</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($worstStudents as $index => $student): ?>
+                    <tr>
+                        <td><?= $index + 1 ?></td>
+                        <td><?= $student['MaHS'] ?></td>
+                        <td><?= $student['HoTen'] ?></td>
+                        <td><?= $student['TenLop'] ?></td>
+                        <td><?= $student['DiemHK'] ?></td>
+                        <td><?= $student['SoLanViPham'] ?></td>
+                        <td><?= $student['TrangThai'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
 
 <style>
     #table-container {
         width: 100%;
         max-width: 100%;
         margin: 0 auto;
-        overflow: hidden; 
+        overflow: hidden;
     }
 
     #directorStaticsConduct {
@@ -123,8 +47,8 @@
     }
 
     #directorStaticsConduct thead th {
-        position: sticky; 
-        top: 0; 
+        position: sticky;
+        top: 0;
         z-index: 1;
         padding: 10px;
         text-align: left;
@@ -133,10 +57,10 @@
     }
 
     #directorStaticsConduct tbody {
-        display: block; 
+        display: block;
         width: 100%;
-        max-height: 400px; 
-        overflow-y: auto; 
+        max-height: 400px;
+        overflow-y: auto;
     }
 
     #directorStaticsConduct tbody td {
@@ -150,7 +74,7 @@
     #directorStaticsConduct thead {
         display: table;
         width: 100%;
-        table-layout: fixed; 
+        table-layout: fixed;
     }
 
     #directorStaticsConduct tbody tr {

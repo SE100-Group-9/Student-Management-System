@@ -28,4 +28,28 @@ class HocSinhModel extends Model
 
         return $this->db->query($SQL, [$year, $year, $semester, $year, $class])->getResultArray();
     }
+
+    // Lấy danh sách học sinh và điểm số theo năm học
+    public function getStudentListByYear($grade, $year)
+    {
+        $SQL = "SELECT DISTINCT hocsinh.MaHS, taikhoan.HoTen, lop.TenLop
+                FROM hocsinh
+                JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+                JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS AND hocsinh_lop.NamHoc = ?
+                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop ";
+                
+        // Lọc theo khối lớp (ví dụ: 10, 11, 12)
+        $gradePrefix = $grade . "_"; // Ví dụ: 10_ hoặc 11_ hoặc 12_
+        $SQL .= "WHERE lop.TenLop LIKE ? ";
+
+        // Tham số cho câu truy vấn
+        $params = [$year, $gradePrefix . '%'];
+
+        //Tiến hành truy vấn và trả về kết quả
+        $SQL .= "ORDER BY hocsinh.MaHS";
+        return $this->db->query($SQL, $params)->getResultArray();
+    }
+
+
+
 }
