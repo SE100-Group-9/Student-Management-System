@@ -10,15 +10,18 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/teacher/profile">
                 <div class="teacher-profile-fields">
+                    <input type="hidden" name="MaBGH" value="<?= $teacher['MaGV'] ?? '' ?>">
+                    <input type="hidden" name="MaTK" value="<?= $teacher['MaTK'] ?? '' ?>">
+
                     <div class="teacher-profile-field">
-                        Mã nhân viên
+                        Mã giáo viên
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_id',
                             'readonly' => true,
-                            'value' => 'GV0001'
+                            'value' => $teacher['MaGV']
                         ]) ?>
                     </div>
                     <div class="teacher-profile-field">
@@ -27,7 +30,7 @@
                             'type' => 'text',
                             'name' => 'teacher_name',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $teacher['HoTen']
                         ]) ?>
                     </div>
                 </div>
@@ -36,18 +39,18 @@
                         Giới tính
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_sex',
+                            'name' => 'teacher_gender',
                             'readonly' => true,
-                            'value' => 'Nam'
+                            'value' => $teacher['GioiTinh']
                         ]) ?>
                     </div>
                     <div class="teacher-profile-field">
                         Ngày sinh
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'teacher_date-of-birth',
+                            'name' => 'teacher_birthday',
                             'readonly' => true,
-                            'value' => '01-01-2000'
+                            'value' => date('d/m/Y', strtotime($teacher['NgaySinh']))
                         ]) ?>
                     </div>
                 </div>
@@ -57,8 +60,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_address',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'readonly' => false,
+                            'required' => true,
+                            'value' => $teacher['DiaChi']
                         ]) ?>
                     </div>
                     <div class="teacher-profile-field">
@@ -66,8 +70,9 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_phone',
-                            'readonly' => true,
-                            'value' => '0123456789'
+                            'readonly' => false,
+                            'required' => true,
+                            'value' => $teacher['SoDienThoai']
                         ]) ?>
                     </div>
                 </div>
@@ -77,11 +82,37 @@
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'teacher_email',
-                            'readonly' => true,
-                            'value' => 'hieutruong@gmail.com'
+                            'readonly' => false,
+                            'required' => true,
+                            'value' => $teacher['Email']
                         ]) ?>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?>
+                            <p>
+                            <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="teacheradd-btns">
+                    <a style="text-decoration: none" href="/sms/public/teacher/statics/grade">
+                        <?= view('components/exit_button') ?>
+                    </a>
+                    <?= view('components/save_button') ?>
+                </div>
+
+
             </form>
         </div>
     </div>
@@ -179,5 +210,13 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+    }
+
+    .teacheradd-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 </style>

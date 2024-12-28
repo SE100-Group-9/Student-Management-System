@@ -129,14 +129,25 @@ $routes->post('login/authenticate', 'LoginController::authenticate');
 $routes->get('logout', 'LoginController::logout');
 
 // Teacher
+// Teacher - Danh sách học sinh
 $routes->get('teacher/student/list', 'TeacherController::studentList');
+
 $routes->get('teacher/statics/grade', 'TeacherController::statics');
+
+// Teacher - Đánh giá kết quả học tập
 $routes->get('teacher/class/rate', 'TeacherController::classRate');
+$routes->get('teacher/class/rate/getHocKyByYear/(:segment)', 'TeacherController::getHocKyByYear/$1');
+$routes->get('teacher/class/rate/getLopHocByHocKy/(:segment)/(:segment)', 'TeacherController::getLopHocByHocKy/$1/$2');
+
 $routes->get('teacher/class/rating', 'TeacherController::classRating');
 $routes->get('teacher/class/record/list', 'TeacherController::recordList');
 $routes->get('teacher/class/record/detail', 'TeacherController::recordDetail');
 $routes->get('teacher/class/enter/list', 'TeacherController::enterList');
 $routes->get('teacher/class/enter/next', 'TeacherController::enterNext');
 $routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
+
+// Teacher - Thanh Header
 $routes->get('teacher/profile', 'TeacherController::profile');
+$routes->post('teacher/profile', 'TeacherController::updateProfile');
 $routes->get('teacher/changepw', 'TeacherController::changepw');
+$routes->post('teacher/changepw', 'TeacherController::updatePassword');

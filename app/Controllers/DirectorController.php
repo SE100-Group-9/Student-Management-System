@@ -29,17 +29,223 @@ class DirectorController extends Controller
 
     public function staticsConduct()
     {
-        return view('director/statics/conduct');
+        $HanhKiemModel = new HanhKiemModel();
+        $PhanCongModel = new PhanCongModel();
+
+        // Nhận giá trị học kỳ, năm học từ query string
+        $selectedSemester = $this->request->getVar('semester') ?? 'Học kỳ 1';
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+
+        // Tách tên học kỳ để lấy số
+        $semesterNumber = preg_replace('/\D/', '', $selectedSemester);
+
+        // Lấy danh sách năm học
+        $yearList = $PhanCongModel->getAssignedYears();
+        $yearList = array_column($yearList, 'NamHoc');
+
+        // Lấy thông tin hạnh kiểm của học sinh theo học kỳ và năm học
+        $HanhKiemKhoi10 = $HanhKiemModel->countConductRank('10', $semesterNumber, $selectedYear);
+        $HanhKiemKhoi11 = $HanhKiemModel->countConductRank('11', $semesterNumber, $selectedYear);
+        $HanhKiemKhoi12 = $HanhKiemModel->countConductRank('12', $semesterNumber, $selectedYear);
+
+        // Lấy danh sách học sinh có điểm hạnh kiểm thấp nhất
+        $worstStudents = $HanhKiemModel->getTopWarnedStudent($semesterNumber, $selectedYear);
+
+        return view('director/statics/conduct', [
+            'selectedSemester' => $selectedSemester,
+            'selectedYear' => $selectedYear,
+            'yearList' => $yearList,
+            'HanhKiemKhoi10' => json_encode($HanhKiemKhoi10),
+            'HanhKiemKhoi11' => json_encode($HanhKiemKhoi11),
+            'HanhKiemKhoi12' => json_encode($HanhKiemKhoi12),
+            'worstStudents' => $worstStudents,
+        ]);
     }
 
     public function staticsGrade()
     {
-        return view('director/statics/grade');
+        $DiemModel = new DiemModel();
+        $HocSinhModel = new HocSinhModel();
+        $PhanCongModel = new PhanCongModel();
+
+        // Nhận giá trị khối lớp, năm học từ query string
+        $selectedGrade = $this->request->getVar('grade') ?? 'Khối 10';
+        $selectedSemester = $this->request->getVar('semester') ?? 'Học kỳ 1';
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+
+        // Tách khối lớp để lấy số
+        // Kiểm tra và tách khối lớp để lấy số
+        $gradeParts = explode(' ', $selectedGrade);
+        if (count($gradeParts) > 1 && is_numeric($gradeParts[1])) {
+            $gradeNumber = (int)$gradeParts[1];
+        } else {
+            // Giá trị mặc định nếu không tách được số
+            $gradeNumber = 10; // Ví dụ: Mặc định là Khối 10
+        }
+
+        // Lấy danh sách năm học
+        $yearList = $PhanCongModel->getAssignedYears();
+        $yearList = array_column($yearList, 'NamHoc');
+
+        // Lấy danh sách học sinh theo năm học
+        $currentStudentList = $HocSinhModel->getStudentListByYear($gradeNumber, $selectedYear);
+
+        $currentReport = [];
+        foreach ($currentStudentList as $student) {
+            $MaHS = $student['MaHS'];
+            // Tính điểm trung bình theo học kỳ hoặc cả năm học
+            if ($selectedSemester === 'Học kỳ 1'){
+                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
+            } elseif ($selectedSemester === 'Học kỳ 2') {
+                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
+            } else {
+                $averageScore = $DiemModel->getYearAverageScore($MaHS, $selectedYear);
+            }
+            $performance  = $DiemModel->getAcademicPerformance($averageScore);
+            $currentReport[] = [
+                'student' => $student,
+                'averageScore' => $averageScore,
+                'performance' => $performance,
+            ];
+        }
+
+        // Xử lý chuỗi năm học để lấy năm liền trước
+        $yearArray = explode('-', $selectedYear);
+        $previousYear = ($yearArray[0] - 1) . '-' . ($yearArray[1] - 1);
+
+        // Lấy danh sách học sinh theo năm học trước
+        $previousStudentList = $HocSinhModel->getStudentListByYear($gradeNumber, $previousYear);
+
+        $previousReport = [];
+        foreach($previousStudentList as $student) {
+            $MaHS = $student['MaHS'];
+            // Tính điểm trung bình theo học kỳ hoặc cả năm học
+            if ($selectedSemester === 'Học kỳ 1') {
+                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 1, $previousYear);
+            } elseif ($selectedSemester === 'Học kỳ 2') {
+                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 2, $previousYear);
+            } else {
+                $averageScore = $DiemModel->getYearAverageScore($MaHS, $previousYear);
+            }
+            $performance = $DiemModel->getAcademicPerformance($averageScore);
+            $previousReport[] = [
+                'student' => $student,
+                'averageScore' => $averageScore,
+                'performance' => $performance,
+            ];
+        }
+
+        // Tính toán số lượng học sinh theo từng loại học lực trong năm học hiện tại và năm học trước
+        $performanceStatistics = $DiemModel->getYearAverageScoreChange($currentReport, $previousReport);
+
+        log_message('info', 'Performance Statistics: ' . print_r($performanceStatistics, true));
+
+        // Số lượng học sinh theo từng loại học lực
+        $excellentCount = $performanceStatistics['summary']['Giỏi']['current'];
+        $goodCount = $performanceStatistics['summary']['Khá']['current'];
+        $averageCount = $performanceStatistics['summary']['Trung bình']['current'];
+        $weakCount = $performanceStatistics['summary']['Yếu']['current'];
+
+        // Phần trăm học lực học sinh thay đổi so với năm học trước
+        $excellentChange = $performanceStatistics['changes']['Giỏi'];
+        $goodChange = $performanceStatistics['changes']['Khá'];
+        $averageChange = $performanceStatistics['changes']['Trung bình'];
+        $weakChange = $performanceStatistics['changes']['Yếu'];
+
+        $studentScores = [];
+        foreach ($currentStudentList as $student) {
+            $MaHS = $student['MaHS'];
+            // Tính điểm dựa trên học kỳ hoặc cả năm học
+            if ($selectedSemester === 'Học kỳ 1') {
+                $averageScore  = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
+            } elseif ($selectedSemester === 'Học kỳ 2') {
+                $averageScore  = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
+            } else {
+                $averageScore  = $DiemModel->getYearAverageScore($MaHS, $selectedYear);
+            }
+            if ($averageScore !== null) {
+                $studentScores[] = [
+                    'MaHS' => $student['MaHS'],
+                    'HoTen' => $student['HoTen'],
+                    'TenLop' => $student['TenLop'],
+                    'DiemTB' => $averageScore,
+                ];
+            }
+        }
+        // Sắp xếp học sinh theo điểm trung bình năm học giảm dần
+        usort($studentScores, function ($a, $b) {
+            return $b['DiemTB'] <=> $a['DiemTB'];
+        });
+
+        // Lấy danh sách 10 học sinh có điểm trung bình năm học cao nhất
+        $topStudents = array_slice($studentScores, 0, 10);
+
+        return view('director/statics/grade', [
+            'selectedGrade' => $selectedGrade,
+            'selectedSemester' => $selectedSemester,
+            'selectedYear' => $selectedYear,
+            'yearList' => $yearList,
+            'previousYear' => $previousYear,
+            'excellentCount' => $excellentCount, 'goodCount' => $goodCount, 'averageCount' => $averageCount, 'weakCount' => $weakCount,
+            'excellentChange' => $excellentChange, 'goodChange' => $goodChange, 'averageChange' => $averageChange, 'weakChange' => $weakChange,
+            'topStudents' => $topStudents,
+        ]);
     }
 
     public function staticsStudent()
     {
-        return view('director/statics/student');
+        $PhanCongModel = new PhanCongModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $HanhKiemModel = new HanhKiemModel();
+
+        // Nhận giá trị năm học từ query string
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+
+        // Lấy danh sách năm học
+        $yearList = $PhanCongModel->getAssignedYears();
+        $yearList = array_column($yearList, 'NamHoc');
+
+        // Lấy số lượng học sinh nhập học lần đầu trong năm học được chọn
+        $currentEnrolledCount = $HocSinhLopModel->countEnrolledStudent($selectedYear);
+
+        // Lấy số lượng tổng học sinh trong năm học được chọn
+        $currentTotalCount = $HocSinhLopModel->countTotalStudent($selectedYear);
+
+        // Lấy số lượng học sinh bị cảnh báo trong năm học được chọn
+        $currentWarnedCount = $HanhKiemModel->countWarnedStudent($selectedYear);
+
+        // Xử lý chuỗi năm học để lấy năm liền trước
+        $yearArray = explode('-', $selectedYear);
+        $previousYear = ($yearArray[0] - 1) . '-' . ($yearArray[1] - 1);
+
+        // Tính toán phần trăm sự thay đổi (tăng/giảm) số lượng học sinh nhập học lần đầu so với năm trước
+        $enrolledChange = $HocSinhLopModel->countEnrolledStudentChange($selectedYear, $previousYear);
+
+        // Tính toán phần trăm sự thay đổi (tăng/giảm) số lượng học sinh so với năm trước
+        $totalChange = $HocSinhLopModel->countTotalStudentChange($selectedYear, $previousYear);
+
+        // Tính toán phần trăm sự thay đổi (tăng/giảm) số lượng học sinh cảnh báo so với năm trước
+        $warnedChange = $HanhKiemModel->countWarnedStudentChange($selectedYear, $previousYear);
+
+        // Lấy dữ liệu trả về biểu đồ
+        $enrolledStudentData = $HocSinhLopModel->getEnrolledStudentData($selectedYear);
+        $warnedStudentData = $HanhKiemModel->getWarnedStudentData($selectedYear);
+
+        log_message('info', 'Enrolled Student Data: ' . print_r($enrolledStudentData, true));
+        log_message('info', 'Warned Student Data: ' . print_r($warnedStudentData, true));
+        return view('director/statics/student', [
+            'selectedYear' => $selectedYear,
+            'previousYear' => $previousYear,
+            'yearList' => $yearList,
+            'currentEnrolledCount' => $currentEnrolledCount,
+            'currentTotalCount' => $currentTotalCount,
+            'currentWarnedCount' => $currentWarnedCount,
+            'enrolledChange' => $enrolledChange,
+            'totalChange' => $totalChange,
+            'warnedChange' => $warnedChange,
+            'enrolledStudentData' => json_encode($enrolledStudentData),  // Ensure it's encoded
+            'warnedStudentData' => json_encode($warnedStudentData),  // Ensure it's encoded
+        ]);
     }
 
     public function exportStudentList() {}
@@ -292,10 +498,6 @@ class DirectorController extends Controller
 
         // Nhận giá trị năm học và lớp học từ query string
         $selectedYear = $this->request->getVar('year') ?? '2024-2025';
-        //Nhận giá trị học kỳ sau khi chuyển từ text sang số
-        $selectedSemesterText = $this->request->getVar('semester') ?? 'Học kỳ 1';
-        $selectedSemester = $selectedSemesterText === 'Học kỳ 1' ? 1 : 2;
-
         $selectedClass = $this->request->getVar('class') ?? '10_1';
 
         // Lấy danh sách tên lớp học
@@ -305,14 +507,13 @@ class DirectorController extends Controller
         $MaLop = $LopModel->where('TenLop', $selectedClass)->first()['MaLop'];
 
         // Lấy thông tin học phí của học sinh
-        $tuitionList = $CTPTTModel->getTuitionInfo($MaLop, $selectedSemester, $selectedYear);
+        $tuitionList = $CTPTTModel->getTuitionInfo($MaLop, $selectedYear);
 
 
         return view('director/student/payment', [
             'tuitionList' => $tuitionList,
             'classList' => $classList,
             'selectedYear' => $selectedYear,
-            'selectedSemesterText' => $selectedSemesterText,
             'selectedClass' => $selectedClass,
         ]);
     }
@@ -1026,6 +1227,11 @@ class DirectorController extends Controller
         $HocKy = preg_replace('/\D/', '', $semester);
         // Lấy MaLop từ tên lớp
         $MaLop = $LopModel->where('TenLop', $className)->first()['MaLop'];
+
+        // Kiểm tra đã chọn học kỳ chưa
+        if (empty($semester)) {
+            $errors['teacher_semester'] = 'Vui lòng chọn học kỳ.';
+        }
 
         // Kiểm tra đã chọn giáo viên chưa
         if (empty($teacherInfo)) {

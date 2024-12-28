@@ -37,33 +37,46 @@
 
     // Lấy dữ liệu khi gọi các tab
     function loadChartData(tabName) {
+
+        // Chuyển dữ liệu từ PHP sang JavaScript
+        var HanhKiemKhoi10 = <?= $HanhKiemKhoi10 ?>;
+        var HanhKiemKhoi11 = <?= $HanhKiemKhoi11 ?>;
+        var HanhKiemKhoi12 = <?= $HanhKiemKhoi12 ?>;
+
+        console.log('Dữ liệu khối 10: ', HanhKiemKhoi10);
+        console.log('Dữ liệu khối 11: ', HanhKiemKhoi11);
+        console.log('Dữ liệu khối 12: ', HanhKiemKhoi12);
+
         var data = [];
         if (tabName === 'grade-10') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"
                 }],
-                ["Xuất sắc", 1000, "#01427A"],
-                ["Giỏi", 600, "#01B3EF"],
-                ["Yếu", 200, "#E14177"]
+                ["Tốt", HanhKiemKhoi10['Tốt'], "#01427A"],
+                ["Khá", HanhKiemKhoi10['Khá'], "#01B3EF"],
+                ["Trung bình", HanhKiemKhoi10['Trung bình'], "#E14177"],
+                ["Yếu", HanhKiemKhoi10['Yếu'], "#6C6C6C"]
             ];
         } else if (tabName === 'grade-11') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"
                 }],
-                ["Xuất sắc", 300, "#01427A"],
-                ["Giỏi", 900, "#01B3EF"],
-                ["Yếu", 100, "#E14177"]
+                ["Tốt", HanhKiemKhoi11['Tốt'], "#01427A"],
+                ["Khá", HanhKiemKhoi11['Khá'], "#01B3EF"],
+                ["Trung bình", HanhKiemKhoi11['Trung bình'], "#E14177"],
+                ["Yếu", HanhKiemKhoi11['Yếu'], "#6C6C6C"]
             ];
         } else if (tabName === 'grade-12') {
             data = [
                 ["Học sinh", "Số lượng", {
                     role: "style"
                 }],
-                ["Xuất sắc", 100, "#01427A"],
-                ["Giỏi", 200, "#01B3EF"],
-                ["Yếu", 800, "#E14177"]
+                ["Tốt", HanhKiemKhoi12['Tốt'], "#01427A"],
+                ["Khá", HanhKiemKhoi12['Khá'], "#01B3EF"],
+                ["Trung bình", HanhKiemKhoi12['Trung bình'], "#E14177"],
+                ["Yếu", HanhKiemKhoi12['Yếu'], "#6C6C6C"]
             ];
         }
 

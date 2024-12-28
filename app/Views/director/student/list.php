@@ -11,7 +11,7 @@
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
             <div class="studentlist-tool">
-                <form method="GET" action="/sms/public/director/student/list">
+                <form method="GET" action="/sms/public/director/student/list" id="form">
                     <div class="tool-search">
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
 
@@ -37,7 +37,7 @@
                             'selected_text' => 'Chọn trạng thái',
                             'value' => $selectedStatus ?? ''
                         ]) ?>
-                        <?= view('components/view_button') ?>
+                        <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>
                 <div class="tool-add">
@@ -146,3 +146,69 @@
         height: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và các dropdown
+        const form = document.getElementById('form'); // Đảm bảo form có id="form"
+
+        // Lấy các dropdown
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const classDropdown = document.querySelector('[data-dropdown-id="class-dropdown"]');
+        const statusDropdown = document.querySelector('[data-dropdown-id="status-dropdown"]');
+
+        // Xử lý sự kiện click cho yearDropdown
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option');
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+
+        // Xử lý sự kiện click cho classDropdown
+        if (classDropdown) {
+            const classOptions = classDropdown.querySelectorAll('.option');
+            classOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    classDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    classDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+
+        // Xử lý sự kiện click cho statusDropdown
+        if (statusDropdown) {
+            const statusOptions = statusDropdown.querySelectorAll('.option');
+            statusOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    statusDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    statusDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>

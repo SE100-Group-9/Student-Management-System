@@ -10,43 +10,58 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Hạnh kiểm
-            <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
-            </div>
-            <div class="conduct-btns">
-                <button class="conduct-btn" onclick="loadChartData('grade-10')">Khối 10</button>
-                <button class="conduct-btn" onclick="loadChartData('grade-11')">Khối 11</button>
-                <button class="conduct-btn" onclick="loadChartData('grade-12')">Khối 12</button>
-            </div>
-            <div class="body-below">
-                <div id="excellent">
-                    <div class="conduct-chart">
-                        <?= view('components/column_chart') ?>
-                    </div>
+            <form method="GET" action="/sms/public/director/statics/conduct" id="form">
+                <div class=" tool-search">
+                <div class="dropdown-edit">
+                    <?= view('components/dropdown', [
+                        'options' => $yearList ?? [],
+                        'dropdown_id' => 'year-dropdown',
+                        'name' => 'year',
+                        'selected_text' => 'Chọn năm học',
+                        'value' => $selectedYear ?? ''
+                    ]) ?>
                 </div>
-                <div class="conduct-table">
-                    Danh sách các học sinh vi phạm nhiều nhất
-                    <?= view('components/tables/directorStaticsConduct') ?>
+                <div class="dropdown-edit">
+                    <?= view('components/dropdown', [
+                        'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                        'dropdown_id' => 'semester-dropdown',
+                        'name' => 'semester',
+                        'selected_text' => 'Chọn học kỳ',
+                        'value' => $selectedSemester ?? ''
+                    ]) ?>
                 </div>
-            </div>
-            <div class="body-below">
-                <div id="good" style="display:none">
-                    <div class="conduct-chart">
-                        <?= view('components/column_chart') ?>
-                    </div>
-                </div>
-            </div>
+                <button type="submit" style="display: none;">Submit</button>
+        </div>
+        </form>
 
-            <div class="body-below">
-                <div id="bad" style="display:none">
-                    <div class="conduct-chart">
-                        <?= view('components/column_chart') ?>
-                    </div>
+        <div style="display: none;">
+            <?= view('components/dropdown', []) ?>
+        </div>
+
+        <div class="conduct-btns">
+            <button class="conduct-btn" onclick="loadChartData('grade-10')">Khối 10</button>
+            <button class="conduct-btn" onclick="loadChartData('grade-11')">Khối 11</button>
+            <button class="conduct-btn" onclick="loadChartData('grade-12')">Khối 12</button>
+        </div>
+        <div class="body-below">
+            <div id="excellent">
+                <div class="conduct-chart">
+                    <?= view('components/column_chart', [
+                        'HanhKiemKhoi10' => $HanhKiemKhoi10,
+                        'HanhKiemKhoi11' => $HanhKiemKhoi11,
+                        'HanhKiemKhoi12' => $HanhKiemKhoi12
+                    ]) ?>
                 </div>
             </div>
-
+            <div class="conduct-table">
+                Danh sách các học sinh có điểm hạnh kiểm thấp nhất
+                <?= view('components/tables/directorStaticsConduct', [
+                    'worstStudents' => $worstStudents
+                ]) ?>
+            </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -175,19 +190,68 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
-        flex: 1; 
+        flex: 1;
         align-self: stretch;
         background: #FFF;
-        overflow: auto; 
-        max-height: 500px; 
+        overflow: auto;
+        max-height: 500px;
     }
 
     .dropdown-edit {
         width: 180px;
     }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và các dropdown
+        const form = document.getElementById('form');
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]');
+
+        // Bắt sự kiện click cho dropdown "year"
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option');
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+
+        // Bắt sự kiện click cho dropdown "class"
+        if (semesterDropdown) {
+            const semesterOptions = semesterDropdown.querySelectorAll('.option');
+            semesterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    semesterDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    semesterDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+    });
+
     function openConduct(ConductName) {
         var x = document.getElementsByClassName("Conduct");
         for (var i = 0; i < x.length; i++) {

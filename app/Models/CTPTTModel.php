@@ -7,7 +7,7 @@ class CTPTTModel extends Model
 {
     protected $table = 'ctptt';
     protected $primaryKey = 'MaCTPTT';
-    protected $allowedFields = ['MaHS','HocKy', 'NamHoc', 'TongHocPhi', 'DaThanhToan', 'TrangThai', 'NgayCapNhat'];
+    protected $allowedFields = ['MaHS', 'NamHoc', 'TongHocPhi', 'DaThanhToan', 'TrangThai', 'NgayCapNhat'];
 
     // Thêm thông tin học phí cho học sinh khi xếp lớp
     public function addTuition($MaHS, $NamHoc, $MucHocPhi)
@@ -24,16 +24,16 @@ class CTPTTModel extends Model
     }
 
     // Xem thông tin học phí của học sinh
-    public function getTuitionInfo($MaLop, $HocKy, $NamHoc)
+    public function getTuitionInfo($MaLop, $NamHoc)
     {
         $SQL = "SELECT ctptt.MaHS, taikhoan.HoTen, taikhoan.Email, lop.TenLop, ctptt.TrangThai, (ctptt.TongHocPhi - ctptt.DaThanhToan) AS TienNo
                 FROM ctptt
-                JOIN hocsinh ON ctptt.MaHS = hocsinh.MaHS
+                JOIN hocsinh ON ctptt.MaHS = hocsinh.MaHS 
                 JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
-                JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS
-                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
-                WHERE hocsinh_lop.MaLop = ? AND ctptt.HocKy = ? AND ctptt.NamHoc = ?";
-        return $this->db->query($SQL, [$MaLop, $HocKy, $NamHoc])->getResultArray();
+                JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS AND hocsinh_lop.NamHoc = ?
+                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop 
+                WHERE hocsinh_lop.MaLop = ? AND ctptt.NamHoc = ?";
+        return $this->db->query($SQL, [$NamHoc, $MaLop, $NamHoc])->getResultArray();
 
     }
 }

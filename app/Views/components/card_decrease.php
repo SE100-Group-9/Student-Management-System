@@ -70,7 +70,7 @@ $comparison = $comparison ?? "so với năm 2023"; // giá trị mặc định
     .decrease-info p {
         color: #000;
         font-family: Inter;
-        font-size: 20px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 400;
         line-height: 20px;

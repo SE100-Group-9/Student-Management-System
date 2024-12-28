@@ -22,4 +22,12 @@ class TaiKhoanModel extends Model
         }
         return null;
     }
+
+    // Cập nhật thông tin tài khoản dựa vào MaTK
+    public function updateAccount($MaTK, $data)
+    {
+        $this->set($data);
+        $this->where('MaTK', $MaTK);
+        return $this->update();
+    }
 }

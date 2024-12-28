@@ -66,4 +66,53 @@ class PhanCongModel extends Model
         ];
         $this->insert($data);
     }
+
+    // Lấy danh sách năm học được phân công giảng dạy
+    public function getAssignedYears()
+    {
+        $SQL = "SELECT DISTINCT NamHoc FROM phancong
+                ORDER BY NamHoc DESC";
+        return $this->db->query($SQL)->getResultArray();
+    }
+
+    // Lấy danh sách năm học được phân công giảng dạy dựa vào mã giáo viên
+    public function getAssignedYearsByTeacher($MaGV)
+    {
+        $SQL = "SELECT DISTINCT NamHoc FROM phancong
+                WHERE MaGV = ?
+                ORDER BY NamHoc DESC";
+        return $this->db->query($SQL, [$MaGV])->getResultArray();
+    }
+
+    // Lấy danh sách lớp học được phân công giảng dạy dựa vào mã giáo viên và năm học
+    public function getAssignedClasses($MaGV, $NamHoc)
+    {
+        $SQL = "SELECT DISTINCT lop.TenLop
+                FROM phancong
+                JOIN lop ON phancong.MaLop = lop.MaLop
+                WHERE phancong.MaGV = ? AND phancong.NamHoc = ?
+                ORDER BY lop.TenLop";
+        return $this->db->query($SQL, [$MaGV, $NamHoc])->getResultArray();
+    }
+
+    // Lấy danh sách học kỳ mà giáo viên đã được phân công dạy trong năm học
+    public function getAssignedSemesters($MaGV, $NamHoc)
+    {
+        $SQL = "SELECT DISTINCT HocKy
+                FROM phancong
+                WHERE MaGV = ? AND NamHoc = ?
+                ORDER BY HocKy";
+        return $this->db->query($SQL, [$MaGV, $NamHoc])->getResultArray();
+    }
+
+    // Lấy danh sách lớp học mà giáo viên đã được phân công dạy trong năm học và học kỳ
+    public function getAssignedClassesBySemester($MaGV, $NamHoc, $HocKy)
+    {
+        $SQL = "SELECT DISTINCT lop.TenLop
+                FROM phancong
+                JOIN lop ON phancong.MaLop = lop.MaLop
+                WHERE phancong.MaGV = ? AND phancong.NamHoc = ? AND phancong.HocKy = ?
+                ORDER BY lop.TenLop";
+        return $this->db->query($SQL, [$MaGV, $NamHoc, $HocKy])->getResultArray();
+    }
 }

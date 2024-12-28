@@ -11,36 +11,78 @@
         <div class="body-right">
             Trung tâm / Thống kê / Học sinh
             <!-- Dropdown -->
-            <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
-            </div>
+            <form method="GET" action="/sms/public/director/statics/student" id="form">
+                <div class="tool-search">
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                    </div>
+                    <button type="submit" style="display: none;">Submit</button>
+                </div>
+            </form>
+
             <!-- Cards -->
             <div class="student-cards">
-                <?= view('components/card_increase', [
-                    'title' => 'Số học sinh nhập học',
-                    'count' => '5000',
-                    'percentage' => '100.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
-                <?= view('components/card_increase', [
-                    'title' => 'Tổng số học sinh',
-                    'count' => '20.000',
-                    'percentage' => '50.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Số học sinh bị cảnh báo',
-                    'count' => '2000',
-                    'percentage' => '50.00%',
-                    'comparison' => 'so với năm 2023'
-                ]) ?>
+                <?php if ($enrolledChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Số học sinh nhập học',
+                        'count' => $currentEnrolledCount,
+                        'percentage' => number_format(abs($enrolledChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Số học sinh nhập học',
+                        'count' => $currentEnrolledCount,
+                        'percentage' => number_format(abs($enrolledChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php endif; ?>
+                <?php if ($totalChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Tổng số học sinh',
+                        'count' => $currentTotalCount,
+                        'percentage' => number_format(abs($totalChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Tổng số học sinh',
+                        'count' => $currentTotalCount,
+                        'percentage' => number_format(abs($totalChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php endif; ?>
+                <?php if ($warnedChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Số học sinh bị cảnh báo',
+                        'count' => $currentWarnedCount,
+                        'percentage' => number_format(abs($warnedChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Số học sinh bị cảnh báo',
+                        'count' => $currentWarnedCount,
+                        'percentage' => number_format(abs($warnedChange), 2) . '%',
+                        'comparison' => 'so với năm ' . $previousYear
+                    ]) ?>
+                <?php endif; ?>
             </div>
             <!-- Chart -->
             <div class="student-chart">
                 <div class="chart-text">
-                    Dữ liệu biểu diễn sự thay đổi của học sinh theo từng năm
+                    Biểu đồ biểu diễn sự thay đổi của học sinh theo từng năm
                 </div>
-                <?= view('components/curve_chart') ?>
+                <?= view('components/curve_chart', [
+                    'enrolledStudentData' => $enrolledStudentData,
+                    'warnedStudentData' => $warnedStudentData,
+                ]) ?>
             </div>
         </div>
     </div>
@@ -139,4 +181,36 @@
     .dropdown-edit {
         width: 180px;
     }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form và dropdown "year"
+        const form = document.getElementById('form'); // Đảm bảo form có id="form"
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+
+        // Kiểm tra nếu dropdown year tồn tại
+        if (yearDropdown) {
+            const yearOptions = yearDropdown.querySelectorAll('.option'); // Lấy tất cả các option trong dropdown
+            yearOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Cập nhật giá trị của input ẩn
+                    const selectedValue = this.getAttribute('data-value');
+                    yearDropdown.querySelector('input').value = selectedValue;
+
+                    // Cập nhật text hiển thị trong dropdown
+                    yearDropdown.querySelector('.selected-text').textContent = this.textContent;
+
+                    // Tự động submit form khi chọn xong
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>
