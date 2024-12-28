@@ -21,6 +21,7 @@ use App\Models\DiemModel;
 use App\Models\HanhKiemModel;
 use App\Models\CTPTTModel;
 use App\Models\ThamSoModel;
+use App\Models\HoaDonModel;
 use PhpCsFixer\Tokenizer\CT;
 
 class DirectorController extends Controller
@@ -959,6 +960,12 @@ class DirectorController extends Controller
 
             // Xác nhận transaction
             $db->transCommit();
+
+            // Khi học sinh được xếp lớp, hóa đơn sẽ được thêm vào db
+            $Hoadon = new HoaDonModel();
+            $result = $Hoadon->addInvoice($MaHS, $year);
+            // chỗ này thêm lỗi nè 
+
             return redirect()->back()->with('success', 'Thêm học sinh vào lớp học thành công!');
         } catch (\Exception $e) {
             // Nếu có lỗi, rollback transaction

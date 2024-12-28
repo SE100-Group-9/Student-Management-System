@@ -93,13 +93,17 @@ $routes->get('student/changepw', 'StudentController::changepw');
 $routes->get('cashier/profile', 'CashierController::profile');
 $routes->post('cashier/profile', 'CashierController::updateProfile');
 
+$routes->get('cashier/invoice/list', 'CashierController::listInvoice');
 $routes->get('cashier/invoice/add', 'CashierController::addInvoice');
+$routes->get('cashier/payment/add/(:num)', 'CashierController::addPaymentForm/$1');
 $routes->post('cashier/payment/add/(:num)', 'CashierController::addPayment/$1');
 $routes->get('cashier/payment/list/(:num)', 'CashierController::listPayment/$1');
+$routes->get('cashier/payment/delete/(:num)', 'CashierController::deletePayment/$1');
+
 
 $routes->get('cashier/invoice/add', 'CashierController::invoice');
 $routes->post('cashier/invoice/add', 'CashierController::addInvoice');
-$routes->get('cashier/invoice/list', 'CashierController::listInvoice');
+
 
 $routes->get('cashier/changepw', 'CashierController::changepw');
 $routes->post('cashier/changepw', 'CashierController::updatePassword');

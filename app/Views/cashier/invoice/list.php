@@ -1,145 +1,147 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="payment-list">
-    <?= view('components/heading'); ?>
+<div class="invoice-lists">
+    <div class="lists-heading">
+        <?= view('components/heading'); ?>
+    </div>
     <div class="body">
+    <div class="body-left">
         <?= view('components/sidebar_cashier'); ?>
-        <div class="list-container">
-            <h1>Học phí / Quản lý học phí / Danh sách</h1>
-            <div class="list-tool">
-                <div class="list-filter">
-                    <?= view('components/searchbar'); ?>
+        </div>
+        <div class="body-right">
+        Học phí / Quản lý học phí / Danh sách hóa đơn
+        <div class="invoicelist-tool">
+            <form method="GET" action="/sms/public/cashier/invoice/list">
+                <div class="tool-search">
+                    <?= view('components/searchbar', ['searchTerm' => $searchTerm]); ?>
                     <?= view('components/dropdown', [
-                        'options' => ['Đã thanh toán', 'Thanh toán 1 phần', 'Chưa thanh toán'], 
-                        'dropdown_id' => 'pay-dropdown',
-                        'selected_text' => 'Trạng thái',
+                        'options' => ['Chọn trạng thái', 'Đã thanh toán', 'Thanh toán 1 phần', 'Chưa thanh toán'], 
+                        'dropdown_id' => 'status-dropdown',
+                        'name' => 'status',
+                        'selected_text' => 'Chọn trạng thái',
+                        'value' => $selectedStatus ?? ''
                         ]) ?>
                     <?= view('components/dropdown', [
-                        'options' => ['2024-2025','2023-2024'], 
+                        'options' => $yearList ?? [], 
                         'dropdown_id' => 'year-dropdown',
-                        'selected_text' => 'Năm học',
+                        'name' => 'year',
+                        'selected_text' => 'Chọn năm học',
+                        'value' => $selectedYear ?? ''
                         ]) ?>
-                    <?= view('components/dropdown', [
-                        'options' => ['Học kỳ I', 'Học kỳ II'], 
-                        'dropdown_id' => 'semester-dropdown',
-                        'selected_text' => 'Học kỳ',
-                        ]) ?>
+                     <?= view('components/view_button') ?>
                 </div>
-                <div class="list-tool-2">                   
+
+            </form>
+            <div style="display: none">
+                    <?= view('components/dropdown', []) ?>
+                </div>
+                <div class="tool-add">        
                     <?= view('components/excel_export'); ?>
                     <?= view('components/upload'); ?>                    
-                </div>
-                <button id="add-bill-btn" class="btn btn-primary">Thêm hóa đơn</button>
-                <script>
-                    document.getElementById('add-bill-btn').addEventListener('click', function () {
-                        window.location.href = "<?= base_url('cashier/invoice/add') ?>";;
-                    });
-                </script>
+                </div>     
+        </div>
+            <div class="tabless">
+                <?= view('components/tables/cashierInvoiceList', ['invoiceList' => $invoiceList]) ?>
             </div>
-            <?= view('components/tables/cashierPaymentList') ?>
-            <?= view('components/pagination'); ?>
-            
+            <div style="max-width: 200px; align-items: flex-end">
+                <?= view('components/pagination'); ?>
+            </div>
         </div>
     </div>
 </div>
 
 
 <style>
-   *,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.payment-list {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    
-}
-
-.body {
-    display: flex; 
-    flex-direction: row; 
-    background: #F0F2F5;
-    height: 100%;
-}
-
-.heading {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.list-container {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    align-self: stretch;
-}
-
-.list-container h1 {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
-.list-container table {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.list-tool {
-    display: flex;
-    padding: 10px;
-    align-items: flex-start;
-    align-self: stretch;
-    justify-content: space-between;
-    border-radius: 10px;
-    background: var(--White, #FFF);
-}
-
-.list-filter {
-    display: flex;   
-    align-items:flex-start;
-    gap: 10px;
-}
-
-.list-tool-2 {
-    display: flex;
-    align-items: center;
-    gap: 10px;gap: 10px;
-}
-
-#add-bill-btn {
-    display: inline-flex;
-        align-items: center;
-        height: 40px;
-        padding: 10px;
-        gap: 10px;
-        border-radius: 10px;
-        border: 1px solid rgba(0, 60, 60, 0.20);
-        background-color: #0056b3;
-        color: #FFF;
-        font-family: Inter, sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: normal;
-        cursor: pointer;
-        margin-left: 250px
-}
-#add-bill-btn:hover {
-        background-color: #004080;
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
+    .hidden {
+        display: none;
+    }
+
+    .invoice-lists {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--White, #FFF);
+    }
+
+    .lists-heading {
+        width: 100%;
+        height: 60px;
+        position: fixed;
+    }
+
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        margin-top: 60px;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
+
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        overflow-y: auto;
+    }
+
+    .invoicelist-tool {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+        border-radius: 10px;
+        background: #FFF;
+    }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tool-add {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tabless {
+        width: 100%;
+        height: 100%;
+    }
 </style>
+
+
+<script>
+                    document.getElementById('add-bill-btn').addEventListener('click', function () {
+                        window.location.href = "<?= base_url('cashier/invoice/add') ?>";;
+                    });
+                </script>

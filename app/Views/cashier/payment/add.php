@@ -9,78 +9,45 @@
             <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
-            Học phí / Quản lý học phí / Danh sách hóa đơn
-            <h1>Thêm hóa đơn:</h1>
-            <form method="POST" action="">
-                <h2>Thông tin hóa đơn:</h2>
+            Học phí / Quản lý học phí / Danh sách hóa đơn / Thêm thanh toán
+            <h1>Thêm thanh toán:</h1>
+            <form method="POST" action="/sms/public/cashier/payment/add/<?= $MaHD ?>">
+                <h2>Thông tin phiếu thanh toán:</h2>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
-                        Mã học sinh 
+                        Mã hóa đơn
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_id',
+                            'name' => 'MaHD',
                             'readonly' => true,
-                            'value' => '01'
+                            'value' => $MaHD
                         ]) ?>
                     </div>
                     <div class="payment-add-field">
-                        Tên học sinh
+                        Mã học sinh
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_name',
+                            'name' => 'MaHS',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $MaHS
                         ]) ?>
                     </div>
                 </div>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
-<<<<<<< HEAD
-=======
-                        Lớp 
+                        Mã Thu ngân 
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_class',
+                            'name' => 'MaTN',
                             'readonly' => true,
-                            'value' => '11A1'
+                            'value' => $MaTN
                         ]) ?>
                     </div>
                     <div class="payment-add-field">
->>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
-                        Năm học
+                        Số tiển đóng
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_year',
-<<<<<<< HEAD
-                            'required' => true,
-                            'readonly' => false,
-                            'value' => '',
-                            'placeholder' => 'Nhập số tiền'
-=======
-                            'readonly' => true,
-                            'value' => '2024-2025'
->>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="payment-add-fields">
-                    <div class="payment-add-field">
-<<<<<<< HEAD
-=======
-                        Tổng tiền
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_total',
-                            'readonly' => true,
-                            'value' => '1,000,000'
-                        ]) ?>
-                    </div>
-                    <div class="payment-add-field">
->>>>>>> c724401312baab2245d53a3b3d538d66e266a29a
-                        Số tiền đã nhận
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_paid',
+                            'name' => 'paid',
                             'required' => true,
                             'readonly' => false,
                             'value' => '',
@@ -88,8 +55,23 @@
                         ]) ?>
                     </div>
                 </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="payment-add-btns">
-                    <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
+                    <a href="/sms/public/cashier/invoice/list" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>

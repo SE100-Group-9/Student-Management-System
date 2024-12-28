@@ -9,13 +9,13 @@
             <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
-            Học phí / Quản lý học phí / Danh sách
-            <h1>Thêm hóa đơn:</h1>
-            <form method="POST" action="/sms/public/cashier/invoice/add">
+            Học phí / Quản lý học phí / Danh sách hóa đơn 
+            <h1>Thêm thanh toán:</h1>
+            <form method="POST" action="">
                 <h2>Thông tin hóa đơn:</h2>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
-                        Mã học sinh 
+                        Mã hóa đơn
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_id',
