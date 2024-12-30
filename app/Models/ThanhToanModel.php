@@ -12,9 +12,19 @@ class ThanhToanModel extends Model
     // Lấy tất cả danh sách hóa đơn
     public function getAllPaymentsByInvoiceId($invoiceId)
     {
-         // Lấy tất cả danh sách hóa đơn với thông tin chi tiết
-        $SQL = "SELECT * FROM phieuthanhtoan WHERE MaHD = ?";
-       // In kết quả trả về để kiểm tra
+        $SQL = "
+        SELECT 
+            ptt.*, 
+            tk.HoTen 
+        FROM 
+            phieuthanhtoan ptt
+        JOIN 
+            thungan tg ON ptt.MaTN = tg.MaTN
+        JOIN 
+            taikhoan tk ON tg.MaTK = tk.MaTK
+        WHERE 
+            ptt.MaHD = ?
+    ";
         $result = $this->db->query($SQL,[$invoiceId])->getResultArray();
         return $result;
     }

@@ -11,7 +11,7 @@
         <div class="body-right">
             Học phí / Quản lý học phí / Danh sách hóa đơn / Thêm thanh toán
             <h1>Thêm thanh toán:</h1>
-            <form method="POST" action="/sms/public/cashier/payment/add/<?= $MaHD ?>">
+            <form method="POST" action="/sms/public/cashier/payment/add/<?= $infor['MaHD'] ?>">
                 <h2>Thông tin phiếu thanh toán:</h2>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
@@ -20,7 +20,7 @@
                             'type' => 'text',
                             'name' => 'MaHD',
                             'readonly' => true,
-                            'value' => $MaHD
+                            'value' => $infor['MaHD']
                         ]) ?>
                     </div>
                     <div class="payment-add-field">
@@ -29,10 +29,30 @@
                             'type' => 'text',
                             'name' => 'MaHS',
                             'readonly' => true,
-                            'value' => $MaHS
+                            'value' => $infor['MaHS']
                         ]) ?>
                     </div>
                 </div>
+                    <div class="payment-add-fields">
+                    <div class="payment-add-field">
+                        Tên học sinh
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'TenHS',
+                            'readonly' => true,
+                            'value' => $infor['HoTenHocSinh']
+                        ]) ?>
+                    </div>
+                    <div class="payment-add-field">
+                        Tên lớp
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'TenLop',
+                            'readonly' => true,
+                            'value' => $infor['TenLop']
+                        ]) ?>
+                    </div>
+                    </div>
                 <div class="payment-add-fields">
                     <div class="payment-add-field">
                         Mã Thu ngân 
@@ -40,9 +60,19 @@
                             'type' => 'text',
                             'name' => 'MaTN',
                             'readonly' => true,
-                            'value' => $MaTN
+                            'value' => $infor['MaTN']
                         ]) ?>
                     </div>
+                    <div class="payment-add-field">
+                        Tên Thu ngân 
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'TenTN',
+                            'readonly' => true,
+                            'value' => $infor['HoTenThuNgan']
+                        ]) ?>
+                    </div>
+                </div>
                     <div class="payment-add-field">
                         Số tiển đóng
                         <?= view('components/input', [
@@ -54,7 +84,6 @@
                             'placeholder' => 'Nhập số tiền'
                         ]) ?>
                     </div>
-                </div>
                 <?php if (session()->getFlashdata('success')): ?>
                     <div class="alert alert-success">
                         <?= session()->getFlashdata('success') ?>

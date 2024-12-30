@@ -1870,6 +1870,7 @@ class DirectorController extends Controller
         }
         return view('director/employee/cashier/update', ['cashier' => $ThuNgan]);
     }
+    
 
     public function updateEmployeeCashier($MaTN)
     {

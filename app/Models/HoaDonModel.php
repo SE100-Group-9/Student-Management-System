@@ -38,34 +38,83 @@ class HoaDonModel extends Model
     // Lấy tất cả danh sách hóa đơn
     public function getAllInvoices($selectedStatus, $selectedYear, $searchStudent)
     {
-        // Tạo điều kiện SQL động
-    $SQL = "SELECT * FROM hoadon WHERE 1=1"; // Luôn đúng để nối điều kiện
+                // Tạo câu lệnh SQL với JOIN để lấy thêm thông tin từ các bảng liên quan
+            $SQL = "SELECT 
+            hoadon.MaHD, 
+            hoadon.MaHS, 
+            hoadon.NamHoc, 
+            hoadon.TongHocPhi, 
+            hoadon.DaThanhToan, 
+            hoadon.ConNo, 
+            hoadon.TrangThai, 
+            taikhoan.HoTen, 
+            lop.TenLop
+        FROM 
+            hoadon
+        JOIN hocsinh ON hoadon.MaHS = hocsinh.MaHS
+        JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+        JOIN hocsinh_lop ON hoadon.MaHS = hocsinh_lop.MaHS AND hoadon.NamHoc = hocsinh_lop.NamHoc
+        JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
+        WHERE 1=1"; // Luôn đúng để nối điều kiện động
 
-    // Mảng chứa tham số truyền vào truy vấn
-    $params = [];
+        // Mảng chứa tham số truyền vào
+        $params = [];
 
-    // Kiểm tra trạng thái
-    if ($selectedStatus !== 'Chọn trạng thái') {
-        $SQL .= " AND TrangThai = ?";
+        // Kiểm tra trạng thái
+        if ($selectedStatus !== 'Chọn trạng thái') {
+        $SQL .= " AND hoadon.TrangThai = ?";
         $params[] = $selectedStatus;
-    }
+        }
 
-    // Kiểm tra năm học
-    if ($selectedYear !== 'Chọn năm học') {
-        $SQL .= " AND NamHoc = ?";
+        // Kiểm tra năm học
+        if ($selectedYear !== 'Chọn năm học') {
+        $SQL .= " AND hoadon.NamHoc = ?";
         $params[] = $selectedYear;
-    }
+        }
 
-    // Tìm kiếm học sinh
-    if (!empty($searchStudent)) {
-        $SQL .= " AND MaHS LIKE ?";
+        // Tìm kiếm học sinh (theo Mã học sinh hoặc Họ tên)
+        if (!empty($searchStudent)) {
+        $SQL .= " AND (hoadon.MaHS LIKE ? OR taikhoan.HoTen LIKE ?)";
         $params[] = '%' . $searchStudent . '%';
+        $params[] = '%' . $searchStudent . '%';
+        }
+
+        // Loại bỏ kết quả trùng lặp bằng cách nhóm theo MaHD
+        $SQL .= " GROUP BY hoadon.MaHD";
+
+
+        // Thực thi truy vấn với các tham số
+        $result = $this->db->query($SQL, $params)->getResultArray();
+
+        return $result; // Trả về danh sách hóa đơn với thông tin mở rộng
     }
 
-    // Thực thi truy vấn với các tham số
-    $result = $this->db->query($SQL, $params)->getResultArray();
+    public function getInvoiceByInvoiceId($invoiceId, $cashierId) {
+            $SQL = "SELECT 
+            hoadon.MaHD, 
+            hoadon.MaHS, 
+            hoadon.NamHoc, 
+            hoadon.TongHocPhi, 
+            hoadon.DaThanhToan, 
+            hoadon.ConNo, 
+            hoadon.TrangThai, 
+            thungan.MaTN,
+            hs_taikhoan.HoTen AS HoTenHocSinh, 
+            lop.TenLop, 
+            tn_taikhoan.HoTen AS HoTenThuNgan
+        FROM 
+            hoadon
+        JOIN hocsinh ON hoadon.MaHS = hocsinh.MaHS
+        JOIN taikhoan AS hs_taikhoan ON hocsinh.MaTK = hs_taikhoan.MaTK
+        JOIN hocsinh_lop ON hoadon.MaHS = hocsinh_lop.MaHS AND hoadon.NamHoc = hocsinh_lop.NamHoc
+        JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
+        Join thungan on thungan.MaTN =  ?
+        JOIN taikhoan AS tn_taikhoan ON tn_taikhoan.MaTK = thungan.MaTK
+        WHERE 
+            hoadon.MaHD = ?";
+        $query = $this->db->query($SQL, [$cashierId, $invoiceId]); 
+        return $query->getRowArray();
 
-    return $result; // Trả về danh sách hóa đơn
     }
 
     public function getInvoiceByPaymentId($paymentId){
