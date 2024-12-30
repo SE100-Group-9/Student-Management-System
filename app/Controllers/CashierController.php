@@ -115,12 +115,7 @@ class CashierController extends Controller
 
     public function addPaymentForm($invoiceId)
     {
-        // trả về mã HS
-        $HoaDonModel = new HoaDonModel();
-        $HoaDon = $HoaDonModel->select('MaHS')   
-                ->where('MaHD', $invoiceId)             
-                ->first();
-        $MaHS = $HoaDon['MaHS'];
+
         // trả về mã TN
         $MaTK = session('MaTK');
         $ThuNganModel = new ThuNganModel();
@@ -129,12 +124,12 @@ class CashierController extends Controller
             ->where('thungan.MaTK', $MaTK)
             ->first();
         $MaTN = $ThuNgan['MaTN'];
-
+        // trả về mã HS
+        $HoaDonModel = new HoaDonModel();
+        $infor = $HoaDonModel->getInvoiceByInvoiceId($invoiceId, $MaTN);
         
         return view('cashier/payment/add', [
-            'MaHD' => $invoiceId,
-            'MaHS' =>  $MaHS,
-            'MaTN' => $MaTN
+            'infor' => $infor,
         ]); 
         
     }

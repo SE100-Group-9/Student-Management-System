@@ -100,7 +100,7 @@
                 <?php endif; ?>
 
                 <div class="cashieradd-btns">
-                    <a style="text-decoration: none" href="/sms/public/cashier/payment/list">
+                    <a style="text-decoration: none" href="/sms/public/cashier/invoice/list">
                         <?= view('components/exit_button') ?>
                     </a href="/sms/public/cashier/profile">
                     <?= view('components/save_button') ?>

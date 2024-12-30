@@ -237,12 +237,8 @@ class DirectorController extends Controller
             'selectedYear' => $selectedYear,
             'previousYear' => $previousYear,
             'yearList' => $yearList,
-            'currentEnrolledCount' => $currentEnrolledCount,
-            'currentTotalCount' => $currentTotalCount,
-            'currentWarnedCount' => $currentWarnedCount,
-            'enrolledChange' => $enrolledChange,
-            'totalChange' => $totalChange,
-            'warnedChange' => $warnedChange,
+            'currentEnrolledCount' => $currentEnrolledCount, 'currentTotalCount' => $currentTotalCount, 'currentWarnedCount' => $currentWarnedCount,
+            'enrolledChange' => $enrolledChange, 'totalChange' => $totalChange, 'warnedChange' => $warnedChange,
             'enrolledStudentData' => json_encode($enrolledStudentData),  // Ensure it's encoded
             'warnedStudentData' => json_encode($warnedStudentData),  // Ensure it's encoded
         ]);
@@ -1109,7 +1105,7 @@ class DirectorController extends Controller
         $ThamSoModel = new ThamSoModel();
         $PhanCongModel = new PhanCongModel();
         $HanhKiemModel = new HanhKiemModel();
-        $CTPTTModel = new CTPTTModel();
+        $HoaDonModel = new HoaDonModel();
 
         //Lấy TenLop, NamHoc, MaHS từ form
         $className = $this->request->getPost('student_classname');
@@ -1152,7 +1148,7 @@ class DirectorController extends Controller
 
             // Thêm thông tin học phí cho học sinh
             $tuitionFee = $ThamSoModel->getGiaTriThamSo('MucHocPhiNamHoc');
-            $CTPTTModel->addTuition($MaHS, $year, $tuitionFee);
+            $HoaDonModel->addInvoice($MaHS, $year, $tuitionFee);
 
             // Kiểm tra nếu tất cả thành công
             if ($db->transStatus() === FALSE) {
@@ -1870,6 +1866,7 @@ class DirectorController extends Controller
         }
         return view('director/employee/cashier/update', ['cashier' => $ThuNgan]);
     }
+    
 
     public function updateEmployeeCashier($MaTN)
     {

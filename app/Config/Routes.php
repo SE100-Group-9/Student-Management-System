@@ -132,19 +132,25 @@ $routes->get('logout', 'LoginController::logout');
 // Teacher - Danh sách học sinh
 $routes->get('teacher/student/list', 'TeacherController::studentList');
 
+// Teacher - Thống kê học lực
 $routes->get('teacher/statics/grade', 'TeacherController::statics');
 
 // Teacher - Đánh giá kết quả học tập
 $routes->get('teacher/class/rate', 'TeacherController::classRate');
-$routes->get('teacher/class/rate/getHocKyByYear/(:segment)', 'TeacherController::getHocKyByYear/$1');
-$routes->get('teacher/class/rate/getLopHocByHocKy/(:segment)/(:segment)', 'TeacherController::getLopHocByHocKy/$1/$2');
+$routes->post('teacher/class/rate', 'TeacherController::addRate');
 
+// Teacher Chưa code frontend
 $routes->get('teacher/class/rating', 'TeacherController::classRating');
+$routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
+
+// Teacher - Báo cáo học lực lớp
 $routes->get('teacher/class/record/list', 'TeacherController::recordList');
 $routes->get('teacher/class/record/detail', 'TeacherController::recordDetail');
+
+// Teacher - Nhập điểm
 $routes->get('teacher/class/enter/list', 'TeacherController::enterList');
 $routes->get('teacher/class/enter/next', 'TeacherController::enterNext');
-$routes->get('teacher/class/enter/student', 'TeacherController::enterStudent');
+
 
 // Teacher - Thanh Header
 $routes->get('teacher/profile', 'TeacherController::profile');

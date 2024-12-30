@@ -6,6 +6,7 @@
                 <th>Mã PTT</th>
                 <th>Mã hóa đơn</th>
                 <th>Mã Thu Ngân</th>
+                <th>Họ tên</th>
                 <th>Đã thanh toán</th>
                 <th>Ngày thanh toán</th>         
                 <th></th>
@@ -17,6 +18,7 @@
                     <td><?= $payment['MaPTT'] ?></td>
                     <td><?= $payment['MaHD'] ?></td>
                     <td><?= $payment['MaTN'] ?></td>
+                    <td><?= $payment['HoTen'] ?></td>
                     <td><?= $payment['DaThanhToan'] ?></td>
                     <td><?= $payment['NgayThanhToan']?></td>
                     <td>

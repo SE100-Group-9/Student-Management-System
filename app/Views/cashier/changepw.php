@@ -78,7 +78,7 @@
                 <?php endif; ?>
                 </div>
                 <div class="changepw-btns">
-                    <a href="/sms/public/cashier/payment/list" style="text-decoration: none";>
+                    <a href="/sms/public/cashier/invoice/list" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>

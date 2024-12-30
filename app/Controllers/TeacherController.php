@@ -85,9 +85,78 @@ class TeacherController extends Controller
         $MaTK = session('MaTK');
         $MaGV = $GiaoVienModel->getTeacherInfo($MaTK)['MaGV'];
 
-        return view('teacher/class/rate', [
+        // Nhận giá trị học kỳ được chọn từ form
+        $selectedSemester = $this->request->getVar('semester') ?? 'Học kỳ 1';
+        
 
+        // Tách chuỗi để lấy số học kỳ
+        $semesterNumber = preg_replace('/\D/', '', $selectedSemester);
+
+        // Lấy danh sách năm học được phân công dạy dựa vào mã giáo viên
+        $yearList = $PhanCongModel->getAssignedYearsByTeacher($MaGV);
+        $yearList = array_column($yearList, 'NamHoc');
+        if (empty($yearList)) {
+            return view('teacher/class/rate', [
+                'error' => 'Bạn chưa được phân công lớp giảng dạy nào.',
+                'yearList' => [], 'classList' => [], 'studentList' => [],
+                'selectedYear' => '', 'selectedSemester' => '', 'selectedClass' => ''
+
+            ]);
+        }
+        $selectedYear = $this->request->getVar('year') ?? $yearList[0];
+
+        // Lấy danh sách lớp học mà giáo viên đã phân công dạy dựa vào mã giáo viên, năm học và học kỳ
+        $classList = $PhanCongModel->getAssignedClassesBySemester($MaGV, $selectedYear, $semesterNumber);
+        $classList = array_column($classList, 'TenLop');
+        if (empty($classList)) {
+            return view('teacher/class/rate', [
+                'error' => "Bạn chưa được phân công dạy trong học kỳ $semesterNumber năm học $yearList[0].",
+                'yearList' => $yearList, 'classList' => [], 'studentList' => [],
+                'selectedYear' => $selectedYear, 'selectedSemester' => $selectedSemester, 'selectedClass' => ''
+            ]);
+        }
+        $selectedClass = $this->request->getVar('class') ?? $classList[0];
+
+
+        // Lấy nhận xét của giáo viên về học sinh
+        $DiemModel = new DiemModel();
+        $studentList = $DiemModel->getTeacherComment($MaGV, $selectedClass, $semesterNumber, $selectedYear);
+
+        return view('teacher/class/rate', [
+            'error' => null,
+            'yearList' => $yearList, 'classList' => $classList,
+            'selectedYear' => $selectedYear ?? '', 'selectedSemester' => $selectedSemester, 'selectedClass' => $selectedClass,
+            'studentList' => $studentList
         ]);
+    }
+
+    public function addRate()
+    {
+        $DiemModel = new DiemModel();
+
+        // Lấy nhận xét của giáo viên về học sinh từ form
+        $comments = $this->request->getPost('comments');
+        $MaTK = session('MaTK');
+        $MaGV = (new GiaoVienModel())->getTeacherInfo($MaTK)['MaGV'];
+        $class = $this->request->getPost('class');
+        $semester = preg_replace('/\D/', '', $this->request->getPost('semester'));
+        $year = $this->request->getPost('year');
+
+        if ($comments && is_array($comments)) {
+            foreach ($comments as $MaHS => $comment) {
+                $NhanXet = $comment['NhanXet'] ?? null;
+                $TenMH = $comment['TenMH'] ?? null;
+                // Lấy MaMH từ TenMH
+                $MaMH = (new MonHocModel())->getSubjectID($TenMH)['MaMH'];
+
+                // Kiểm tra và cập nhật nhận xét
+                if ($MaHS && $MaGV && $MaMH !== null && $NhanXet !== null) {
+                    $DiemModel->updateTeacherComment($MaHS, $MaGV, $MaMH, $NhanXet, $semester, $year);
+                }
+            }
+            return redirect()->back()->with('success', 'Cập nhật đánh giá thành công!');
+        }
+        return redirect()->back()->with('error', 'Không có dữ liệu cập nhật.');
     }
 
     public function classRating()

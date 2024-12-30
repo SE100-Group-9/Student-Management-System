@@ -11,133 +11,62 @@
         <div class="body-right">
             Học tập / Lớp học / Đánh giá kết quả học
             <div class="teacherclassrate-tools">
-                <div class="tool-search">
-                    <?= view('components/searchbar') ?>
-                    <?= view('components/dropdown', [
-                        'options' => $yearList ?? [],
-                        'dropdown_id' => 'year-dropdown',
-                        'name' => 'year',
-                        'selected_text' => 'Chọn năm học',
-                        'value' => $selectedYear ?? ''
-                    ]) ?>
-                    <?= view('components/dropdown', [
-                        'options' => [],
-                        'dropdown_id' => 'hocky-dropdown',
-                        'name' => 'hocky',
-                        'selected_text' => 'Chọn học kỳ',
-                        'value' => $selectedHocKy ?? ''
-                    ]) ?>
-                    <?= view('components/dropdown', [
-                        'options' => [],
-                        'dropdown_id' => 'lophoc-dropdown',
-                        'name' => 'lophoc',
-                        'selected_text' => 'Chọn lớp học',
-                        'value' => $selectedLopHoc ?? ''
-                    ]) ?>
-                </div>
+                <form method="GET" action="/sms/public/teacher/class/rate" id="form">
+                    <div class="tool-search">
+                        <?= view('components/searchbar') ?>
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemester ?? ''
+                        ]) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $classList ?? [],
+                            'dropdown_id' => 'class-dropdown',
+                            'name' => 'class',
+                            'selected_text' => 'Chọn lớp học',
+                            'value' => $selectedClass ?? ''
+                        ]) ?>
+                        <button type="submit" style="display: none;">Submit</button>
+                    </div>
+                </form>
                 <div class="tool-add">
+                    <?= view('components/save_button', ['text' => 'Lưu đánh giá']) ?>
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <?= view('components/tables/teacherClassRate', ['tableId' => 'teacherClassRate']) ?>
+
+            <?php if (session()->getFlashdata('success')): ?>
+                <p class="alert alert-success"><?= session()->getFlashdata('success') ?></p>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <p class="alert alert-danger"><?= session()->getFlashdata('error') ?></p>
+            <?php endif; ?>
+
+                <?= view('components/tables/teacherClassRate', [
+                    'studentList' => $studentList,
+                    'selectedYear' => $selectedYear,
+                    'selectedSemester' => $selectedSemester,
+                    'selectedClass' => $selectedClass
+                ]) ?>
+
+
+            <?php if (isset($error) && $error): ?>
+                <p><?= $error ?></p>
+            <?php endif; ?>
+
             <?= view('components/pagination'); ?>
+
         </div>
-        </form>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-                const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
-                const hocKyDropdown = document.querySelector('[data-dropdown-id="hocky-dropdown"]');
-                const lopHocDropdown = document.querySelector('[data-dropdown-id="lophoc-dropdown"]');
-
-                console.log('Year Dropdown:', yearDropdown);
-                console.log('Hoc Ky Dropdown:', hocKyDropdown);
-                console.log('Lop Hoc Dropdown:', lopHocDropdown);
-
-                // Kiểm tra nếu các dropdown không được tìm thấy
-                if (!yearDropdown || !hocKyDropdown || !lopHocDropdown) {
-                    console.error("Một trong các dropdown không tồn tại!");
-                    return;
-
-                    // Khi chọn năm học
-                    yearDropdown.addEventListener('change', function() {
-                        const selectedYear = this.querySelector('input').value;
-
-                        // Gọi API để lấy danh sách học kỳ
-                        fetch(`http://localhost/sms/public/teacher/class/rate/getHocKyByYear/${selectedYear}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                // Cập nhật học kỳ
-                                updateDropdown(hocKyDropdown, data, 'Chọn học kỳ');
-                                updateDropdown(lopHocDropdown, [], 'Chọn lớp học'); // Reset lớp học
-                            })
-                            .catch(error => {
-                                console.error('Lỗi khi gọi API học kỳ:', error);
-                            });
-                    });
-
-                    // Khi chọn học kỳ
-                    hocKyDropdown.addEventListener('change', function() {
-                        const selectedYear = yearDropdown.querySelector('input').value;
-                        const selectedHocKy = this.querySelector('input').value;
-
-                        console.log('Selected Year:', selectedYear);
-                        console.log('Selected Hoc Ky:', selectedHocKy);
-                        if (!selectedYear || !selectedHocKy) {
-                            console.log('Không có lớp học nào');
-                            return;
-                        }
-                        // Nếu không thấy thì console.log('Không có lớp học nào');
-                        if (!selectedYear || !selectedHocKy) {
-                            console.log('Không có lớp học nào');
-                            return;
-                        }
-
-                        // Gọi API để lấy danh sách lớp học
-                        fetch(`http://localhost/sms/public/teacher/class/rate/getLopHocByHocKy/${selectedYear}/${selectedHocKy}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                // Cập nhật lớp học
-                                updateDropdown(lopHocDropdown, data, 'Chọn lớp học');
-                            })
-                            .catch(error => {
-                                console.error('Lỗi khi gọi API lớp học:', error);
-                            });
-                    });
-
-
-                    // Hàm cập nhật dropdown
-                    function updateDropdown(dropdown, options, placeholder) {
-                        const dropdownInput = dropdown.querySelector('input');
-                        const dropdownText = dropdown.querySelector('.selected-text');
-                        const dropdownOptions = dropdown.querySelector('.dropdown-option');
-
-                        console.log('Dropdown trước khi cập nhật:', dropdown);
-                        console.log('Danh sách tùy chọn:', options);
-
-                        dropdownInput.value = '';
-                        dropdownText.textContent = placeholder;
-                        dropdownOptions.innerHTML = options.map(option => `
-                <div class="option" data-value="${option}">
-                    <p>${option}</p>
-                </div>
-            `).join('');
-
-                        dropdownOptions.querySelectorAll('.option').forEach(option => {
-                            option.addEventListener('click', function() {
-                                dropdownInput.value = this.dataset.value;
-                                dropdownText.textContent = this.textContent;
-                                console.log('Giá trị đã chọn:', this.dataset.value);
-                                console.log('Tên lớp học đã chọn:', this.textContent);
-                            });
-                        });
-                    }
-                }
-            });
-</script>
-
 
 
 <style>
@@ -218,3 +147,74 @@
         gap: 10px;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let isFormDirty = false; // Biến theo dõi trạng thái thay đổi của form
+
+        // Theo dõi sự thay đổi trong các ô nhập liệu
+        const commentInputs = document.querySelectorAll('input[name^="comments"]');
+        commentInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                isFormDirty = true; // Đánh dấu form đã thay đổi
+            });
+        });
+
+        // Theo dõi sự kiện trước khi rời khỏi trang
+        window.addEventListener('beforeunload', function(event) {
+            if (isFormDirty) {
+                // Hiển thị thông báo cảnh báo
+                event.preventDefault();
+                event.returnValue = ''; // Bắt buộc phải có để kích hoạt hộp thoại xác nhận
+            }
+        });
+
+        // Khi người dùng nhấn nút Lưu đánh giá, đặt lại trạng thái
+        document.getElementById('button-save').addEventListener('click', function() {
+            isFormDirty = false; // Đặt lại trạng thái form
+        });
+    });
+
+    // Lấy nút submit và form
+    document.getElementById('button-save').addEventListener('click', function() {
+        // Gửi form
+        document.getElementById('comment-form').submit();
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form
+        const form = document.querySelector('form'); // Đảm bảo form cần xử lý có tồn tại
+
+        // Lấy các dropdown
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]');
+        const classDropdown = document.querySelector('[data-dropdown-id="class-dropdown"]');
+
+        // Hàm xử lý sự kiện click
+        function handleDropdownClick(dropdown) {
+            if (!dropdown) return;
+
+            const options = dropdown.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedValue = this.getAttribute('data-value'); // Lấy giá trị từ data-value
+                    const input = dropdown.querySelector('input'); // Input ẩn
+                    const selectedText = dropdown.querySelector('.selected-text'); // Text hiển thị
+
+                    if (input && selectedText) {
+                        input.value = selectedValue; // Cập nhật giá trị cho input
+                        selectedText.textContent = this.textContent; // Cập nhật text hiển thị
+                    }
+
+                    // Submit form tự động
+                    if (form) form.submit();
+                });
+            });
+        }
+
+        // Áp dụng sự kiện cho từng dropdown
+        handleDropdownClick(yearDropdown);
+        handleDropdownClick(semesterDropdown);
+        handleDropdownClick(classDropdown);
+    });
+</script>

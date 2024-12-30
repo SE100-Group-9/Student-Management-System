@@ -5,6 +5,8 @@
             <tr>
                 <th>Mã hóa đơn</th>
                 <th>Mã học sinh</th>
+                <th>Họ tên</th>
+                <th>Tên lớp</th>
                 <th>Năm học</th>
                 <th>Tổng học phí</th>
                 <th>Đã thanh toán</th>
@@ -18,6 +20,8 @@
                 <tr>
                     <td><?= $invoice['MaHD'] ?></td>
                     <td><?= $invoice['MaHS'] ?></td>
+                    <td><?= $invoice['HoTen'] ?></td>
+                    <td><?= $invoice['TenLop'] ?></td>
                     <td><?= $invoice['NamHoc'] ?></td>
                     <td><?= $invoice['TongHocPhi'] ?></td>
                     <td><?= $invoice['DaThanhToan'] ?></td>
