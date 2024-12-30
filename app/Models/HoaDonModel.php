@@ -10,36 +10,27 @@ class HoaDonModel extends Model
     protected $primaryKey = 'MaHD';
     protected $allowedFields = ['MaHS', 'NamHoc', 'TongHocPhi', 'DaThanhToan', 'ConNo', 'TrangThai'];
 
+    // Thêm hóa đơn học phí cho học sinh dựa vào MaHS, NamHoc, TongHocPhi
+    public function addInvoice($studentId, $year, $totalAmount)
+    {
+        $data = [
+            'MaHS' => $studentId,
+            'NamHoc' => $year,
+            'TongHocPhi' => $totalAmount,
+            'DaThanhToan' => 0,
+            'ConNo' => $totalAmount,
+            'TrangThai' => 'Chưa thanh toán'
+        ];
 
-    public function addInvoice($studentId, $NamHoc) {
-        // Lấy mức học phí tương ứng từ bảng thamso
-        $SQL = "SELECT GiaTri 
-        FROM thamso 
-        WHERE TenThamSo = ?";
-
-        // Tạo tên tham số dựa trên năm học
-        $paramName = 'MucHocPhiNamHoc' . str_replace('-', '_', $NamHoc);
-        $query = $this->db->query($SQL, [$paramName]);
-        $row = $query->getRow();
-
-        $TongHocPhi = $row->GiaTri;
-
-        // Chèn hóa đơn mới vào bảng hoadon
-        $SQL = "INSERT INTO hoadon (MaHS, NamHoc, TongHocPhi, DaThanhToan, ConNo, TrangThai)
-            VALUES (?, ?, ?, 0, ?, 'Chưa thanh toán')";
-
-        // Số nợ ban đầu = Tổng học phí
-        $this->db->query($SQL, [$studentId, $NamHoc, $TongHocPhi, $TongHocPhi]);
-
-        return true; // Thêm hóa đơn thành công
+        $this->insert($data);
     }
 
 
     // Lấy tất cả danh sách hóa đơn
     public function getAllInvoices($selectedStatus, $selectedYear, $searchStudent)
     {
-                // Tạo câu lệnh SQL với JOIN để lấy thêm thông tin từ các bảng liên quan
-            $SQL = "SELECT 
+        // Tạo câu lệnh SQL với JOIN để lấy thêm thông tin từ các bảng liên quan
+        $SQL = "SELECT 
             hoadon.MaHD, 
             hoadon.MaHS, 
             hoadon.NamHoc, 
@@ -62,21 +53,21 @@ class HoaDonModel extends Model
 
         // Kiểm tra trạng thái
         if ($selectedStatus !== 'Chọn trạng thái') {
-        $SQL .= " AND hoadon.TrangThai = ?";
-        $params[] = $selectedStatus;
+            $SQL .= " AND hoadon.TrangThai = ?";
+            $params[] = $selectedStatus;
         }
 
         // Kiểm tra năm học
         if ($selectedYear !== 'Chọn năm học') {
-        $SQL .= " AND hoadon.NamHoc = ?";
-        $params[] = $selectedYear;
+            $SQL .= " AND hoadon.NamHoc = ?";
+            $params[] = $selectedYear;
         }
 
         // Tìm kiếm học sinh (theo Mã học sinh hoặc Họ tên)
         if (!empty($searchStudent)) {
-        $SQL .= " AND (hoadon.MaHS LIKE ? OR taikhoan.HoTen LIKE ?)";
-        $params[] = '%' . $searchStudent . '%';
-        $params[] = '%' . $searchStudent . '%';
+            $SQL .= " AND (hoadon.MaHS LIKE ? OR taikhoan.HoTen LIKE ?)";
+            $params[] = '%' . $searchStudent . '%';
+            $params[] = '%' . $searchStudent . '%';
         }
 
         // Loại bỏ kết quả trùng lặp bằng cách nhóm theo MaHD
@@ -89,8 +80,9 @@ class HoaDonModel extends Model
         return $result; // Trả về danh sách hóa đơn với thông tin mở rộng
     }
 
-    public function getInvoiceByInvoiceId($invoiceId, $cashierId) {
-            $SQL = "SELECT 
+    public function getInvoiceByInvoiceId($invoiceId, $cashierId)
+    {
+        $SQL = "SELECT 
             hoadon.MaHD, 
             hoadon.MaHS, 
             hoadon.NamHoc, 
@@ -112,57 +104,57 @@ class HoaDonModel extends Model
         JOIN taikhoan AS tn_taikhoan ON tn_taikhoan.MaTK = thungan.MaTK
         WHERE 
             hoadon.MaHD = ?";
-        $query = $this->db->query($SQL, [$cashierId, $invoiceId]); 
+        $query = $this->db->query($SQL, [$cashierId, $invoiceId]);
         return $query->getRowArray();
-
     }
 
-    public function getInvoiceByPaymentId($paymentId){
+    public function getInvoiceByPaymentId($paymentId)
+    {
         // Truy vấn SQL để lấy thông tin MaHD và DaThanhToan từ phiếu thanh toán
-            $SQL = "
+        $SQL = "
             SELECT MaHD, DaThanhToan
             FROM phieuthanhtoan
             WHERE MaPTT = ?
         ";
 
-            // Thực thi truy vấn và trả về kết quả
-            $query = $this->db->query($SQL, [$paymentId]);
-            return $query->getRowArray(); // Lấy một dòng dữ liệu dạng mảng
+        // Thực thi truy vấn và trả về kết quả
+        $query = $this->db->query($SQL, [$paymentId]);
+        return $query->getRowArray(); // Lấy một dòng dữ liệu dạng mảng
 
     }
 
-    public function updateInvoice($invoiceId, $paymentAmount) {
-    
-    $invoiceModel = new HoaDonModel();
-    // Lấy thông tin hóa đơn hiện tại
-    $invoice = $invoiceModel->find($invoiceId);
+    public function updateInvoice($invoiceId, $paymentAmount)
+    {
 
-    // Cập nhật lại số tiền đã thanh toán
-    $newPaidAmount = $invoice['DaThanhToan'] + $paymentAmount;
+        $invoiceModel = new HoaDonModel();
+        // Lấy thông tin hóa đơn hiện tại
+        $invoice = $invoiceModel->find($invoiceId);
 
-    // Tính toán lại số nợ
-    $debt = $invoice['TongHocPhi'] - $newPaidAmount;
+        // Cập nhật lại số tiền đã thanh toán
+        $newPaidAmount = $invoice['DaThanhToan'] + $paymentAmount;
 
-    // Xác định trạng thái thanh toán
-    if ($newPaidAmount >= $invoice['TongHocPhi']) {
-        $status = 'Đã thanh toán';
-    } elseif ($newPaidAmount > 0) {
-        $status = 'Thanh toán 1 phần';
-    } else {
-        $status = 'Chưa thanh toán';
+        // Tính toán lại số nợ
+        $debt = $invoice['TongHocPhi'] - $newPaidAmount;
+
+        // Xác định trạng thái thanh toán
+        if ($newPaidAmount >= $invoice['TongHocPhi']) {
+            $status = 'Đã thanh toán';
+        } elseif ($newPaidAmount > 0) {
+            $status = 'Thanh toán 1 phần';
+        } else {
+            $status = 'Chưa thanh toán';
+        }
+
+        // Cập nhật dữ liệu hóa đơn
+        $data = [
+            'DaThanhToan' => $newPaidAmount,
+            'ConNo' => $debt,
+            'TrangThai' => $status
+        ];
+
+        // Thực hiện cập nhật
+        $invoiceModel->update($invoiceId, $data);
+
+        return true; // Cập nhật thành công
     }
-
-    // Cập nhật dữ liệu hóa đơn
-    $data = [
-        'DaThanhToan' => $newPaidAmount,
-        'ConNo' => $debt,
-        'TrangThai' => $status
-    ];
-
-    // Thực hiện cập nhật
-    $invoiceModel->update($invoiceId, $data);
-
-    return true; // Cập nhật thành công
-    }
-
 }

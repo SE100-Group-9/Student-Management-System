@@ -10,9 +10,8 @@
         </div>
         <div class="body-right">
             Học tập / Học sinh / Danh sách học sinh
-
-            <form method="GET" action="/sms/public/teacher/student/list" id="form">
-                <div class="teacherstudentlist-tools">
+            <div class="teacherstudentlist-tools">
+                <form method="GET" action="/sms/public/teacher/student/list" id="form">
                     <div class="tool-search">
                         <?= view('components/searchbar') ?>
                         <?= view('components/dropdown', [
@@ -31,21 +30,18 @@
                         ]) ?>
                         <button type="submit" style="display: none;">Submit</button>
                     </div>
-            </form>
-            <div class="tool-add">
-                <?= view('components/excel_export') ?>
+                </form>
+                <div class="tool-add">
+                    <?= view('components/excel_export') ?>
+                </div>
             </div>
-        </div>
-        <div class="tabless">
             <?= view('components/tables/teacherStudentList', ['studentList' => $studentList]) ?>
             <?php if (isset($error) && $error): ?>
                 <p><?= $error ?></p>
             <?php endif; ?>
+            <?= view('components/pagination'); ?>
         </div>
-        <?= view('components/pagination'); ?>
-
     </div>
-
 </div>
 <div style="display: none;">
     <?= view('components/dropdown', []) ?>

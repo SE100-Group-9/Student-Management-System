@@ -23,172 +23,13 @@
                 <td>8.5</td>
                 <td>
                     <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="16" viewBox="0 0 25 16" fill="none">
+                            <path d="M15.3333 8C15.3333 9.654 13.9873 11 12.3333 11C10.6793 11 9.33334 9.654 9.33334 8C9.33334 6.346 10.6793 5 12.3333 5C13.9873 5 15.3333 6.346 15.3333 8ZM24.3333 7.551C24.3333 7.551 20.0813 16 12.3483 16C5.16834 16 0.333344 7.551 0.333344 7.551C0.333344 7.551 4.77934 0 12.3483 0C20.0423 0 24.3333 7.551 24.3333 7.551ZM17.3333 8C17.3333 5.243 15.0903 3 12.3333 3C9.57634 3 7.33334 5.243 7.33334 8C7.33334 10.757 9.57634 13 12.3333 13C15.0903 13 17.3333 10.757 17.3333 8Z" fill="#E14177" />
                         </svg>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>LP01</td>
-                <td>11A1</td>
-                <td>50%</td>
-                <td>20%</td>
-                <td>20%</td>
-                <td>10%</td>
-                <td>8.5</td>
-                <td>
-                    <a style="text-decoration: none; background: none; color: inherit;" title="Xem chi tiết" href="/sms/public/teacher/class/record/detail">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M7.14 14.11L10.18 17.15V6.85M16.86 9.89L13.82 6.85V17.15M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#E14177" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                </td>
-            </tr>
+
         </tbody>
     </table>
     <div id="pagination-container"></div>
@@ -226,22 +67,22 @@
 
     #pagination-container {
         display: flex;
-        justify-content: flex-end;  
+        justify-content: flex-end;
         align-items: center;
-        margin-top: 10px;  
-        width: 100%; 
+        margin-top: 10px;
+        width: 100%;
     }
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const tableElement = document.getElementById('teacherRecordList');
-    const paginationContainer = document.getElementById('pagination-container');
+        const tableElement = document.getElementById('teacherRecordList');
+        const paginationContainer = document.getElementById('pagination-container');
 
-    initializeTablePagination({
-        tableElement,
-        paginationContainer,
-        rowsPerPage: 10,
+        initializeTablePagination({
+            tableElement,
+            paginationContainer,
+            rowsPerPage: 10,
+        });
     });
-});
 </script>
