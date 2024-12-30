@@ -34,6 +34,7 @@ $value = $value ?? '';
         align-items: flex-start;
         position: relative;
         width: 100%;
+        white-space: nowrap;
     }
 
     .dropdown-inner {

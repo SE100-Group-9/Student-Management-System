@@ -12,7 +12,6 @@
             Học tập / Lớp học / Nhập điểm
             <div class="classlists-tools">
                 <div class="tools">
-                    <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
                 </div>
                 <div class="tool-add">

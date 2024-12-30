@@ -12,7 +12,6 @@
             Học tập / Lớp học / Báo cáo học lực lớp
             <div class="classlists-tools">
                 <div class="tools">
-                    <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
                     <?= view('components/dropdown', [
                         'options' => ['15p (1)', '15p (2)', '45p (1)', '45p (2)', 'Cuối kỳ'],

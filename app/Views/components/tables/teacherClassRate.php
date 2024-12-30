@@ -57,6 +57,7 @@
 
     #teacherClassRate {
         width: 100%;
+        table-layout: auto;
         font-family: "Inter";
         border-collapse: collapse;
         color: black;
@@ -67,14 +68,16 @@
         text-align: left;
         background-color: rgba(185, 185, 185, 0.50);
         color: black;
+        white-space: nowrap;
     }
 
     #teacherClassRate td {
-        padding: 10px;
+        padding: 0 10px;
         text-align: left;
         color: black;
         background-color: white;
         border-top: 1px solid rgba(0, 60, 60, 0.50);
+        white-space: nowrap;
     }
 
     #pagination-container {

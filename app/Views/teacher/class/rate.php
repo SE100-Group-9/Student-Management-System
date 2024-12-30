@@ -39,7 +39,7 @@
                     </div>
                 </form>
                 <div class="tool-add">
-                    <?= view('components/save_button', ['text' => 'Lưu đánh giá']) ?>
+                    <?= view('components/save_button') ?>
                     <?= view('components/excel_export') ?>
                 </div>
             </div>

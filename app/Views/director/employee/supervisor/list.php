@@ -10,13 +10,14 @@
         </div>
         <div class="body-right">
             Quản lý / Quản lý nhân viên / Giám thị
-            <div class="employee-teacherlist-tool">
+            <div class="employee-supervisorlist-tool">
                 <form method="GET" action="/sms/public/director/employee/supervisor/list">
                     <div class="tool-search">
                         <?= view('components/filter') ?>
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
-                    </div>
-                </form>
+                </form> 
+            </div>
+                
                 <div class="tool-add">
                     <a style="text-decoration: none" href="/sms/public/director/employee/supervisor/add">
                         <?= view('components/add', ['button_text' => 'Thêm giám thị']) ?>
@@ -26,7 +27,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorEmployeeSupervisor', ['supervisorList' => $supervisorList]) ?>
+                <?= view('components/tables/directorEmployeesupervisor', ['supervisorList' => $supervisorList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -89,7 +90,7 @@
         overflow-y: auto;
     }
 
-    .employee-teacherlist-tool {
+    .employee-supervisorlist-tool {
         display: flex;
         padding: 10px;
         justify-content: space-between;
