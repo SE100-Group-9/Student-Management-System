@@ -32,8 +32,19 @@
                     <?= view('components/upload') ?>
                 </div>
             </div>
+
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('error')) : ?>
+                <div style="color: red;"><?= session()->getFlashdata('error') ?></div>
+            <?php endif; ?>
+
             <div class="tabless">
-                <?= view('components/tables/directorClassList', ['classList' => $classList]) ?>
+                <?= view('components/tables/directorClassList', [
+                    'classList' => $classList,
+                    'selectedYear' => $selectedYear
+                ]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>

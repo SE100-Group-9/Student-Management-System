@@ -14,14 +14,14 @@ use App\Models\ThuNganModel;
 use App\Models\GiamThiModel;
 use App\Models\GiaoVienModel;
 use App\Models\BanGiamHieuModel;
-use App\Models\GiaoVienLopModel;
 use App\Models\MonHocModel;
 use App\Models\PhanCongModel;
 use App\Models\DiemModel;
 use App\Models\HanhKiemModel;
-use App\Models\CTPTTModel;
 use App\Models\ThamSoModel;
 use App\Models\HoaDonModel;
+use App\Models\ViPhamModel;
+use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
 
 class DirectorController extends Controller
@@ -94,7 +94,7 @@ class DirectorController extends Controller
         foreach ($currentStudentList as $student) {
             $MaHS = $student['MaHS'];
             // Tính điểm trung bình theo học kỳ hoặc cả năm học
-            if ($selectedSemester === 'Học kỳ 1'){
+            if ($selectedSemester === 'Học kỳ 1') {
                 $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
             } elseif ($selectedSemester === 'Học kỳ 2') {
                 $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
@@ -117,7 +117,7 @@ class DirectorController extends Controller
         $previousStudentList = $HocSinhModel->getStudentListByYear($gradeNumber, $previousYear);
 
         $previousReport = [];
-        foreach($previousStudentList as $student) {
+        foreach ($previousStudentList as $student) {
             $MaHS = $student['MaHS'];
             // Tính điểm trung bình theo học kỳ hoặc cả năm học
             if ($selectedSemester === 'Học kỳ 1') {
@@ -186,8 +186,14 @@ class DirectorController extends Controller
             'selectedYear' => $selectedYear,
             'yearList' => $yearList,
             'previousYear' => $previousYear,
-            'excellentCount' => $excellentCount, 'goodCount' => $goodCount, 'averageCount' => $averageCount, 'weakCount' => $weakCount,
-            'excellentChange' => $excellentChange, 'goodChange' => $goodChange, 'averageChange' => $averageChange, 'weakChange' => $weakChange,
+            'excellentCount' => $excellentCount,
+            'goodCount' => $goodCount,
+            'averageCount' => $averageCount,
+            'weakCount' => $weakCount,
+            'excellentChange' => $excellentChange,
+            'goodChange' => $goodChange,
+            'averageChange' => $averageChange,
+            'weakChange' => $weakChange,
             'topStudents' => $topStudents,
         ]);
     }
@@ -237,8 +243,12 @@ class DirectorController extends Controller
             'selectedYear' => $selectedYear,
             'previousYear' => $previousYear,
             'yearList' => $yearList,
-            'currentEnrolledCount' => $currentEnrolledCount, 'currentTotalCount' => $currentTotalCount, 'currentWarnedCount' => $currentWarnedCount,
-            'enrolledChange' => $enrolledChange, 'totalChange' => $totalChange, 'warnedChange' => $warnedChange,
+            'currentEnrolledCount' => $currentEnrolledCount,
+            'currentTotalCount' => $currentTotalCount,
+            'currentWarnedCount' => $currentWarnedCount,
+            'enrolledChange' => $enrolledChange,
+            'totalChange' => $totalChange,
+            'warnedChange' => $warnedChange,
             'enrolledStudentData' => json_encode($enrolledStudentData),  // Ensure it's encoded
             'warnedStudentData' => json_encode($warnedStudentData),  // Ensure it's encoded
         ]);
@@ -441,7 +451,7 @@ class DirectorController extends Controller
         $yearListArray = $HocSinhLopModel
             ->distinct()
             ->select('NamHoc')
-            ->orderBy('NamHoc', 'ASC')
+            ->orderBy('NamHoc', 'DESC')
             ->findAll();
         // Lấy các giá trị của trường 'NamHoc' từ mảng $yearListArray
         $yearList = array_map(function ($year) {
@@ -451,7 +461,7 @@ class DirectorController extends Controller
         $statusList = ['Chọn trạng thái', 'Đang học', 'Mới tiếp nhận', 'Nghỉ học'];
 
         $query = $HocSinhModel
-            ->select('hocsinh.*, taikhoan.*, hocsinh_lop.MaLop, lop.TenLop')
+            ->select('hocsinh.MaHS AS MaHocSinh, hocsinh.*, taikhoan.*, hocsinh_lop.*, lop.TenLop')
             ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
             ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
             ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left');
@@ -473,6 +483,10 @@ class DirectorController extends Controller
             $query->where('hocsinh.TinhTrang', $selectedStatus);
         }
 
+        // Thêm sắp xếp theo năm học (NamHoc)
+        $query->orderBy('hocsinh_lop.NamHoc', 'DESC');
+        $query->orderBy('lop.TenLop', 'ASC');
+
         $studentList  = $query->findAll();
 
         return view('director/student/list', [
@@ -487,27 +501,76 @@ class DirectorController extends Controller
         ]);
     }
 
+    public function deleteStudent($MaHS)
+    {
+        $db = \Config\Database::connect();
+        $HocSinhModel = new HocSinhModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+
+        log_message('info', 'Deleting student with ID ' . $MaHS);
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra học sinh có tồn tại không
+            $HocSinh = $HocSinhModel->find($MaHS);
+            if (!$HocSinh) {
+                return redirect()->back()->with('error', 'Không tìm thấy thông tin học sinh.');
+            }
+
+            // Xóa học sinh khỏi bảng HOCSINH
+            if (!$HocSinhModel->delete($MaHS)) {
+                throw new \Exception('Xóa học sinh thất bại.');
+            }
+
+            // Xóa tài khoản liên kết với học sinh
+            if (!$TaiKhoanModel->delete($HocSinh['MaTK'])) {
+                throw new \Exception('Xóa tài khoản học sinh thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            // Kiểm tra trạng thái transaction
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa học sinh.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa học sinh thành công!');
+        } catch (\Exception $e) {
+            // Nếu có lỗi, rollback transaction
+            $db->transRollback();
+
+            // Hiển thị thông báo lỗi
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     public function studentPayment()
     {
         $LopModel = new LopModel();
-        $CTPTTModel = new CTPTTModel();
+        $HoaDonModel = new HoaDonModel();
+        $HocSinhLopModel = new HocSinhLopModel();
 
-        // Nhận giá trị năm học và lớp học từ query string
-        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
-        $selectedClass = $this->request->getVar('class') ?? '10_1';
-
+        // Lấy danh sách năm học
+        $yearList = $HocSinhLopModel->getYearList();
         // Lấy danh sách tên lớp học
         $classList = $LopModel->findColumn('TenLop');
+
+        // Nhận giá trị năm học và lớp học từ query string
+        $selectedYear = $this->request->getVar('year') ?? $yearList[0];
+        $selectedClass = $this->request->getVar('class') ?? $classList[0];
 
         // Lấy MaLop từ tên lớp học
         $MaLop = $LopModel->where('TenLop', $selectedClass)->first()['MaLop'];
 
         // Lấy thông tin học phí của học sinh
-        $tuitionList = $CTPTTModel->getTuitionInfo($MaLop, $selectedYear);
+        $tuitionList = $HoaDonModel->getInvoiceInfo($MaLop, $selectedYear);
 
 
         return view('director/student/payment', [
             'tuitionList' => $tuitionList,
+            'yearList' => $yearList,
             'classList' => $classList,
             'selectedYear' => $selectedYear,
             'selectedClass' => $selectedClass,
@@ -525,82 +588,248 @@ class DirectorController extends Controller
         $LopModel = new LopModel();
         $DiemModel = new DiemModel();
         $PhanCongModel = new PhanCongModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $HanhKiemModel = new HanhKiemModel();
+
+        // Lấy danh sách năm học lớp học
+        $yearList = $HocSinhLopModel->getYearList();
+        $classList = $LopModel->findColumn('TenLop');
 
         // Nhận giá trị năm học, học kỳ và lớp học từ query string
-        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+        $selectedYear = $this->request->getVar('year') ?? $yearList[0];
         //Nhận giá trị học kỳ sau khi chuyển từ text sang số
         $selectedSemesterText = $this->request->getVar('semester') ?? 'Học kỳ 1';
-        $selectedSemester = $selectedSemesterText === 'Học kỳ 1' ? 1 : 2;
-        $selectedClass = $this->request->getVar('class') ?? '10_1';
+        $selectedSemester = null;
+        if ($selectedSemesterText === 'Học kỳ 1') {
+            $selectedSemester = 1;
+        } elseif ($selectedSemesterText === 'Học kỳ 2') {
+            $selectedSemester = 2;
+        } else {
+            $selectedSemester = 0;
+        }
+        $selectedClass = $this->request->getVar('class') ?? $classList[0];
 
-        // Lấy danh sách các tên lớp học
-        $classList = $LopModel->findColumn('TenLop');
+        // Nếu chọn Học kỳ 1
+        if ($selectedSemester === 1) {
+            $studentList = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass);
+
+            $student = [];
+
+            foreach ($studentList as $student) {
+                $MaHS = $student['MaHS'];
+
+                // Khởi tạo dữ liệu học sinh nếu chưa có
+                if (!isset($students[$MaHS])) {
+                    $students[$MaHS] = [
+                        'MaHS' => $MaHS,
+                        'HoTen' => $student['HoTen'],
+                        'TenLop' => $student['TenLop'],
+                        'Diem' => [],
+                        'DiemHK' => $student['DiemHK']
+                    ];
+                }
+
+                // Lưu điểm của từng môn học
+                if ($student['MaMH']) {
+                    $students[$MaHS]['Diem'][$student['MaMH']] = [
+                        'Diem15P_1' => $student['Diem15P_1'],
+                        'Diem15P_2' => $student['Diem15P_2'],
+                        'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+                        'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+                        'DiemCK' => $student['DiemCK'],
+                    ];
+                }
+            }
+
+            // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và học lực, danh hiệu
+            foreach ($students as &$student) {
+                $DiemTrungBinh = null;
+                $TongDiemTB = 0;
+                $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
+                $SoMonDuCotDiem = 0; // Số môn học có điểm
+
+                foreach ($student['Diem'] as $MaMH => $Diem) {
+                    $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
+
+                    // Lưu điểm trung bình môn học vào mảng
+                    $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBMonHoc;
+
+                    if ($DiemTBMonHoc !== null) {
+                        $TongDiemTB += $DiemTBMonHoc;
+                        $SoMonDuCotDiem++;
+                    }
+                }
+                // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
+                if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+                    $DiemTrungBinh = round($TongDiemTB / $SoMon, 1);
+                }
+                $student['DiemTrungBinh'] = $DiemTrungBinh;
+
+                // Xếp loại học lực
+                $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinh);
+
+                // Xếp loại danh hiệu
+                $DanhHieuModel = new DanhHieuModel();
+                $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinh, $student['DiemHK']);
+                $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+            }
+        }
+
+        // Nếu chọn Học kỳ 2
+        if ($selectedSemester === 2) {
+            $studentList = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass);
+
+            $student = [];
+
+            foreach ($studentList as $student) {
+                $MaHS = $student['MaHS'];
+
+                // Khởi tạo dữ liệu học sinh nếu chưa có
+                if (!isset($students[$MaHS])) {
+                    $students[$MaHS] = [
+                        'MaHS' => $MaHS,
+                        'HoTen' => $student['HoTen'],
+                        'TenLop' => $student['TenLop'],
+                        'Diem' => [],
+                        'DiemHK' => $student['DiemHK']
+                    ];
+                }
+
+                // Lưu điểm của từng môn học
+                if ($student['MaMH']) {
+                    $students[$MaHS]['Diem'][$student['MaMH']] = [
+                        'Diem15P_1' => $student['Diem15P_1'],
+                        'Diem15P_2' => $student['Diem15P_2'],
+                        'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+                        'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+                        'DiemCK' => $student['DiemCK'],
+                    ];
+                }
+            }
+
+            // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và học lực, danh hiệu
+            foreach ($students as &$student) {
+                $DiemTrungBinh = null;
+                $TongDiemTB = 0;
+                $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
+                $SoMonDuCotDiem = 0; // Số môn học có điểm
+
+                foreach ($student['Diem'] as $MaMH => $Diem) {
+                    $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
+
+                    // Lưu điểm trung bình môn học vào mảng
+                    $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBMonHoc;
+
+                    if ($DiemTBMonHoc !== null) {
+                        $TongDiemTB += $DiemTBMonHoc;
+                        $SoMonDuCotDiem++;
+                    }
+                }
+                // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
+                if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+                    $DiemTrungBinh = round($TongDiemTB / $SoMon, 1);
+                }
+                $student['DiemTrungBinh'] = $DiemTrungBinh;
+
+                // Xếp loại học lực
+                $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinh);
+
+                // Xếp loại danh hiệu
+                $DanhHieuModel = new DanhHieuModel();
+                $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinh, $student['DiemHK']);
+                $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+            }
+        }
+
+
+        // Trường hợp "Cả năm"
+        if ($selectedSemester === 0) {
+            $studentList1 = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass); // Học kỳ 1
+            $studentList2 = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass); // Học kỳ 2
+
+            foreach ([$studentList1, $studentList2] as $key => $studentList) {
+                foreach ($studentList as $student) {
+                    $MaHS = $student['MaHS'];
+
+                    // Khởi tạo dữ liệu học sinh nếu chưa có
+                    if (!isset($students[$MaHS])) {
+                        $students[$MaHS] = [
+                            'MaHS' => $MaHS,
+                            'HoTen' => $student['HoTen'],
+                            'TenLop' => $student['TenLop'],
+                            'Diem' => [],
+                            'DiemHK' => ['HocKy1' => null, 'HocKy2' => null],
+                        ];
+                    }
+
+                    // Lưu điểm hạnh kiểm
+                    $students[$MaHS]['DiemHK']['HocKy' . ($key + 1)] = $student['DiemHK'];
+
+                    // Lưu điểm của từng môn học
+                    if ($student['MaMH']) {
+                        $students[$MaHS]['Diem'][$student['MaMH']]['HocKy' . ($key + 1)] = [
+                            'Diem15P_1' => $student['Diem15P_1'],
+                            'Diem15P_2' => $student['Diem15P_2'],
+                            'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+                            'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+                            'DiemCK' => $student['DiemCK'],
+                        ];
+                    }
+                }
+            }
+
+            // Tính toán điểm trung bình cả năm
+            foreach ($students as &$student) {
+                $TongDiemTB = 0;
+                $SoMon = count($PhanCongModel->getSubjectList($selectedYear, 1, $selectedClass)); // Số môn học
+                $SoMonDuCotDiem = 0;
+
+                foreach ($student['Diem'] as $MaMH => $DiemHocKy) {
+                    $DiemTBHocKy1 = isset($DiemHocKy['HocKy1']) ? $DiemModel->getAverageScore($DiemHocKy['HocKy1']) : null;
+                    $DiemTBHocKy2 = isset($DiemHocKy['HocKy2']) ? $DiemModel->getAverageScore($DiemHocKy['HocKy2']) : null;
+
+                    $DiemTBCaNam = null;
+                    if ($DiemTBHocKy1 !== null && $DiemTBHocKy2 !== null) {
+                        $DiemTBCaNam = round(($DiemTBHocKy1 + 2 * $DiemTBHocKy2) / 3, 1);
+                    }
+
+                    $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBCaNam;
+
+                    if ($DiemTBCaNam !== null) {
+                        $TongDiemTB += $DiemTBCaNam;
+                        $SoMonDuCotDiem++;
+                    }
+                }
+
+                $DiemTrungBinhCaNam = null;
+                if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+                    $DiemTrungBinhCaNam = round($TongDiemTB / $SoMon, 1);
+                }
+
+                $student['DiemTrungBinh'] = $DiemTrungBinhCaNam;
+
+                // Xếp loại học lực
+                $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinhCaNam);
+
+                // Xếp loại danh hiệu
+                $DanhHieuModel = new DanhHieuModel();
+                $DiemHKCaNam = round(($student['DiemHK']['HocKy1'] + $student['DiemHK']['HocKy2']) / 2, 1);
+                $student['DiemHK'] = $DiemHKCaNam;
+                $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinhCaNam, $DiemHKCaNam);
+                $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+            }
+        }
 
         // Lấy danh sách học sinh theo năm học, học kỳ và lớp học
         $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
 
-        $students = [];
-        foreach ($studentList as $student) {
-            $MaHS = $student['MaHS'];
 
-            //Khởi tạo dữ liệu học sinh nếu chưa có
-            if (!isset($students[$MaHS])) {
-                $students[$MaHS] = [
-                    'MaHS' => $MaHS,
-                    'HoTen' => $student['HoTen'],
-                    'TenLop' => $student['TenLop'],
-                    'Diem' => [],
-                    'DiemHK' => $student['DiemHK'],
-                ];
-            }
 
-            // Lưu điểm của từng môn học
-            if ($student['MaMH']) {
-                $students[$MaHS]['Diem'][$student['MaMH']] = [
-                    'Diem15P_1' => $student['Diem15P_1'],
-                    'Diem15P_2' => $student['Diem15P_2'],
-                    'Diem1Tiet_1' => $student['Diem1Tiet_1'],
-                    'Diem1Tiet_2' => $student['Diem1Tiet_2'],
-                    'DiemCK' => $student['DiemCK'],
-                ];
-            }
-        }
-
-        // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và xếp loại học lực, danh hiệu
-        foreach ($students as &$student) {
-            $DiemTBHocKy = null;
-            $TongDiemTB = 0;
-            $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
-            $SoMonDuCotDiem = 0; // Số môn có đủ cột điểm để tính điểm trung bình môn học
-
-            foreach ($student['Diem'] as $MaMH => $Diem) {
-                $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
-
-                // Lưu điểm trung bình môn học vào mảng
-                $student[$MaMH] = $DiemTBMonHoc;
-
-                if ($DiemTBMonHoc !== null) {
-                    $TongDiemTB += $DiemTBMonHoc;
-                    $SoMonDuCotDiem++;
-                }
-            }
-            // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
-            if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
-                $DiemTBHocKy = round($TongDiemTB / $SoMon, 1);
-            }
-            $student['DiemTBHocKy'] = $DiemTBHocKy;
-
-            // Xếp loại học lực
-            $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTBHocKy);
-
-            // Xếp loại danh hiệu
-            $DanhHieuModel = new DanhHieuModel();
-            $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTBHocKy, $student['DiemHK']);
-            $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
-        }
+        log_message('info', 'Student List: ' . print_r($students, true));
 
         return view('director/student/record', [
             'studentList' => $students,
+            'yearList' => $yearList,
             'classList' => $classList,
             'selectedYear' => $selectedYear,
             'selectedSemesterText' => $selectedSemesterText,
@@ -612,6 +841,7 @@ class DirectorController extends Controller
     public function titleList()
     {
         $DanhHieuModel = new DanhHieuModel();
+        $ThamSoModel = new ThamSoModel();
 
         // Nhận giá trị từ khóa tìm kiếm từ query string
         $searchTerm = $this->request->getVar('search') ?? '';
@@ -624,11 +854,34 @@ class DirectorController extends Controller
         // Lấy danh sách danh hiệu và sắp xếp theo DiemTBToiThieu giảm dần
         $titleList = $DanhHieuModel->orderBy('DiemTBToiThieu', 'DESC')->findAll();
 
+        // Lấy giá trị MucHocPhiNamHoc từ bảng ThamSo
+        $HocPhi = $ThamSoModel->getGiaTriThamSo('MucHocPhiNamHoc');
+
+        // Lấy giá trị SiSoLopToiDa từ bảng ThamSo
+        $SiSoLopToiDa = $ThamSoModel->getGiaTriThamSo('SiSoLopToiDa');
+
         // Truyền dữ liệu tới view
         return view('director/title/list', [
             'titleList' => $titleList,
             'searchTerm' => $searchTerm,
+            'HocPhi' => $HocPhi,
+            'SiSoLopToiDa' => $SiSoLopToiDa,
         ]);
+    }
+
+    public function updateRule()
+    {
+        $ThamSoModel = new ThamSoModel();
+
+        // Lấy dữ liệu từ form
+        $MucHocPhiNamHoc = $this->request->getPost('student_fee');
+        $SiSoLopToiDa = $this->request->getPost('student_quantity');
+
+        // Cập nhật giá trị MucHocPhiNamHoc và SiSoLopToiDa trong bảng ThamSo
+        $ThamSoModel->updateGiaTriThamSo('MucHocPhiNamHoc', $MucHocPhiNamHoc);
+        $ThamSoModel->updateGiaTriThamSo('SiSoLopToiDa', $SiSoLopToiDa);
+
+        return redirect()->back()->with('success', 'Cập nhật quy định thành công!');
     }
 
     public function titleAdd()
@@ -975,6 +1228,88 @@ class DirectorController extends Controller
         return redirect()->back()->with('success', 'Cập nhật lớp học thành công!');
     }
 
+    public function deleteClass($MaLop)
+    {
+        $db = \Config\Database::connect();
+        $LopModel = new LopModel();
+        $PhanCongModel = new PhanCongModel();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $DiemModel = new DiemModel();
+        $NamHoc = $this->request->getGet('NamHoc');
+
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra lớp có tồn tại trong năm học không
+            $class = $LopModel->where(['MaLop' => $MaLop])->first();
+            if (!$class) {
+                return redirect()->back()->with('error', 'Không tìm thấy lớp học.');
+            }
+
+            // Kiểm tra ràng buộc với bảng HOCSINH_LOP
+            if ($HocSinhLopModel->where(['MaLop' => $MaLop, 'NamHoc' => $NamHoc])->countAllResults() > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa lớp vì có học sinh đang theo học.');
+            }
+
+            // Kiểm tra ràng buộc với bảng DIEM
+            // Lấy danh sách học sinh trong lớp theo MaLop và NamHoc
+            $studentsInClass = $HocSinhLopModel->where(['MaLop' => $MaLop, 'NamHoc' => $NamHoc])->findAll();
+
+            // Kiểm tra nếu có học sinh trong lớp này có điểm
+            if (!empty($studentsInClass)) {
+                $studentIds = array_column($studentsInClass, 'MaHS'); // Lấy danh sách MaHS của học sinh trong lớp
+
+                // Kiểm tra xem có điểm nào của học sinh trong bảng DIEM không
+                if ($DiemModel->whereIn('MaHS', $studentIds)->where('NamHoc', $NamHoc)->countAllResults() > 0) {
+                    return redirect()->back()->with('error', 'Không thể xóa lớp vì có dữ liệu điểm.');
+                }
+            }
+
+            // Kiểm tra phân công giáo viên
+            $assignments = $PhanCongModel->where(['MaLop' => $MaLop, 'NamHoc' => $NamHoc])->findAll();
+            $GiaoVienChuNhiem = null;
+            $GiaoVienBoMon = [];
+
+            foreach ($assignments as $assignment) {
+                if ($assignment['VaiTro'] === 'Giáo viên chủ nhiệm') {
+                    $GiaoVienChuNhiem = $assignment;
+                } else {
+                    $GiaoVienBoMon[] = $assignment;
+                }
+            }
+
+            // Nếu có giáo viên bộ môn, không cho phép xóa
+            if (!empty($GiaoVienBoMon)) {
+                return redirect()->back()->with('error', 'Không thể xóa lớp vì có phân công giáo viên bộ môn.');
+            }
+
+            // Thực hiện xóa lớp và phân công giáo viên chủ nhiệm
+            if ($GiaoVienChuNhiem) {
+                $PhanCongModel->delete($GiaoVienChuNhiem['MaPC']);
+            }
+
+            // Thực hiện xóa lớp
+            $deletedClass = $LopModel->delete($MaLop);
+            if (!$deletedClass) {
+                throw new \Exception('Xóa lớp học thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa lớp.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa lớp học thành công!');
+        } catch (\Exception $e) {
+            // Rollback transaction khi xảy ra lỗi
+            $db->transRollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
     // Màn hình xếp lớp
     public function classArrangeStudent($MaLop)
     {
@@ -1002,6 +1337,99 @@ class DirectorController extends Controller
         ]);
     }
 
+    public function deleteStudentFromClass($MaHS)
+    {
+        $db = \Config\Database::connect();
+        $HocSinhLopModel = new HocSinhLopModel();
+        $DiemModel = new DiemModel();
+        $ViPhamModel = new ViPhamModel();
+        $HanhKiemModel = new HanhKiemModel();
+        $PhieuThanhToanModel = new ThanhToanModel();
+        $HoaDonModel = new HoaDonModel();
+
+        $MaLop = $this->request->getGet('MaLop');
+        $NamHoc = $this->request->getGet('NamHoc');
+
+        log_message('debug', 'MaHS: ' . $MaHS . ', MaLop: ' . $MaLop . ', NamHoc: ' . $NamHoc);
+
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra học sinh có tồn tại trong lớp học không
+            $studentInClass = $HocSinhLopModel->where([
+                'MaLop' => $MaLop,
+                'NamHoc' => $NamHoc,
+                'MaHS' => $MaHS,
+            ])->first();
+
+            if (!$studentInClass) {
+                return redirect()->back()->with('error', 'Không tìm thấy học sinh trong lớp học đã chọn.');
+            }
+
+            // Kiểm tra ràng buộc với bảng DIEM
+            if ($DiemModel->where(['MaHS' => $MaHS, 'NamHoc' => $NamHoc])->countAllResults() > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa học sinh vì đã có dữ liệu điểm.');
+            }
+
+            // Kiểm tra ràng buộc với bảng VIPHAM
+            if ($ViPhamModel->where(['MaHS' => $MaHS, 'NamHoc' => $NamHoc])->countAllResults() > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa học sinh vì đã có dữ liệu vi phạm.');
+            }
+
+            // Kiểm tra và xử lý bảng HOADON
+            $hoaDon = $HoaDonModel->where(['MaHS' => $MaHS, 'NamHoc' => $NamHoc])->first();
+            if ($hoaDon) {
+                if ($hoaDon['TrangThai'] === 'Đã thanh toán' || $hoaDon['DaThanhToan'] > 0) {
+                    return redirect()->back()->with('error', 'Không thể xóa học sinh vì hóa đơn đã thanh toán hoặc thanh toán một phần.');
+                }
+
+                if ($hoaDon['TrangThai'] === 'Chưa thanh toán') {
+                    // Xóa hóa đơn nếu chưa thanh toán
+                    $HoaDonModel->delete($hoaDon['MaHD']);
+                }
+            }
+
+            // Kiểm tra và xóa dữ liệu HANHKIEM nếu điểm là mặc định
+            $hanhKiem = $HanhKiemModel->where(['MaHS' => $MaHS, 'NamHoc' => $NamHoc])->findAll();
+            if (!empty($hanhKiem)) {
+                foreach ($hanhKiem as $hk) {
+                    if ($hk['DiemHK'] != 100) {
+                        return redirect()->back()->with('error', 'Không thể xóa học sinh vì có dữ liệu hạnh kiểm quan trọng.');
+                    }
+                }
+
+                // Xóa tất cả các bản ghi hạnh kiểm liên quan
+                $HanhKiemModel->where(['MaHS' => $MaHS, 'NamHoc' => $NamHoc])->delete();
+            }
+
+            // Thực hiện xóa học sinh khỏi lớp
+            $deletedStudent = $HocSinhLopModel->where([
+                'MaLop' => $MaLop,
+                'NamHoc' => $NamHoc,
+                'MaHS' => $MaHS,
+            ])->delete();
+
+            if (!$deletedStudent) {
+                throw new \Exception('Xóa học sinh khỏi lớp thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa học sinh khỏi lớp.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa học sinh khỏi lớp thành công!');
+        } catch (\Exception $e) {
+            // Rollback transaction khi xảy ra lỗi
+            $db->transRollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     public function classArrangeTeacher($MaLop)
     {
         //Lưu học kỳ vào session
@@ -1023,7 +1451,7 @@ class DirectorController extends Controller
         //Lấy thông tin giáo viên dạy lớp được chọn
         $GiaoVienModel = new GiaoVienModel();
 
-        $SQL = "SELECT giaovien.*, taikhoan.*, lop.TenLop, monhoc.TenMH
+        $SQL = "SELECT giaovien.*, taikhoan.*, lop.TenLop, monhoc.*
         FROM giaovien
         JOIN taikhoan ON taikhoan.MaTK = giaovien.MaTK
         JOIN phancong ON phancong.MaGV = giaovien.MaGV
@@ -1059,6 +1487,84 @@ class DirectorController extends Controller
             'selectedSemester' => $selectedSemester,
             'searchTerm' => $searchTerm,
         ]);
+    }
+
+    public function deleteTeacherFromClass($MaGV)
+    {
+        $db = \Config\Database::connect();
+        $PhanCongModel = new PhanCongModel();
+        $DiemModel = new DiemModel();
+
+        $MaLop = $this->request->getGet('MaLop');
+        $NamHoc = $this->request->getGet('NamHoc');
+        $HocKy = preg_replace('/\D/', '', $this->request->getGet('HocKy'));
+        $MaMH = $this->request->getGet('MaMH');
+
+        log_message('debug', 'MaGV: ' . $MaGV . ', MaLop: ' . $MaLop . ', NamHoc: ' . $NamHoc . ', HocKy: ' . $HocKy . ', MaMH: ' . $MaMH);
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra phân công của giáo viên trong lớp học trong bảng PHANCONG
+            $PhanCong = $PhanCongModel->where([
+                'MaGV' => $MaGV,
+                'MaLop' => $MaLop,
+                'MaMH' => $MaMH,
+                'NamHoc' => $NamHoc,
+                'HocKy' => $HocKy,
+                'VaiTro' => 'Giáo viên bộ môn',
+            ])->first();
+
+            if (!$PhanCong) {
+                return redirect()->back()->with('error', 'Không tìm thấy phân công giáo viên trong lớp học đã chọn.');
+            }
+
+            // Kiểm tra xem giáo viên có điểm đã nhập cho lớp này không
+            $sql = "
+                    SELECT diem.*
+                    FROM diem
+                    JOIN hocsinh_lop ON hocsinh_lop.MaHS = diem.MaHS
+                    WHERE diem.MaGV = ?
+                    AND diem.MaMH = ?
+                    AND diem.NamHoc = ?
+                    AND diem.HocKy = ?
+                    AND hocsinh_lop.MaLop = ?
+                ";
+            $query = $db->query($sql, [
+                $MaGV,
+                $MaMH,
+                $NamHoc,
+                $HocKy,
+                $MaLop
+            ]);
+
+            $Diem = $query->getResult();
+
+            if ($Diem) {
+                return redirect()->back()->with('error', 'Không thể xóa giáo viên vì đã có dữ liệu điểm.');
+            }
+
+            // Thực hiện xóa phân công giáo viên
+            $deletedAssignment = $PhanCongModel->delete($PhanCong['MaPC']);
+
+            if (!$deletedAssignment) {
+                throw new \Exception('Xóa phân công giáo viên thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa giáo viên khỏi lớp.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa giáo viên khỏi lớp thành công!');
+        } catch (\Exception $e) {
+            // Rollback transaction khi xảy ra lỗi
+            $db->transRollback();
+
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function classArrangeAddStudent($MaLop)
@@ -1158,11 +1664,6 @@ class DirectorController extends Controller
             // Xác nhận transaction
             $db->transCommit();
 
-            // Khi học sinh được xếp lớp, hóa đơn sẽ được thêm vào db
-            $Hoadon = new HoaDonModel();
-            $result = $Hoadon->addInvoice($MaHS, $year);
-            // chỗ này thêm lỗi nè 
-
             return redirect()->back()->with('success', 'Thêm học sinh vào lớp học thành công!');
         } catch (\Exception $e) {
             // Nếu có lỗi, rollback transaction
@@ -1255,10 +1756,10 @@ class DirectorController extends Controller
             $errors['teacher_TeacherAssigned'] = 'Giáo viên đã được phân công dạy môn học này trong lớp học.';
         }
 
-        // Kiểm tra môn học đã có giáo viên phân công dạy trong năm học, học kỳ và lớp học đó chưa
-        if ($PhanCongModel->isSubjectAssigned($MaMH, $MaLop, $HocKy, $year)) {
-            $errors['teacher_SubjectAssigned'] = 'Môn học đã có giáo viên phân công dạy trong lớp học.';
-        }
+        // // Kiểm tra môn học đã có giáo viên phân công dạy trong năm học, học kỳ và lớp học đó chưa
+        // if ($PhanCongModel->isSubjectAssigned($MaMH, $MaLop, $HocKy, $year)) {
+        //     $errors['teacher_SubjectAssigned'] = 'Môn học đã có giáo viên phân công dạy trong lớp học.';
+        // }
 
         //Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -1448,6 +1949,62 @@ class DirectorController extends Controller
         $GiaoVienModel->query($GiaoVien);
 
         return redirect()->back()->with('success', 'Cập nhật thông tin giáo viên thành công!');
+    }
+
+    public function deleteEmployeeTeacher($MaGV)
+    {
+        $db = \Config\Database::connect();
+        $giaoVienModel = new GiaoVienModel();
+        $taiKhoanModel = new TaiKhoanModel();
+        $phanCongModel = new PhanCongModel();
+        $diemModel = new DiemModel();
+
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra tồn tại giáo viên
+            $giaoVien = $giaoVienModel->find($MaGV);
+            if (!$giaoVien) {
+                return redirect()->back()->with('error', 'Không tìm thấy giáo viên.');
+            }
+
+            // Kiểm tra ràng buộc: Giáo viên có dữ liệu liên quan trong bảng PHANCONG không
+            $phanCongBound = $phanCongModel->where('MaGV', $MaGV)->countAllResults();
+            if ($phanCongBound > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa giáo viên vì đã được phân công giảng dạy.');
+            }
+
+            // Kiểm tra ràng buộc: Giáo viên có dữ liệu liên quan trong bảng DIEM không
+            $diemBound = $diemModel->where('MaGV', $MaGV)->countAllResults();
+            if ($diemBound > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa giáo viên vì đã có dữ liệu điểm liên quan.');
+            }
+
+            // Xóa giáo viên
+            if (!$giaoVienModel->delete($MaGV)) {
+                throw new \Exception('Xóa giáo viên thất bại.');
+            }
+
+            // Xóa tài khoản liên kết với giáo viên
+            if (!$taiKhoanModel->delete($giaoVien['MaTK'])) {
+                throw new \Exception('Xóa tài khoản giáo viên thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            // Kiểm tra trạng thái transaction
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa giáo viên.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa giáo viên thành công!');
+        } catch (\Exception $e) {
+            // Rollback transaction nếu có lỗi
+            $db->transRollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     // Màn hình quản lý giám thị
@@ -1640,6 +2197,61 @@ class DirectorController extends Controller
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
         }
     }
+
+    public function deleteEmployeeSupervisor($MaGT)
+    {
+        // Kết nối database
+        $db = \Config\Database::connect();
+        $GiamThiModel = new GiamThiModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+        $ViPhamModel = new ViPhamModel();
+
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Lấy thông tin giám thị theo mã MaGT
+            $GiamThi = $GiamThiModel->find($MaGT);
+
+            // Kiểm tra giám thị có tồn tại không
+            if (!$GiamThi) {
+                return redirect()->back()->with('error', 'Không tìm thấy giám thị.');
+            }
+
+            // Kiểm tra ràng buộc với bảng ViPham
+            if ($ViPhamModel->where('MaGT', $MaGT)->countAllResults() > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa giám thị vì đã có ràng buộc dữ liệu.');
+            }
+
+            // Xóa giám thị
+            if (!$GiamThiModel->delete($MaGT)) {
+                throw new \Exception('Xóa giám thị thất bại.');
+            }
+
+            // Xóa tài khoản liên kết với giám thị
+            if (!$TaiKhoanModel->delete($GiamThi['MaTK'])) {
+                throw new \Exception('Xóa tài khoản giám thị thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            // Kiểm tra trạng thái transaction
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa giám thị.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa giám thị thành công!');
+        } catch (\Exception $e) {
+            // Nếu có lỗi, rollback transaction
+            $db->transRollback();
+
+            // Hiển thị thông báo lỗi
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+
 
     // Màn hình thông tin cá nhân
     public function profile()
@@ -1866,7 +2478,7 @@ class DirectorController extends Controller
         }
         return view('director/employee/cashier/update', ['cashier' => $ThuNgan]);
     }
-    
+
 
     public function updateEmployeeCashier($MaTN)
     {
@@ -1935,6 +2547,58 @@ class DirectorController extends Controller
             return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
+        }
+    }
+
+    public function deleteEmployeeCashier($MaTN)
+    {
+        $db = \Config\Database::connect();
+        $ThuNganModel = new ThuNganModel();
+        $TaiKhoanModel = new TaiKhoanModel();
+        $HoaDonModel = new HoaDonModel();
+        $PhieuThanhToanModel = new ThanhToanModel;
+
+        // Bắt đầu transaction
+        $db->transStart();
+
+        try {
+            // Kiểm tra thu ngân có tồn tại không
+            $ThuNgan = $ThuNganModel->find($MaTN);
+            if (!$ThuNgan) {
+                return redirect()->back()->with('error', 'Không tìm thấy thông tin thu ngân.');
+            }
+
+            // Kiểm tra ràng buộc với bảng PHIEUTHANHTOAN
+            $isBound = $PhieuThanhToanModel->where('MaTN', $MaTN)->countAllResults();
+            if ($isBound > 0) {
+                return redirect()->back()->with('error', 'Không thể xóa thu ngân vì đã có ràng buộc dữ liệu trong bảng PHIEUTHANHTOAN.');
+            }
+
+            // Xóa thu ngân
+            if (!$ThuNganModel->delete($MaTN)) {
+                throw new \Exception('Xóa thu ngân thất bại.');
+            }
+
+            // Xóa tài khoản liên kết với thu ngân
+            if (!$TaiKhoanModel->delete($ThuNgan['MaTK'])) {
+                throw new \Exception('Xóa tài khoản thu ngân thất bại.');
+            }
+
+            // Hoàn tất transaction
+            $db->transComplete();
+
+            // Kiểm tra trạng thái transaction
+            if ($db->transStatus() === false) {
+                throw new \Exception('Có lỗi xảy ra khi thực hiện xóa thu ngân.');
+            }
+
+            return redirect()->back()->with('success', 'Xóa thu ngân thành công!');
+        } catch (\Exception $e) {
+            // Nếu có lỗi, rollback transaction
+            $db->transRollback();
+
+            // Hiển thị thông báo lỗi
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

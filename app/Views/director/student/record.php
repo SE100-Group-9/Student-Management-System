@@ -15,14 +15,14 @@
                     <div class="tool-search">
                         <?= view('components/searchbar') ?>
                         <?= view('components/dropdown', [
-                            'options' => ['2023-2024', '2024-2025', '2025-2026'],
+                            'options' => $yearList ?? [],
                             'dropdown_id' => 'year-dropdown',
                             'name' => 'year',
                             'selected_text' => 'Chọn năm học',
                             'value' => $selectedYear ?? ''
                         ]) ?>
                         <?= view('components/dropdown', [
-                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'options' => ['Học kỳ 1', 'Học kỳ 2', 'Cả năm'],
                             'dropdown_id' => 'semester-dropdown',
                             'name' => 'semester',
                             'selected_text' => 'Chọn học kỳ',

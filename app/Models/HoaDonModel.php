@@ -25,6 +25,18 @@ class HoaDonModel extends Model
         $this->insert($data);
     }
 
+    // Xem thông tin hóa đơn của học sinh
+    public function getInvoiceInfo($MaHS, $NamHoc)
+    {
+        $SQL = "SELECT hoadon.MaHS, taikhoan.*, lop.TenLop, hoadon.*
+                FROM hoadon
+                JOIN hocsinh ON hoadon.MaHS = hocsinh.MaHS 
+                JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+                JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS AND hocsinh_lop.NamHoc = ?
+                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop 
+                WHERE hocsinh_lop.MaLop = ? AND hoadon.NamHoc = ?";
+        return $this->db->query($SQL, [$NamHoc, $MaHS, $NamHoc])->getResultArray();
+    }
 
     // Lấy tất cả danh sách hóa đơn
     public function getAllInvoices($selectedStatus, $selectedYear, $searchStudent)

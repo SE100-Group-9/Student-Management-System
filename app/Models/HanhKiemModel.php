@@ -126,10 +126,10 @@ class HanhKiemModel extends Model
         return $counts;
     }
 
-        // Lấy dánh sách top 20 học sinh có điểm hạnh kiểm thấp nhất trong học kỳ và năm học
-        public function getTopWarnedStudent($HocKy, $NamHoc)
-        {
-            $SQL = "SELECT hocsinh.MaHS, taikhoan.HoTen, lop.TenLop, hanhkiem.DiemHK, COUNT(vipham.MaVP) AS SoLanViPham, hanhkiem.TrangThai
+    // Lấy dánh sách top 20 học sinh có điểm hạnh kiểm thấp nhất trong học kỳ và năm học
+    public function getTopWarnedStudent($HocKy, $NamHoc)
+    {
+        $SQL = "SELECT hocsinh.MaHS, taikhoan.HoTen, lop.TenLop, hanhkiem.DiemHK, COUNT(vipham.MaVP) AS SoLanViPham, hanhkiem.TrangThai
                     FROM hocsinh
                     JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
                     JOIN hocsinh_lop ON hocsinh.MaHS = hocsinh_lop.MaHS
@@ -141,7 +141,17 @@ class HanhKiemModel extends Model
                     GROUP BY hocsinh.MaHS, taikhoan.HoTen, lop.TenLop, hanhkiem.DiemHK, hanhkiem.TrangThai
                     ORDER BY hanhkiem.DiemHK ASC, SoLanViPham DESC, lop.TenLop ASC
                     LIMIT 20";
-            return $this->db->query($SQL, [$NamHoc, $HocKy, $NamHoc])->getResultArray();
-                    
-        }
+        return $this->db->query($SQL, [$NamHoc, $HocKy, $NamHoc])->getResultArray();
+    }
+
+    // Lấy điểm hạnh kiểm của học sinh trong học kỳ và năm học dựa vào MaHS, HocKy, NamHoc
+    public function getConductScore($MaHS, $HocKy, $NamHoc)
+    {
+        $SQL = "SELECT DiemHK
+                FROM hanhkiem
+                WHERE MaHS = ? AND HocKy = ? AND NamHoc = ?";
+        $query = $this->db->query($SQL, [$MaHS, $HocKy, $NamHoc]);
+        $result = $query->getRowArray();
+        return $result ? $result['DiemHK'] : 0;
+    }
 }

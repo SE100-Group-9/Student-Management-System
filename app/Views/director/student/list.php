@@ -16,7 +16,7 @@
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
 
                         <?= view('components/dropdown', [
-                            'options' => $yearList ?? [], // Thay bằng danh sách năm học từ controller
+                            'options' => $yearList ?? [],
                             'dropdown_id' => 'year-dropdown',
                             'name' => 'year',
                             'selected_text' => 'Chọn năm học',
@@ -24,7 +24,7 @@
                         ]) ?>
 
                         <?= view('components/dropdown', [
-                            'options' => $classList ?? [], // Thay bằng danh sách lớp từ controller
+                            'options' => $classList ?? [],
                             'dropdown_id' => 'class-dropdown',
                             'name' => 'class',
                             'selected_text' => 'Chọn lớp học',
@@ -49,6 +49,14 @@
 
                 </div>
             </div>
+
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('error')) : ?>
+                <div style="color: red;"><?= session()->getFlashdata('error') ?></div>
+            <?php endif; ?>
+
             <div class="tabless">
                 <?= view('components/tables/directorStudentList', ['studentlist' => $studentlist]) ?>
             </div>

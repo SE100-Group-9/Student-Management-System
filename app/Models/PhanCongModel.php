@@ -105,4 +105,5 @@ class PhanCongModel extends Model
                 ORDER BY lop.TenLop";
         return $this->db->query($SQL, [$MaGV, $NamHoc, $HocKy])->getResultArray();
     }
+
 }
