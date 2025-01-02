@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
+
 <div class="employee-teacher-lists">
     <div class="lists-heading">
         <?= view('components/heading') ?>
@@ -13,8 +15,9 @@
                     <div class="tool-search">
                         <?= view('components/filter') ?>
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
-                    </div>
-                </form>
+                </form> 
+            </div>
+                
                 <div class="tool-add">
                     <a style="text-decoration: none" href="/sms/public/director/employee/teacher/add">
                         <?= view('components/add', ['button_text' => 'Thêm giáo viên']) ?>
@@ -24,7 +27,7 @@
                 </div>
             </div>
             <div class="tabless">
-                <?= view('components/tables/directorEmployeeTeacher', ['teacherList' => $teacherList]) ?>
+                <?= view('components/tables/directorEmployeeteacher', ['teacherList' => $teacherList]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -101,6 +104,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        padding-top: 10px;
     }
 
     .tool-add {

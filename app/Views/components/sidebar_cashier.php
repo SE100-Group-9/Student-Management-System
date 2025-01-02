@@ -16,7 +16,9 @@
         </div>
         <div id="fee-deeper" class="fee-deeper">
             <div class="payment pointer">
-                <p>Danh sách</p>
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/cashier//invoice/list">
+                    <p>Danh sách</p>
+                </a>
             </div>
         </div>
     </div>

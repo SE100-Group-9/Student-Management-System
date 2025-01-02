@@ -9,43 +9,33 @@
     .searchbar {
         display: flex;
         width: 100%;
-        height: 40px;
-        /* Chiều cao cố định */
-        padding: 0 10px;
-        /* Thêm padding cho khung bao quanh */
-        justify-content: space-between;
-        /* Giãn đều các phần tử */
-        align-items: center;
-        /* Căn giữa các phần tử theo chiều dọc */
+        height: 40px; /* Chiều cao cố định */
+        padding: 0 10px; /* Thêm padding cho khung bao quanh */
+        justify-content: space-between; /* Giãn đều các phần tử */
+        align-items: center; /* Căn giữa các phần tử theo chiều dọc */
         border-radius: 10px;
         border: 1px solid rgba(0, 60, 60, 0.20);
         background: var(--White, #FFF);
         transition: border-color 0.3s ease;
         color: #CCC;
-        font-family: Inter;
+        font-family: Inter, sans-serif;
         font-size: 16px;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
-        /* Bao gồm padding và border trong kích thước tổng thể */
+        box-sizing: border-box; /* Bao gồm padding và border trong kích thước tổng thể */
     }
 
     .searchbar input {
-        flex: 1;
-        /* Chiếm không gian còn lại trong .searchbar */
-        height: 100%;
-        /* Đảm bảo input chiếm toàn bộ chiều cao của .searchbar */
+        flex: 1; /* Chiếm không gian còn lại trong .searchbar */
+        height: calc(100% - 2px); /* Chiều cao giảm trừ border nếu cần */
         background: transparent;
         color: #000;
-        font-family: Inter;
+        font-family: Inter, sans-serif;
         font-size: 14px;
-        font-style: normal;
         font-weight: 400;
-        line-height: normal;
-        padding: 0px;
-        margin-top: 10px;
-        border: none;
-        /* Padding trong input */
+        padding: 10px; /* Padding trong input */
+        border: none; /* Xóa border mặc định */
+        outline: none; /* Xóa viền mặc định khi focus */
+        line-height: normal; /* Đặt lại line-height */
         vertical-align: middle;
         display: inline-block;
         box-sizing: border-box;
@@ -53,8 +43,7 @@
 
     .searchbar svg {
         cursor: pointer;
-        margin-left: 10px;
-        /* Khoảng cách giữa biểu tượng và input */
+        margin-left: 10px; /* Khoảng cách giữa biểu tượng và input */
     }
 </style>
 

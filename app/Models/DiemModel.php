@@ -172,4 +172,45 @@ class DiemModel extends Model
             'changes' => $changes
         ];
     }
+
+    // Lấy nhận xét của giáo viên về học sinh dựa vào mã giáo viên, tên lớp, học kỳ và năm học
+    public function getTeacherComment($MaGV, $TenLop, $HocKy, $NamHoc)
+    {
+        $SQL = "SELECT hocsinh.MaHS, taikhoan.HoTen, monhoc.TenMH, diem.NhanXet,
+                        diem.Diem15P_1, diem.Diem15P_2, diem.Diem1Tiet_1, diem.Diem1Tiet_2, diem.DiemCK
+                FROM hocsinh_lop
+                JOIN hocsinh ON hocsinh_lop.MaHS = hocsinh.MaHS AND hocsinh_lop.NamHoc = ?
+                JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop AND lop.TenLop = ?
+                LEFT JOIN diem ON hocsinh.MaHS = diem.MaHS
+                    AND diem.MaGV = ? 
+                    AND diem.HocKy = ? 
+                    AND diem.NamHoc = ?
+                LEFT JOIN monhoc ON diem.MaMH = monhoc.MaMH";
+        $studentList = $this->db->query($SQL, [$NamHoc, $TenLop, $MaGV, $HocKy, $NamHoc])->getResultArray();
+
+        foreach ($studentList as &$student) {
+            $student['DiemTBMonHoc'] = $this->getAverageScore($student);
+        }
+        return $studentList;
+    }
+
+    // Lưu hoặc cập nhật nhận xét của giáo viên về học sinh dưa vào mã giáo viên, mã học sinh, học kỳ, năm học và nội dung nhận xét
+    public function updateTeacherComment($MaHS, $MaGV, $MaMH, $NhanXet, $HocKy, $NamHoc)
+    {
+        // Kiểm tra xem dữ liệu đã tồn tại chưa
+        $SQLCheck = "SELECT COUNT(*) AS count
+                    FROM diem
+                    WHERE MaHS = ? AND MaGV = ? AND MaMH = ? AND HocKy = ? AND NamHoc = ?";
+        $query = $this->db->query($SQLCheck, [$MaHS, $MaGV, $MaMH, $HocKy, $NamHoc]);
+        $result = $query->getRow();
+
+        // Nếu dữ liệu đã tồn tại, cập nhật nó
+        if ($result->count > 0) {
+            $SQLUpdate = "UPDATE diem
+                        SET NhanXet = ?
+                        WHERE MaHS = ? AND MaGV = ? AND MaMH = ? AND HocKy = ? AND NamHoc = ?";
+            $this->db->query($SQLUpdate, [$NhanXet, $MaHS, $MaGV, $MaMH, $HocKy, $NamHoc]);
+        } 
+    }
 }

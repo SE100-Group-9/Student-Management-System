@@ -112,9 +112,10 @@ class HocSinhLopModel extends Model
     // Đếm tổng số học sinh trong năm học
     public function countTotalStudent($NamHoc)
     {
-        $SQL = "SELECT COUNT(DISTINCT MaHS) as SoLuongHS
+        $SQL = "SELECT COUNT(DISTINCT hocsinh.MaHS) as SoLuongHS
                 FROM hocsinh_lop
-                WHERE NamHoc = ?";
+                JOIN hocsinh ON hocsinh_lop.MaHS = hocsinh.MaHS
+                WHERE hocsinh.TinhTrang = 'Đang học' AND NamHoc = ?";
         $query = $this->db->query($SQL, [$NamHoc]);
         $result = $query->getRowArray();
         return $result ? $result['SoLuongHS'] : 0;

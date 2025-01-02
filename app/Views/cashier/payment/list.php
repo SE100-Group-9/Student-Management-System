@@ -5,21 +5,19 @@
         <?= view('components/heading'); ?>
     </div>
     <div class="body">
-    <div class="body-left">
-        <?= view('components/sidebar_cashier'); ?>
+        <div class="body-left">
+            <?= view('components/sidebar_cashier'); ?>
         </div>
         <div class="body-right">
-        Học phí / Quản lý học phí / Danh sách hóa đơn / Lịch sử thanh toán
-        <div class="invoicelist-tool">
+            Học phí / Quản lý học phí / Danh sách hóa đơn / Lịch sử thanh toán
             <form method="GET" action="/sms/public/cashier/payment/list/<?= $MaHD ?>">
-                <div class="tool-search">
-                    <?= view('components/searchbar'); ?>
+                <div class="tools">
+                    <?= view('components/searchbar') ?>
                 </div>
-            </form>   
-        </div>
-            <div class="tabless">
-                <?= view('components/tables/cashierPaymentList', ['paymentList' => $paymentList]) ?>
-            </div>
+                <div class="tabless">
+                    <?= view('components/tables/cashierPaymentList', ['paymentList' => $paymentList]) ?>
+                </div>
+            </form>
             <div style="max-width: 200px; align-items: flex-end">
                 <?= view('components/pagination'); ?>
             </div>
@@ -35,10 +33,6 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-
-    .hidden {
-        display: none;
     }
 
     .invoice-lists {
@@ -88,25 +82,19 @@
         overflow-y: auto;
     }
 
-    .invoicelist-tool {
+    .paymentlist-tools {
         display: flex;
         padding: 10px;
-        justify-content: space-between;
         align-items: flex-start;
+        gap: 10px;
         align-self: stretch;
         border-radius: 10px;
         background: #FFF;
     }
 
-    .tool-search {
+    .tools {
+        width: 50%;
         display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .tool-add {
-        display: flex;
-        align-items: center;
         gap: 10px;
     }
 
@@ -118,7 +106,7 @@
 
 
 <script>
-                    document.getElementById('add-bill-btn').addEventListener('click', function () {
-                        window.location.href = "<?= base_url('cashier/invoice/add') ?>";;
-                    });
-                </script>
+    document.getElementById('add-bill-btn').addEventListener('click', function () {
+    window.location.href = "<?= base_url('cashier/invoice/add') ?>";;
+    });
+</script>
