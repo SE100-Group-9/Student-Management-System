@@ -84,6 +84,21 @@
         white-space: nowrap;
     }
 
+    #teacherEnterScore td input {
+        width: 100%;
+        padding: 5px;
+        text-align: center; 
+        font-size: 14px;
+        border: 1px solid rgba(185, 185, 185, 0.75);
+        box-sizing: border-box;
+        border-radius: 4px; 
+    }
+
+    #teacherEnterScore td input:focus {
+        outline: none;
+        border-color: rgba(0, 60, 60, 0.75); 
+    }
+
     #pagination-container {
         display: flex;
         justify-content: flex-end;
