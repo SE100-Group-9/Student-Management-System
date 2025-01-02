@@ -1,161 +1,38 @@
+<?php if (!empty($LoaiViPham) && is_array($LoaiViPham)): ?>
 <div id="table-container">
     <table id="supervisorCategory">
         <thead>
             <tr>
                 <th>Mã vi phạm</th>
-                <th>Tên vi phạm</th>
+                <th>Tên loại vi phạm</th>
                 <th>Điểm trừ</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
         <tbody>
+        <?php foreach ($LoaiViPham as $index => $loaivipham): ?>
             <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
+                <td><?= $loaivipham['MaLVP'] ?></td>
+                <td><?= $loaivipham['TenLVP'] ?></td>
+                <td><?= $loaivipham['DiemTru'] ?></td>
                 <td colspan="2">
                     <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
+                        <a href="/sms/public/supervisor/updatecategory/<?= $loaivipham['MaLVP'] ?>">
                             <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
+                        <a href="/sms/public/supervisor/deletecategory/<?= $loaivipham['MaLVP'] ?>" title="Xóa vi phạm"  onclick="return confirm('Bạn có chắc chắn muốn xóa loại vi phạm này?')">
+                            <?= view('components/delete_button'); ?>
                     </div>
                 </td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Đi trễ</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Nghỉ học không phép</td>
-                <td>3</td>
-                <td colspan="2">
-                    <div class="button-container">
-                        <a href="/sms/public/supervisor/updatecategory">
-                            <?= view('components/edit_button'); ?>
-                        </a>
-                        <?= view('components/delete_button'); ?>
-                    </div>
-                </td>
-            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
     <div id="pagination-container"></div>
 </div>
+<?php else: ?>
+    <p>Không có dữ liệu hóa đơn.</p>
+<?php endif; ?>
+
 
 <style>
     #table-container {

@@ -139,9 +139,3 @@
     }
 </style>
 
-
-<script>
-                    document.getElementById('add-bill-btn').addEventListener('click', function () {
-                        window.location.href = "<?= base_url('cashier/invoice/add') ?>";;
-                    });
-                </script>

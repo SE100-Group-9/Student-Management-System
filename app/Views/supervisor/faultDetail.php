@@ -9,9 +9,9 @@
             <?= view('components/sidebar_supervisor') ?>
         </div>
         <div class="body-right">
-            <h1>Thêm vi phạm</h1>
+            <h1>Quản lý / Quản lý hạnh kiểm / Thông tin vi phạm / Chi tiết vi phạm</h1>
             <h2>Thông tin vi phạm</h2>
-            <form method="POST" action="/sms/public/supervisor/addfault">
+            <form method="GET" action="/sms/public/supervisor/faultDetail/<?= $viPham['MaVP'] ?>">
                 <div class="add-fault-fields">
                     <div class="add-fault-field">
                         Mã học sinh
@@ -20,8 +20,9 @@
                             'name' => 'MaHS',
                             'id' => 'student-id', 
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Nhập mã học sinh',
+                            'value' => $viPham['MaHS']
                         ]) ?>
                     </div>
                     <div class="add-fault-field">
@@ -31,9 +32,9 @@
                             'name' => 'TenHS',
                             'id' => 'student-name',
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Tên học sinh',
-                            'value' => '',
+                            'value' => $viPham['TenHS'],
                         ]) ?>
                     </div>
                 </div>
@@ -45,9 +46,9 @@
                             'name' => 'Lop',
                             'id' => 'class', 
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Lớp',
-                            'value' => '',
+                            'value' => $viPham['TenLop'],
                         ]) ?>
                     </div>
                     <div class="add-fault-field">
@@ -58,63 +59,52 @@
                                 'id' => 'student-name',
                                 'required' => true,
                                 'readonly' => true,
-                                'value' => $HoTen,
+                                'value' => $viPham['TenGT'],
                             ]) ?>
                     </div>
                 </div>                
                 <div class="add-fault-fields">
                     <div class="add-fault-field">
-                        Học kì
-                        <?= view('components/dropdown', [
-                            'options' => ['Học kì 1', 'Học kì 2'],
-                            'dropdown_id' => 'semester-dropdown',
-                            'name' => 'HocKi',
-                            'value' => ''
-                        ]) ?>
+                            Học kì
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'TenGT',
+                                'id' => 'student-name',
+                                'required' => true,
+                                'readonly' => true,
+                                'value' => $viPham['HocKi']
+                            ]) ?>
                     </div>
                     <div class="add-fault-field">
-                        Năm học
-                        <?= view('components/dropdown', [
-                            'options' => $yearList ?? '',
-                            'dropdown_id' => 'year-dropdown',
-                            'name' => 'NamHoc',
-                            'value' => ''
-                        ]) ?>
+                            Năm học
+                            <?= view('components/input', [
+                                'type' => 'text',
+                                'name' => 'TenGT',
+                                'id' => 'student-name',
+                                'required' => true,
+                                'readonly' => true,
+                                'value' => $viPham['NamHoc'],
+                            ]) ?>
                     </div>
                 </div>
                  <div class="add-fault-fields">
-                   
-                        <div class="add-fault-field">
-                                    Lỗi vi phạm
-                                <?= view('components/dropdown', [
-                                    'options' => $categoryList ?? '',
-                                    'dropdown_id' => 'fault-dropdown',
-                                    'name' => 'Loi',
-                                    'value' => '',
+                    <div class="add-fault-field">
+                                Lỗi vi phạm
+                                <?= view('components/input', [
+                                    'type' => 'text',
+                                    'name' => 'TenGT',
+                                    'id' => 'student-name',
+                                    'required' => true,
+                                    'readonly' => true,
+                                    'value' => $viPham['TenLVP'],
                                 ]) ?>
-                        </div>                
+                        </div>              
                 </div>
 
-                <?php if (session()->getFlashdata('success')): ?>
-                    <div class="alert alert-success">
-                        <?= session()->getFlashdata('success') ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (session()->getFlashdata('errors')): ?>
-                    <div class="alert alert-danger">
-                        <?= session()->getFlashdata('error') ?>
-                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                            <p><?= $error ?><p>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
                 <div class="add-button">
                     <a href="/sms/public/supervisor/fault" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
-
-                    <?= view('components/save_button') ?> 
                 </div>
             </form>
         </div>

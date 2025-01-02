@@ -6,17 +6,26 @@
         <?= view('components/sidebar_supervisor'); ?>
         <div class="category-container">
             <p>Hạnh kiểm / Quản lý hạnh kiểm / Danh mục</p>
-            <div class="category-tool">
-                <div class="category-filter">
-                    <?= view('components/filter'); ?>
-                    <?= view('components/searchbar'); ?>
+            <div class="categorylist-tool">
+                <form method="GET" action="/sms/public/supervisor/category">
+                    <div class="tool-search">
+                        <div>
+                            <?= view('components/searchbar', ['placeholder' => 'Nhập tên vi phạm'])?>
+                        </div>
+                    </div>
+                </form>
+                <div class="tool-add">
+                        <a style="text-decoration: none" href="/sms/public/supervisor/addcategory">
+                            <?= view('components/add', ['button_text' => 'Thêm loại vi phạm']) ?>
+                        </a>
                 </div>
-                <a style="text-decoration: none" href="/sms/public/supervisor/addcategory">
-                    <?= view('components/add'); ?>
-                </a>
             </div>
-            <?= view('components/tables/supervisorCategory', ['tableId' => 'supervisorCategory']) ?>
-            <?= view('components/pagination'); ?>
+            <div class="tabless">
+                <?= view('components/tables/supervisorCategory', ['LoaiViPham' => $LoaiViPham]) ?>
+            </div>
+            <div style="max-width: 200px; align-items: flex-end">
+                <?= view('components/pagination'); ?>
+            </div>
         </div>
     </div>
 </div>
@@ -77,20 +86,38 @@
     margin-bottom: 20px; /* Khoảng cách giữa table và pagination */
 }
 
-.category-tool {
-    display: flex;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
-    align-self: stretch;
-    border-radius: 10px;
-    background: var(--White, #FFF);
-}
+.categorylist-tool {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+        border-radius: 10px;
+        background: #FFF;
+    }
+
+    
+.tool-add {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
 .category-filter {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
+.tabless {
+        width: 100%;
+        height: 100%;
+    }
 
 </style>

@@ -1,97 +1,140 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="supervisor-fault">
-    <?= view('components/heading'); ?>
+<div class="fault-lists">
+    <div class="lists-heading">
+        <?= view('components/heading'); ?>
+    </div>
     <div class="body">
+    <div class="body-left">
         <?= view('components/sidebar_supervisor'); ?>
-        <div class="fault-container">
-            <p>Quản lý / Quản lý hạnh kiểm / Thông tin vi phạm</p>
-            <div class="fault-tool">
-                <div class="fault-filter">
-                    <?= view('components/filter'); ?>
-                    <?= view('components/searchbar'); ?>
+        </div>
+        <div class="body-right">
+        Quản lý / Quản lý hạnh kiểm / Thông tin vi phạm
+        <div class="faultlist-tool">
+            <form method="GET" action="/sms/public/supervisor/fault">
+                <div class="tool-search">
+                    <?= view('components/searchbar', ['placeholder' => 'Nhập HS hoặc lớp']); ?>
+                    <?= view('components/dropdown', [
+                        'options' => ['Chọn học kì','Học kì 1', 'Học kì 2'], 
+                        'dropdown_id' => 'status-dropdown',
+                        'name' => 'semester',
+                        'selected_text' => 'Chọn học kì',
+                        ]) ?>
+                    <?= view('components/dropdown', [
+                        'options' => $yearList, 
+                        'dropdown_id' => 'year-dropdown',
+                        'name' => 'year',
+                        'selected_text' => 'Chọn năm học',
+                        ]) ?>
+                     <?= view('components/view_button') ?>
                 </div>
-                <a style="text-decoration: none" href="/sms/public/supervisor/addfault">
-                    <?= view('components/add'); ?>
-                </a>
+
+            </form>
+            <div style="display: none">
+                    <?= view('components/dropdown', []) ?>
+                </div>
+                <div class="tool-add">        
+                        <a style="text-decoration: none" href="/sms/public/supervisor/addfault">
+                            <?= view('components/add', ['button_text' => 'Thêm']) ?>
+                        </a>
+                </div>     
+        </div>
+            <div class="tabless">
+                <?= view('components/tables/supervisorFault', ['ViPham' => $viPham]) ?>
             </div>
-            <?= view('components/tables/supervisorFault', ['tableId' => 'supervisorFault']) ?>
-            <?= view('components/pagination'); ?>
+            <div style="max-width: 200px; align-items: flex-end">
+                <?= view('components/pagination'); ?>
+            </div>
         </div>
     </div>
 </div>
 
 
 <style>
-   *,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-.supervisor-fault {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    height: 100%;
-}
+    .hidden {
+        display: none;
+    }
 
-.body {
-    display: flex; 
-    flex-direction: row; 
-    background: #F0F2F5;
-    height: 100%;
-}
+    .fault-lists {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--White, #FFF);
+    }
 
-.heading {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
+    .lists-heading {
+        width: 100%;
+        height: 60px;
+        position: fixed;
+    }
 
-.fault-container {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    align-self: stretch;
-    width: 100%; 
-}
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        margin-top: 60px;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
 
-.fault-container p {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-.fault-container table {
-    width: 100%;
-    margin-bottom: 20px; /* Khoảng cách giữa table và pagination */
-}
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        overflow-y: auto;
+    }
 
-.fault-tool {
-    display: flex;
-    padding: 10px;
-    align-items: center;
-    justify-content: space-between;
-    align-self: stretch;
-    border-radius: 10px;
-    background: var(--White, #FFF);
-}
+    .faultlist-tool {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+        border-radius: 10px;
+        background: #FFF;
+    }
 
-.fault-filter {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
+    .tool-add {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tabless {
+        width: 100%;
+        height: 100%;
+    }
 </style>
+

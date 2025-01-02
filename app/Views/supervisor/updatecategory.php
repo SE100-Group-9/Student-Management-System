@@ -11,25 +11,25 @@
         <div class="body-right">
             <h1>Cập nhật lỗi vi phạm:</h1>
             <h2>Thông tin lỗi vi phạm:</h2>
-            <form method="POST" action=" ">
+            <form method="POST" action="/sms/public/supervisor/updatecategory/<?= $loaivipham['MaLVP']?>">
                 <div class="update-category-fields">
                     <div class="update-category-field">
                         Mã vi phạm 
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'category_id',
+                            'name' => 'MaLVP',
                             'readonly' => true,
-                            'value' => '01'
+                            'value' => $loaivipham['MaLVP']
                         ]) ?>
                     </div>
                     <div class="update-category-field">
                         Tên vi phạm
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'category_name',
+                            'name' => 'TenLVP',
                             'required' => true,
                             'readonly' => false,
-                            'value' => 'Đi trễ'
+                            'value' => $loaivipham['TenLVP']
                         ]) ?>
                     </div>
                 </div>
@@ -38,12 +38,28 @@
                         Điểm trừ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'minus_point',
+                            'name' => 'DiemTru',
                             'required' => true,
-                            'value' => '1'
+                            'readonly' => false,
+                            'value' => $loaivipham['DiemTru']
                         ]) ?>
                     </div>
                 </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                
                 <div class="update-category-btns">
                     <a href="/sms/public/supervisor/category" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>

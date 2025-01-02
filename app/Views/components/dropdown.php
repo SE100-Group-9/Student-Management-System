@@ -70,6 +70,8 @@ $value = $value ?? '';
         left: 0;
         /* Đảm bảo căn giữa từ bên trái */
         z-index: 2000;
+        max-height: 250px; /* Giới hạn chiều cao dropdown */
+        overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
     }
 
     .option {

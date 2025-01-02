@@ -145,4 +145,10 @@ class HocSinhLopModel extends Model
                 ORDER BY hocsinh.MaHS";
         return $this->db->query($SQL, [$TenLop, $NamHoc])->getResultArray();
     }
+
+    public function getYearList() {
+        $SQL = "SELECT DISTINCT NamHoc FROM hocsinh_lop ORDER BY NamHoc DESC";
+        $result = $this->db->query($SQL)->getResultArray();
+        return array_column($result, 'NamHoc');
+    }
 }

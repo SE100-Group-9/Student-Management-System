@@ -5,13 +5,15 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\TaiKhoanModel;
 use App\Models\GiamThiModel;
+use App\Models\LoaiViPhamModel;
+use App\Models\HocSinhLopModel;
+use App\Models\LopModel;
+use App\Models\ViPhamModel;
+use App\Models\HocSinhModel;
 
 class SupervisorController extends Controller
 {
-    public function fault()
-    {
-        return view('supervisor/fault');
-    }
+
 
     public function profile()
     {    
@@ -76,17 +78,68 @@ class SupervisorController extends Controller
 
     public function category()
     {
-        return view('supervisor/category');
+        $LoaiViPhamModel = new LoaiViPhamModel();
+
+        $searchLVP = $this->request->getVar('search') ?? '';
+        
+        
+        $LoaiViPham = $LoaiViPhamModel->getLVP($searchLVP);
+
+        
+        return view(
+            'supervisor/category',
+            [
+                'LoaiViPham' => $LoaiViPham,
+            ]
+        );
+        
     }
 
-    public function addfault()
-    {
-        return view('supervisor/addfault');
-    }
 
     public function addcategory()
-    {
+    {   
+        $errors = [];
+        $LoaiViPhamModel = new LoaiViPhamModel();
+
+
+
+
+        $TenLVP = $this->request->getPost('TenLVP');
+        $DiemTru = $this->request->getPost('DiemTru');
+
+        if (empty(trim($TenLVP)))
+        $errors['TenLVP'] = 'Tên vi phạm không được phép trống';
+        if (!is_numeric($DiemTru) || $DiemTru <= 0)
+        $errors['DiemTru'] = 'Điểm trừ không hợp lệ';
+        if (!empty($errors))
+        return redirect()->back()->withInput()->with('errors', $errors);
+
+        $data = [
+            'TenLVP'  => $TenLVP,
+            'DiemTru' => $DiemTru,
+        ];
+
+        $result = $LoaiViPhamModel->addLVP($data);
+        
+        if ($result) {
+            return redirect()->back()->with('success', 'Thêm vi phạm thành công');
+        } else {
+            return redirect()->back()->with('errors', 'Thêm vi phạm thất bại');
+        }
+    
         return view('supervisor/addcategory');
+    }
+
+
+
+    public function addcategoryForm() {
+        $GiamThiModel = new GiamThiModel();
+        $GiamThi = $GiamThiModel->getCurrentSupervisor();
+
+        $MaGT = $GiamThi['MaGT'];
+        $TenGT = $GiamThi['HoTen'];
+
+        return view('supervisor/addcategory', ['MaGT' =>  $MaGT, 'TenGT' =>  $TenGT]);
     }
 
     public function changepw()
@@ -136,12 +189,219 @@ class SupervisorController extends Controller
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
         }
+        
     }
 
 
 
-    public function updatecategory()
-    {
+    public function updatecategory($categoryId)
+    {   
+        $TenLVP = $this->request->getPost('TenLVP');
+        $DiemTru = $this->request->getPost('DiemTru');
+
+        if (empty(trim($TenLVP)))
+        $errors['TenLVP'] = 'Tên vi phạm không được phép trống';
+        if (!is_numeric($DiemTru) || $DiemTru <= 0)
+        $errors['DiemTru'] = 'Điểm trừ không hợp lệ';
+        if (!empty($errors))
+        return redirect()->back()->withInput()->with('errors', $errors);
+
+        $data = [
+            'TenLVP'  => $TenLVP,
+            'DiemTru' => $DiemTru,
+        ];
+
+        $LoaiViPhamModel = new LoaiViPhamModel();
+        $result = $LoaiViPhamModel->updateLVP($categoryId, $data);
+        
+        if ($result) {
+            return redirect()->back()->with('success', 'Cập nhật vi phạm thành công');
+        } else {
+            return redirect()->back()->with('errors', 'Cập nhật vi phạm thất bại');
+        }
+        
         return view('supervisor/updatecategory');
+    }
+
+    public function updatecategoryForm($categoryId)
+    {   
+        $LoaiViPhamModel = new LoaiViPhamModel();
+        $LoaiViPham = $LoaiViPhamModel->getLVPByCategoryId($categoryId);
+        $loaivipham = [
+            'MaLVP' => $LoaiViPham['MaLVP'],
+            'TenLVP' =>  $LoaiViPham['TenLVP'],
+            'DiemTru' => $LoaiViPham['DiemTru']
+        ];
+
+        return view('supervisor/updatecategory', ['loaivipham' => $loaivipham]);
+        
+    }
+
+
+    public function deletecategory($categoryId)
+    {   
+        $LoaiViPhamModel = new LoaiViPhamModel();
+        $result= $LoaiViPhamModel->deleteLVP($categoryId);
+        if ($result) {
+            return redirect()->back()->with('success', 'Xóa thanh toán thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Xóa thanh toán thất bại.');
+        }
+    }
+
+    public function addfaultForm() {
+        $HocSinhLopModel = new HocSinhLopModel();
+        $yearListArray = $HocSinhLopModel->getYearList();
+
+        $LoaiViPhamModel = new LoaiViPhamModel();
+        $categoryList = $LoaiViPhamModel->getLVP('');
+        $categoryArray = array_column($categoryList, 'TenLVP');
+
+        $GiamThiModel = new GiamThiModel();
+        $GiamThi = $GiamThiModel->getCurrentSupervisor();
+        
+        $TenGT = $GiamThi['HoTen'];
+        return view('supervisor/addfault', [
+            'HoTen' => $TenGT,
+            'yearList' => $yearListArray,
+            'categoryList' => $categoryArray,
+        ]);
+        
+    }
+
+    
+    public function addfault()
+    {  
+        
+        $errors = [];
+
+        $MaHS = $this->request->getPost('MaHS');
+        $TenHS = $this->request->getPost('TenHS');
+        $Lop = $this->request->getPost('Lop');
+
+        $TenGT = $this->request->getPost('TenGT');
+
+        $HocKi = $this->request->getPost('HocKi');
+        $NamHoc = $this->request->getPost('NamHoc');
+        $Loi = $this->request->getPost('Loi');
+
+
+        if (empty($HocKi)) {
+            $errors['hocki'] = 'Vui lòng chọn Học kì.';
+        }
+    
+        if (empty($NamHoc)) {
+            $errors['namhoc'] = 'Vui lòng chọn Năm học.';
+        }
+    
+        if (empty($Loi)) {
+            $errors['loi'] = 'Vui lòng chọn Lỗi vi phạm.';
+        }
+
+
+        if (empty(trim($MaHS)) || empty(trim($TenHS)) || empty(trim($Lop))) {
+            $errors['empty'] = 'Vui lòng nhập đầy đủ thông tin';
+        } else {
+            $HocSinhModel = new HocSinhModel();
+            // Kiểm tra mã HS có tồn tại hay không ?
+            $result = $HocSinhModel->isValidStudentCode($MaHS);
+            if (!$result) {
+                $errors['MaHS'] = 'Mã học sinh không hợp lệ';
+            } else {
+                // Kiểm tra tenHS có đúng với MaHS đó không ?
+                $result = $HocSinhModel->isValidStudentName($MaHS, $TenHS);
+                if (!$result) {
+                    $errors['TenHS'] = 'Tên học sinh không đúng với mã học sinh';
+                } else {
+                    $LopModel = new LopModel();
+                    // Kiểm tra lớp có tồn tại không ?
+                    $result = $LopModel->isExistClass($Lop);
+                    if (!$result) {
+                        $errors['Lop'] = 'Lớp không hợp lệ';
+                    }             
+                }
+            }
+        }
+          
+        if (!empty($errors))
+        return redirect()->back()->withInput()->with('errors', $errors);
+
+        $GiamThiModel = new GiamThiModel();
+        $GiamThi = $GiamThiModel->getCurrentSupervisor();
+        $MaGT = $GiamThi['MaGT'];
+
+        $LoaiViPhamModel = new LoaiViPhamModel();
+        $MaLVP = $LoaiViPhamModel->getMaLVP($Loi);
+
+        $LopModel = new LopModel();
+        $MaLop =  $LopModel->getMaLop($Lop);
+
+        preg_match('/\d+/', $HocKi, $matches);
+        $HocKi = $matches[0];
+
+        $data = [
+            'MaHS' => $MaHS, 
+            'MaGT' => $MaGT,
+            'MaLVP' => $MaLVP,
+            'MaLop' =>  $MaLop,
+            'HocKy' => $HocKi,
+            'NamHoc' => $NamHoc,
+
+        ];
+
+        $ViPhamModel = new ViPhamModel();
+        $result = $ViPhamModel->addVP($data);
+        
+        if ($result) {
+            return redirect()->back()->with('success', 'Thêm lỗi thành công');
+        } else {
+            return redirect()->back()->with('errors', 'Thêm lỗi thất bại');
+        }
+        return view('supervisor/addfault');
+    }
+
+
+    public function fault()
+    {
+        $HocSinhLopModel = new HocSinhLopModel();
+        $yearListArray = $HocSinhLopModel->getYearList();
+        $yearList = array_merge(['Chọn năm học'], $yearListArray ); 
+
+
+        $selectedSemester = $this->request->getVar('semester');
+        $selectedYear = $this->request->getVar('year');
+        $searchStudent = $this->request->getVar('search') ?? '';
+
+        preg_match('/\d+/', $selectedSemester, $matches);
+        $selectedSemester = $matches;
+
+        $ViPhamModel = new ViPhamModel();
+        $ViPham = $ViPhamModel->getAllVP($selectedSemester, $selectedYear, $searchStudent);
+
+        return view('supervisor/fault', [
+            'yearList' => $yearList,
+            'viPham' => $ViPham
+
+        ]);
+    }
+
+    public function faultDetail($faultId)
+    {
+        $ViPhamModel = new ViPhamModel();
+        $ViPham = $ViPhamModel->getVPById($faultId);
+
+        return view('supervisor/faultDetail', [
+            'viPham' => $ViPham
+        ]);
+    }
+    public function deletefault($faultId)
+    {   
+        $ViPhamModel = new ViPhamModel();
+        $result= $ViPhamModel->deleteVP($faultId);
+        if ($result) {
+            return redirect()->back()->with('success', 'Xóa vi phạm thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Xóa vi phạm thất bại.');
+        }
     }
 }

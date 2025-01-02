@@ -12,27 +12,69 @@
             <h1>Thêm lỗi vi phạm:</h1>
             <h2>Thông tin lỗi vi phạm:</h2>
             <form method="POST" action="/sms/public/supervisor/addcategory">
-                <div class="add-category-fields">
+            <div class="add-category-fields">
                     <div class="add-category-field">
-                        Tên vi phạm
+                        Mã giám thị
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'category_name',
+                            'name' => 'MaGT',
+                            'required' => true,
+                            'readonly' => true,
+                            'value' => $MaGT
+                        ]) ?>
+                    </div>
+                    <div class="add-category-field">
+                        Tên giám thị
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'TenGT',
+                            'required' => true,
+                            'readonly' => true,
+                            'value' => $TenGT
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="add-category-fields">
+                    <div class="add-category-field">
+                        Tên loại vi phạm
+                        <?= view('components/input', [
+                            'type' => 'text',
+                            'name' => 'TenLVP',
                             'required' => true,
                             'readonly' => false,
-                            'placeholder' => 'Nhập tên vi phạm'
+                            'placeholder' => 'Nhập tên vi phạm',
+                            'value' => ''
                         ]) ?>
                     </div>
                     <div class="add-category-field">
                         Điểm trừ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'minus_point',
+                            'name' => 'DiemTru',
                             'required' => true,
-                            'placeholder' => 'Nhập điểm trừ'
+                            'placeholder' => 'Nhập điểm trừ',
+                            'value' => ''
                         ]) ?>
                     </div>
                 </div>
+
+
+
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="add-category-btns">
                     <a href="/sms/public/supervisor/category" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
@@ -145,4 +187,6 @@
         align-items: center;
         gap: 20px;
     }
+
 </style>
+

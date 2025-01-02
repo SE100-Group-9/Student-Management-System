@@ -50,6 +50,17 @@ class HocSinhModel extends Model
         return $this->db->query($SQL, $params)->getResultArray();
     }
 
+    public function isValidStudentCode($MaHS) {
+        $SQL = "SELECT COUNT(*) AS count FROM hocsinh WHERE MaHS = ?";
+        $result = $this->db->query($SQL, [$MaHS])->getRowArray();
+        return !empty($result['count']) && $result['count'] > 0;
+    }
+
+    public function isValidStudentName($MaHS, $HoTen) {
+        $SQL = "SELECT COUNT(*) AS count FROM hocsinh JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK WHERE MaHS = ? AND HoTen = ?";
+        $result = $this->db->query($SQL, [$MaHS, $HoTen])->getRowArray();
+        return !empty($result['count']) && $result['count'] > 0;
+    }
 
 
 }

@@ -21,4 +21,21 @@ class LopModel extends Model
                 ORDER BY lop.TenLop";
         return $this->db->query($SQL, [$year])->getResultArray();
     }    
+
+    public function isExistClass($TenLop) {
+        $SQL = "SELECT COUNT(*) AS count FROM lop WHERE TenLop = ?";
+        $result = $this->db->query($SQL, [$TenLop])->getRowArray();
+        return !empty($result['count']) && $result['count'] > 0;
+    }
+
+    public function getMaLop($Lop) {
+        // Câu lệnh SQL để lấy MaLVP dựa trên TenLVP
+        $SQL = "SELECT MaLop FROM lop WHERE TenLop = ?";
+        
+        // Thực hiện truy vấn và lấy kết quả
+        $result = $this->db->query($SQL, [$Lop])->getRowArray();
+        
+        // Kiểm tra và trả về MaLVP
+        return $result['MaLop'];
+    }
 }

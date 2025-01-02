@@ -95,7 +95,7 @@ $routes->post('cashier/profile', 'CashierController::updateProfile');
 
 $routes->get('cashier/invoice/list', 'CashierController::listInvoice');
 $routes->get('cashier/invoice/add', 'CashierController::addInvoice');
-$routes->get('cashier/payment/add/(:num)', 'CashierController::addPaymentForm/$1');
+$routes->get('cashier/payment/add/(:num)', 'CashierController::addPaymentForm/$1'); 
 $routes->post('cashier/payment/add/(:num)', 'CashierController::addPayment/$1');
 $routes->get('cashier/payment/list/(:num)', 'CashierController::listPayment/$1');
 $routes->get('cashier/payment/delete/(:num)', 'CashierController::deletePayment/$1');
@@ -111,15 +111,25 @@ $routes->post('cashier/changepw', 'CashierController::updatePassword');
 
 
 // supervisor
-$routes->get('supervisor/fault', 'SupervisorController::fault');
+
 $routes->get('supervisor/profile', 'SupervisorController::profile');
 $routes->post('supervisor/profile', 'SupervisorController::updateProfile');
+
+$routes->get('supervisor/fault', 'SupervisorController::fault');
+$routes->get('supervisor/addfault', 'SupervisorController::addfaultForm');
+$routes->get('supervisor/faultDetail/(:num)', 'SupervisorController::faultDetail/$1');
+$routes->post('supervisor/addfault', 'SupervisorController::addfault');
+$routes->get('supervisor/deletefault/(:num)', 'SupervisorController::deletefault/$1');
+
 $routes->get('supervisor/category', 'SupervisorController::category');
-$routes->get('supervisor/addfault', 'SupervisorController::addfault');
-$routes->get('supervisor/addcategory', 'SupervisorController::addcategory');
+$routes->get('supervisor/addcategory', 'SupervisorController::addcategoryForm');
+$routes->post('supervisor/addcategory', 'SupervisorController::addcategory');
+$routes->get('supervisor/updatecategory/(:num)', 'SupervisorController::updatecategoryForm/$1');
+$routes->post('supervisor/updatecategory/(:num)', 'SupervisorController::updatecategory/$1');
+$routes->get('supervisor/deletecategory/(:num)', 'SupervisorController::deletecategory/$1');
+
 $routes->get('supervisor/changepw', 'SupervisorController::changepw');
 $routes->post('supervisor/changepw', 'SupervisorController::updatePassword');
-$routes->get('supervisor/updatecategory', 'SupervisorController::updatecategory');
 
 
 
