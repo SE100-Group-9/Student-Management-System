@@ -1,62 +1,72 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="studentconduct">
-    <div class="studentconduct-heading">
-        <?= view('components/heading') ?>
+<div class="score-lists">
+    <div class="lists-heading">
+        <?= view('components/heading'); ?>
     </div>
     <div class="body">
-        <div class="body-left">
-            <?= view('components/sidebar_student') ?>
+    <div class="body-left">
+        <?= view('components/sidebar_student'); ?>
         </div>
-            <div class="body-right">
-                Học tập / Học tập / Xem hạnh kiểm
-                <div class="studentconduct-tools">
-                    <div class="tool-search">
-                        <?= view('components/filter') ?>
-                        <?= view('components/searchbar') ?>
-                        <?= view('components/dropdown', [
-                            'options' => ['2024-2025','2023-2024'],
-                            'dropdown_id' => 'year-dropdown',
-                            'selected_text' => 'Năm học',
-                            ]) ?>
-                        <?= view('components/dropdown', [
-                            'options' => ['Học kỳ I', 'Học kỳ II'], 
+        <div class="body-right">
+        <h1>Học tập / Xem hạnh kiểm</h1>
+        <div class="scorelist-tool">
+            <form method="GET" action="/sms/public/student/conduct">
+                <div class="tool-search">
+                    <?= view('components/dropdown', [
+                            'options' => $yearList, 
+                            'dropdown_id' => 'year-dropdown', 
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear
+                        ]) ?>
+                    <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'], 
                             'dropdown_id' => 'semester-dropdown',
-                            'selected_text' => 'Học kỳ',
-                            ]) ?>
-                        <div class="hidden-dropdown">
-                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown']) ?>
-                        </div>
-                    </div>
-                    <div class="tool-add">
-                        <?= view('components/excel_export') ?>
-                    </div>
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kì',
+                            'value' => $selectedSemester
+                        ]) ?>
+                     <?= view('components/view_button') ?>
                 </div>
-                <?= view('components/tables/StudentConduct') ?>
-                <?= view('components/pagination'); ?> 
+            </form>
+        </div>
+            <div style="display: none">
+                    <?= view('components/dropdown', []) ?>
             </div>
+            <div class="tabless">
+            <?= view('components/tables/studentConduct', ['Conduct' => $Conduct, 'Point' => $Point]) ?>
+            <div style="max-width: 200px; align-items: flex-end">
+                <?= view('components/pagination'); ?>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <style>
     *,
     *::before,
     *::after {
-        padding: 0;
         margin: 0;
+        padding: 0;
         box-sizing: border-box;
     }
 
-    .studentconduct {
+    .hidden {
+        display: none;
+    }
+
+    .score-lists {
         display: flex;
         width: 100%;
         height: 100%;
         flex-direction: column;
         align-items: flex-start;
-        background: #FFF;
+        background: var(--White, #FFF);
     }
 
-    .studentconduct-heading {
+    .lists-heading {
         width: 100%;
         height: 60px;
         position: fixed;
@@ -94,12 +104,12 @@
         overflow-y: auto;
     }
 
-    .studentconduct-tools {
+    .scorelist-tool {
         display: flex;
-        width: 100%;
         padding: 10px;
         justify-content: space-between;
         align-items: flex-start;
+        align-self: stretch;
         border-radius: 10px;
         background: #FFF;
     }
@@ -116,8 +126,10 @@
         gap: 10px;
     }
 
-    .hidden-dropdown {
-        display: none;
+    .tabless {
+        width: 100%;
+        height: 100%;
     }
 </style>
+
 

@@ -152,4 +152,6 @@ class HocSinhLopModel extends Model
         $result = $this->db->query($SQL)->getResultArray();
         return array_column($result, 'NamHoc');
     }
+
+    
 }

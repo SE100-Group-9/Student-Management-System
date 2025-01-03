@@ -98,7 +98,18 @@
                                     'readonly' => true,
                                     'value' => $viPham['TenLVP'],
                                 ]) ?>
-                        </div>              
+                        </div> 
+                        <div class="add-fault-field">
+                                Ngày vi phạm 
+                                <?= view('components/input', [
+                                    'type' => 'text',
+                                    'name' => 'NgayVP',
+                                    'id' => 'student-name',
+                                    'required' => true,
+                                    'readonly' => true,
+                                    'value' => $viPham['NgayVP'],
+                                ]) ?>
+                        </div>               
                 </div>
 
                 <div class="add-button">

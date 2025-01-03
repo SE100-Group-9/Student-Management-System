@@ -1,33 +1,43 @@
 <link rel="stylesheet" href="<?= base_url(relativePath: 'assets/css/style.css') ?>">
 
-<div class="student-score">
-    <?= view('components/heading'); ?>
+<div class="score-lists">
+    <div class="lists-heading">
+        <?= view('components/heading'); ?>
+    </div>
     <div class="body">
+    <div class="body-left">
         <?= view('components/sidebar_student'); ?>
-        <div class="score-container">
-            <h1>Học tập / Học tập / Xem điểm</h1>
-            <div class="score-tool">
-                <div class="score-dropdown">
-                    <div class="score-dropdown">
-                        <h2>Năm học:</h2>
-                        <?= view('components/dropdown', ['options' => ['2024-2025','2023-2024'], 'dropdown_id' => 'year-dropdown']) ?>
-                    </div>
-                    <div class="score-dropdown">
-                        <h2>Học kì:</h2>
-                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
-                    </div>
-                    <div class="hidden-dropdown">
-                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
-                    </div>
-                    <?= view('components/view_button'); ?>
-                </div>             
-                <div class="tool-export">
-                    <?= view('components/excel_export') ?>
+        </div>
+        <div class="body-right">
+        <h1>Học tập / Xem điểm</h1>
+        <div class="scorelist-tool">
+            <form method="GET" action="/sms/public/student/score">
+                <div class="tool-search">
+                    <?= view('components/dropdown', [
+                            'options' => $yearList, 
+                            'dropdown_id' => 'year-dropdown', 
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear
+                        ]) ?>
+                    <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'], 
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kì',
+                            'value' => $selectedSemester
+                        ]) ?>
+                     <?= view('components/view_button') ?>
                 </div>
+            </form>
+        </div>
+            <div style="display: none">
+                    <?= view('components/dropdown', []) ?>
             </div>
-            <div class="table-container" style="display: none;">
-                <?= view('components/tables/studentSemesterResult', ['tableId' => 'studentSemesterResult']) ?>
-                <?= view('components/pagination'); ?> 
+            <div class="tabless">
+            <?= view('components/tables/studentSemesterResult', ['Score' => $Score]) ?>
+            <div style="max-width: 200px; align-items: flex-end">
+                <?= view('components/pagination'); ?>
             </div>
         </div>
     </div>
@@ -35,109 +45,91 @@
 
 
 <style>
-   *,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-.student-score {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
+    .hidden {
+        display: none;
+    }
 
-.body {
-    display: flex; 
-    flex-direction: row; 
-    background: #F0F2F5;
-    height: 100%;
-}
+    .score-lists {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--White, #FFF);
+    }
 
-.heading {
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
+    .lists-heading {
+        width: 100%;
+        height: 60px;
+        position: fixed;
+    }
 
-.score-container {
-    display: flex;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    flex: 1 0 0;
-    align-self: stretch;
-}
+    .body {
+        display: flex;
+        align-items: flex-start;
+        flex: 1 0 0;
+        margin-top: 60px;
+        align-self: stretch;
+        background: var(--light-grey, #F9FAFB);
+        overflow: hidden;
+    }
 
-.score-container h1 {
-    color: #000;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
+    .body-left {
+        height: 100%;
+        overflow-y: auto;
+    }
 
-.table-container {
-    width: 100%;
-    margin-bottom: 20px; 
-    transition: all 0.3s ease;
-}
+    .body-right {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        flex: 1 0 0;
+        align-self: stretch;
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        overflow-y: auto;
+    }
 
-.score-tool {
-    display: flex;
-    justify-content: space-between;
-    align-self: stretch;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: nowrap;
-    padding: 10px;
-    background: var(--White, #FFF);
-    border-radius: 10px;
-}
+    .scorelist-tool {
+        display: flex;
+        padding: 10px;
+        justify-content: space-between;
+        align-items: flex-start;
+        align-self: stretch;
+        border-radius: 10px;
+        background: #FFF;
+    }
 
-.score-dropdown {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap;
-}
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-.score-dropdown h2 {
-    color: #000;
-    font-family: Inter;
-    font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap; /* Ngăn văn bản bị xuống dòng */
-    margin: 0; /* Xóa khoảng cách không cần thiết */
-}
+    .tool-add {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-.score-dropdown select {
-    min-width: 120px;
-    max-width: 200px;
-}
-
-.hidden-dropdown {
-    display: none;
-}
+    .tabless {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const viewButton = document.querySelector('.button-view');
-        const tableContainer = document.querySelector('.table-container');
-
-        viewButton.addEventListener('click', () => {
-            // Toggle hiển thị bảng
-            if (tableContainer.style.display === 'none' || tableContainer.style.display === '') {
-                tableContainer.style.display = 'block'; // Hiển thị bảng
-            }
-        });
-    });
-</script>
 

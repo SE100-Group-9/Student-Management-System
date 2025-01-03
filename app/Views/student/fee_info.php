@@ -9,69 +9,7 @@
             <?= view('components/sidebar_student') ?>
         </div>
         <div class="body-right">
-            <h2>Thông tin học phí:</h2>
-            <form method="GET" action=" ">
-                <div class="student-fee-info-fields">
-                    <div class="student-fee-info-field">
-                        Tổng tiền
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_total',
-                            'readonly' => true,
-                            'value' => '1,000,000'
-                        ]) ?>
-                    </div>
-                    <div class="student-fee-info-field">
-                        Đã thanh toán
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_paid',
-                            'readonly' => true,
-                            'value' => '500,000'
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="student-fee-info-fields">
-                    <div class="student-fee-info-field">
-                        Chưa thanh toán
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_notpaid',
-                            'readonly' => true,
-                            'value' => '500,000'
-                        ]) ?>
-                    </div>
-                    <div class="student-fee-info-field">
-                        Ngày thanh toán
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'day_paid',
-                            'readonly' => true,
-                            'value' => '01-01-2000'
-                        ]) ?>
-                    </div>
-                </div>
-                <div class="student-fee-info-fields">
-                    <div class="student-fee-info-field">
-                        Người thu
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'cashier_name',
-                            'readonly' => true,
-                            'value' => 'Trần Thị B'
-                        ]) ?>
-                    </div>
-                    <div class="student-fee-info-field">
-                        Trạng thái
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'student_state',
-                            'readonly' => true,
-                            'value' => 'Thanh toán 1 phần'
-                        ]) ?>
-                    </div>
-                </div>
-            </form>
+            <?= view('components/tables/studentFeeInfo', ['HoaDon' => $HoaDon]) ?>
         </div>
     </div>
 </div>

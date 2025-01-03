@@ -10,15 +10,17 @@
         </div>
         <div class="body-right">
             <h2>Thông tin cá nhân:</h2>
-            <form method="GET" action=" ">
+            <form method="POST" action="/sms/public/student/profile">
                 <div class="student-profile-fields">
+                <input type="hidden" name="MaHS" value="<?= $Student['MaHS'] ?? '' ?>">
+                <input type="hidden" name="MaTK" value="<?= $Student['MaTK'] ?? '' ?>">
                     <div class="student-profile-field">
                         Mã học sinh
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_id',
                             'readonly' => true,
-                            'value' => 'GT0001'
+                            'value' => $Student['MaHS']
                         ]) ?>
                     </div>
                     <div class="student-profile-field">
@@ -27,7 +29,7 @@
                             'type' => 'text',
                             'name' => 'student_name',
                             'readonly' => true,
-                            'value' => 'Nguyễn Văn A'
+                            'value' => $Student['HoTen']
                         ]) ?>
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                             'type' => 'text',
                             'name' => 'student_sex',
                             'readonly' => true,
-                            'value' => 'Nam'
+                            'value' => $Student['GioiTinh']
                         ]) ?>
                     </div>
                     <div class="student-profile-field">
@@ -47,7 +49,7 @@
                             'type' => 'text',
                             'name' => 'student_date-of-birth',
                             'readonly' => true,
-                            'value' => '01-01-2000'
+                            'value' => $Student['NgaySinh']
                         ]) ?>
                     </div>
                 </div>
@@ -56,18 +58,18 @@
                         Địa chỉ
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_address',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'name' => 'address',
+                            'readonly' => false,
+                            'value' => $Student['DiaChi']
                         ]) ?>
                     </div>
                     <div class="student-profile-field">
                         Số điện thoại
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_phone',
-                            'readonly' => true,
-                            'value' => '0123456789'
+                            'name' => 'phone',
+                            'readonly' => false,
+                            'value' => $Student['SoDienThoai']
                         ]) ?>
                     </div>
                 </div>
@@ -76,18 +78,18 @@
                         Email
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_email',
-                            'readonly' => true,
-                            'value' => 'giamthi1@gmail.com'
+                            'name' => 'email',
+                            'readonly' => false,
+                            'value' => $Student['Email']
                         ]) ?>
                     </div>
                     <div class="student-profile-field">
                         Nơi sinh
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_country',
-                            'readonly' => true,
-                            'value' => 'TPHCM'
+                            'name' => 'country',
+                            'readonly' => false,
+                            'value' => $Student['NoiSinh']
                         ]) ?>
                     </div>
                 </div>
@@ -96,9 +98,9 @@
                         Dân tộc
                         <?= view('components/input', [
                             'type' => 'text',
-                            'name' => 'student_nation',
-                            'readonly' => true,
-                            'value' => 'Kinh'
+                            'name' => 'nation',
+                            'readonly' => false,
+                            'value' => $Student['DanToc']
                         ]) ?>
                     </div>
                     <div class="student-profile-field">
@@ -107,9 +109,30 @@
                             'type' => 'text',
                             'name' => 'student_status',
                             'readonly' => true,
-                            'value' => 'Đang học'
+                            'value' => $Student['TinhTrang']
                         ]) ?>
                     </div>
+                </div>
+                <?php if (session()->getFlashdata('success')): ?>
+                    <div class="alert alert-success">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (session()->getFlashdata('errors')): ?>
+                    <div class="alert alert-danger">
+                        <?= session()->getFlashdata('error') ?>
+                        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+                            <p><?= $error ?><p>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="supervisoradd-btns">
+                    <a style="text-decoration: none" href="/sms/public/student/score">
+                        <?= view('components/exit_button') ?>
+                    </a>
+                    <?= view('components/save_button') ?>
                 </div>
             </form>
         </div>
@@ -186,6 +209,14 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+    }
+
+    .supervisoradd-btns {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 20px;
     }
 
     .student-profile-fields {

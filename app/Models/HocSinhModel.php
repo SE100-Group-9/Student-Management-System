@@ -62,5 +62,61 @@ class HocSinhModel extends Model
         return !empty($result['count']) && $result['count'] > 0;
     }
 
+    public function getCurrentStudent() {
+        $StudentModel = new HocSinhModel();
+
+        // Lấy thông tin tài khoản hiện tại
+        $MaTK = session('MaTK');
+
+        // Lấy thông tin học sinh
+        $Student = $StudentModel
+            ->select('hocsinh.*, taikhoan.*')
+            ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
+            ->where('hocsinh.MaTK', $MaTK)
+            ->first();
+        return  $Student;
+    }
+
+    public function getStudentRank($MaHS, $MaLop, $HocKi, $NamHoc, $DTB) {
+        // Truy vấn để lấy danh sách học sinh trong lớp, xếp theo điểm trung bình giảm dần
+            $SQL = "SELECT 
+            hs.MaHS,
+            tk.HoTen,
+            dtb.DTB,
+            RANK() OVER (ORDER BY dtb.DTB DESC) AS XepHang
+        FROM 
+            diemtrungbinh dtb
+        JOIN hocsinh hs ON dtb.MaHS = hs.MaHS
+        JOIN taikhoan tk ON hs.MaTK = tk.MaTK
+        JOIN hocsinh_lop hl ON hs.MaHS = hl.MaHS
+        WHERE 
+            hl.MaLop = ? 
+            AND dtb.HocKi = ?
+            AND dtb.NamHoc = ?";
+
+        // Tham số truyền vào câu lệnh SQL
+        $params = [$MaLop, $HocKi, $NamHoc];
+
+        // Thực thi truy vấn
+        $result = $this->db->query($SQL, $params)->getResultArray();
+
+        // Tìm vị trí của học sinh hiện tại dựa trên mã học sinh
+        $rank = "Chưa xếp hạng"; // Giá trị mặc định
+        foreach ($result as $row) {
+        if ($row['MaHS'] == $MaHS) {
+            $rank = $row['XepHang']; // Gán thứ hạng
+            break;
+            }
+        }
+        // Trả về thứ hạng
+        return $rank;
+    }
+
+    public function getCurrentClass($MaHS, $NamHoc) {
+        $SQL = "SELECT MaLop FROM hocsinh_lop WHERE MaHS = ? AND NamHoc = ?";
+        $result = $this->db->query($SQL, [$MaHS, $NamHoc])->getRowArray();
+        return $result['MaLop'];
+    }
+
 
 }

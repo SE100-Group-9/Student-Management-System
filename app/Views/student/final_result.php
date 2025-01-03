@@ -9,108 +9,89 @@
             <?= view('components/sidebar_student') ?>
         </div>
         <div class="body-right">
-            <h1>Học tập / Học tập / Xem kết quả tổng kết</h1>
+            <h1>Học tập / Xem kết quả tổng kết</h1>
             <div class="final-tool">
+            <form method="GET" action="/sms/public/student/final_result">
                 <div class="final-dropdown">
                     <div class="final-dropdown">
                         <h2>Năm học:</h2>
-                        <?= view('components/dropdown', ['options' => ['2024-2025','2023-2024'], 'dropdown_id' => 'year-dropdown']) ?>
+                        <?= view('components/dropdown', [
+                            'options' => $yearList, 
+                            'dropdown_id' => 'year-dropdown', 
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear
+                        ]) ?>
                     </div>
                     <div class="final-dropdown">
                         <h2>Học kì:</h2>
-                        <?= view('components/dropdown', ['options' => ['Học kỳ I', 'Học kỳ II'], 'dropdown_id' => 'semester-dropdown']) ?>
-                    </div>
-                    <div class="hidden-dropdown">
-                        <?= view('components/dropdown', ['options' => ['11A1', '11A2'], 'dropdown_id' => 'class-dropdown'])?>
-                    </div>
+                            <?= view('components/dropdown', [
+                                'options' => ['Học kỳ 1', 'Học kỳ 2', 'Cả năm'], 
+                                'dropdown_id' => 'a-dropdown', 
+                                'name' => 'semester',
+                                'selected_text' =>   'Chọn học kì',
+                                'value' => $selectedSemester
+                            ]) ?>
+                    </div>                  
                     <?= view('components/view_button'); ?>
-                </div>                   
-            </div>
-            <div class="table-container" style="display: none;">
-                <?= view('components/tables/studentFinalResult', ['tableId' => 'studentFinalResult']) ?>
-                <?= view('components/pagination'); ?> 
-            </div>
-            <form method="GET" action=" ">
+                    <div style="display: none">
+                    
+                    <?= view('components/dropdown', []) ?>
+                    </div>
+                </div>            
+                   
+            <h3>Điểm trung bình tổng kết:</h3>
             <div class="student-final-fields">
                     <div class="student-final-field">
-                        Học kỳ 1
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'first_score',
                             'readonly' => true,
-                            'value' => '10'
-                        ]) ?>
-                    </div>
-                    <div class="student-final-field">
-                        Học kỳ 2
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'second_score',
-                            'readonly' => true,
-                            'value' => '10'
+                            'value' => $DTB
                         ]) ?>
                     </div>
                 </div>
                 <h3>Học lực</h3>
                 <div class="student-final-fields">
                     <div class="student-final-field">
-                        Học kỳ 1
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'first_performance',
                             'readonly' => true,
-                            'value' => 'Giỏi'
-                        ]) ?>
-                    </div>
-                    <div class="student-final-field">
-                        Học kỳ 2
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'second_performance',
-                            'readonly' => true,
-                            'value' => 'Giỏi'
+                            'value' => $HL
                         ]) ?>
                     </div>
                 </div>
                 <h3>Hạnh kiểm</h3>
                 <div class="student-final-fields">
                     <div class="student-final-field">
-                        Học kỳ 1
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'first_conduct',
                             'readonly' => true,
-                            'value' => 'Tốt'
-                        ]) ?>
-                    </div>
-                    <div class="student-final-field">
-                        Học kỳ 2
-                        <?= view('components/input', [
-                            'type' => 'text',
-                            'name' => 'second_conduct',
-                            'readonly' => true,
-                            'value' => 'Tốt'
+                            'value' => $HK
                         ]) ?>
                     </div>
                 </div>
                 <h3>Tổng kết</h3>
                 <div class="student-final-fields">
                     <div class="student-final-field">
-                        Danh hiệu
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'title',
                             'readonly' => true,
-                            'value' => 'Học sinh giỏi'
+                            'value' => $DanhHieu
                         ]) ?>
                     </div>
+                </div>
+                <h3>Xếp hạng</h3>
+                <div class="student-final-fields">
                     <div class="student-final-field">
-                        Nhận xét của giáo viên
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'title',
                             'readonly' => true,
-                            'value' => 'Chăm'
+                            'value' => $Rank
                         ]) ?>
                     </div>
                 </div>

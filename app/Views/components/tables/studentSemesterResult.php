@@ -1,118 +1,38 @@
+<?php if (!empty($Score) && is_array($Score)): ?>
 <div id="table-container">
     <table id="studentSemesterResult">
         <thead>
             <tr>
                 <th>Môn</th>
-                <th colspan="2">Kiểm tra thường xuyên</th>
-                <th colspan="2">Kiểm tra giữa kì</th>
-                <th>Kiểm tra cuối kì</th>
+                <th>Điểm 15' đợt 1</th>
+                <th>Điểm 15' đợt 2</th>
+                <th>Điểm GK đợt 1</th>
+                <th>Điểm GK đợt 2</th>
+                <th>Điểm CK </th>
                 <th>Điểm trung bình học kì</th>
+                <th>Nhận xét</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Giáo dục công dân</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>Toán</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-                <td>10</td>
-            </tr>
+        <?php foreach ($Score as $index => $score): ?>
+                <tr>
+                    <td><?= $score['TenMH'] ?></td>
+                    <td><?= $score['Diem15P_1'] ?></td>
+                    <td><?= $score['Diem15P_2'] ?></td>
+                    <td><?= $score['Diem1Tiet_1'] ?></td>
+                    <td><?= $score['Diem1Tiet_2'] ?></td>
+                    <td><?= $score['DiemCK'] ?></td>
+                    <td><?= $score['DiemTBHK'] ?></td>
+                    <td><?= $score['NhanXet'] ?></td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
     <div id="pagination-container"></div>
 </div>
+<?php else: ?>
+    <p>Không có dữ liệu điểm.</p>
+<?php endif; ?>
 
 <style>
 

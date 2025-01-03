@@ -21,7 +21,8 @@ class ViPhamModel extends Model
             l.TenLop, 
             lv.TenLVP, 
             lv.DiemTru, 
-            tk_gt.HoTen AS TenGT
+            tk_gt.HoTen AS TenGT,
+            vp.NgayVP
         FROM 
             vipham vp
         JOIN 
@@ -66,6 +67,76 @@ class ViPhamModel extends Model
         return $result; // Trả về kết quả tìm kiếm
     }
 
+    public function getAllVPByStudentId($MaHS, $selectedSemester, $selectedYear) {
+        $SQL = "SELECT 
+        vp.MaVP,
+        vp.MaHS, 
+        vp.HocKy AS HocKi,
+        vp.NamHoc,
+        tk_hs.HoTen AS TenHS, 
+        l.TenLop, 
+        lv.TenLVP, 
+        lv.DiemTru, 
+        gt.MaGT,
+        tk_gt.HoTen AS TenGT,
+        vp.NgayVP
+    FROM 
+        vipham vp
+    JOIN 
+        hocsinh hs ON vp.MaHS = hs.MaHS
+    JOIN 
+        taikhoan tk_hs ON hs.MaTK = tk_hs.MaTK
+    JOIN 
+        giamthi gt ON vp.MaGT = gt.MaGT
+    JOIN 
+        taikhoan tk_gt ON gt.MaTK = tk_gt.MaTK
+    JOIN 
+        loaivipham lv ON vp.MaLVP = lv.MaLVP
+    JOIN 
+        lop l ON vp.MaLop = l.MaLop
+     WHERE 1=1";  // Điều kiện mặc định để có thể thêm các điều kiện khác vào sau
+
+        // Tạo mảng tham số để truyền vào câu truy vấn
+        $params = [];
+
+        $SQL .= " AND vp.MaHS = ?";
+        $params[] = $MaHS;
+
+        $SQL .= " AND vp.HocKy = ?";
+        $params[] = $selectedSemester;
+
+        $SQL .= " AND vp.NamHoc = ?";
+        $params[] = $selectedYear;
+
+        // Thực thi truy vấn với các tham số đã được thêm vào
+        $violations = $this->db->query($SQL, $params)->getResultArray();
+
+        // Tổng điểm ban đầu là 100
+        $initialScore = 100;
+
+        // Tính tổng điểm trừ
+        $totalDiemTru = 0;
+        foreach ($violations as $violation) {
+            $totalDiemTru += $violation['DiemTru']; // Cộng dồn DiemTru
+        }
+
+        // Tính điểm còn lại
+        $remainingScore = $initialScore - $totalDiemTru;
+
+        return [
+            'violations' => $violations,        // Danh sách các vi phạm
+            'remainingScore' => $remainingScore // Điểm còn lại
+        ];
+    }
+
+    public function getTotalPoint($DiemTru) {
+        // Ban đầu là 100
+        // Kết quả trả về các cột DiemTru 
+        // Hãy tính tổng còn lại 
+
+    }
+    
+
 
 
     public function getVPById($faultId) {
@@ -79,7 +150,8 @@ class ViPhamModel extends Model
                 l.TenLop, 
                 lv.TenLVP, 
                 lv.DiemTru, 
-                tk_gt.HoTen AS TenGT
+                tk_gt.HoTen AS TenGT,
+                vp.NgayVP
             FROM 
                 vipham vp
             JOIN 
@@ -124,5 +196,10 @@ class ViPhamModel extends Model
          return $this->db->query($SQL, [$faultId]);
     }
 
+    public function getYearList() {
+        $SQL = "SELECT DISTINCT NamHoc FROM vipham ORDER BY NamHoc DESC";
+        $result = $this->db->query($SQL)->getResultArray();
+        return array_column($result, 'NamHoc');
+    }
 
 }

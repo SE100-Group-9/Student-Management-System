@@ -62,14 +62,14 @@ class SupervisorController extends Controller
         $TaiKhoanModel = new TaiKhoanModel();
 
         // Cập nhật thông tin tài khoản
-        $TaiKhoanModel->update($MaTK, [
+        $result = $TaiKhoanModel->update($MaTK, [
             'Email' => $this->request->getPost('supervisor_email'),
             'SoDienThoai' => $this->request->getPost('supervisor_phone'),
             'DiaChi' => $this->request->getPost('supervisor_address'),
         ]);
 
         // Xử lý thông báo
-        if ($TaiKhoanModel) {
+        if ($result) {
             return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
@@ -339,6 +339,8 @@ class SupervisorController extends Controller
         preg_match('/\d+/', $HocKi, $matches);
         $HocKi = $matches[0];
 
+        $NgayVP= date('d/m/Y');
+
         $data = [
             'MaHS' => $MaHS, 
             'MaGT' => $MaGT,
@@ -346,7 +348,7 @@ class SupervisorController extends Controller
             'MaLop' =>  $MaLop,
             'HocKy' => $HocKi,
             'NamHoc' => $NamHoc,
-
+            'NgayVP'=> $NgayVP
         ];
 
         $ViPhamModel = new ViPhamModel();
@@ -373,15 +375,16 @@ class SupervisorController extends Controller
         $searchStudent = $this->request->getVar('search') ?? '';
 
         preg_match('/\d+/', $selectedSemester, $matches);
-        $selectedSemester = $matches;
+        $selectedSemesterNumber = $matches;
 
         $ViPhamModel = new ViPhamModel();
-        $ViPham = $ViPhamModel->getAllVP($selectedSemester, $selectedYear, $searchStudent);
+        $ViPham = $ViPhamModel->getAllVP($selectedSemesterNumber, $selectedYear, $searchStudent);
 
         return view('supervisor/fault', [
             'yearList' => $yearList,
-            'viPham' => $ViPham
-
+            'viPham' => $ViPham,
+            'selectedSemester' => $selectedSemester,
+            'selectedYear' => $selectedYear
         ]);
     }
 
@@ -404,4 +407,5 @@ class SupervisorController extends Controller
             return redirect()->back()->with('error', 'Xóa vi phạm thất bại.');
         }
     }
+
 }

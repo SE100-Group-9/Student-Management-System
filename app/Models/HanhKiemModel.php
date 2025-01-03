@@ -74,6 +74,7 @@ class HanhKiemModel extends Model
     // Xếp loại hạnh kiểm của học sinh
     public function getConductRank($DiemHK)
     {
+        
         if ($DiemHK >= 80) {
             return 'Tốt';
         } elseif ($DiemHK >= 65) {

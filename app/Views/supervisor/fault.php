@@ -19,12 +19,14 @@
                         'dropdown_id' => 'status-dropdown',
                         'name' => 'semester',
                         'selected_text' => 'Chọn học kì',
+                        'value' => $selectedSemester
                         ]) ?>
                     <?= view('components/dropdown', [
                         'options' => $yearList, 
                         'dropdown_id' => 'year-dropdown',
                         'name' => 'year',
                         'selected_text' => 'Chọn năm học',
+                        'value' => $selectedYear
                         ]) ?>
                      <?= view('components/view_button') ?>
                 </div>

@@ -39,7 +39,12 @@ class HoaDonModel extends Model
             hoadon.ConNo, 
             hoadon.TrangThai, 
             taikhoan.HoTen, 
-            lop.TenLop
+            lop.TenLop,
+             (SELECT ptt.NgayThanhToan
+                 FROM phieuthanhtoan ptt
+                 WHERE ptt.MaHD = hoadon.MaHD
+                 ORDER BY ptt.MaPTT DESC
+                 LIMIT 1) AS NgayThanhToan
         FROM 
             hoadon
         JOIN hocsinh ON hoadon.MaHS = hocsinh.MaHS
@@ -69,10 +74,12 @@ class HoaDonModel extends Model
             $params[] = '%' . $searchStudent . '%';
             $params[] = '%' . $searchStudent . '%';
         }
-
+        
         // Loại bỏ kết quả trùng lặp bằng cách nhóm theo MaHD
-        $SQL .= " GROUP BY hoadon.MaHD";
+        // $SQL .= " GROUP BY hoadon.MaHD";
 
+         // Loại bỏ kết quả trùng lặp bằng cách nhóm theo MaHD và lấy MaPTT cao nhất
+            $SQL .= " GROUP BY hoadon.MaHD";
 
         // Thực thi truy vấn với các tham số
         $result = $this->db->query($SQL, $params)->getResultArray();

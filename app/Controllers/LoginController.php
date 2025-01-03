@@ -45,7 +45,7 @@ class LoginController extends Controller
                     case '2': // Giáo Viên
                         return redirect()->to('/teacher/statics/grade');
                     case '3': // Học Sinh
-                        return redirect()->to('/student/conduct');
+                        return redirect()->to('/student/score');
                     case '4': // Thu Ngân
                         return redirect()->to('/cashier/invoice/list');
                     case '5': // Giám Thị

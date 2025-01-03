@@ -78,14 +78,20 @@ $routes->post('director/profile', 'DirectorController::updateProfile');
 $routes->get('director/changepw', 'DirectorController::changepw');
 $routes->post('director/changepw', 'DirectorController::updatePassword');
 
+
 // student
-$routes->get('student/score', 'StudentController::score');
+
 $routes->get('student/profile', 'StudentController::profile');
+$routes->post('student/profile', 'StudentController::updateProfile');
+
+$routes->get('student/score', 'StudentController::score');
 $routes->get('student/final_result', 'StudentController::final_result');
 $routes->get('student/conduct', 'StudentController::conduct');
 $routes->get('student/fee_info', 'StudentController::fee_info');
-$routes->get('student/changepw', 'StudentController::changepw');
 
+
+$routes->get('student/changepw', 'StudentController::changepw');
+$routes->post('student/changepw', 'StudentController::updatePassword');
 
 
 // cashier
