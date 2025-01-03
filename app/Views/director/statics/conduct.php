@@ -104,13 +104,23 @@
         overflow-y: auto;
     }
 
+    .body-below {
+        display: flex;
+        align-items: flex-start;
+        gap: 5px;
+        align-self: stretch;
+        width: 100%;
+        background-color: white;
+        overflow: visible;
+    }
+
     .body-right {
         display: flex;
         padding: 20px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
-        flex: 1 0 0;
+        gap: 10px;
+        flex: 1;
         align-self: stretch;
         color: #000;
         font-family: Inter;
@@ -119,6 +129,36 @@
         font-weight: 400;
         line-height: normal;
         height: auto;
+    }
+
+    .conduct-table {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+        align-self: stretch;
+        background: #FFF;
+        overflow-y: auto; 
+        max-height: none; 
+        height: auto; 
+        padding: 10px;
+    }
+
+    .conduct-table table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    .conduct-table th, .conduct-table td {
+        padding: 8px;
+        text-align: left;
+    }
+
+    .conduct-table th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
     }
 
     .conduct-chart {
@@ -163,14 +203,7 @@
         background: var(--slate-100, #F1F5F9);
     }
 
-    .body-below {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        align-self: stretch;
-        width: 100%;
-        background-color: white;
-    }
+    
 
     #excellent {
         width: 50%;
@@ -194,7 +227,7 @@
         align-self: stretch;
         background: #FFF;
         overflow: auto;
-        max-height: 500px;
+        
     }
 
     .dropdown-edit {

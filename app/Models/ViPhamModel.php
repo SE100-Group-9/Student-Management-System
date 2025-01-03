@@ -8,6 +8,7 @@ class ViPhamModel extends Model
 {
     protected $table      = 'vipham';
     protected $primaryKey = 'MaVP';
+    protected $allowedFields = ['MaHS', 'MaGT', 'MaLVP', 'MaLop', 'HocKy', 'NamHoc'];
     
     public function getAllVP($selectedSemester, $selectedYear, $search)
     {   

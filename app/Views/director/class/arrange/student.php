@@ -15,7 +15,7 @@
             </div>
             <div class="classlists-tools">
                 <div class="tools">
-                    <a " style="text-decoration: none;" href="/sms/public/director/class/arrange/addstudent/<?= $MaLop ?>">
+                    <a " style=" text-decoration: none;" href="/sms/public/director/class/arrange/addstudent/<?= $MaLop ?>">
                         <?= view('components/add', data: ['button_text' => 'Thêm học sinh']) ?>
                     </a>
                 </div>
@@ -24,8 +24,20 @@
                     <?= view('components/upload') ?>
                 </div>
             </div>
+
+            <?php if (session()->getFlashdata('success')) : ?>
+                <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
+            <?php endif; ?>
+            <?php if (session()->getFlashdata('error')) : ?>
+                <div style="color: red;"><?= session()->getFlashdata('error') ?></div>
+            <?php endif; ?>
+
             <div class="tabless">
-                <?= view('components/tables/directorClassArrangeStudent', ['studentList' => $studentList]) ?>
+                <?= view('components/tables/directorClassArrangeStudent', [
+                    'studentList' => $studentList,
+                    'selectedYear' => $selectedYear,
+                    'MaLop' => $MaLop
+                ]) ?>
             </div>
             <?= view('components/pagination'); ?>
         </div>

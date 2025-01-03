@@ -10,42 +10,133 @@
         </div>
         <div class="body-right">
             Trung tâm / Thống kê / Học lực
-            <!-- Dropdown -->
-            <div class="dropdown-edit">
-                <?= view('components/dropdown', ['options' => ['2024-2025', '2023-2024']]) ?>
+            <form method="GET" action="/sms/public/teacher/statics/grade" id="form">
+                <div class="tool-search">
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                    </div>
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemester ?? ''
+                        ]) ?>
+                    </div>
+                    <button type="submit" style="display: none;">Submit</button>
+                </div>
+            </form>
+
+            <?php
+            // Xác định text comparison dựa trên selectedSemester
+            $comparisonText = 'so với ';
+            if ($selectedSemester === 'Học kỳ 1' || $selectedSemester === 'Học kỳ 2') {
+                $comparisonText .= strtolower($selectedSemester) . ' năm ' . $previousYear;
+            } else {
+                $comparisonText .= 'năm ' . $previousYear;
+            }
+            ?>
+            <?php if (isset($error) && $error): ?>
+                <p><?= $error ?></p>
+            <?php endif; ?>
+            <div style="display: none;">
+                <?= view('components/dropdown', []) ?>
             </div>
+
             <!-- Cards -->
             <div class="grade-cards">
-                <?= view('components/card_increase', [
-                    'title' => 'Học lực giỏi',
-                    'count' => '4500',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
-                ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Học lực khá',
-                    'count' => '200',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
-                ]) ?>
-                <?= view('components/card_increase', [
-                    'title' => 'Học lực trung bình',
-                    'count' => '20.000',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
-                ]) ?>
-                <?= view('components/card_decrease', [
-                    'title' => 'Học lực yếu',
-                    'count' => '2000',
-                    'percentage' => '99.99%',
-                    'comparison' => 'so với học kỳ II năm 2023'
-                ]) ?>
+                <!-- Học lực Giỏi -->
+                <?php if ($excellentChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Học lực giỏi',
+                        'count' => $excellentCount,
+                        'percentage' => number_format(abs($excellentChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Học lực giỏi',
+                        'count' => $excellentCount,
+                        'percentage' => number_format(abs($excellentChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php endif; ?>
+                <!-- Học lực Khá -->
+                <?php if ($goodChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Học lực khá',
+                        'count' => $goodCount,
+                        'percentage' => number_format(abs($goodChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Học lực khá',
+                        'count' => $goodCount,
+                        'percentage' => number_format(abs($goodChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php endif; ?>
+                <!-- Học lực Trung bình -->
+                <?php if ($averageChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Học lực trung bình',
+                        'count' => $averageCount,
+                        'percentage' => number_format(abs($averageChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Học lực trung bình',
+                        'count' => $averageCount,
+                        'percentage' => number_format(abs($averageChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php endif; ?>
+                <!-- Học lực Yếu -->
+                <?php if ($weakChange >= 0): ?>
+                    <?= view('components/card_increase', [
+                        'title' => 'Học lực yếu',
+                        'count' => $weakCount,
+                        'percentage' => number_format(abs($weakChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php else: ?>
+                    <?= view('components/card_decrease', [
+                        'title' => 'Học lực yếu',
+                        'count' => $weakCount,
+                        'percentage' => number_format(abs($weakChange), 2) . '%',
+                        'comparison' => $comparisonText
+                    ]) ?>
+                <?php endif; ?>
             </div>
             <!-- Chart -->
             <div class="grade-chart">
                 <div class="charts">
-                    Dữ liệu biểu diễn sự thay đổi của học lực theo từng học kỳ
-                    <?= view('components/line_chart') ?>
+                    Thống kê học lực học sinh trong học kỳ
+
+                    <?= view('components/pie_chart_teacher', [
+                        'excellentCount' => $excellentCount,
+                        'goodCount' => $goodCount,
+                        'averageCount' => $averageCount,
+                        'weakCount' => $weakCount
+                    ]) ?>
+                </div>
+                <div class="charts">
+                    Biểu đồ so sánh số lượng học sinh theo học lực trong học kỳ
+                    <?= view('components/column_chart_teacher', [
+                        'excellentCount' => $excellentCount,
+                        'goodCount' => $goodCount,
+                        'averageCount' => $averageCount,
+                        'weakCount' => $weakCount
+                    ]) ?>
                 </div>
             </div>
         </div>
@@ -129,4 +220,48 @@
     .dropdown-edit {
         width: 180px;
     }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 </style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form
+        const form = document.querySelector('#form'); // Đảm bảo form cần xử lý có tồn tại
+
+        // Lấy các dropdown
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]');
+
+        // Hàm xử lý sự kiện click cho các dropdown
+        function handleDropdownClick(dropdown) {
+            if (!dropdown) return;
+
+            const options = dropdown.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedValue = this.getAttribute('data-value'); // Lấy giá trị từ data-value
+                    const input = dropdown.querySelector('input'); // Input ẩn
+                    const selectedText = dropdown.querySelector('.selected-text'); // Text hiển thị
+
+                    if (input && selectedText) {
+                        input.value = selectedValue; // Cập nhật giá trị cho input
+                        selectedText.textContent = this.textContent; // Cập nhật text hiển thị
+                    }
+
+                    // Submit form tự động
+                    if (form) form.submit();
+                });
+            });
+        }
+
+        // Áp dụng sự kiện cho các dropdown
+        handleDropdownClick(yearDropdown);
+        handleDropdownClick(semesterDropdown);
+    });
+</script>

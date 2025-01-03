@@ -1,60 +1,23 @@
-<table id="teacherRecordGood">
-    <tr>
-        <th>MSHS</th>
-        <th>Tên học sinh</th>
-        <th>Điểm</th>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-    <tr>
-        <td>HS01</td>
-        <td>Nguyễn Khánh Huy</td>
-        <td>8.5</td>
-    </tr>
-</table>
+<?php if (!empty($studentList['PerformanceDetails']['Khá']) && is_array($studentList['PerformanceDetails']['Khá'])): ?>
+    <table id="teacherRecordGood">
+        <tr>
+            <th>STT</th>
+            <th>Mã học sinh</th>
+            <th>Họ tên</th>
+            <th>Điểm số</th>
+        </tr>
+        <?php foreach ($studentList['PerformanceDetails']['Khá'] as $student): ?>
+            <tr>
+                <td><?= $student['STT'] ?></td>
+                <td><?= $student['MaHS'] ?></td>
+                <td><?= $student['HoTen'] ?></td>
+                <td><?= $student['Diem'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <p>Không có dữ liệu học sinh.</p>
+<?php endif; ?>
 
 <style>
     #teacherRecordGood {

@@ -12,21 +12,32 @@
             Học tập / Lớp học / Nhập điểm
             <div class="classlists-tools">
                 <div class="tools">
-                    <?= view('components/filter') ?>
                     <?= view('components/searchbar') ?>
                 </div>
-                <div class="tool-add">
-                    <?= view('components/dropdown', [
-                        'options' => ['15(1)', '15(2)', '45(1)','45(2)','Cuối kỳ'],
-                        'dropdown_id' => 'testtype-dropdown',
-                        'name' => 'dropdown',
-                        'selected_text' => 'Chọn cột điểm',
-                        'value' => '',
-                    ]) ?>
-                </div>
+                <?= view('components/save_button') ?>
             </div>
+
+            <?php if (session()->getFlashdata('success')): ?>
+                <p class="alert alert-success"><?= session()->getFlashdata('success') ?></p>
+            <?php elseif (session()->getFlashdata('error')): ?>
+                <p class="alert alert-danger"><?= session()->getFlashdata('error') ?></p>
+            <?php endif; ?>
+
+            <?php if (session()->has('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach (session('errors') as $error): ?>
+                        <p><?= esc($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
             <div class="tabless">
-                <?= view('components/tables/teacherEnterScore') ?>
+                <?= view('components/tables/teacherEnterScore', [
+                    'scoreList' => $scoreList ?? [],
+                    'NamHoc' => $NamHoc,
+                    'HocKy' => $HocKy,
+                    'TenMH' => $TenMH,
+                ]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -114,3 +125,37 @@
         height: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let isFormDirty = false; // Biến theo dõi trạng thái thay đổi của form
+
+        // Theo dõi sự thay đổi trong các ô nhập liệu
+        const commentInputs = document.querySelectorAll('input[name^="scores"]');
+        commentInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                isFormDirty = true; // Đánh dấu form đã thay đổi
+            });
+        });
+
+        // Theo dõi sự kiện trước khi rời khỏi trang
+        window.addEventListener('beforeunload', function(event) {
+            if (isFormDirty) {
+                // Hiển thị thông báo cảnh báo
+                event.preventDefault();
+                event.returnValue = ''; // Bắt buộc phải có để kích hoạt hộp thoại xác nhận
+            }
+        });
+
+        // Khi người dùng nhấn nút Lưu đánh giá, đặt lại trạng thái
+        document.getElementById('button-save').addEventListener('click', function() {
+            isFormDirty = false; // Đặt lại trạng thái form
+        });
+    });
+
+    // Lấy nút submit và form
+    document.getElementById('button-save').addEventListener('click', function() {
+        // Gửi form
+        document.getElementById('score-form').submit();
+    });
+</script>

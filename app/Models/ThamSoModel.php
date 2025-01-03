@@ -20,4 +20,14 @@ class ThamSoModel extends Model
         $result = $query->getRowArray();
         return $result ? $result['GiaTri'] : null;
     }
+
+    // Cập nhật giá trị của tham số
+    public function updateGiaTriThamSo($TenThamSo, $GiaTri)
+    {
+        $SQl = "UPDATE thamso
+                SET GiaTri = ?
+                WHERE TenThamSo = ?";
+        $query = $this->db->query($SQl, [$GiaTri, $TenThamSo]);
+        return $this->db->affectedRows();
+    }
 }

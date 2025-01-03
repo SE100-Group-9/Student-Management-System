@@ -11,28 +11,31 @@
         <div class="body-right">
             Học tập / Lớp học / Báo cáo học lực lớp
             <div class="classlists-tools">
-                <div class="tools">
-                    <?= view('components/filter') ?>
-                </div>
                 <div class="tool-add">
                     <?= view('components/excel_export') ?>
                 </div>
             </div>
-            <h1>Loại xuất sắc</h1>
+            <h1>Báo cáo học lực lớp</h1>
+            <h1>Năm học: <?= esc($NamHoc) ?></h1>
+            <h1>Học kỳ: <?= esc($HocKy) ?></h1>
+            <h1>Lớp: <?= esc($TenLop) ?></h1>
+            <h1>Môn học: <?= esc($TenMH) ?></h1>
+            <h1>Bài kiểm tra: <?= esc($TenBaiKT) ?></h1>
+            <h1>Loại Giỏi</h1>
             <div class="tabless">
-                <?= view('components/tables/teacherRecordExcellent') ?>
+                <?= view('components/tables/teacherRecordExcellent', ['studentList' => $studentList]) ?>
             </div>
-            <h1>Loại giỏi</h1>
+            <h1>Loại Khá</h1>
             <div class="tabless">
-                <?= view('components/tables/teacherRecordGood') ?>
+                <?= view('components/tables/teacherRecordGood', ['studentList' => $studentList]) ?>
             </div>
-            <h1>Loại trung bình</h1>
+            <h1>Loại Trung Bình</h1>
             <div class="tabless">
-                <?= view('components/tables/teacherRecordMedium') ?>
+                <?= view('components/tables/teacherRecordMedium', ['studentList' => $studentList]) ?>
             </div>
-            <h1>Loại yếu</h1>
+            <h1>Loại Yếu</h1>
             <div class="tabless">
-                <?= view('components/tables/teacherRecordBad') ?>
+                <?= view('components/tables/teacherRecordBad', ['studentList' => $studentList]) ?>
             </div>
         </div>
     </div>
@@ -124,7 +127,10 @@
     }
 
     .tabless {
-        width: 100%;
-        height: 100%;
+        width: 100%; 
+        flex: 1 0 auto; 
+        max-height: none; 
+        overflow: visible; 
+        background: #FFF;
     }
 </style>

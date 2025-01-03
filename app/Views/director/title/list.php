@@ -19,15 +19,17 @@
             </div>
             <?= view('components/tables/directorTitleList', ['titleList' => $titleList]) ?>
             <form method="POST" action="/sms/public/director/title/list">
-            <h2>Cập nhật quy định:</h2>
+                <h2>Cập nhật quy định:</h2>
                 <div class="rule-update-fields">
                     <div class="rule-update-field">
-                        Học phí trong năm học (triệu)
+                        Mức học phí năm học (VNĐ)
                         <?= view('components/input', [
                             'type' => 'text',
                             'name' => 'student_fee',
-                            'placeholder' => '1,000,000',
-                            'value' => '1,000,000'
+                            'readonly' => false,
+                            'required' => true,
+                            'placeholder' => '3000000',
+                            'value' => $HocPhi,
                         ]) ?>
                     </div>
                     <div class="rule-update-field">
@@ -36,11 +38,20 @@
                             'type' => 'text',
                             'name' => 'student_quantity',
                             'readonly' => false,
-                            'placeholder' => '40',
-                            'value' => '40',
+                            'required' => true,
+                            'placeholder' => '35',
+                            'value' => $SiSoLopToiDa,
                         ]) ?>
                     </div>
                 </div>
+
+                <?php if (session()->getFlashdata('success')) : ?>
+                    <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
+                <?php endif; ?>
+                <?php if (session()->getFlashdata('error')) : ?>
+                    <div style="color: red;"><?= session()->getFlashdata('error') ?></div>
+                <?php endif; ?>
+
                 <div class="rule-update-btns">
                     <?= view('components/save_button') ?>
                 </div>

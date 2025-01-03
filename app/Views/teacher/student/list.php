@@ -14,20 +14,24 @@
                 <form method="GET" action="/sms/public/teacher/student/list" id="form">
                     <div class="tool-search">
                         <?= view('components/searchbar') ?>
-                        <?= view('components/dropdown', [
-                            'options' => $yearList ?? [],
-                            'dropdown_id' => 'year-dropdown',
-                            'name' => 'year',
-                            'selected_text' => 'Chọn năm học',
-                            'value' => $selectedYear ?? ''
-                        ]) ?>
-                        <?= view('components/dropdown', [
-                            'options' => $classList ?? [],
-                            'dropdown_id' => 'class-dropdown',
-                            'name' => 'class',
-                            'selected_text' => 'Chọn lớp học',
-                            'value' => $selectedClass ?? ''
-                        ]) ?>
+                        <div class="dropdown-edit">
+                            <?= view('components/dropdown', [
+                                'options' => $yearList ?? [],
+                                'dropdown_id' => 'year-dropdown',
+                                'name' => 'year',
+                                'selected_text' => 'Chọn năm học',
+                                'value' => $selectedYear ?? ''
+                            ]) ?>
+                        </div>
+                        <div class="dropdown-edit">
+                            <?= view('components/dropdown', [
+                                'options' => $classList ?? [],
+                                'dropdown_id' => 'class-dropdown',
+                                'name' => 'class',
+                                'selected_text' => 'Chọn lớp học',
+                                'value' => $selectedClass ?? ''
+                            ]) ?>
+                        </div>
                         <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>
@@ -168,6 +172,10 @@
         display: flex;
         align-items: center;
         gap: 10px;
+    }
+
+    .dropdown-edit {
+        width: 180px;
     }
 
     .tabless {

@@ -50,6 +50,19 @@ class HocSinhModel extends Model
         return $this->db->query($SQL, $params)->getResultArray();
     }
 
+    // Lấy danh sách học sinh (MaHS, HoTen) dựa vào MaGV phụ trách lớp, năm học và học kỳ
+    public function getStudentListByTeacher($MaGV, $HocKy, $NamHoc)
+    {
+        $SQL = "SELECT DISTINCT hocsinh.MaHS, taikhoan.HoTen
+                FROM phancong
+                JOIN hocsinh_lop ON phancong.MaLop = hocsinh_lop.MaLop 
+                    AND phancong.NamHoc = hocsinh_lop.NamHoc
+                    AND hocsinh_lop.NamHoc = ?
+                JOIN hocsinh ON hocsinh_lop.MaHS = hocsinh.MaHS
+                JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+                WHERE phancong.MaGV = ? AND phancong.HocKy = ? AND phancong.NamHoc = ? AND phancong.VaiTro = 'Giáo viên bộ môn'";
+        return $this->db->query($SQL, [$NamHoc, $MaGV, $HocKy, $NamHoc])->getResultArray();
+    }
     public function isValidStudentCode($MaHS) {
         $SQL = "SELECT COUNT(*) AS count FROM hocsinh WHERE MaHS = ?";
         $result = $this->db->query($SQL, [$MaHS])->getRowArray();

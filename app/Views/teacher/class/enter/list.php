@@ -10,22 +10,41 @@
         </div>
         <div class="body-right">
             Học tập / Lớp học / Nhập điểm
-            <div class="classlists-tools">
-                <div class="tools">
+            <form method="GET" action="/sms/public/teacher/class/enter/list" id="form">
+                <div class="tool-search">
                     <?= view('components/searchbar') ?>
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                    </div>
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemester ?? ''
+                        ]) ?>
+                    </div>
+                    <button type="submit" style="display: none;">Submit</button>
                 </div>
-                <div class="tool-add">
-                    <?= view('components/dropdown', [
-                        'options' => ['11A1', '11A2', '11A3'],
-                        'dropdown_id' => 'testtype-dropdown',
-                        'name' => 'dropdown',
-                        'selected_text' => 'Chọn lớp',
-                        'value' => '',
-                    ]) ?>
-                </div>
+            </form>
+
+            <div style="display: none;">
+                <?= view('components/dropdown') ?>
             </div>
+
             <div class="tabless">
-                <?= view('components/tables/teacherEnterList') ?>
+                <?= view('components/tables/teacherEnterList',[
+                    'enterList' => $enterList ?? [],
+                    'selectedYear' => $selectedYear ?? '',
+                    'selectedSemester' => $selectedSemester ?? ''
+                ]) ?>
             </div>
             <?= view('components/pagination') ?>
         </div>
@@ -108,8 +127,55 @@
         gap: 10px;
     }
 
+    .dropdown-edit {
+        width: 180px;
+    }
+
+    .tool-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
     .tabless {
         width: 100%;
         height: 100%;
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy form
+        const form = document.querySelector('#form'); // Đảm bảo form cần xử lý có tồn tại
+
+        // Lấy các dropdown
+        const yearDropdown = document.querySelector('[data-dropdown-id="year-dropdown"]');
+        const semesterDropdown = document.querySelector('[data-dropdown-id="semester-dropdown"]');
+
+        // Hàm xử lý sự kiện click cho các dropdown
+        function handleDropdownClick(dropdown) {
+            if (!dropdown) return;
+
+            const options = dropdown.querySelectorAll('.option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const selectedValue = this.getAttribute('data-value'); // Lấy giá trị từ data-value
+                    const input = dropdown.querySelector('input'); // Input ẩn
+                    const selectedText = dropdown.querySelector('.selected-text'); // Text hiển thị
+
+                    if (input && selectedText) {
+                        input.value = selectedValue; // Cập nhật giá trị cho input
+                        selectedText.textContent = this.textContent; // Cập nhật text hiển thị
+                    }
+
+                    // Submit form tự động
+                    if (form) form.submit();
+                });
+            });
+        }
+
+        // Áp dụng sự kiện cho các dropdown
+        handleDropdownClick(yearDropdown);
+        handleDropdownClick(semesterDropdown);
+    });
+</script>

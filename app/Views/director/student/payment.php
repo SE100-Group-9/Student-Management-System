@@ -15,7 +15,7 @@
                     <div class="tool-search">
                         <?= view('components/searchbar') ?>
                         <?= view('components/dropdown', [
-                            'options' => ['2023-2024', '2024-2025', '2025-2026'],
+                            'options' => $yearList ?? [],
                             'dropdown_id' => 'year-dropdown',
                             'name' => 'year',
                             'selected_text' => 'Chọn năm học',
@@ -29,6 +29,7 @@
                             'selected_text' => 'Chọn lớp học',
                             'value' => $selectedClass ?? ''
                         ]) ?>
+
                         <button type="submit" style="display: none;">Submit</button>
                     </div>
                 </form>

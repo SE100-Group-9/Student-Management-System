@@ -24,11 +24,11 @@
                         <td><?= $student['MaHS'] ?></td>
                         <td><?= $student['HoTen'] ?></td>
                         <td><?= $student['TenLop'] ?></td>
-                        <td><?= $student[1] ?? '' ?></td>
-                        <td><?= $student[2] ?? '' ?></td>
-                        <td><?= $student[3] ?? '' ?></td>
-                        <td><?= $student[4] ?? '' ?></td>
-                        <td><?= $student['DiemTBHocKy'] ?></td>
+                        <td><?= $student['Diem'][1]['DiemTBMonHoc'] ?? '' ?></td>
+                        <td><?= $student['Diem'][2]['DiemTBMonHoc'] ?? '' ?></td>
+                        <td><?= $student['Diem'][3]['DiemTBMonHoc'] ?? '' ?></td>
+                        <td><?= $student['Diem'][4]['DiemTBMonHoc'] ?? '' ?></td>
+                        <td><?= $student['DiemTrungBinh'] ?></td>
                         <td><?= $student['HocLuc'] ?></td>
                         <td><?= $student['DiemHK'] ?></td>
                         <td><?= $student['DanhHieu'] ?></td>

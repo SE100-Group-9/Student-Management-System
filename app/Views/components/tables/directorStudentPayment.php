@@ -8,8 +8,9 @@
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>Lớp học</th>
+                    <th>Tổng học phí</th>
+                    <th>Còn nợ</th>
                     <th>Trạng thái</th>
-                    <th>Tiền nợ</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,10 +21,12 @@
                         <td><?= $tuition['HoTen'] ?></td>
                         <td><?= $tuition['Email'] ?></td>
                         <td><?= $tuition['TenLop'] ?></td>
+                        <td><?= $tuition['TongHocPhi'] ?></td>
+                        <td><?= $tuition['ConNo'] ?></td>
                         <td>
                             <?= view('components/status', ['status' => $tuition['TrangThai']]); ?>
                         </td>
-                        <td><?= $tuition['TienNo'] ?></td>
+                        
                     </tr>
                 <?php endforeach; ?>
             </tbody>

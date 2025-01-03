@@ -15,23 +15,31 @@
                     <div class="tool-search">
                         <?= view('components/filter') ?>
                         <?= view('components/searchbar', ['searchTerm' => $searchTerm]) ?>
-                </form> 
+                </form>
             </div>
-                
-                <div class="tool-add">
-                    <a style="text-decoration: none" href="/sms/public/director/employee/supervisor/add">
-                        <?= view('components/add', ['button_text' => 'Thêm giám thị']) ?>
-                    </a>
-                    <?= view('components/excel_export') ?>
-                    <?= view('components/upload') ?>
-                </div>
+
+            <div class="tool-add">
+                <a style="text-decoration: none" href="/sms/public/director/employee/supervisor/add">
+                    <?= view('components/add', ['button_text' => 'Thêm giám thị']) ?>
+                </a>
+                <?= view('components/excel_export') ?>
+                <?= view('components/upload') ?>
             </div>
-            <div class="tabless">
-                <?= view('components/tables/directorEmployeesupervisor', ['supervisorList' => $supervisorList]) ?>
-            </div>
-            <?= view('components/pagination') ?>
         </div>
+
+        <?php if (session()->getFlashdata('success')) : ?>
+            <div style="color: green;"><?= session()->getFlashdata('success') ?></div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('error')) : ?>
+            <div style="color: red;"><?= session()->getFlashdata('error') ?></div>
+        <?php endif; ?>
+
+        <div class="tabless">
+            <?= view('components/tables/directorEmployeesupervisor', ['supervisorList' => $supervisorList]) ?>
+        </div>
+        <?= view('components/pagination') ?>
     </div>
+</div>
 </div>
 
 <style>
