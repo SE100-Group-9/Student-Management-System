@@ -10,6 +10,7 @@
                 <th>Lỗi vi phạm</th>
                 <th>Điểm trừ</th>
                 <th>Người tạo</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>

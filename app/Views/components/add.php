@@ -10,7 +10,7 @@
 
 <style>
     .add-container {
-        position: relative;
+        width: 100px;
         display: flex;
         align-items: center;
     }
