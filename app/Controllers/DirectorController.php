@@ -333,7 +333,7 @@ class DirectorController extends Controller
             'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
         ]);
 
-        return redirect()->back()->with('success', 'Thêm học sinh mới thành công!');
+        return redirect()->to('director/student/list')->with('success', 'Thêm học sinh mới thành công!');
     }
 
     public function studentUpdate($id = null)
@@ -424,7 +424,7 @@ class DirectorController extends Controller
         log_message('info', 'Received Data: ' . json_encode($allPostData));
         // Xử lý thông báo
         if ($TaiKhoanModel && $HocSinhModel) {
-            return redirect()->back()->with('success', 'Cập nhật thành công!');
+            return redirect()->to('director/student/list')->with('success', 'Cập nhật thông tin học sinh thành công!');
         } else {
             return redirect()->back()->with('error', 'Không thể cập nhật. Vui lòng thử lại.');
         }
@@ -915,7 +915,7 @@ class DirectorController extends Controller
 
         // Điều hướng sau khi lưu thành công/thất bại
         if ($MaDH) {
-            return redirect()->back()->with('success', 'Danh hiệu đã được thêm thành công!');
+            return redirect()->to('director/title/list')->with('success', 'Thêm danh hiệu thành công!');
         } else {
             return redirect()->back()->with('error', 'Không thể thêm danh hiệu. Vui lòng thử lại.');
         }
@@ -962,7 +962,7 @@ class DirectorController extends Controller
 
         // Điều hướng sau khi cập nhật
         if ($DanhHieu) {
-            return redirect()->back()->with('success', 'Cập nhật danh hiệu thành công!');
+            return redirect()->to('director/title/list')->with('success', 'Cập nhật danh hiệu thành công!');
         } else {
             return redirect()->back()->with('error', 'Không thể cập nhật danh hiệu. Vui lòng thử lại.');
         }
@@ -1118,7 +1118,7 @@ class DirectorController extends Controller
             'VaiTro' => 'Giáo viên chủ nhiệm',
         ]);
 
-        return redirect()->back()->with('success', 'Thêm lớp học mới thành công!');
+        return redirect()->to('director/class/list')->with('success', 'Thêm lớp học thành công!');
     }
 
     public function classUpdate($MaLop)
@@ -1225,7 +1225,7 @@ class DirectorController extends Controller
         $PhanCongModel->query($SQL);
 
 
-        return redirect()->back()->with('success', 'Cập nhật lớp học thành công!');
+        return redirect()->to('director/class/list')->with('success', 'Cập nhật lớp học thành công!');
     }
 
     public function deleteClass($MaLop)
@@ -1664,7 +1664,7 @@ class DirectorController extends Controller
             // Xác nhận transaction
             $db->transCommit();
 
-            return redirect()->back()->with('success', 'Thêm học sinh vào lớp học thành công!');
+            return redirect()->to('director/class/arrange/student/' . $MaLop)->with('success', 'Thêm học sinh vào lớp học thành công!');
         } catch (\Exception $e) {
             // Nếu có lỗi, rollback transaction
             $db->transRollback();
@@ -1769,7 +1769,7 @@ class DirectorController extends Controller
         //Lưu thông tin phân công giáo viên dạy môn học trong lớp học
         $PhanCongModel->addTeacherToAssign($MaGV, $MaMH, $MaLop, $HocKy, $year);
 
-        return redirect()->back()->with('success', 'Phân công giáo viên dạy môn học thành công!');
+        return redirect()->to('director/class/arrange/teacher/' . $MaLop)->with('success', 'Phân công giáo viên dạy môn học thành công!');
     }
 
     // Màn hình quản lý giáo viên
@@ -1879,7 +1879,7 @@ class DirectorController extends Controller
             'TinhTrang' => $this->request->getPost('teacher_status') ?? 'Đang giảng dạy',
         ]);
 
-        return redirect()->back()->with('success', 'Thêm giáo viên mới thành công!');
+        return redirect()->to('director/employee/teacher/list')->with('success', 'Thêm giáo viên thành công!');
     }
 
     public function employeeTeacherUpdate($MaGV)
@@ -1902,7 +1902,6 @@ class DirectorController extends Controller
     {
         $errors = [];
         // Lấy dữ liệu từ form
-        $MaGV = $this->request->getPost('MaGV');
         $MaTK = $this->request->getPost('MaTK');
         $password = $this->request->getPost('teacher_password');
         $birthday = $this->request->getPost('teacher_birthday');
@@ -1911,6 +1910,7 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('teacher_gender');
         $role = $this->request->getPost('teacher_role');
         $status = $this->request->getPost('teacher_status');
+        $name = $this->request->getPost('teacher_name');
 
         // Kiểm tra ngày sinh
         if (strtotime($birthday) > strtotime(date('Y-m-d')))
@@ -1938,7 +1938,7 @@ class DirectorController extends Controller
 
         // Cập nhật thông tin tài khoản
         $TaiKhoan = "UPDATE taikhoan
-        SET MatKhau = '$password' , Email = '$email', SoDienThoai = '$phone', GioiTinh = '$gender', NgaySinh = '$birthday'
+        SET MatKhau = '$password' , Email = '$email', SoDienThoai = '$phone', GioiTinh = '$gender', NgaySinh = '$birthday', HoTen = '$name'
         WHERE MaTK = '$MaTK'";
         $TaiKhoanModel->query($TaiKhoan);
 
@@ -1948,7 +1948,7 @@ class DirectorController extends Controller
         WHERE MaGV = '$MaGV'";
         $GiaoVienModel->query($GiaoVien);
 
-        return redirect()->back()->with('success', 'Cập nhật thông tin giáo viên thành công!');
+        return redirect()->to('director/employee/teacher/list')->with('success', 'Cập nhật giáo viên thành công!');
     }
 
     public function deleteEmployeeTeacher($MaGV)
@@ -2109,7 +2109,7 @@ class DirectorController extends Controller
             'TinhTrang' => $this->request->getPost('supervisor_status') ?? 'Đang làm việc',
         ]);
 
-        return redirect()->back()->with('success', 'Thêm giám thị mới thành công!');
+        return redirect()->to('director/employee/supervisor/list')->with('success', 'Thêm giám thị thành công!');
     }
 
     public function employeeSupervisorUpdate($MaGT)
@@ -2192,7 +2192,7 @@ class DirectorController extends Controller
 
         // Xử lý thông báo
         if ($TaiKhoanModel && $GiamThiModel) {
-            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+            return redirect()->to('director/employee/supervisor/list')->with('success', 'Cập nhật giám thị thành công!');
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
         }
@@ -2458,7 +2458,7 @@ class DirectorController extends Controller
             'TinhTrang' => $this->request->getPost('cashier_status') ?? 'Đang làm việc',
         ]);
 
-        return redirect()->back()->with('success', 'Thêm thu ngân mới thành công!');
+        return redirect()->to('director/employee/cashier/list')->with('success', 'Thêm thu ngân thành công!');
     }
 
     public function employeeCashierUpdate($MaTN)
@@ -2544,7 +2544,7 @@ class DirectorController extends Controller
 
         // Xử lý thông báo
         if ($TaiKhoanModel && $ThuNganModel) {
-            return redirect()->back()->with('success', 'Cập nhật thông tin thành công!');
+            return redirect()->to('director/employee/cashier/list')->with('success', 'Cập nhật thu ngân thành công!');
         } else {
             return redirect()->back()->with('errors', 'Không thể cập nhật. Vui lòng thử lại.');
         }

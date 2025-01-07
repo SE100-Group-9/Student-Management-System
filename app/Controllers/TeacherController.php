@@ -65,14 +65,7 @@ class TeacherController extends Controller
         $currentReport = [];
         foreach ($currentStudentList as $student) {
             $MaHS = $student['MaHS'];
-            // Tính điểm trung bình theo học kỳ hoặc cả năm học
-            if ($selectedSemester === 'Học kỳ 1') {
-                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
-            } elseif ($selectedSemester === 'Học kỳ 2') {
-                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
-            } else {
-                $averageScore = $DiemModel->getYearAverageScore($MaHS, $selectedYear);
-            }
+            $averageScore = $DiemModel->getAverageScore($student);
             $performance  = $DiemModel->getAcademicPerformance($averageScore);
             $currentReport[] = [
                 'student' => $student,
@@ -80,6 +73,7 @@ class TeacherController extends Controller
                 'performance' => $performance,
             ];
         }
+        log_message('debug', 'Current report: ' . print_r($currentReport, true));
 
         // Xử lý chuỗi năm học để lấy năm liền trước
         $yearArray = explode('-', $selectedYear);
@@ -91,11 +85,7 @@ class TeacherController extends Controller
         $previousReport = [];
         foreach ($previousStudentList as $student) {
             $MaHS = $student['MaHS'];
-            // Tính điểm trung bình theo học kỳ hoặc cả năm học
-            if ($selectedSemester === 'Học kỳ 1') {
-                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 1, $previousYear);
-            } else
-                $averageScore = $DiemModel->getSemesterAverageScore($MaHS, 2, $previousYear);
+            $averageScore = $DiemModel->getAverageScore($student);
             $performance = $DiemModel->getAcademicPerformance($averageScore);
             $previousReport[] = [
                 'student' => $student,
@@ -103,6 +93,7 @@ class TeacherController extends Controller
                 'performance' => $performance,
             ];
         }
+        log_message('debug', 'Previous report: ' . print_r($previousReport, true));
 
         // Tính toán số lượng học sinh theo từng loại học lực trong năm học hiện tại và năm học trước
         $performanceStatistics = $DiemModel->getYearAverageScoreChange($currentReport, $previousReport);
