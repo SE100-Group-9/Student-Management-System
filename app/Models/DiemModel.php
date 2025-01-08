@@ -523,7 +523,8 @@ class DiemModel extends Model
                     AND diem.HocKy = ?
                 JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
                 JOIN monhoc ON diem.MaMH = monhoc.MaMH
-                WHERE lop.TenLop = ? AND monhoc.TenMH = ? AND hocsinh_lop.NamHoc = ?";
+                WHERE lop.TenLop = ? AND monhoc.TenMH = ? AND hocsinh_lop.NamHoc = ?
+                ORDER BY diem.$TenBaiKT DESC";
         $scores = $this->db->query($SQL, [$MaGV, $NamHoc, $HocKy, $TenLop, $TenMH, $NamHoc])->getResultArray();
 
         $performanceDetails = [

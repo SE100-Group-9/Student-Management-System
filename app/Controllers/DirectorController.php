@@ -846,13 +846,11 @@ class DirectorController extends Controller
         // Nhận giá trị từ khóa tìm kiếm từ query string
         $searchTerm = $this->request->getVar('search') ?? '';
 
-        //Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
-        if ($searchTerm) {
-            $DanhHieuModel->like('TenDH', $searchTerm);
-        }
+
 
         // Lấy danh sách danh hiệu và sắp xếp theo DiemTBToiThieu giảm dần
         $titleList = $DanhHieuModel->orderBy('DiemTBToiThieu', 'DESC')->findAll();
+
 
         // Lấy giá trị MucHocPhiNamHoc từ bảng ThamSo
         $HocPhi = $ThamSoModel->getGiaTriThamSo('MucHocPhiNamHoc');

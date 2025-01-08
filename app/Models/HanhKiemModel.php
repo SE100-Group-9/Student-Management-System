@@ -137,12 +137,12 @@ class HanhKiemModel extends Model
                     AND hocsinh_lop.NamHoc = ?
                     JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
                     JOIN hanhkiem ON hocsinh.MaHS = hanhkiem.MaHS
-                    LEFT JOIN vipham ON hocsinh.MaHS = vipham.MaHS
+                    LEFT JOIN vipham ON hocsinh.MaHS = vipham.MaHS AND vipham.HocKy = ? AND vipham.NamHoc = ?
                     WHERE hanhkiem.HocKy = ? AND hanhkiem.NamHoc = ?
                     GROUP BY hocsinh.MaHS, taikhoan.HoTen, lop.TenLop, hanhkiem.DiemHK, hanhkiem.TrangThai
                     ORDER BY hanhkiem.DiemHK ASC, SoLanViPham DESC, lop.TenLop ASC
                     LIMIT 20";
-        return $this->db->query($SQL, [$NamHoc, $HocKy, $NamHoc])->getResultArray();
+        return $this->db->query($SQL, [$NamHoc, $HocKy, $NamHoc, $HocKy, $NamHoc])->getResultArray();
     }
 
     // Lấy điểm hạnh kiểm của học sinh trong học kỳ và năm học dựa vào MaHS, HocKy, NamHoc
