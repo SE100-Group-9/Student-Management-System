@@ -101,6 +101,8 @@
         height: 30px;
         align-items: center;
         gap: 20px;
+        font-size: 14px;
+        font-family: "Inter";
     }
 
     .payment p {

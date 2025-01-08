@@ -81,11 +81,22 @@
         cursor: default;
     }
 
+    .conduct-management h1{
+        font-family: "Inter";
+    }
+
     .text {
         display: flex;
         height: 30px;
         align-items: center;
         gap: 20px;
+        font-family: "Inter";
+        font-size: 14px;
+    }
+
+    .text h1{
+        font-family: "Inter";
+        font-size: 14px;
     }
 
     .pointer {
