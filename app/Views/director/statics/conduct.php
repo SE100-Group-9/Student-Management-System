@@ -12,56 +12,56 @@
             Trung tâm / Thống kê / Hạnh kiểm
             <form method="GET" action="/sms/public/director/statics/conduct" id="form">
                 <div class=" tool-search">
-                <div class="dropdown-edit">
-                    <?= view('components/dropdown', [
-                        'options' => $yearList ?? [],
-                        'dropdown_id' => 'year-dropdown',
-                        'name' => 'year',
-                        'selected_text' => 'Chọn năm học',
-                        'value' => $selectedYear ?? ''
-                    ]) ?>
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => $yearList ?? [],
+                            'dropdown_id' => 'year-dropdown',
+                            'name' => 'year',
+                            'selected_text' => 'Chọn năm học',
+                            'value' => $selectedYear ?? ''
+                        ]) ?>
+                    </div>
+                    <div class="dropdown-edit">
+                        <?= view('components/dropdown', [
+                            'options' => ['Học kỳ 1', 'Học kỳ 2'],
+                            'dropdown_id' => 'semester-dropdown',
+                            'name' => 'semester',
+                            'selected_text' => 'Chọn học kỳ',
+                            'value' => $selectedSemester ?? ''
+                        ]) ?>
+                    </div>
+                    <button type="submit" style="display: none;">Submit</button>
                 </div>
-                <div class="dropdown-edit">
-                    <?= view('components/dropdown', [
-                        'options' => ['Học kỳ 1', 'Học kỳ 2'],
-                        'dropdown_id' => 'semester-dropdown',
-                        'name' => 'semester',
-                        'selected_text' => 'Chọn học kỳ',
-                        'value' => $selectedSemester ?? ''
-                    ]) ?>
-                </div>
-                <button type="submit" style="display: none;">Submit</button>
-        </div>
-        </form>
+            </form>
 
-        <div style="display: none;">
-            <?= view('components/dropdown', []) ?>
-        </div>
-
-        <div class="conduct-btns">
-            <button class="conduct-btn" onclick="loadChartData('grade-10')">Khối 10</button>
-            <button class="conduct-btn" onclick="loadChartData('grade-11')">Khối 11</button>
-            <button class="conduct-btn" onclick="loadChartData('grade-12')">Khối 12</button>
-        </div>
-        <div class="body-below">
-            <div id="excellent">
-                <div class="conduct-chart">
-                    <?= view('components/column_chart', [
-                        'HanhKiemKhoi10' => $HanhKiemKhoi10,
-                        'HanhKiemKhoi11' => $HanhKiemKhoi11,
-                        'HanhKiemKhoi12' => $HanhKiemKhoi12
-                    ]) ?>
-                </div>
+            <div style="display: none;">
+                <?= view('components/dropdown', []) ?>
             </div>
-            <div class="conduct-table">
-                Danh sách các học sinh có điểm hạnh kiểm thấp nhất
-                <?= view('components/tables/directorStaticsConduct', [
-                    'worstStudents' => $worstStudents
-                ]) ?>
+
+            <div class="conduct-btns">
+                <button class="conduct-btn active" onclick="loadChartData('grade-10')">Khối 10</button>
+                <button class="conduct-btn" onclick="loadChartData('grade-11')">Khối 11</button>
+                <button class="conduct-btn" onclick="loadChartData('grade-12')">Khối 12</button>
+            </div>
+            <div class="body-below">
+                <div id="excellent">
+                    <div class="conduct-chart">
+                        <?= view('components/column_chart', [
+                            'HanhKiemKhoi10' => $HanhKiemKhoi10,
+                            'HanhKiemKhoi11' => $HanhKiemKhoi11,
+                            'HanhKiemKhoi12' => $HanhKiemKhoi12
+                        ]) ?>
+                    </div>
+                </div>
+                <div class="conduct-table">
+                    Danh sách các học sinh có điểm hạnh kiểm thấp nhất
+                    <?= view('components/tables/directorStaticsConduct', [
+                        'worstStudents' => $worstStudents
+                    ]) ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -138,9 +138,9 @@
         flex: 1;
         align-self: stretch;
         background: #FFF;
-        overflow-y: auto; 
-        max-height: none; 
-        height: auto; 
+        overflow-y: auto;
+        max-height: none;
+        height: auto;
         padding: 10px;
     }
 
@@ -150,7 +150,8 @@
         border-spacing: 0;
     }
 
-    .conduct-table th, .conduct-table td {
+    .conduct-table th,
+    .conduct-table td {
         padding: 8px;
         text-align: left;
     }
@@ -203,7 +204,7 @@
         background: var(--slate-100, #F1F5F9);
     }
 
-    
+
 
     #excellent {
         width: 50%;
@@ -227,7 +228,7 @@
         align-self: stretch;
         background: #FFF;
         overflow: auto;
-        
+
     }
 
     .dropdown-edit {
@@ -294,4 +295,23 @@
 
         loadChartData(ConductName); // Gọi hàm vẽ chart khi chuyển tab
     }
+
+    // Giữ màu kể cả khi nhấn ra ngoài
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll(".conduct-btn");
+
+        // Đặt sự kiện click cho tất cả các nút
+        buttons.forEach(button => {
+            button.addEventListener("click", function() {
+                // Xóa class 'active' khỏi tất cả các nút
+                buttons.forEach(btn => btn.classList.remove("active"));
+
+                // Thêm class 'active' vào nút được click
+                this.classList.add("active");
+            });
+        });
+
+        // Gọi hàm loadChartData mặc định (Khối 10)
+        loadChartData('grade-10');
+    });
 </script>
