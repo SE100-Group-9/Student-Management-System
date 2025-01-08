@@ -53,16 +53,29 @@ class HocSinhModel extends Model
     // Lấy danh sách học sinh (MaHS, HoTen) dựa vào MaGV phụ trách lớp, năm học và học kỳ
     public function getStudentListByTeacher($MaGV, $HocKy, $NamHoc)
     {
-        $SQL = "SELECT DISTINCT hocsinh.MaHS, taikhoan.HoTen
+        $SQL = "SELECT DISTINCT hocsinh.MaHS, taikhoan.HoTen, lop.TenLop, monhoc.TenMH,
+                diem.Diem15P_1, diem.Diem15P_2, diem.Diem1Tiet_1, diem.Diem1Tiet_2, diem.DiemCK
                 FROM phancong
                 JOIN hocsinh_lop ON phancong.MaLop = hocsinh_lop.MaLop 
                     AND phancong.NamHoc = hocsinh_lop.NamHoc
                     AND hocsinh_lop.NamHoc = ?
                 JOIN hocsinh ON hocsinh_lop.MaHS = hocsinh.MaHS
                 JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
-                WHERE phancong.MaGV = ? AND phancong.HocKy = ? AND phancong.NamHoc = ? AND phancong.VaiTro = 'Giáo viên bộ môn'";
-        return $this->db->query($SQL, [$NamHoc, $MaGV, $HocKy, $NamHoc])->getResultArray();
+                JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
+                LEFT JOIN diem ON hocsinh.MaHS = diem.MaHS 
+                    AND diem.MaGV = ?
+                    AND diem.NamHoc = ? AND diem.HocKy = ?
+                LEFT JOIN monhoc ON diem.MaMH = monhoc.MaMH
+                WHERE phancong.MaGV = ?
+                    AND phancong.HocKy = ?
+                    AND phancong.NamHoc = ?
+                    AND phancong.VaiTro = 'Giáo viên bộ môn'
+                    ORDER BY hocsinh.MaHS, monhoc.TenMH";
+        return $this->db->query($SQL, [$NamHoc, $MaGV, $NamHoc, $HocKy, $MaGV, $HocKy, $NamHoc])->getResultArray();
     }
+
+
+    
     public function isValidStudentCode($MaHS) {
         $SQL = "SELECT COUNT(*) AS count FROM hocsinh WHERE MaHS = ?";
         $result = $this->db->query($SQL, [$MaHS])->getRowArray();
