@@ -132,10 +132,10 @@ $routes->post('cashier/changepw', 'CashierController::updatePassword');
 $routes->get('supervisor/profile', 'SupervisorController::profile');
 $routes->post('supervisor/profile', 'SupervisorController::updateProfile');
 
-$routes->get('supervisor/fault', 'SupervisorController::fault');
-$routes->get('supervisor/addfault', 'SupervisorController::addfaultForm');
-$routes->get('supervisor/faultDetail/(:num)', 'SupervisorController::faultDetail/$1');
-$routes->post('supervisor/addfault', 'SupervisorController::addfault');
+$routes->get('supervisor/conduct', 'SupervisorController::conduct');
+$routes->get('supervisor/addfault/(:num)', 'SupervisorController::addfaultForm/$1');
+$routes->get('supervisor/conductDetail/(:num)', 'SupervisorController::conductDetail/$1');
+$routes->post('supervisor/addfault/(:num)', 'SupervisorController::addfault/$1');
 $routes->get('supervisor/deletefault/(:num)', 'SupervisorController::deletefault/$1');
 
 $routes->get('supervisor/category', 'SupervisorController::category');

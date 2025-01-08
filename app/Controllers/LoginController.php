@@ -90,7 +90,7 @@ class LoginController extends Controller
                     case '4': // Thu Ngân
                         return redirect()->to('/cashier/invoice/list');
                     case '5': // Giám Thị
-                        return redirect()->to('/supervisor/fault');
+                        return redirect()->to('/supervisor/conduct');
                     default:
                         $session->destroy();
                         return redirect()->to('/')->with('error', 'Vai trò không hợp lệ!');

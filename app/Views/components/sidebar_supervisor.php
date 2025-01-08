@@ -22,7 +22,7 @@
                 </a>
             </div>
             <div class="fault pointer">
-                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/supervisor/fault">
+                <a style="text-decoration: none; background: none; color: inherit;" href="/sms/public/supervisor/conduct">
                     <p>Thông tin vi phạm</p>
                 </a>
             </div>

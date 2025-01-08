@@ -9,9 +9,9 @@
         <?= view('components/sidebar_supervisor'); ?>
         </div>
         <div class="body-right">
-        Quản lý / Quản lý hạnh kiểm / Thông tin vi phạm
+        Quản lý / Quản lý hạnh kiểm / Thông tin hạnh kiểm
         <div class="faultlist-tool">
-            <form method="GET" action="/sms/public/supervisor/fault">
+            <form method="GET" action="/sms/public/supervisor/conduct">
                 <div class="tool-search">
                     <?= view('components/searchbar', ['placeholder' => 'Nhập HS hoặc lớp']); ?>
                     <?= view('components/dropdown', [
@@ -19,14 +19,14 @@
                         'dropdown_id' => 'status-dropdown',
                         'name' => 'semester',
                         'selected_text' => 'Chọn học kì',
-                        'value' => $selectedSemester
+                        'value' => $selectedSemester ?? ''
                         ]) ?>
                     <?= view('components/dropdown', [
                         'options' => $yearList, 
                         'dropdown_id' => 'year-dropdown',
                         'name' => 'year',
                         'selected_text' => 'Chọn năm học',
-                        'value' => $selectedYear
+                        'value' => $selectedYear ?? ''
                         ]) ?>
                      <?= view('components/view_button') ?>
                 </div>
@@ -34,15 +34,10 @@
             </form>
             <div style="display: none">
                     <?= view('components/dropdown', []) ?>
-                </div>
-                <div class="tool-add">        
-                        <a style="text-decoration: none" href="/sms/public/supervisor/addfault">
-                            <?= view('components/add', ['button_text' => 'Thêm']) ?>
-                        </a>
-                </div>     
+                </div>  
         </div>
             <div class="tabless">
-                <?= view('components/tables/supervisorFault', ['ViPham' => $viPham]) ?>
+                <?= view('components/tables/supervisorConduct', ['HanhKiem' => $HanhKiem]) ?>
             </div>
             <div style="max-width: 200px; align-items: flex-end">
                 <?= view('components/pagination'); ?>

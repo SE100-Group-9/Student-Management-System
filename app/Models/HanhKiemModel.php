@@ -155,4 +155,122 @@ class HanhKiemModel extends Model
         $result = $query->getRowArray();
         return $result ? $result['DiemHK'] : 0;
     }
+
+    public function updateConductScore($MaHS, $HocKy, $NamHoc) {
+        // Bước 1: Lấy tổng điểm trừ của học sinh trong học kỳ và năm học
+        $SQL_DiemTru = "SELECT SUM(lvp.DiemTru) AS DiemTru
+                        FROM vipham vp
+                        INNER JOIN loaivipham lvp ON vp.MaLVP = lvp.MaLVP
+                        WHERE vp.MaHS = ? AND vp.HocKy = ? AND vp.NamHoc = ?";
+        $queryDiemTru = $this->db->query($SQL_DiemTru, [$MaHS, $HocKy, $NamHoc]);
+        $resultDiemTru = $queryDiemTru->getRowArray();
+        $DiemTru = $resultDiemTru ? $resultDiemTru['DiemTru'] : 0;
+    
+        // Bước 2: Tính điểm hạnh kiểm mới
+        $newDiemHK = max(0, 100 - $DiemTru); // Đảm bảo DiemHK >= 0
+    
+        // Bước 3: Xác định trạng thái
+        $TrangThai = $newDiemHK < 50 ? 'Bị cảnh báo' : null;
+    
+        // Bước 4: Cập nhật điểm hạnh kiểm và trạng thái
+        $SQL_Update = "UPDATE hanhkiem
+                       SET DiemHK = ?, TrangThai = ?
+                       WHERE MaHS = ? AND HocKy = ? AND NamHoc = ?";
+        $this->db->query($SQL_Update, [$newDiemHK, $TrangThai, $MaHS, $HocKy, $NamHoc]);
+    
+        return [
+            'DiemHK' => $newDiemHK,
+            'TrangThai' => $TrangThai,
+        ];
+    }
+
+    public function getConductById($conductId) {
+        $SQL = "SELECT 
+            hanhkiem.MaHK, 
+            hanhkiem.MaHS, 
+            taikhoan.HoTen AS TenHS, 
+            lop.TenLop AS Lop, 
+            hanhkiem.HocKy, 
+            hanhkiem.NamHoc, 
+            hanhkiem.DiemHK, 
+            hanhkiem.TrangThai
+        FROM 
+            hanhkiem
+        JOIN hocsinh ON hanhkiem.MaHS = hocsinh.MaHS
+        JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+        JOIN hocsinh_lop ON hanhkiem.MaHS = hocsinh_lop.MaHS AND hanhkiem.NamHoc = hocsinh_lop.NamHoc
+        JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
+        WHERE hanhkiem.MaHK = ?"; // Điều kiện lọc theo MaHK
+    
+        // Thực thi truy vấn và truyền tham số
+        $result = $this->db->query($SQL, [$conductId])->getRowArray();
+    
+        return $result; // Trả về kết quả duy nhất
+    }
+
+    public function getAllConduct($selectedSemester, $selectedYear, $searchStudent)
+    {
+        // Tạo câu lệnh SQL với JOIN để lấy thêm thông tin từ các bảng liên quan
+        $SQL = "SELECT 
+                hanhkiem.MaHK, 
+                hanhkiem.MaHS, 
+                taikhoan.HoTen AS TenHS, 
+                lop.TenLop AS Lop, 
+                hanhkiem.HocKy, 
+                hanhkiem.NamHoc, 
+                hanhkiem.DiemHK, 
+                hanhkiem.TrangThai
+            FROM 
+                hanhkiem
+            JOIN hocsinh ON hanhkiem.MaHS = hocsinh.MaHS
+            JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK
+            JOIN hocsinh_lop ON hanhkiem.MaHS = hocsinh_lop.MaHS AND hanhkiem.NamHoc = hocsinh_lop.NamHoc
+            JOIN lop ON hocsinh_lop.MaLop = lop.MaLop
+            WHERE 1=1"; // Luôn đúng để nối điều kiện động
+    
+        // Mảng chứa tham số truyền vào
+        $params = [];
+    
+        // Kiểm tra học kỳ
+        if ($selectedSemester !== 'Chọn học kì') {
+            $SQL .= " AND hanhkiem.HocKy = ?";
+            $params[] = $selectedSemester;
+        }
+    
+        // Kiểm tra năm học
+        if ($selectedYear !== 'Chọn năm học') {
+            $SQL .= " AND hanhkiem.NamHoc = ?";
+            $params[] = $selectedYear;
+        }
+    
+        // Tìm kiếm học sinh (theo Mã học sinh, Họ tên hoặc Tên lớp)
+        if (!empty($searchStudent)) {
+            // Thêm điều kiện tìm kiếm
+            $SQL .= " AND (
+                hanhkiem.MaHS LIKE ? 
+                OR taikhoan.HoTen LIKE ? 
+                OR lop.TenLop LIKE ?
+            )";
+            $params[] = '%' . $searchStudent . '%';
+            $params[] = '%' . $searchStudent . '%';
+            $params[] = '%' . $searchStudent . '%';
+        }
+    
+
+    
+        // Thực thi truy vấn với các tham số
+        $result = $this->db->query($SQL, $params)->getResultArray();
+    
+        return $result; // Trả về 
+    }
+    
+
+
+public function getYearList() {
+    $SQL = "SELECT DISTINCT NamHoc FROM hanhkiem ORDER BY NamHoc DESC";
+    $result = $this->db->query($SQL)->getResultArray();
+    return array_column($result, 'NamHoc');
+}
+
+
 }

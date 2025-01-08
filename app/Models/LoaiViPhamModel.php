@@ -10,16 +10,34 @@ class LoaiViPhamModel extends Model
     protected $primaryKey = 'MaLVP';
     
     public function getLVP($searchLVP) {
-          // Tạo câu SQL cơ bản
-          $SQL = "SELECT * FROM loaivipham";
+        // Tạo câu SQL cơ bản
+        $SQL = "SELECT TenLVP FROM loaivipham";
+    
+        // Thêm điều kiện tìm kiếm nếu có từ khóa
+        if (!empty($searchLVP)) {
+            $SQL .= " WHERE TenLVP LIKE '%" . $this->db->escapeLikeString($searchLVP) . "%'";
+        }
+    
+        // Lấy dữ liệu dưới dạng mảng hai chiều
+        $result = $this->db->query($SQL)->getResultArray();
+    
+        // Chuyển đổi sang mảng một chiều chứa các giá trị TenLVP
+        $LVPList = array_column($result, 'TenLVP');
+    
+        return $LVPList;
+    }
 
-          // Thêm điều kiện tìm kiếm nếu có từ khóa
-          if (!empty($searchLVP)) {
-              $SQL .= " WHERE TenLVP LIKE '%" . $this->db->escapeLikeString($searchLVP) . "%'";
-          }
-  
-          // Thực thi truy vấn và trả về kết quả mảng 2 chiều 
-          return $this->db->query($SQL)->getResultArray();
+    public function getLVP2($searchLVP) {
+                // Tạo câu SQL cơ bản
+            $SQL = "SELECT * FROM loaivipham";
+
+            // Thêm điều kiện tìm kiếm nếu có từ khóa
+            if (!empty($searchLVP)) {
+                $SQL .= " WHERE TenLVP LIKE '%" . $this->db->escapeLikeString($searchLVP) . "%'";
+            }
+
+            // Thực thi truy vấn và trả về kết quả mảng 2 chiều 
+            return $this->db->query($SQL)->getResultArray();
     }
 
     public function getMaLVP($TenLVP) {

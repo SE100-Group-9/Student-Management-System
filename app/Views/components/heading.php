@@ -203,6 +203,7 @@ function getChangePasswordUrl($MaVT)
         right: 20px;
         z-index: 1000;
         transform: translateY(-10px);
+        z-index: 9999;
     }
 
     /* Khi class 'show' được thêm vào, dropdown sẽ hiển thị */
@@ -210,7 +211,9 @@ function getChangePasswordUrl($MaVT)
         display: flex;
     }
 
-
+    #dropdown-heading{
+        z-index: 999999999;
+    }
 
     .personal {
         display: flex;

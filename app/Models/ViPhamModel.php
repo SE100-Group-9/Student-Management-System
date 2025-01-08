@@ -10,10 +10,77 @@ class ViPhamModel extends Model
     protected $primaryKey = 'MaVP';
     protected $allowedFields = ['MaHS', 'MaGT', 'MaLVP', 'MaLop', 'HocKy', 'NamHoc'];
     
+
+
+    public function getAllVP2($selectedSemester, $selectedYear, $MaHS, $MaLop) {
+        // Tạo câu SQL cơ bản với các JOIN để lấy dữ liệu liên quan
+        $SQL = "SELECT 
+                vp.MaVP,
+                vp.MaHS, 
+                vp.HocKy AS HocKi,
+                vp.NamHoc,
+                tk_hs.HoTen AS TenHS, 
+                l.TenLop, 
+                lv.TenLVP, 
+                lv.DiemTru, 
+                tk_gt.HoTen AS TenGT,
+                vp.NgayVP,
+                vp.MaLop
+            FROM 
+                vipham vp
+            JOIN 
+                hocsinh hs ON vp.MaHS = hs.MaHS
+            JOIN 
+                taikhoan tk_hs ON hs.MaTK = tk_hs.MaTK
+            JOIN 
+                giamthi gt ON vp.MaGT = gt.MaGT
+            JOIN 
+                taikhoan tk_gt ON gt.MaTK = tk_gt.MaTK
+            JOIN 
+                loaivipham lv ON vp.MaLVP = lv.MaLVP
+            JOIN 
+                lop l ON vp.MaLop = l.MaLop
+            WHERE 1=1"; // Điều kiện mặc định
+    
+        // Tạo mảng tham số để bảo mật dữ liệu đầu vào
+        $params = [];
+    
+        // Thêm điều kiện tìm kiếm theo học kỳ
+        if ($selectedSemester !== 'Chọn học kì' && !empty($selectedSemester)) {
+            $SQL .= " AND vp.HocKy = ?";
+            $params[] = $selectedSemester;
+        }
+    
+        // Thêm điều kiện tìm kiếm theo năm học
+        if ($selectedYear !== 'Chọn năm học' && !empty($selectedYear)) {
+            $SQL .= " AND vp.NamHoc = ?";
+            $params[] = $selectedYear;
+        }
+    
+        // Thêm điều kiện tìm kiếm theo mã học sinh
+        if (!empty($MaHS)) {
+            $SQL .= " AND vp.MaHS = ?";
+            $params[] = $MaHS;
+        }
+    
+        // Thêm điều kiện tìm kiếm theo mã lớp
+        if (!empty($MaLop)) {
+            $SQL .= " AND vp.MaLop = ?";
+            $params[] = $MaLop;
+        }
+    
+        // Thực thi truy vấn với các tham số
+        $result = $this->db->query($SQL, $params)->getResultArray();
+    
+        return $result; // Trả về kết quả
+    }
+
+
     public function getAllVP($selectedSemester, $selectedYear, $search)
     {   
                     // Tạo câu lệnh SQL với JOIN để lấy thêm thông tin từ các bảng liên quan
             $SQL = "SELECT 
+            
             vp.MaVP,
             vp.MaHS, 
             vp.HocKy AS HocKi,
@@ -23,7 +90,8 @@ class ViPhamModel extends Model
             lv.TenLVP, 
             lv.DiemTru, 
             tk_gt.HoTen AS TenGT,
-            vp.NgayVP
+            vp.NgayVP,
+            vp.MaLop
         FROM 
             vipham vp
         JOIN 
@@ -121,8 +189,8 @@ class ViPhamModel extends Model
             $totalDiemTru += $violation['DiemTru']; // Cộng dồn DiemTru
         }
 
-        // Tính điểm còn lại
-        $remainingScore = $initialScore - $totalDiemTru;
+        $DiemHK = new HanhKiemModel();
+        $remainingScore = $DiemHK->getConductScore($MaHS, $selectedSemester, $selectedYear);
 
         return [
             'violations' => $violations,        // Danh sách các vi phạm
@@ -177,8 +245,10 @@ class ViPhamModel extends Model
   }
 
     public function addVP($data) {
+        // Update bên điểm hạnh kiểm
 
         return $this->db->table($this->table)->insert($data);
+
     }
 
     public function updateLVP($categoryId, $data) {

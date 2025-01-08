@@ -10,6 +10,7 @@ use App\Models\HocSinhLopModel;
 use App\Models\LopModel;
 use App\Models\ViPhamModel;
 use App\Models\HocSinhModel;
+use App\Models\HanhKiemModel;
 
 class SupervisorController extends Controller
 {
@@ -83,7 +84,7 @@ class SupervisorController extends Controller
         $searchLVP = $this->request->getVar('search') ?? '';
         
         
-        $LoaiViPham = $LoaiViPhamModel->getLVP($searchLVP);
+        $LoaiViPham = $LoaiViPhamModel->getLVP2($searchLVP);
 
         
         return view(
@@ -241,7 +242,8 @@ class SupervisorController extends Controller
     public function deletecategory($categoryId)
     {   
         $LoaiViPhamModel = new LoaiViPhamModel();
-        $result= $LoaiViPhamModel->deleteLVP($categoryId);
+        $result = $LoaiViPhamModel->deleteLVP($categoryId);
+ 
         if ($result) {
             return redirect()->back()->with('success', 'Xóa thanh toán thành công.');
         } else {
@@ -249,24 +251,55 @@ class SupervisorController extends Controller
         }
     }
 
-    public function addfaultForm() {
-        $HocSinhLopModel = new HocSinhLopModel();
-        $yearListArray = $HocSinhLopModel->getYearList();
+    public function addfaultForm($conductId) {
+
+        $HanhKiemModel = new HanhKiemModel();
+        $HanhKiem = $HanhKiemModel->getConductById($conductId);
 
         $LoaiViPhamModel = new LoaiViPhamModel();
-        $categoryList = $LoaiViPhamModel->getLVP('');
-        $categoryArray = array_column($categoryList, 'TenLVP');
+        $LVP = $LoaiViPhamModel->getLVP('');
 
         $GiamThiModel = new GiamThiModel();
         $GiamThi = $GiamThiModel->getCurrentSupervisor();
         
         $TenGT = $GiamThi['HoTen'];
+
         return view('supervisor/addfault', [
-            'HoTen' => $TenGT,
-            'yearList' => $yearListArray,
-            'categoryList' => $categoryArray,
+            'TenGT' => $TenGT,
+            'HanhKiem' => $HanhKiem,
+            'LVP' => $LVP
         ]);
         
+    }
+
+    public function conduct() {
+
+        $HanhKiemModel = new HanhKiemModel();
+        $yearListArray = $HanhKiemModel->getYearList();
+        $yearList = array_merge(['Chọn năm học'], $yearListArray ); 
+
+
+        $selectedSemester1 = $this->request->getVar('semester') ?? 'Học kì 1';
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
+        $searchStudent = $this->request->getVar('search') ?? '';
+        
+        if ($selectedSemester1 === 'Học kì 1') {
+            $selectedSemester = 1;
+        } else if ($selectedSemester1 === 'Học kì 2') {
+            $selectedSemester = 2;
+        } else {
+            $selectedSemester = $selectedSemester1;
+        }
+
+        $HanhKiem =  $HanhKiemModel->getAllConduct($selectedSemester, $selectedYear, $searchStudent);
+
+        return view('supervisor/conduct', [
+            'yearList' => $yearList,
+            'HanhKiem' => $HanhKiem,
+            'selectedSemester' => $selectedSemester1,
+            'selectedYear' => $selectedYear
+        ]);
+
     }
 
     
@@ -352,9 +385,13 @@ class SupervisorController extends Controller
         ];
 
         $ViPhamModel = new ViPhamModel();
-        $result = $ViPhamModel->addVP($data);
+        $MaVP = $ViPhamModel->addVP($data);
+
         
-        if ($result) {
+        $HanhKiemModel = new HanhKiemModel();
+        $HanhKiemModel->updateConductScore($MaHS, $HocKi, $NamHoc);
+        
+        if ($MaVP !== null) {
             return redirect()->back()->with('success', 'Thêm lỗi thành công');
         } else {
             return redirect()->back()->with('errors', 'Thêm lỗi thất bại');
@@ -388,19 +425,42 @@ class SupervisorController extends Controller
         ]);
     }
 
-    public function faultDetail($faultId)
-    {
-        $ViPhamModel = new ViPhamModel();
-        $ViPham = $ViPhamModel->getVPById($faultId);
-
-        return view('supervisor/faultDetail', [
-            'viPham' => $ViPham
-        ]);
-    }
-    public function deletefault($faultId)
+    public function conductDetail($MaHK)
     {   
+        $HanhKiemModel = new HanhKiemModel();
+        $HanhKiem = $HanhKiemModel->getConductById($MaHK);
+
+        $selectedSemester = $HanhKiem['HocKy'];
+        $selectedYear = $HanhKiem['NamHoc'];
+        $MaHS = $HanhKiem['MaHS'];
+        $Lop = $HanhKiem['Lop'];
+
+        $LopModel = new LopModel();
+        $MaLop = $LopModel->getMaLop($Lop);
         $ViPhamModel = new ViPhamModel();
+        $ViPham = $ViPhamModel->getAllVP2($selectedSemester, $selectedYear, $MaHS, $MaLop);
+        
+        return view('supervisor/conductDetail', [
+            'ViPham' => $ViPham,
+            'MaHK' => $MaHK
+        ]);
+        
+    }
+
+
+    public function deletefault($faultId)
+    {  
+        
+        $ViPhamModel = new ViPhamModel();
+        $ViPham =  $ViPhamModel->getVPById($faultId);
+    
+
         $result= $ViPhamModel->deleteVP($faultId);
+
+       
+        $HanhKiemModel = new HanhKiemModel();
+        $HanhKiemModel->updateConductScore($ViPham['MaHS'], $ViPham['HocKi'], $ViPham['NamHoc']);
+
         if ($result) {
             return redirect()->back()->with('success', 'Xóa vi phạm thành công.');
         } else {

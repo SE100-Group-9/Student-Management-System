@@ -15,7 +15,7 @@ class CashierController extends Controller
         $HoaDonModel = new HoaDonModel();
 
         $selectedStatus = $this->request->getVar('status') ?? 'Chưa thanh toán';
-        $selectedYear = $this->request->getVar('year') ?? '2023-2024';
+        $selectedYear = $this->request->getVar('year') ?? '2024-2025';
         $searchStudent = $this->request->getVar('search') ?? '';
         
         // lấy list year

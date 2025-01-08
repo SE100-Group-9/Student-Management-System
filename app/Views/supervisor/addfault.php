@@ -11,7 +11,7 @@
         <div class="body-right">
             <h1>Thêm vi phạm</h1>
             <h2>Thông tin vi phạm</h2>
-            <form method="POST" action="/sms/public/supervisor/addfault">
+            <form method="POST" action="/sms/public/supervisor/addfault/<?= $HanhKiem['MaHK'] ?>">
                 <div class="add-fault-fields">
                     <div class="add-fault-field">
                         Mã học sinh
@@ -20,8 +20,9 @@
                             'name' => 'MaHS',
                             'id' => 'student-id', 
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Nhập mã học sinh',
+                            'value' =>  $HanhKiem['MaHS']
                         ]) ?>
                     </div>
                     <div class="add-fault-field">
@@ -31,9 +32,9 @@
                             'name' => 'TenHS',
                             'id' => 'student-name',
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Tên học sinh',
-                            'value' => '',
+                            'value' => $HanhKiem['TenHS']
                         ]) ?>
                     </div>
                 </div>
@@ -45,9 +46,9 @@
                             'name' => 'Lop',
                             'id' => 'class', 
                             'required' => true,
-                            'readonly' => false,
+                            'readonly' => true,
                             'placeholder' => 'Lớp',
-                            'value' => '',
+                            'value' => $HanhKiem['Lop']
                         ]) ?>
                     </div>
                     <div class="add-fault-field">
@@ -58,27 +59,33 @@
                                 'id' => 'student-name',
                                 'required' => true,
                                 'readonly' => true,
-                                'value' => $HoTen,
+                                'value' => $TenGT
                             ]) ?>
                     </div>
                 </div>                
                 <div class="add-fault-fields">
-                    <div class="add-fault-field">
+                <div class="add-fault-field">
                         Học kì
-                        <?= view('components/dropdown', [
-                            'options' => ['Học kì 1', 'Học kì 2'],
-                            'dropdown_id' => 'semester-dropdown',
+                        <?= view('components/input', [
+                            'type' => 'text',
                             'name' => 'HocKi',
-                            'value' => ''
+                            'id' => 'student-name',
+                            'required' => true,
+                            'readonly' => true,
+                            'placeholder' => 'Tên học sinh',
+                            'value' => $HanhKiem['HocKy']
                         ]) ?>
                     </div>
                     <div class="add-fault-field">
                         Năm học
-                        <?= view('components/dropdown', [
-                            'options' => $yearList ?? '',
-                            'dropdown_id' => 'year-dropdown',
+                        <?= view('components/input', [
+                            'type' => 'text',
                             'name' => 'NamHoc',
-                            'value' => ''
+                            'id' => 'student-name',
+                            'required' => true,
+                            'readonly' => true,
+                            'placeholder' => 'Tên học sinh',
+                            'value' => $HanhKiem['NamHoc'],
                         ]) ?>
                     </div>
                 </div>
@@ -87,7 +94,7 @@
                         <div class="add-fault-field">
                                     Lỗi vi phạm
                                 <?= view('components/dropdown', [
-                                    'options' => $categoryList ?? '',
+                                    'options' => $LVP ?? '',
                                     'dropdown_id' => 'fault-dropdown',
                                     'name' => 'Loi',
                                     'value' => '',
@@ -110,7 +117,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="add-button">
-                    <a href="/sms/public/supervisor/fault" style="text-decoration: none";>
+                    <a href="/sms/public/supervisor/conduct" style="text-decoration: none";>
                         <?= view('components/exit_button') ?>
                     </a>
 
@@ -217,8 +224,8 @@
     .add-button {
         display: flex;
         width: 100%;
-        justify-content: center;
-        align-items: center;
+        justify-content: right;
+        align-items: right;
         gap: 20px;
     }
 

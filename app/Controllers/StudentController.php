@@ -177,6 +177,7 @@ class StudentController extends Controller
         $selectedYear = $this->request->getVar('year') ?? $latestYear;
         $selectedSemester = $this->request->getVar('semester') ?? 'Học kì 1';
 
+
         $DanhHieuModel = new DanhHieuModel();
         $MaLop = $HocSinhModel->getCurrentClass($MaHS, $selectedYear);
         

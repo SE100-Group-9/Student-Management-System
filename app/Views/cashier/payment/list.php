@@ -10,10 +10,10 @@
         </div>
         <div class="body-right">
             Học phí / Quản lý học phí / Danh sách hóa đơn / Lịch sử thanh toán
-            <form method="GET" action="/sms/public/cashier/payment/list/<?= $MaHD ?>">
                 <div class="tools">
                     <?= view('components/searchbar') ?>
                 </div>
+                <form method="GET" action="/sms/public/cashier/payment/list/<?= $MaHD ?>">
                 <div class="tabless">
                     <?= view('components/tables/cashierPaymentList', ['paymentList' => $paymentList]) ?>
                 </div>

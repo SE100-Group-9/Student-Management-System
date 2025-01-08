@@ -8,7 +8,7 @@
                 <th>Lỗi</th>
                 <th>Điểm trừ</th>
                 <th>Ngày vi phạm</th>
-                <th> </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +19,7 @@
                     <td><?= $conduct['TenLVP'] ?></td>
                     <td><?= $conduct['DiemTru'] ?></td>
                     <td><?= $conduct['NgayVP'] ?></td>
+                    <td></td>
                 </tr>
         <?php endforeach; ?>
             <tr>

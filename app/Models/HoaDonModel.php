@@ -80,9 +80,10 @@ class HoaDonModel extends Model
             $params[] = $selectedYear;
         }
 
-        // Tìm kiếm học sinh (theo Mã học sinh hoặc Họ tên)
+        // Tìm kiếm học sinh (theo Mã học sinh hoặc Họ tên hoặc tên lớp)
         if (!empty($searchStudent)) {
-            $SQL .= " AND (hoadon.MaHS LIKE ? OR taikhoan.HoTen LIKE ?)";
+            $SQL .= " AND (hoadon.MaHS LIKE ? OR taikhoan.HoTen LIKE ? OR lop.TenLop LIKE ?)";
+            $params[] = '%' . $searchStudent . '%';
             $params[] = '%' . $searchStudent . '%';
             $params[] = '%' . $searchStudent . '%';
         }

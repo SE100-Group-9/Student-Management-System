@@ -35,10 +35,6 @@
             <div style="display: none">
                     <?= view('components/dropdown', []) ?>
                 </div>
-                <div class="tool-add">        
-                    <?= view('components/excel_export'); ?>
-                    <?= view('components/upload'); ?>                    
-                </div>     
         </div>
             <div class="tabless">
                 <?= view('components/tables/cashierInvoiceList', ['invoiceList' => $invoiceList]) ?>
