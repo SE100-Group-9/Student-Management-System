@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 25, 2024 lúc 06:57 AM
+-- Thời gian đã tạo: Th1 08, 2025 lúc 05:07 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -50,25 +50,6 @@ CREATE TRIGGER `trg_BGH_BeforeInsert` BEFORE INSERT ON `bangiamhieu` FOR EACH RO
 END
 $$
 DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Cấu trúc bảng cho bảng `ctptt`
---
-
-CREATE TABLE `phieuthanhtoan` (
-  `MaPTT` int(11) NOT NULL,
-  `MaHD` int(11) NOT NULL,
-  `MaTN` varchar(10) NOT NULL,
-  `DaThanhToan` float DEFAULT NULL,
-  `NgayThanhToan` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `ctptt`
---
-
 
 -- --------------------------------------------------------
 
@@ -1443,6 +1424,30 @@ INSERT INTO `diem` (`MaDiem`, `MaHS`, `MaGV`, `MaMH`, `Diem15P_1`, `Diem15P_2`, 
 (1408, 'HS0035', 'GV0012', 4, 8.5, 8, 8.5, 8, 8.5, 2, '2024-2025', 'Cần chủ động hơn'),
 (1409, 'HS0036', 'GV0009', 1, 8.5, 8, 8.5, 8, 9, 1, '2024-2025', 'Tiến bộ, cần duy trì');
 
+--
+-- Bẫy `diem`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_check_nhanxet` BEFORE INSERT ON `diem` FOR EACH ROW BEGIN
+    IF NEW.Diem15P_1 IS NULL OR NEW.Diem15P_2 IS NULL OR 
+       NEW.Diem1Tiet_1 IS NULL OR NEW.Diem1Tiet_2 IS NULL OR 
+       NEW.DiemCK IS NULL THEN
+        SET NEW.NhanXet = NULL;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_check_nhanxet_update` BEFORE UPDATE ON `diem` FOR EACH ROW BEGIN
+    IF NEW.Diem15P_1 IS NULL OR NEW.Diem15P_2 IS NULL OR 
+       NEW.Diem1Tiet_1 IS NULL OR NEW.Diem1Tiet_2 IS NULL OR 
+       NEW.DiemCK IS NULL THEN
+        SET NEW.NhanXet = NULL;
+    END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -1545,8 +1550,8 @@ CREATE TABLE `hanhkiem` (
 --
 
 INSERT INTO `hanhkiem` (`MaHK`, `MaHS`, `HocKy`, `NamHoc`, `DiemHK`, `TrangThai`) VALUES
-(1, 'HS0001', 1, '2023-2024', 100, NULL),
-(2, 'HS0002', 1, '2023-2024', 100, NULL),
+(1, 'HS0001', 1, '2023-2024', 98, NULL),
+(2, 'HS0002', 1, '2023-2024', 98, NULL),
 (3, 'HS0003', 1, '2023-2024', 100, NULL),
 (4, 'HS0004', 1, '2023-2024', 100, NULL),
 (5, 'HS0005', 1, '2023-2024', 100, NULL),
@@ -1605,8 +1610,8 @@ INSERT INTO `hanhkiem` (`MaHK`, `MaHS`, `HocKy`, `NamHoc`, `DiemHK`, `TrangThai`
 (58, 'HS0058', 1, '2023-2024', 100, NULL),
 (59, 'HS0059', 1, '2023-2024', 100, NULL),
 (60, 'HS0060', 1, '2023-2024', 100, NULL),
-(61, 'HS0001', 2, '2023-2024', 100, NULL),
-(62, 'HS0002', 2, '2023-2024', 100, NULL),
+(61, 'HS0001', 2, '2023-2024', 79, NULL),
+(62, 'HS0002', 2, '2023-2024', 80, NULL),
 (63, 'HS0003', 2, '2023-2024', 100, NULL),
 (64, 'HS0004', 2, '2023-2024', 100, NULL),
 (65, 'HS0005', 2, '2023-2024', 100, NULL),
@@ -1665,10 +1670,10 @@ INSERT INTO `hanhkiem` (`MaHK`, `MaHS`, `HocKy`, `NamHoc`, `DiemHK`, `TrangThai`
 (118, 'HS0058', 2, '2023-2024', 100, NULL),
 (119, 'HS0059', 2, '2023-2024', 100, NULL),
 (120, 'HS0060', 2, '2023-2024', 100, NULL),
-(121, 'HS0061', 1, '2024-2025', 100, NULL),
-(122, 'HS0061', 2, '2024-2025', 100, NULL),
-(123, 'HS0062', 1, '2024-2025', 100, NULL),
-(124, 'HS0062', 2, '2024-2025', 100, NULL),
+(121, 'HS0061', 1, '2024-2025', 60, NULL),
+(122, 'HS0061', 2, '2024-2025', 84, NULL),
+(123, 'HS0062', 1, '2024-2025', 70, NULL),
+(124, 'HS0062', 2, '2024-2025', 84, NULL),
 (125, 'HS0063', 1, '2024-2025', 100, NULL),
 (126, 'HS0063', 2, '2024-2025', 100, NULL),
 (127, 'HS0064', 1, '2024-2025', 100, NULL),
@@ -1889,6 +1894,198 @@ INSERT INTO `hanhkiem` (`MaHK`, `MaHS`, `HocKy`, `NamHoc`, `DiemHK`, `TrangThai`
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `hoadon`
+--
+
+CREATE TABLE `hoadon` (
+  `MaHD` int(11) NOT NULL,
+  `MaHS` varchar(10) DEFAULT NULL,
+  `NamHoc` varchar(10) DEFAULT NULL,
+  `TongHocPhi` float DEFAULT NULL,
+  `DaThanhToan` float DEFAULT NULL,
+  `ConNo` float DEFAULT NULL,
+  `TrangThai` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `hoadon`
+--
+
+INSERT INTO `hoadon` (`MaHD`, `MaHS`, `NamHoc`, `TongHocPhi`, `DaThanhToan`, `ConNo`, `TrangThai`) VALUES
+(31, 'HS0001', '2023-2024', 2900000, 200000, 2700000, 'Thanh toán 1 phần'),
+(32, 'HS0002', '2023-2024', 2900000, 2000000, 900000, 'Thanh toán 1 phần'),
+(33, 'HS0003', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(34, 'HS0004', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(35, 'HS0005', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(36, 'HS0006', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(37, 'HS0007', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(38, 'HS0008', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(39, 'HS0009', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(40, 'HS0010', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(41, 'HS0011', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(42, 'HS0012', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(43, 'HS0013', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(44, 'HS0014', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(45, 'HS0015', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(46, 'HS0016', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(47, 'HS0017', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(48, 'HS0018', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(49, 'HS0019', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(50, 'HS0020', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(51, 'HS0021', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(52, 'HS0022', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(53, 'HS0023', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(54, 'HS0024', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(55, 'HS0025', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(56, 'HS0026', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(57, 'HS0027', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(58, 'HS0028', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(59, 'HS0029', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(60, 'HS0030', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(61, 'HS0031', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(62, 'HS0032', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(63, 'HS0033', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(64, 'HS0034', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(65, 'HS0035', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(66, 'HS0036', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(67, 'HS0037', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(68, 'HS0038', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(69, 'HS0039', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(70, 'HS0040', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(71, 'HS0041', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(72, 'HS0042', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(73, 'HS0043', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(74, 'HS0044', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(75, 'HS0045', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(76, 'HS0046', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(77, 'HS0047', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(78, 'HS0048', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(79, 'HS0049', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(80, 'HS0050', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(81, 'HS0051', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(82, 'HS0052', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(83, 'HS0053', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(84, 'HS0054', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(85, 'HS0055', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(86, 'HS0056', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(87, 'HS0057', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(88, 'HS0058', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(89, 'HS0059', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(90, 'HS0060', '2023-2024', 2900000, 0, 2900000, 'Chưa thanh toán'),
+(91, 'HS0061', '2024-2025', 3000000, 3000000, 0, 'Đã thanh toán'),
+(92, 'HS0062', '2024-2025', 3000000, 3000000, 0, 'Đã thanh toán'),
+(93, 'HS0063', '2024-2025', 3000000, 3000000, 0, 'Đã thanh toán'),
+(94, 'HS0064', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(95, 'HS0065', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(96, 'HS0066', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(97, 'HS0067', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(98, 'HS0068', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(99, 'HS0069', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(100, 'HS0070', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(101, 'HS0071', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(102, 'HS0072', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(103, 'HS0073', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(104, 'HS0074', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(105, 'HS0075', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(106, 'HS0076', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(107, 'HS0077', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(108, 'HS0078', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(109, 'HS0079', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(110, 'HS0080', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(111, 'HS0081', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(112, 'HS0082', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(113, 'HS0083', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(114, 'HS0084', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(115, 'HS0085', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(116, 'HS0086', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(117, 'HS0087', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(118, 'HS0088', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(119, 'HS0089', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(120, 'HS0090', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(121, 'HS0091', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(122, 'HS0092', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(123, 'HS0093', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(124, 'HS0094', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(125, 'HS0095', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(126, 'HS0096', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(127, 'HS0097', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(128, 'HS0098', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(129, 'HS0099', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(130, 'HS0100', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(131, 'HS0101', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(132, 'HS0102', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(133, 'HS0103', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(134, 'HS0104', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(135, 'HS0105', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(136, 'HS0106', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(137, 'HS0107', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(138, 'HS0108', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(139, 'HS0109', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(140, 'HS0110', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(141, 'HS0111', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(142, 'HS0112', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(143, 'HS0113', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(144, 'HS0114', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(145, 'HS0115', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(146, 'HS0116', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(147, 'HS0117', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(148, 'HS0118', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(149, 'HS0119', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(150, 'HS0120', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(151, 'HS0121', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(152, 'HS0122', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(153, 'HS0123', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(154, 'HS0124', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(155, 'HS0125', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(156, 'HS0126', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(157, 'HS0127', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(158, 'HS0128', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(159, 'HS0129', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(160, 'HS0130', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(161, 'HS0001', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(162, 'HS0002', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(163, 'HS0003', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(164, 'HS0004', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(165, 'HS0005', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(166, 'HS0006', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(167, 'HS0007', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(168, 'HS0008', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(169, 'HS0009', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(170, 'HS0010', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(171, 'HS0011', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(172, 'HS0012', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(173, 'HS0013', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(174, 'HS0014', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(175, 'HS0015', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(176, 'HS0016', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(177, 'HS0017', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(178, 'HS0018', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(179, 'HS0019', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(180, 'HS0020', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(181, 'HS0021', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(182, 'HS0022', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(183, 'HS0023', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(184, 'HS0024', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(185, 'HS0025', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(186, 'HS0026', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(187, 'HS0027', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(188, 'HS0028', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(189, 'HS0029', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(190, 'HS0030', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(191, 'HS0031', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(192, 'HS0032', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(193, 'HS0033', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(194, 'HS0034', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(195, 'HS0035', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(196, 'HS0036', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(197, 'HS0037', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(198, 'HS0038', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(199, 'HS0039', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán'),
+(200, 'HS0040', '2024-2025', 3000000, 0, 3000000, 'Chưa thanh toán');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `hocsinh`
 --
 
@@ -1963,7 +2160,7 @@ INSERT INTO `hocsinh` (`MaHS`, `MaTK`, `DanToc`, `NoiSinh`, `TinhTrang`) VALUES
 ('HS0056', 88, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
 ('HS0057', 89, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
 ('HS0058', 90, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
-('HS0059', 91, 'Kinh', 'Hồ Chí Minh', 'Đang h   c'),
+('HS0059', 91, 'Kinh', 'Hồ Chí Minh', ''),
 ('HS0060', 92, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
 ('HS0061', 93, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
 ('HS0062', 94, 'Kinh', 'Hồ Chí Minh', 'Đang học'),
@@ -2257,7 +2454,7 @@ CREATE TABLE `loaivipham` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho b   ng `loaivipham`
+-- Đang đổ dữ liệu cho bảng `loaivipham`
 --
 
 INSERT INTO `loaivipham` (`MaLVP`, `TenLVP`, `DiemTru`) VALUES
@@ -2460,19 +2657,26 @@ INSERT INTO `phancong` (`MaPC`, `MaGV`, `MaMH`, `MaLop`, `HocKy`, `NamHoc`, `Vai
 -- Cấu trúc bảng cho bảng `phieuthanhtoan`
 --
 
-CREATE TABLE `hoadon` (
+CREATE TABLE `phieuthanhtoan` (
+  `MaPTT` int(11) NOT NULL,
   `MaHD` int(11) NOT NULL,
-  `MaHS` varchar(10) DEFAULT NULL,
-  `NamHoc` varchar(10) DEFAULT NULL,
-  `TongHocPhi` float DEFAULT NULL,
+  `MaTN` varchar(10) NOT NULL,
   `DaThanhToan` float DEFAULT NULL,
-  `ConNo` float DEFAULT NULL,
-  `TrangThai` varchar(20) DEFAULT NULL
+  `NgayThanhToan` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `phieuthanhtoan`
+--
+
+INSERT INTO `phieuthanhtoan` (`MaPTT`, `MaHD`, `MaTN`, `DaThanhToan`, `NgayThanhToan`) VALUES
+(38, 31, 'TN0001', 200000, '08/01/2025'),
+(39, 32, 'TN0001', 2000000, '08/01/2025'),
+(40, 91, 'TN0001', 3000000, '08/01/2025'),
+(41, 92, 'TN0001', 3000000, '08/01/2025'),
+(42, 93, 'TN0001', 3000000, '08/01/2025');
+
 -- --------------------------------------------------------
-
-
 
 --
 -- Cấu trúc bảng cho bảng `taikhoan`
@@ -2753,11 +2957,35 @@ INSERT INTO `vaitro` (`MaVT`, `TenVT`) VALUES
 CREATE TABLE `vipham` (
   `MaVP` int(11) NOT NULL,
   `MaHS` varchar(10) DEFAULT NULL,
+  `MaLop` int(11) NOT NULL,
   `MaGT` varchar(10) DEFAULT NULL,
   `MaLVP` int(11) DEFAULT NULL,
   `HocKy` int(11) DEFAULT NULL,
-  `NamHoc` varchar(10) DEFAULT NULL
+  `NamHoc` varchar(10) DEFAULT NULL,
+  `NgayVP` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `vipham`
+--
+
+INSERT INTO `vipham` (`MaVP`, `MaHS`, `MaLop`, `MaGT`, `MaLVP`, `HocKy`, `NamHoc`, `NgayVP`) VALUES
+(53, 'HS0001', 1, 'GT0001', 1, 1, '2023-2024', '08/01/2025'),
+(54, 'HS0001', 1, 'GT0001', 2, 1, '2023-2024', '08/01/2025'),
+(55, 'HS0002', 1, 'GT0001', 2, 1, '2023-2024', '08/01/2025'),
+(56, 'HS0002', 1, 'GT0001', 1, 1, '2023-2024', '08/01/2025'),
+(57, 'HS0001', 1, 'GT0001', 3, 2, '2023-2024', '08/01/2025'),
+(58, 'HS0001', 1, 'GT0001', 16, 2, '2023-2024', '08/01/2025'),
+(59, 'HS0002', 1, 'GT0001', 11, 2, '2023-2024', '08/01/2025'),
+(60, 'HS0002', 1, 'GT0001', 15, 2, '2023-2024', '08/01/2025'),
+(61, 'HS0061', 1, 'GT0001', 17, 1, '2024-2025', '08/01/2025'),
+(62, 'HS0061', 1, 'GT0001', 18, 1, '2024-2025', '08/01/2025'),
+(63, 'HS0062', 1, 'GT0001', 18, 1, '2024-2025', '08/01/2025'),
+(64, 'HS0062', 1, 'GT0001', 14, 1, '2024-2025', '08/01/2025'),
+(65, 'HS0061', 1, 'GT0001', 2, 2, '2024-2025', '08/01/2025'),
+(66, 'HS0061', 1, 'GT0001', 15, 2, '2024-2025', '08/01/2025'),
+(67, 'HS0062', 1, 'GT0001', 15, 2, '2024-2025', '08/01/2025'),
+(68, 'HS0062', 1, 'GT0001', 3, 2, '2024-2025', '08/01/2025');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -2769,13 +2997,6 @@ CREATE TABLE `vipham` (
 ALTER TABLE `bangiamhieu`
   ADD PRIMARY KEY (`MaBGH`),
   ADD KEY `FK_BGH_TaiKhoan` (`MaTK`);
-
---
--- Chỉ mục cho bảng `ctptt`
---
-ALTER TABLE `phieuthanhtoan`
-  ADD PRIMARY KEY (`MaPTT`),
-  ADD KEY `FK_PTT_HD` (`MaHD`);
 
 --
 -- Chỉ mục cho bảng `danhhieu`
@@ -2812,6 +3033,13 @@ ALTER TABLE `giaovien`
 ALTER TABLE `hanhkiem`
   ADD PRIMARY KEY (`MaHK`),
   ADD UNIQUE KEY `MaHS` (`MaHS`,`HocKy`,`NamHoc`);
+
+--
+-- Chỉ mục cho bảng `hoadon`
+--
+ALTER TABLE `hoadon`
+  ADD PRIMARY KEY (`MaHD`),
+  ADD KEY `FK_HD_HocSinhLop` (`MaHS`);
 
 --
 -- Chỉ mục cho bảng `hocsinh`
@@ -2857,10 +3085,10 @@ ALTER TABLE `phancong`
 --
 -- Chỉ mục cho bảng `phieuthanhtoan`
 --
-ALTER TABLE `hoadon`
-  ADD PRIMARY KEY (`MaHD`),
-  ADD KEY `FK_HD_HocSinhLop` (`MaHS`);
-
+ALTER TABLE `phieuthanhtoan`
+  ADD PRIMARY KEY (`MaPTT`),
+  ADD KEY `FK_PTT_HD` (`MaHD`),
+  ADD KEY `FK_PTT_TN` (`MaTN`);
 
 --
 -- Chỉ mục cho bảng `taikhoan`
@@ -2894,6 +3122,7 @@ ALTER TABLE `vaitro`
 --
 ALTER TABLE `vipham`
   ADD PRIMARY KEY (`MaVP`),
+  ADD KEY `FK_VP_Lop` (`MaLop`),
   ADD KEY `FK_VP_HocSinh` (`MaHS`),
   ADD KEY `FK_VP_GiamThi` (`MaGT`),
   ADD KEY `FK_VP_LoaiViPham` (`MaLVP`);
@@ -2901,12 +3130,6 @@ ALTER TABLE `vipham`
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
-
---
--- AUTO_INCREMENT cho bảng `ctptt`
---
-ALTER TABLE `phieuthanhtoan`
-  MODIFY `MaPTT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT cho bảng `danhhieu`
@@ -2925,6 +3148,12 @@ ALTER TABLE `diem`
 --
 ALTER TABLE `hanhkiem`
   MODIFY `MaHK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=349;
+
+--
+-- AUTO_INCREMENT cho bảng `hoadon`
+--
+ALTER TABLE `hoadon`
+  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=286;
 
 --
 -- AUTO_INCREMENT cho bảng `loaivipham`
@@ -2953,8 +3182,8 @@ ALTER TABLE `phancong`
 --
 -- AUTO_INCREMENT cho bảng `phieuthanhtoan`
 --
-ALTER TABLE `hoadon`
-  MODIFY `MaHD` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `phieuthanhtoan`
+  MODIFY `MaPTT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
@@ -2966,13 +3195,19 @@ ALTER TABLE `taikhoan`
 -- AUTO_INCREMENT cho bảng `thamso`
 --
 ALTER TABLE `thamso`
-  MODIFY `MaThamSo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `MaThamSo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `vaitro`
 --
 ALTER TABLE `vaitro`
   MODIFY `MaVT` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `vipham`
+--
+ALTER TABLE `vipham`
+  MODIFY `MaVP` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -2983,12 +3218,6 @@ ALTER TABLE `vaitro`
 --
 ALTER TABLE `bangiamhieu`
   ADD CONSTRAINT `FK_BGH_TaiKhoan` FOREIGN KEY (`MaTK`) REFERENCES `taikhoan` (`MaTK`);
-
---
--- Các ràng buộc cho bảng `ctptt`
---
-ALTER TABLE `phieuthanhtoan`
-  ADD CONSTRAINT `FK_PTT_HD` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`);
 
 --
 -- Các ràng buộc cho bảng `diem`
@@ -3017,6 +3246,12 @@ ALTER TABLE `hanhkiem`
   ADD CONSTRAINT `FK_HK_HocSinh` FOREIGN KEY (`MaHS`) REFERENCES `hocsinh` (`MaHS`);
 
 --
+-- Các ràng buộc cho bảng `hoadon`
+--
+ALTER TABLE `hoadon`
+  ADD CONSTRAINT `FK_HD_HocSinhLop` FOREIGN KEY (`MaHS`) REFERENCES `hocsinh_lop` (`MaHS`);
+
+--
 -- Các ràng buộc cho bảng `hocsinh`
 --
 ALTER TABLE `hocsinh`
@@ -3040,9 +3275,10 @@ ALTER TABLE `phancong`
 --
 -- Các ràng buộc cho bảng `phieuthanhtoan`
 --
-ALTER TABLE `hoadon`
-  ADD CONSTRAINT `FK_HD_HocSinhLop` FOREIGN KEY (`MaHS`) REFERENCES `hocsinh_lop` (`MaHS`);
-  
+ALTER TABLE `phieuthanhtoan`
+  ADD CONSTRAINT `FK_PTT_HD` FOREIGN KEY (`MaHD`) REFERENCES `hoadon` (`MaHD`),
+  ADD CONSTRAINT `FK_PTT_TN` FOREIGN KEY (`MaTN`) REFERENCES `thungan` (`MaTN`);
+
 --
 -- Các ràng buộc cho bảng `taikhoan`
 --
@@ -3061,72 +3297,10 @@ ALTER TABLE `thungan`
 ALTER TABLE `vipham`
   ADD CONSTRAINT `FK_VP_GiamThi` FOREIGN KEY (`MaGT`) REFERENCES `giamthi` (`MaGT`),
   ADD CONSTRAINT `FK_VP_HocSinh` FOREIGN KEY (`MaHS`) REFERENCES `hocsinh` (`MaHS`),
-  ADD CONSTRAINT `FK_VP_LoaiViPham` FOREIGN KEY (`MaLVP`) REFERENCES `loaivipham` (`MaLVP`);
+  ADD CONSTRAINT `FK_VP_LoaiViPham` FOREIGN KEY (`MaLVP`) REFERENCES `loaivipham` (`MaLVP`),
+  ADD CONSTRAINT `FK_VP_Lop` FOREIGN KEY (`MaLop`) REFERENCES `lop` (`MaLop`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-INSERT INTO `hoadon` VALUES
-(1, 'HS0001', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(2, 'HS0002', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(3, 'HS0003', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(4, 'HS0004', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(5, 'HS0005', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(6, 'HS0006', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(7, 'HS0007', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(8, 'HS0008', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(9, 'HS0009', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(10, 'HS0010', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(11, 'HS0011', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(12, 'HS0012', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(13, 'HS0013', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(14, 'HS0014', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(15, 'HS0015', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(16, 'HS0016', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(17, 'HS0017', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(18, 'HS0018', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(19, 'HS0019', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(20, 'HS0020', '2023-2024', 3000000, 3000000, 0, 'Đã thanh toán'),
-(21, 'HS0021', '2023-2024', 3000000, 1500000, 1500000, 'Thanh toán 1 phần'),
-(22, 'HS0022', '2023-2024', 3000000, 1000000, 2000000, 'Thanh toán 1 phần'),
-(23, 'HS0023', '2023-2024', 3000000, 2000000, 1000000, 'Thanh toán 1 phần'),
-(24, 'HS0024', '2023-2024', 3000000, 500000, 2500000, 'Thanh toán 1 phần'),
-(25, 'HS0025', '2023-2024', 3000000, 2500000, 500000, 'Thanh toán 1 phần'),
-(26, 'HS0026', '2023-2024', 3000000, 0, 3000000, 'Chưa thanh toán'),
-(27, 'HS0027', '2023-2024', 3000000, 0, 3000000, 'Chưa thanh toán'),
-(28, 'HS0028', '2023-2024', 3000000, 0, 3000000, 'Chưa thanh toán'),
-(29, 'HS0029', '2023-2024', 3000000, 0, 3000000, 'Chưa thanh toán'),
-(30, 'HS0030', '2023-2024', 3000000, 0, 3000000, 'Chưa thanh toán');
-
-
-
-INSERT INTO `phieuthanhtoan` VALUES
-(1, 1, 'TN0001', 3000000, '01/12/2023'),
-(2, 2, 'TN0002', 3000000, '02/12/2023'),
-(3, 3, 'TN0003', 3000000, '03/12/2023'),
-(4, 4, 'TN0004', 3000000, '04/12/2023'),
-(5, 5, 'TN0005', 3000000, '05/12/2023'),
-(6, 6, 'TN0001', 3000000, '06/12/2023'),
-(7, 7, 'TN0002', 3000000, '07/12/2023'),
-(8, 8, 'TN0003', 3000000, '08/12/2023'),
-(9, 9, 'TN0004', 3000000, '09/12/2023'),
-(10, 10, 'TN0005', 3000000, '10/12/2023'),
-(11, 11, 'TN0001', 3000000, '11/12/2023'),
-(12, 12, 'TN0002', 3000000, '12/12/2023'),
-(13, 13, 'TN0003', 3000000, '13/12/2023'),
-(14, 14, 'TN0004', 3000000, '14/12/2023'),
-(15, 15, 'TN0005', 3000000, '15/12/2023'),
-(16, 16, 'TN0001', 3000000, '16/12/2023'),
-(17, 17, 'TN0002', 3000000, '17/12/2023'),
-(18, 18, 'TN0003', 3000000, '18/12/2023'),
-(19, 19, 'TN0004', 3000000, '19/12/2023'),
-(20, 20, 'TN0005', 3000000, '20/12/2023'),
-(21, 21, 'TN0001', 1500000, '06/12/2023'),
-(22, 22, 'TN0002', 1000000, '07/12/2023'),
-(23, 23, 'TN0003', 2000000, '08/12/2023'),
-(24, 24, 'TN0004', 500000, '09/12/2023'),
-(25, 25, 'TN0005', 2500000, '10/12/2023');
-
