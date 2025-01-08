@@ -9,7 +9,7 @@
             <?= view('components/sidebar_cashier') ?>
         </div>
         <div class="body-right">
-            Học phí / Quản lý học phí / Danh sách hóa đơn 
+            Học phí / Quản lý học phí / Danh sách hóa đơn
             <h1>Thêm thanh toán:</h1>
             <form method="POST" action="">
                 <h2>Thông tin hóa đơn:</h2>
@@ -29,14 +29,14 @@
                     <div class="payment-add-field">
                         Đợt
                         <?= view('components/dropdown', [
-                            'name' => 'phase_dropdown'
-                            'options' => 
+                            'name' => 'phase_dropdown',
+                            'options' =>
                             [
-                                'Học kì 1, năm học 2022 - 2023', 
-                                'Học kì 2, năm học 2022 - 2023', 
-                                'Học kì 1, năm học 2023 - 2024', 
-                                'Học kì 2, năm học 2023 - 2024',              
-                            ], 
+                                'Học kì 1, năm học 2022 - 2023',
+                                'Học kì 2, năm học 2022 - 2023',
+                                'Học kì 1, năm học 2023 - 2024',
+                                'Học kì 2, năm học 2023 - 2024',
+                            ],
                             'dropdown_id' => 'pay-dropdown',
                             'value' => '',
                             'required' => true,
@@ -84,10 +84,10 @@
                     </div>
                 </div>
 
-               
-               
+
+
                 <div class="payment-add-btns">
-                    <a href="/sms/public/cashier/invoice/list" style="text-decoration: none";>
+                    <a href="/sms/public/cashier/invoice/list" style="text-decoration: none" ;>
                         <?= view('components/exit_button') ?>
                     </a>
                     <?= view('components/save_button') ?>
