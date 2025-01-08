@@ -181,49 +181,27 @@ class StudentController extends Controller
         $DanhHieuModel = new DanhHieuModel();
         $MaLop = $HocSinhModel->getCurrentClass($MaHS, $selectedYear);
         
-        if ($MaLop === null) {
-            $DTB = 'Chưa có dữ liệu';
-            $HL = 'Chưa có dữ liệu';
-            $HK = 'Chưa có dữ liệu';
-            $Rank = 'Chưa có dữ liệu';
-            $DH = 'Chưa có dữ liệu';
+        if ($selectedSemester === 'Học kì 1') {
+            $DTB = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
+            $HL = $DiemModel->getAcademicPerformance($DTB);
+            $HK = $DiemModel->getConductPoint($MaHS, 1, $selectedYear);
+            $Rank = $DiemModel->getSemesterRank($MaHS, $MaLop, 1, $selectedYear);
+            $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
+
         }
-
-        if ($MaLop !== null) {
-            if ($selectedSemester === 'Học kì 1') {
-                $DTB = $DiemModel->getSemesterAverageScore($MaHS, 1, $selectedYear);
-                $HL = $DiemModel->getAcademicPerformance($DTB);
-                $HK = $DiemModel->getConductPoint($MaHS, 1, $selectedYear);
-                $Rank = $DiemModel->getSemesterRank($MaHS, $MaLop, 1, $selectedYear);
-                $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
-                $DH = $DanhHieu['TenDH'];
-
-            }
-            if ($selectedSemester === 'Học kì 2') {
-                $DTB = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
-                $HL = $DiemModel->getAcademicPerformance($DTB);
-                $HK = $DiemModel->getConductPoint($MaHS, 2, $selectedYear);
-                $Rank = $DiemModel->getSemesterRank($MaHS, $MaLop, 2, $selectedYear);
-                $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
-                $DH = $DanhHieu['TenDH'];
-            }
-            if ($selectedSemester === 'Cả năm') {
-                $DTB = $DiemModel->getYearAverageScore($MaHS, $selectedYear);
-                $HL = $DiemModel->getAcademicPerformance($DTB);
-                $HK = $DiemModel->getConductPoint($MaHS, 2, $selectedYear); // Lấy hk2 làm hk cả năm
-                $Rank = $DiemModel->getYearRank($MaLop, $selectedYear);
-                $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
-                $DH = $DanhHieu['TenDH'];
-            }
-            /*
-            if ($DTB == null || $HL === null || $HK === null || $Rank === null || $DH === null) {
-                $DTB = 'Chưa có dữ liệu';
-                $HL = 'Chưa có dữ liệu';
-                $HK = 'Chưa có dữ liệu';
-                $Rank = 'Chưa có dữ liệu';
-                $DH = 'Chưa có dữ liệu';
-            }
-            */
+        if ($selectedSemester === 'Học kì 2') {
+            $DTB = $DiemModel->getSemesterAverageScore($MaHS, 2, $selectedYear);
+            $HL = $DiemModel->getAcademicPerformance($DTB);
+            $HK = $DiemModel->getConductPoint($MaHS, 2, $selectedYear);
+            $Rank = $DiemModel->getSemesterRank($MaHS, $MaLop, 2, $selectedYear);
+            $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
+        }
+        if ($selectedSemester === 'Cả năm') {
+            $DTB = $DiemModel->getYearAverageScore($MaHS, $selectedYear);
+            $HL = $DiemModel->getAcademicPerformance($DTB);
+            $HK = $DiemModel->getConductPoint($MaHS, 2, $selectedYear); // Lấy hk2 làm hk cả năm
+            $Rank = $DiemModel->getYearRank($MaLop, $selectedYear);
+            $DanhHieu = $DanhHieuModel->getAcademicTitle($DTB, $HK);
         }
     
         
