@@ -16,7 +16,7 @@ $value = $value ?? '';
         </svg>
         <div class="dropdown-option">
             <?php foreach ($options as $option): ?>
-                <div 
+                <div
                     class="option <?= $option === $value ? 'selected' : '' ?>"
                     data-value="<?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?>">
                     <p><?= htmlspecialchars($option, ENT_QUOTES, 'UTF-8') ?></p>
@@ -46,6 +46,7 @@ $value = $value ?? '';
         align-items: center;
         border-radius: 5px;
         border: 1px solid #003C3C;
+        background-color: #FFF;
         color: #000;
         font-family: Inter;
         font-size: 14px;
@@ -71,8 +72,10 @@ $value = $value ?? '';
         left: 0;
         /* Đảm bảo căn giữa từ bên trái */
         z-index: 2000;
-        max-height: 250px; /* Giới hạn chiều cao dropdown */
-        overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
+        max-height: 250px;
+        /* Giới hạn chiều cao dropdown */
+        overflow-y: auto;
+        /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
     }
 
     .option {
@@ -108,7 +111,7 @@ $value = $value ?? '';
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         // Đóng tất cả các dropdown
         function closeAllDropdowns() {
             document.querySelectorAll('.dropdown-option.show').forEach((dropdownOptions) => {
@@ -153,14 +156,14 @@ $value = $value ?? '';
             const options = dropdown.querySelectorAll('.option');
 
             // Sự kiện click vào dropdown
-            dropdownInner.addEventListener('click', function (event) {
+            dropdownInner.addEventListener('click', function(event) {
                 event.stopPropagation();
                 handleDropdownClick(dropdown);
             });
 
             // Sự kiện click vào tùy chọn
             options.forEach((option) => {
-                option.addEventListener('click', function (event) {
+                option.addEventListener('click', function(event) {
                     event.stopPropagation();
                     handleOptionClick(option, dropdown);
                 });
@@ -168,10 +171,8 @@ $value = $value ?? '';
         });
 
         // Đóng tất cả dropdown khi click ra ngoài
-        document.addEventListener('click', function () {
+        document.addEventListener('click', function() {
             closeAllDropdowns();
         });
     });
-
-
 </script>
