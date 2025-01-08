@@ -72,6 +72,15 @@
         position: fixed;
     }
 
+    .body-right h1 {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
     .body {
         display: flex;
         align-items: flex-start;

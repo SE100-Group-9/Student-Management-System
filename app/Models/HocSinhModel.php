@@ -141,7 +141,13 @@ class HocSinhModel extends Model
     public function getCurrentClass($MaHS, $NamHoc) {
         $SQL = "SELECT MaLop FROM hocsinh_lop WHERE MaHS = ? AND NamHoc = ?";
         $result = $this->db->query($SQL, [$MaHS, $NamHoc])->getRowArray();
-        return $result['MaLop'];
+        // Kiểm tra nếu kết quả là null
+        if ($result === null) {
+            return null; // Trả về null nếu không tìm thấy kết quả
+        }
+
+        return $result['MaLop']; // Trả về 'MaLop' nếu có kết quả
+
     }
 
 

@@ -104,6 +104,15 @@
         overflow-y: auto;
     }
 
+    .body-right h1 {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
     .scorelist-tool {
         display: flex;
         padding: 10px;
