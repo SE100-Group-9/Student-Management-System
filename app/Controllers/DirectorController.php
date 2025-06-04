@@ -24,7 +24,7 @@ use App\Models\ViPhamModel;
 use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
 use DesignPatterns\Creational\FactoryMethod\StudentFactory;
-
+use System\DesignPatterns\Behavioral\State\StudentStateManager;
 
 class DirectorController extends Controller
 {
@@ -299,7 +299,9 @@ class DirectorController extends Controller
         ]);
     }
 
-    public function exportStudentList() {}
+    public function exportStudentList()
+    {
+    }
 
     public function studentAdd()
     {
@@ -398,6 +400,7 @@ class DirectorController extends Controller
 
         // Gọi hàm validate nội bộ
         $errors = $this->validateStudent($info);
+        
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
@@ -462,33 +465,54 @@ class DirectorController extends Controller
         return $errors;
     }
 
-
-
     public function studentUpdate($id = null)
     {
         if ($id === null) {
-            return redirect()->to('director/student/list'); // Redirect nếu không có id
+            return redirect()->to('director/student/list');
         }
+
         $TaiKhoanModel = new TaiKhoanModel();
         $HocSinhModel = new HocSinhModel();
         $HocSinhLopModel = new HocSinhLopModel();
         $LopModel = new LopModel();
-        // Lấy thông tin học sinh theo id
-        $data = $HocSinhModel
+
+        // Lấy thông tin học sinh + tài khoản + lớp
+        $student = $HocSinhModel
             ->select('hocsinh.*, taikhoan.*, hocsinh_lop.*, lop.TenLop')
             ->join('taikhoan', 'taikhoan.MaTK = hocsinh.MaTK')
             ->join('hocsinh_lop', 'hocsinh.MaHS = hocsinh_lop.MaHS', 'left')
             ->join('lop', 'lop.MaLop = hocsinh_lop.MaLop', 'left')
             ->where('hocsinh.MaHS', $id)
             ->first();
-        if (!$data) {
-            return redirect()->to('director/student/list'); // Redirect nếu không tìm thấy học sinh
+
+        if (!$student) {
+            return redirect()->to('director/student/list');
         }
-        return view('director/student/update', ['student' => $data]);
+
+        // ✅ Xử lý trạng thái hiện tại
+        $currentStatus = trim($student['TinhTrang'] ?? '');
+        $stateManager = new StudentStateManager($currentStatus);
+        $nextStates = $stateManager->getNextStates();
+
+        // ✅ Đảm bảo trạng thái hiện tại luôn nằm trong dropdown
+        if (!in_array($currentStatus, $nextStates)) {
+            array_unshift($nextStates, $currentStatus);
+        }
+
+        $availableStatuses = array_unique($nextStates); // loại trùng nếu có
+
+        return view('director/student/update', [
+            'student' => $student,
+            'availableStatuses' => $availableStatuses, // 👈 Gửi xuống view để tạo dropdown
+        ]);
     }
+
+
+  
     public function updateStudent()
     {
         $errors = [];
+
         // Lấy dữ liệu từ form
         $MaHS = $this->request->getPost('MaHS');
         $MaTK = $this->request->getPost('MaTK');
@@ -497,66 +521,94 @@ class DirectorController extends Controller
         $password = $this->request->getPost('student_password');
         $phone = $this->request->getPost('student_phone');
         $gender = $this->request->getPost('student_gender');
-        //Kiểm tra giới tính
-        if (empty($gender))
+        $status = trim($this->request->getPost('student_status'));
+
+
+        // Debug nhanh:
+        log_message('debug', '🔍 Trạng thái gửi lên: [' . $status . ']');
+
+
+
+        // Validate giới tính
+        if (empty($gender)) {
             $errors['student_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
-        // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
-            $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
-
-        if (empty($birthday))
+        // Validate ngày sinh
+        if (empty($birthday)) {
             $errors['student_birthday'] = 'Vui lòng nhập ngày sinh.';
+        } elseif (strtotime($birthday) > strtotime(date('Y-m-d'))) {
+            $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        // Validate email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['student_email'] = 'Email không đúng định dạng.';
+        }
 
-        // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        // Validate mật khẩu
+        if (strlen($password) < 6) {
             $errors['student_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
-        // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        // Validate số điện thoại
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['student_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
-        // Nếu có lỗi, trả về cùng thông báo
+        // ✅ Validate trạng thái sử dụng State Pattern
+        try {
+            $stateManager = new \System\DesignPatterns\Behavioral\State\StudentStateManager($status);
+
+        } catch (\Exception $e) {
+            $errors['student_status'] = 'Trạng thái học sinh không hợp lệ.';
+        }
+
+        // Nếu có lỗi, quay lại form
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-
-
+        // Cập nhật DB
         $TaiKhoanModel = new TaiKhoanModel();
         $HocSinhModel = new HocSinhModel();
 
-
-
         $TaiKhoanModel->update($MaTK, [
             'TenTK' => $this->request->getPost('student_account'),
-            'MatKhau' => $this->request->getPost('student_password'),
+            'MatKhau' => $password,
             'HoTen' => $this->request->getPost('student_name'),
-            'Email' => $this->request->getPost('student_email'),
-            'SoDienThoai' => $this->request->getPost('student_phone'),
+            'Email' => $email,
+            'SoDienThoai' => $phone,
             'DiaChi' => $this->request->getPost('student_address'),
-            'GioiTinh' => $this->request->getPost('student_gender'),
-            'NgaySinh' => $this->request->getPost('student_birthday'),
+            'GioiTinh' => $gender,
+            'NgaySinh' => $birthday,
         ]);
 
-        $HocSinhModel->update($MaHS, [
-            'DanToc' => $this->request->getPost('student_nation'),
-            'NoiSinh' => $this->request->getPost('student_country'),
-            'TinhTrang' => $this->request->getPost('student_status'),
-        ]);
-        $allPostData = $this->request->getPost();
-        log_message('info', 'Received Data: ' . json_encode($allPostData));
-        // Xử lý thông báo
+        if (!empty($status)) {
+            $result = $HocSinhModel->update($MaHS, [
+                'DanToc' => $this->request->getPost('student_nation'),
+                'NoiSinh' => $this->request->getPost('student_country'),
+                'TinhTrang' => $status,
+            ]);
+            log_message('info', 'Update result: ' . var_export($result, true));
+        } else {
+            log_message('error', '❌ Không cập nhật được TinhTrang vì giá trị rỗng!');
+        }
+        // $HocSinhModel->update($MaHS, [
+        //     'DanToc' => $this->request->getPost('student_nation'),
+        //     'NoiSinh' => $this->request->getPost('student_country'),
+        //     'TinhTrang' => $status,
+        // ]);
+
+        log_message('info', 'Received Data: ' . json_encode($this->request->getPost()));
+       
         if ($TaiKhoanModel && $HocSinhModel) {
             return redirect()->to('director/student/list')->with('success', 'Cập nhật thông tin học sinh thành công!');
         } else {
             return redirect()->back()->with('error', 'Không thể cập nhật. Vui lòng thử lại.');
         }
     }
+
 
 
     public function studentList()
@@ -1783,7 +1835,7 @@ class DirectorController extends Controller
             $HoaDonModel->addInvoice($MaHS, $year, $tuitionFee);
 
             // Kiểm tra nếu tất cả thành công
-            if ($db->transStatus() === FALSE) {
+            if ($db->transStatus() === false) {
                 throw new \Exception('Transaction failed');
             }
 
@@ -1876,7 +1928,7 @@ class DirectorController extends Controller
         // Tách MaGV từ chuỗi teacherInfo
         $MaGV = explode(' - ', $teacherInfo)[0];
 
-        // Kiểm tra giáo viên đã được phân công dạy môn học 
+        // Kiểm tra giáo viên đã được phân công dạy môn học
         // trong năm học, học kỳ và lớp học đó chưa
         if ($PhanCongModel->isTeacherAssigned($MaGV, $MaMH, $MaLop, $HocKy, $year)) {
             $errors['teacher_TeacherAssigned'] = 'Giáo viên đã được phân công dạy môn học này trong lớp học.';
@@ -1952,31 +2004,38 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('teacher_gender');
         $role = $this->request->getPost('teacher_role');
         //Kiểm tra giới tính
-        if (empty($gender))
+        if (empty($gender)) {
             $errors['teacher_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
         //Kiểm tra chức vụ
-        if (empty($role))
+        if (empty($role)) {
             $errors['teacher_role'] = 'Vui lòng chọn chức vụ.';
+        }
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        if (empty($birthday))
+        if (empty($birthday)) {
             $errors['teacher_birthday'] = 'Vui lòng nhập ngày sinh.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['teacher_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -2039,20 +2098,24 @@ class DirectorController extends Controller
         $name = $this->request->getPost('teacher_name');
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['teacher_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         //Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -2187,27 +2250,33 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('supervisor_gender');
 
         //Kiểm tra giới tính
-        if (empty($gender))
+        if (empty($gender)) {
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        if (empty($birthday))
+        if (empty($birthday)) {
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['cashier_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -2269,27 +2338,33 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('supervisor_gender');
 
         //Kiểm tra giới tính
-        if (empty($gender))
+        if (empty($gender)) {
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        if (empty($birthday))
+        if (empty($birthday)) {
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['cashier_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -2409,11 +2484,13 @@ class DirectorController extends Controller
         $phone = $this->request->getPost('director_phone');
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['director_email'] = 'Email không đúng định dạng.';
+        }
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['director_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
@@ -2536,27 +2613,33 @@ class DirectorController extends Controller
         $gender = $this->request->getPost('cashier_gender');
 
         //Kiểm tra giới tính
-        if (empty($gender))
+        if (empty($gender)) {
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        if (empty($birthday))
+        if (empty($birthday)) {
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['cashier_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
@@ -2625,27 +2708,33 @@ class DirectorController extends Controller
         log_message('debug', 'Dữ liệu Tình trạng nhận được: ' . print_r($status, true));
 
         //Kiểm tra giới tính
-        if (empty($gender))
+        if (empty($gender)) {
             $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+        }
 
         // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
+        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
             $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
 
-        if (empty($birthday))
+        if (empty($birthday)) {
             $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+        }
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['cashier_email'] = 'Email không đúng định dạng.';
+        }
 
         // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
+        if (strlen($password) < 6) {
             $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
 
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
 
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {

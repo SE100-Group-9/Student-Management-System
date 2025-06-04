@@ -151,13 +151,12 @@
                         <div class="studentupdate-special">
                             Tình trạng hiện tại
                             <?= view('components/dropdown', [
-                                'options' => ['Đang học', 'Nghỉ học'],
+                                'options' => $availableStatuses, // ✅ không hard-code nữa
                                 'dropdown_id' => 'class-dropdown',
                                 'name' => 'student_status',
                                 'selected_text' => 'Tình trạng hiện tại',
                                 'value' => $student['TinhTrang'] ?? ''
-                            ]) ?>
-                            
+                            ]) ?>                                           
                         </div>
                     </div>
                 </div>

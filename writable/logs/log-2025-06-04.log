@@ -1,0 +1,406 @@
+INFO - 2025-06-04 04:35:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 04:35:27 --> ErrorException: Trying to access array offset on value of type null
+[Method: GET, Route: director/profile]
+in APPPATH\Views\director\profile.php on line 24.
+ 1 APPPATH\Views\director\profile.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to access array offset on value of type null', 'C:\\xampp\\htdocs\\sms\\app\\Views\\director\\profile.php', 24)
+ 2 SYSTEMPATH\View\View.php(234): include('C:\\xampp\\htdocs\\sms\\app\\Views\\director\\profile.php')
+ 3 SYSTEMPATH\View\View.php(237): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1171): CodeIgniter\View\View->render('director/profile', [], true)
+ 5 APPPATH\Controllers\DirectorController.php(2318): view('director/profile', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->profile()
+ 7 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 8 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 04:36:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:36:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:36:32 --> Performance Statistics: Array
+(
+    [summary] => Array
+        (
+            [Giỏi] => Array
+                (
+                    [current] => 37
+                    [previous] => 9
+                )
+
+            [Khá] => Array
+                (
+                    [current] => 21
+                    [previous] => 6
+                )
+
+            [Trung bình] => Array
+                (
+                    [current] => 12
+                    [previous] => 4
+                )
+
+            [Yếu] => Array
+                (
+                    [current] => 0
+                    [previous] => 1
+                )
+
+        )
+
+    [changes] => Array
+        (
+            [Giỏi] => 311.11
+            [Khá] => 250
+            [Trung bình] => 200
+            [Yếu] => -100
+        )
+
+)
+
+INFO - 2025-06-04 04:36:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:36:37 --> Enrolled Student Data: Array
+(
+    [0] => Array
+        (
+            [NamHoc] => 2023-2024
+            [SoLuongHS] => 60
+        )
+
+    [1] => Array
+        (
+            [NamHoc] => 2024-2025
+            [SoLuongHS] => 70
+        )
+
+)
+
+INFO - 2025-06-04 04:36:37 --> Warned Student Data: Array
+(
+)
+
+INFO - 2025-06-04 04:36:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:36:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:36:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:45:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:47:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:49:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:52:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:54:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:54:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:55:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:57:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:57:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:58:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 04:59:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:02:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:05:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:06:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:06:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:06:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:06:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:13:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:13:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:14:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:14:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:15:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:21:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:24:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:26:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:26:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:26:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 05:27:30 --> Error: Class "System\DesignPatterns\Behavioral\State\StudentStateManager" not found
+[Method: POST, Route: director/student/updateStudent]
+in APPPATH\Controllers\DirectorController.php on line 413.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->updateStudent()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 05:30:25 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 05:30:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:30:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:30:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:30:33 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 05:30:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:30:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:33:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:33:16 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 05:33:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:33:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:33:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:37:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:37:12 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 05:37:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:37:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:38:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:39:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:39:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:39:24 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"\u0110ang h\u1ecdc","save":"save"}
+INFO - 2025-06-04 05:39:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:39:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:39:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:41:01 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"\u0110ang h\u1ecdc","save":"save"}
+INFO - 2025-06-04 05:41:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:41:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:41:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:41:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:41:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:31 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"\u0110ang h\u1ecdc","save":"save"}
+INFO - 2025-06-04 05:42:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:49 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"\u0110ang h\u1ecdc","save":"save"}
+INFO - 2025-06-04 05:42:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:42:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:43:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:43:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:43:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:43:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:44:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:44:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:47:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 05:48:00 --> Trạng thái gửi lên: Nghỉ học
+INFO - 2025-06-04 05:48:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:48:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:51:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:51:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 05:51:21 --> Trạng thái gửi lên: Nghỉ học
+INFO - 2025-06-04 05:51:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 05:51:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:17:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:17:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:17:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:18:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:18:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:18:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:18:39 --> Trạng thái gửi lên: Bị cảnh cáo
+INFO - 2025-06-04 12:18:39 --> Received Data: {"MaHS":"HS0061","MaTK":"93","student_account":"HS0061","student_password":"123abc","student_name":"B\u00f9i Th\u1ecb Thu H\u01b0\u01a1ng","student_email":"hocsinh61@gmail.com","student_phone":"0903456809","student_address":"1818 Nguy\u1ec5n V\u0103n C\u1eeb, Qu\u1eadn 8, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-04-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:18:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 12:18:50 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(375): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 12:18:55 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(375): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 12:23:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:24:39 --> Trạng thái gửi lên: Nghỉ học
+INFO - 2025-06-04 12:24:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:24:49 --> Trạng thái gửi lên: Nghỉ học
+INFO - 2025-06-04 12:24:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:24:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:25:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:25:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 12:29:27 --> ErrorException: Trait "App\Controllers\System\DesignPatterns\Behavioral\State\StudentStateManager" not found
+[Method: GET, Route: director/student/list]
+in APPPATH\Controllers\DirectorController.php on line 28.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+INFO - 2025-06-04 12:29:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:29:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:30:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:30:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:31:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:31:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:31:43 --> Trạng thái gửi lên: Bị cảnh cáo
+INFO - 2025-06-04 12:31:43 --> Received Data: {"MaHS":"HS0062","MaTK":"94","student_account":"HS0062","student_password":"123abc","student_name":"V\u00f5 Minh \u0110\u1ee9c","student_email":"hocsinh62@gmail.com","student_phone":"0903456810","student_address":"1919 Tr\u01b0\u1eddng Chinh, Qu\u1eadn 2, TP HCM","student_gender":"Nam","student_birthday":"2008-05-15","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:31:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:31:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 12:31:46 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0062]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0062')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 12:32:12 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0062]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0062')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 12:42:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 12:42:47 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0062]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0062')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 12:42:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:42:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:42:52 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:42:52 --> Received Data: {"MaHS":"HS0063","MaTK":"95","student_account":"HS0063","student_password":"123abc","student_name":"\u0110\u1eb7ng Ti\u1ebfn H\u00f9ng","student_email":"hocsinh63@gmail.com","student_phone":"0903456811","student_address":"2020 Nguy\u1ec5n Tri Ph\u01b0\u01a1ng, Qu\u1eadn 9, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-06-18","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:42:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:42:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:46:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:46:40 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:46:40 --> Update result: true
+INFO - 2025-06-04 12:46:40 --> Received Data: {"MaHS":"HS0064","MaTK":"96","student_account":"HS0064","student_password":"123abc","student_name":"L\u00ea Minh Th\u01b0","student_email":"hocsinh64@gmail.com","student_phone":"0903456812","student_address":"2121 Nguy\u1ec5n \u0110\u00ecnh Chi\u1ec3u, Qu\u1eadn 6, TP HCM","student_gender":"Nam","student_birthday":"2008-07-21","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:50:18 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:50:18 --> Update result: true
+INFO - 2025-06-04 12:50:18 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:50:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:50:45 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 12:50:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:50:50 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 12:50:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:50:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:51:07 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:51:07 --> Update result: true
+INFO - 2025-06-04 12:51:07 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:51:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:51:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:51:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:51:13 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:51:13 --> Update result: true
+INFO - 2025-06-04 12:51:13 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:51:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:51:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:51:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:51:18 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 12:51:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:51:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:52:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:52:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:52:34 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 12:52:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:52:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:55:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:55:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:58:11 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 12:58:11 --> Update result: true
+INFO - 2025-06-04 12:58:11 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"Ngh\u1ec9 h\u1ecdc","save":"save"}
+INFO - 2025-06-04 12:58:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:58:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:58:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:58:16 --> 🔍 Trạng thái gửi lên: [Đang học]
+INFO - 2025-06-04 12:58:16 --> Update result: true
+INFO - 2025-06-04 12:58:16 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"\u0110ang h\u1ecdc","save":"save"}
+INFO - 2025-06-04 12:58:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:58:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:58:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 12:58:21 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 12:58:21 --> Update result: true
+INFO - 2025-06-04 12:58:21 --> Received Data: {"MaHS":"HS0065","MaTK":"97","student_account":"HS0065","student_password":"123abc","student_name":"Ho\u00e0ng Anh Qu\u1ef3nh","student_email":"hocsinh65@gmail.com","student_phone":"0903456813","student_address":"2222 B\u1ebfn V\u00e2n \u0110\u1ed3n, Qu\u1eadn 7, TP HCM","student_gender":"N\u1eef","student_birthday":"2008-08-02","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 12:58:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 12:58:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2025-06-04 12:58:50 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 12:58:54 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 12:59:38 --> Exception: Trạng thái học sinh không hợp lệ
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 20.
+ 1 APPPATH\Controllers\DirectorController.php(378): System\DesignPatterns\Behavioral\State\StudentStateManager->__construct('')
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-06-04 12:59:54 --> Error: Typed property System\DesignPatterns\Behavioral\State\StudentStateManager::$state must not be accessed before initialization
+[Method: GET, Route: director/student/update/HS0061]
+in SYSTEMPATH\DesignPatterns\Behavioral\State\StudentStateManager.php on line 42.
+ 1 APPPATH\Controllers\DirectorController.php(379): System\DesignPatterns\Behavioral\State\StudentStateManager->getNextStates()
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->studentUpdate('HS0061')
+ 3 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 4 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-04 13:00:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:01:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:01:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:01:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:01:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 13:03:38 --> 🔍 Trạng thái gửi lên: [Bị cảnh cáo]
+INFO - 2025-06-04 13:03:38 --> Update result: true
+INFO - 2025-06-04 13:03:38 --> Received Data: {"MaHS":"HS0066","MaTK":"98","student_account":"HS0066","student_password":"123abc","student_name":"Nguy\u1ec5n Kim H\u1ea3i","student_email":"hocsinh66@gmail.com","student_phone":"0903456814","student_address":"2323 Tr\u1ea7n Nh\u00e2n T\u00f4n, Qu\u1eadn 3, TP HCM","student_gender":"Nam","student_birthday":"2008-09-05","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"B\u1ecb c\u1ea3nh c\u00e1o","save":"save"}
+INFO - 2025-06-04 13:03:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2025-06-04 13:03:42 --> 🔍 Trạng thái gửi lên: [Nghỉ học]
+INFO - 2025-06-04 13:03:42 --> Update result: true
+INFO - 2025-06-04 13:03:42 --> Received Data: {"MaHS":"HS0064","MaTK":"96","student_account":"HS0064","student_password":"123abc","student_name":"L\u00ea Minh Th\u01b0","student_email":"hocsinh64@gmail.com","student_phone":"0903456812","student_address":"2121 Nguy\u1ec5n \u0110\u00ecnh Chi\u1ec3u, Qu\u1eadn 6, TP HCM","student_gender":"Nam","student_birthday":"2008-07-21","student_nation":"Kinh","student_country":"H\u1ed3 Ch\u00ed Minh","student_class":"10_1","student_status":"Ngh\u1ec9 h\u1ecdc","save":"save"}
+INFO - 2025-06-04 13:03:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-04 13:03:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
