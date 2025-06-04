@@ -25,34 +25,10 @@ use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
 use DesignPatterns\Creational\FactoryMethod\StudentFactory;
 use System\DesignPatterns\Behavioral\State\StudentStateManager;
+use function DesignPatterns\Creational\FactoryMethod\getFactoryByRole;
 
 class DirectorController extends Controller
 {
-
-    private function validateCommonFields($data, $prefix)
-    {
-        $errors = [];
-
-        if (empty($data[$prefix . '_gender']))
-            $errors[$prefix . '_gender'] = 'Vui lòng chọn giới tính.';
-
-        if (empty($data[$prefix . '_birthday']))
-            $errors[$prefix . '_birthday'] = 'Vui lòng nhập ngày sinh.';
-        else if (strtotime($data[$prefix . '_birthday']) > strtotime(date('Y-m-d')))
-            $errors[$prefix . '_birthday'] = 'Ngày sinh không hợp lệ.';
-
-        if (!filter_var($data[$prefix . '_email'], FILTER_VALIDATE_EMAIL))
-            $errors[$prefix . '_email'] = 'Email không đúng định dạng.';
-
-        if (strlen($data[$prefix . '_password']) < 6)
-            $errors[$prefix . '_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-
-        if (!preg_match('/^\d{10}$/', $data[$prefix . '_phone']))
-            $errors[$prefix . '_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-
-        return $errors;
-    }
-
 
     // public function addUser($role)
     // {
@@ -299,9 +275,7 @@ class DirectorController extends Controller
         ]);
     }
 
-    public function exportStudentList()
-    {
-    }
+    public function exportStudentList() {}
 
     public function studentAdd()
     {
@@ -400,7 +374,7 @@ class DirectorController extends Controller
 
         // Gọi hàm validate nội bộ
         $errors = $this->validateStudent($info);
-        
+
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
@@ -508,7 +482,7 @@ class DirectorController extends Controller
     }
 
 
-  
+
     public function updateStudent()
     {
         $errors = [];
@@ -559,7 +533,6 @@ class DirectorController extends Controller
         // ✅ Validate trạng thái sử dụng State Pattern
         try {
             $stateManager = new \System\DesignPatterns\Behavioral\State\StudentStateManager($status);
-
         } catch (\Exception $e) {
             $errors['student_status'] = 'Trạng thái học sinh không hợp lệ.';
         }
@@ -601,7 +574,7 @@ class DirectorController extends Controller
         // ]);
 
         log_message('info', 'Received Data: ' . json_encode($this->request->getPost()));
-       
+
         if ($TaiKhoanModel && $HocSinhModel) {
             return redirect()->to('director/student/list')->with('success', 'Cập nhật thông tin học sinh thành công!');
         } else {
@@ -1993,79 +1966,153 @@ class DirectorController extends Controller
         return view('director/employee/teacher/add', ['newMaGV' => $newMaGV]);
     }
 
+    // public function addEmployeeTeacher()
+    // {
+    //     $errors = [];
+    //     // Lấy dữ liệu từ form
+    //     $birthday = $this->request->getPost('teacher_birthday');
+    //     $email = $this->request->getPost('teacher_email');
+    //     $password = $this->request->getPost('teacher_password');
+    //     $phone = $this->request->getPost('teacher_phone');
+    //     $gender = $this->request->getPost('teacher_gender');
+    //     $role = $this->request->getPost('teacher_role');
+    //     //Kiểm tra giới tính
+    //     if (empty($gender)) {
+    //         $errors['teacher_gender'] = 'Vui lòng chọn giới tính.';
+    //     }
+
+    //     //Kiểm tra chức vụ
+    //     if (empty($role)) {
+    //         $errors['teacher_role'] = 'Vui lòng chọn chức vụ.';
+    //     }
+
+    //     // Kiểm tra ngày sinh
+    //     if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
+    //         $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+    //     }
+
+    //     if (empty($birthday)) {
+    //         $errors['teacher_birthday'] = 'Vui lòng nhập ngày sinh.';
+    //     }
+
+    //     // Kiểm tra email
+    //     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //         $errors['teacher_email'] = 'Email không đúng định dạng.';
+    //     }
+
+    //     // Kiểm tra mật khẩu
+    //     if (strlen($password) < 6) {
+    //         $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+    //     }
+
+    //     // Kiểm tra số điện thoại
+    //     if (!preg_match('/^\d{10}$/', $phone)) {
+    //         $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+    //     }
+
+    //     // Nếu có lỗi, trả về cùng thông báo
+    //     if (!empty($errors)) {
+    //         return redirect()->back()->withInput()->with('errors', $errors);
+    //     }
+
+    //     $TaiKhoanModel = new TaiKhoanModel();
+    //     $GiaoVienModel = new GiaoVienModel();
+
+    //     $MaTK = $TaiKhoanModel->insert([
+    //         'TenTK' => $this->request->getPost('teacher_account'),
+    //         'MatKhau' => $this->request->getPost('teacher_password'),
+    //         'Email' => $this->request->getPost('teacher_email'),
+    //         'HoTen' => $this->request->getPost('teacher_name'),
+    //         'SoDienThoai' => $this->request->getPost('teacher_phone'),
+    //         'DiaChi' => $this->request->getPost('teacher_address'),
+    //         'GioiTinh' => $this->request->getPost('teacher_gender'),
+    //         'NgaySinh' => $this->request->getPost('teacher_birthday'),
+    //         'MaVT' => 2, // Mã vai trò giáo viên
+    //     ]);
+
+    //     // Lưu thông tin giáo viên
+    //     $GiaoVienModel->insert([
+    //         'MaTK' => $MaTK,
+    //         'ChucVu' => $this->request->getPost('teacher_role'),
+    //         'TinhTrang' => $this->request->getPost('teacher_status') ?? 'Đang giảng dạy',
+    //     ]);
+
+    //     return redirect()->to('director/employee/teacher/list')->with('success', 'Thêm giáo viên thành công!');
+    // }
+
     public function addEmployeeTeacher()
     {
-        $errors = [];
-        // Lấy dữ liệu từ form
-        $birthday = $this->request->getPost('teacher_birthday');
-        $email = $this->request->getPost('teacher_email');
-        $password = $this->request->getPost('teacher_password');
-        $phone = $this->request->getPost('teacher_phone');
-        $gender = $this->request->getPost('teacher_gender');
-        $role = $this->request->getPost('teacher_role');
-        //Kiểm tra giới tính
-        if (empty($gender)) {
-            $errors['teacher_gender'] = 'Vui lòng chọn giới tính.';
-        }
+        log_message('info', 'Bắt đầu tạo tài khoản giáo viên mới.');
 
-        //Kiểm tra chức vụ
-        if (empty($role)) {
-            $errors['teacher_role'] = 'Vui lòng chọn chức vụ.';
-        }
+        $info = [
+            'account' => $this->request->getPost('teacher_account'),
+            'password' => $this->request->getPost('teacher_password'),
+            'name' => $this->request->getPost('teacher_name'),
+            'email' => $this->request->getPost('teacher_email'),
+            'phone' => $this->request->getPost('teacher_phone'),
+            'address' => $this->request->getPost('teacher_address'),
+            'gender' => $this->request->getPost('teacher_gender'),
+            'birthday' => $this->request->getPost('teacher_birthday'),
+            'role' => $this->request->getPost('teacher_role'),
+            'status' => $this->request->getPost('teacher_status') ?? 'Đang giảng dạy'
+        ];
 
-        // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
-            $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
-        }
-
-        if (empty($birthday)) {
-            $errors['teacher_birthday'] = 'Vui lòng nhập ngày sinh.';
-        }
-
-        // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['teacher_email'] = 'Email không đúng định dạng.';
-        }
-
-        // Kiểm tra mật khẩu
-        if (strlen($password) < 6) {
-            $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        }
-
-        // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) {
-            $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        }
-
-        // Nếu có lỗi, trả về cùng thông báo
+        // Gọi hàm validate riêng
+        $errors = $this->validateTeacher($info);
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-        $TaiKhoanModel = new TaiKhoanModel();
-        $GiaoVienModel = new GiaoVienModel();
+        // Sử dụng Factory Method
+        $factory = getFactoryByRole('giáo viên', $info);
+        if (!$factory) {
+            return redirect()->back()->with('error', 'Không xác định được vai trò người dùng.');
+        }
 
-        $MaTK = $TaiKhoanModel->insert([
-            'TenTK' => $this->request->getPost('teacher_account'),
-            'MatKhau' => $this->request->getPost('teacher_password'),
-            'Email' => $this->request->getPost('teacher_email'),
-            'HoTen' => $this->request->getPost('teacher_name'),
-            'SoDienThoai' => $this->request->getPost('teacher_phone'),
-            'DiaChi' => $this->request->getPost('teacher_address'),
-            'GioiTinh' => $this->request->getPost('teacher_gender'),
-            'NgaySinh' => $this->request->getPost('teacher_birthday'),
-            'MaVT' => 2, // Mã vai trò giáo viên
-        ]);
+        $teacher = $factory->createUser();
+        if (!$teacher->createAndSave()) {
+            return redirect()->back()->with('error', 'Tạo tài khoản giáo viên thất bại.');
+        }
 
-        // Lưu thông tin giáo viên
-        $GiaoVienModel->insert([
-            'MaTK' => $MaTK,
-            'ChucVu' => $this->request->getPost('teacher_role'),
-            'TinhTrang' => $this->request->getPost('teacher_status') ?? 'Đang giảng dạy',
-        ]);
+        log_message('info', 'Tài khoản giáo viên được tạo: ' . $teacher->getInfo() . ' - Vai trò: ' . $teacher->getRole());
 
         return redirect()->to('director/employee/teacher/list')->with('success', 'Thêm giáo viên thành công!');
     }
+
+    private function validateTeacher($info)
+    {
+        $errors = [];
+
+        if (empty($info['gender'])) {
+            $errors['teacher_gender'] = 'Vui lòng chọn giới tính.';
+        }
+
+        if (empty($info['role'])) {
+            $errors['teacher_role'] = 'Vui lòng chọn chức vụ.';
+        }
+
+        if (empty($info['birthday'])) {
+            $errors['teacher_birthday'] = 'Vui lòng nhập ngày sinh.';
+        } elseif (strtotime($info['birthday']) > strtotime(date('Y-m-d'))) {
+            $errors['teacher_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
+
+        if (!filter_var($info['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['teacher_email'] = 'Email không đúng định dạng.';
+        }
+
+        if (strlen($info['password']) < 6) {
+            $errors['teacher_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
+
+        if (!preg_match('/^\d{10}$/', $info['phone'])) {
+            $errors['teacher_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
+
+        return $errors;
+    }
+
+
 
     public function employeeTeacherUpdate($MaGV)
     {
@@ -2239,72 +2286,142 @@ class DirectorController extends Controller
         return view('director/employee/supervisor/add', ['newMaGT' => $newMaGT]);
     }
 
+    // public function addEmployeeSupervisor()
+    // {
+    //     $errors = [];
+    //     // Lấy dữ liệu từ form
+    //     $birthday = $this->request->getPost('supervisor_birthday');
+    //     $email = $this->request->getPost('supervisor_email');
+    //     $password = $this->request->getPost('supervisor_password');
+    //     $phone = $this->request->getPost('supervisor_phone');
+    //     $gender = $this->request->getPost('supervisor_gender');
+
+    //     //Kiểm tra giới tính
+    //     if (empty($gender)) {
+    //         $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+    //     }
+
+    //     // Kiểm tra ngày sinh
+    //     if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
+    //         $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+    //     }
+
+    //     if (empty($birthday)) {
+    //         $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+    //     }
+
+    //     // Kiểm tra email
+    //     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //         $errors['cashier_email'] = 'Email không đúng định dạng.';
+    //     }
+
+    //     // Kiểm tra mật khẩu
+    //     if (strlen($password) < 6) {
+    //         $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+    //     }
+
+    //     // Kiểm tra số điện thoại
+    //     if (!preg_match('/^\d{10}$/', $phone)) {
+    //         $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+    //     }
+
+    //     // Nếu có lỗi, trả về cùng thông báo
+    //     if (!empty($errors)) {
+    //         return redirect()->back()->withInput()->with('errors', $errors);
+    //     }
+
+    //     $TaiKhoanModel = new TaiKhoanModel();
+    //     $GiamThiModel = new GiamThiModel();
+
+    //     $MaTK = $TaiKhoanModel->insert([
+    //         'TenTK' => $this->request->getPost('supervisor_account'),
+    //         'MatKhau' => $this->request->getPost('supervisor_password'),
+    //         'Email' => $this->request->getPost('supervisor_email'),
+    //         'HoTen' => $this->request->getPost('supervisor_name'),
+    //         'SoDienThoai' => $this->request->getPost('supervisor_phone'),
+    //         'DiaChi' => $this->request->getPost('supervisor_address'),
+    //         'GioiTinh' => $this->request->getPost('supervisor_gender'),
+    //         'NgaySinh' => $this->request->getPost('supervisor_birthday'),
+    //         'MaVT' => 5, // Mã vai trò giám thị
+    //     ]);
+
+    //     // Lưu thông tin giám thị
+    //     $GiamThiModel->insert([
+    //         'MaTK' => $MaTK,
+    //         'TinhTrang' => $this->request->getPost('supervisor_status') ?? 'Đang làm việc',
+    //     ]);
+
+    //     return redirect()->to('director/employee/supervisor/list')->with('success', 'Thêm giám thị thành công!');
+    // }
+
     public function addEmployeeSupervisor()
     {
-        $errors = [];
-        // Lấy dữ liệu từ form
-        $birthday = $this->request->getPost('supervisor_birthday');
-        $email = $this->request->getPost('supervisor_email');
-        $password = $this->request->getPost('supervisor_password');
-        $phone = $this->request->getPost('supervisor_phone');
-        $gender = $this->request->getPost('supervisor_gender');
+        log_message('info', 'Bắt đầu tạo tài khoản giám thị mới.');
 
-        //Kiểm tra giới tính
-        if (empty($gender)) {
-            $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
-        }
+        // Lấy thông tin từ form
+        $info = [
+            'account' => $this->request->getPost('supervisor_account'),
+            'password' => $this->request->getPost('supervisor_password'),
+            'name' => $this->request->getPost('supervisor_name'),
+            'email' => $this->request->getPost('supervisor_email'),
+            'phone' => $this->request->getPost('supervisor_phone'),
+            'address' => $this->request->getPost('supervisor_address'),
+            'gender' => $this->request->getPost('supervisor_gender'),
+            'birthday' => $this->request->getPost('supervisor_birthday'),
+            'role' => $this->request->getPost('supervisor_role') ?? 'giám thị',
+            'status' => $this->request->getPost('supervisor_status') ?? 'Đang làm việc',
+        ];
 
-        // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
-            $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        }
-
-        if (empty($birthday)) {
-            $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        }
-
-        // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['cashier_email'] = 'Email không đúng định dạng.';
-        }
-
-        // Kiểm tra mật khẩu
-        if (strlen($password) < 6) {
-            $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        }
-
-        // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) {
-            $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        }
-
-        // Nếu có lỗi, trả về cùng thông báo
+        // Gọi hàm validate chung (nên tái sử dụng từ teacher hoặc đặt tên lại là validateUser)
+        $errors = $this->validateUser($info);
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-        $TaiKhoanModel = new TaiKhoanModel();
-        $GiamThiModel = new GiamThiModel();
+        // Lấy Factory phù hợp với vai trò
+        $factory = getFactoryByRole($info['role'], $info);
+        if (!$factory) {
+            return redirect()->back()->with('error', 'Không xác định được vai trò người dùng.');
+        }
 
-        $MaTK = $TaiKhoanModel->insert([
-            'TenTK' => $this->request->getPost('supervisor_account'),
-            'MatKhau' => $this->request->getPost('supervisor_password'),
-            'Email' => $this->request->getPost('supervisor_email'),
-            'HoTen' => $this->request->getPost('supervisor_name'),
-            'SoDienThoai' => $this->request->getPost('supervisor_phone'),
-            'DiaChi' => $this->request->getPost('supervisor_address'),
-            'GioiTinh' => $this->request->getPost('supervisor_gender'),
-            'NgaySinh' => $this->request->getPost('supervisor_birthday'),
-            'MaVT' => 5, // Mã vai trò giám thị
-        ]);
+        // Tạo đối tượng user và lưu vào DB
+        $supervisor = $factory->createUser();
+        if (!$supervisor->createAndSave()) {
+            return redirect()->back()->with('error', 'Tạo tài khoản giám thị thất bại.');
+        }
 
-        // Lưu thông tin giám thị
-        $GiamThiModel->insert([
-            'MaTK' => $MaTK,
-            'TinhTrang' => $this->request->getPost('supervisor_status') ?? 'Đang làm việc',
-        ]);
+        log_message('info', 'Tài khoản giám thị được tạo: ' . $supervisor->getInfo() . ' - Vai trò: ' . $supervisor->getRole());
 
         return redirect()->to('director/employee/supervisor/list')->with('success', 'Thêm giám thị thành công!');
+    }
+
+    private function validateUser($info)
+    {
+        $errors = [];
+
+        if (empty($info['gender'])) {
+            $errors['gender'] = 'Vui lòng chọn giới tính.';
+        }
+
+        if (empty($info['birthday'])) {
+            $errors['birthday'] = 'Vui lòng nhập ngày sinh.';
+        } elseif (strtotime($info['birthday']) > strtotime(date('Y-m-d'))) {
+            $errors['birthday'] = 'Ngày sinh không hợp lệ.';
+        }
+
+        if (!filter_var($info['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Email không đúng định dạng.';
+        }
+
+        if (strlen($info['password']) < 6) {
+            $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
+
+        if (!preg_match('/^\d{10}$/', $info['phone'])) {
+            $errors['phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
+
+        return $errors;
     }
 
     public function employeeSupervisorUpdate($MaGT)
@@ -2602,73 +2719,143 @@ class DirectorController extends Controller
         return view('director/employee/cashier/add', ['newMaTN' => $newMaTN]);
     }
 
+    // public function addEmployeeCashier()
+    // {
+    //     $errors = [];
+    //     // Lấy dữ liệu từ form
+    //     $birthday = $this->request->getPost('cashier_birthday');
+    //     $email = $this->request->getPost('cashier_email');
+    //     $password = $this->request->getPost('cashier_password');
+    //     $phone = $this->request->getPost('cashier_phone');
+    //     $gender = $this->request->getPost('cashier_gender');
+
+    //     //Kiểm tra giới tính
+    //     if (empty($gender)) {
+    //         $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+    //     }
+
+    //     // Kiểm tra ngày sinh
+    //     if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
+    //         $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+    //     }
+
+    //     if (empty($birthday)) {
+    //         $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+    //     }
+
+    //     // Kiểm tra email
+    //     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    //         $errors['cashier_email'] = 'Email không đúng định dạng.';
+    //     }
+
+    //     // Kiểm tra mật khẩu
+    //     if (strlen($password) < 6) {
+    //         $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+    //     }
+
+    //     // Kiểm tra số điện thoại
+    //     if (!preg_match('/^\d{10}$/', $phone)) {
+    //         $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+    //     }
+
+    //     // Nếu có lỗi, trả về cùng thông báo
+    //     if (!empty($errors)) {
+    //         return redirect()->back()->withInput()->with('errors', $errors);
+    //     }
+
+    //     $TaiKhoanModel = new TaiKhoanModel();
+    //     $ThuNganModel = new ThuNganModel();
+
+    //     $MaTK = $TaiKhoanModel->insert([
+    //         'TenTK' => $this->request->getPost('cashier_account'),
+    //         'MatKhau' => $this->request->getPost('cashier_password'),
+    //         'Email' => $this->request->getPost('cashier_email'),
+    //         'HoTen' => $this->request->getPost('cashier_name'),
+    //         'SoDienThoai' => $this->request->getPost('cashier_phone'),
+    //         'DiaChi' => $this->request->getPost('cashier_address'),
+    //         'GioiTinh' => $this->request->getPost('cashier_gender'),
+    //         'NgaySinh' => $this->request->getPost('cashier_birthday'),
+    //         'MaVT' => 4, // Mã vai trò thu ngân
+    //     ]);
+
+    //     // Lưu thông tin thu ngân
+    //     $ThuNganModel->insert([
+    //         'MaTK' => $MaTK,
+    //         'TinhTrang' => $this->request->getPost('cashier_status') ?? 'Đang làm việc',
+    //     ]);
+
+    //     return redirect()->to('director/employee/cashier/list')->with('success', 'Thêm thu ngân thành công!');
+    // }
+
     public function addEmployeeCashier()
     {
-        $errors = [];
-        // Lấy dữ liệu từ form
-        $birthday = $this->request->getPost('cashier_birthday');
-        $email = $this->request->getPost('cashier_email');
-        $password = $this->request->getPost('cashier_password');
-        $phone = $this->request->getPost('cashier_phone');
-        $gender = $this->request->getPost('cashier_gender');
+        log_message('info', 'Bắt đầu tạo tài khoản thu ngân mới.');
 
-        //Kiểm tra giới tính
-        if (empty($gender)) {
-            $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
-        }
+        $info = [
+            'account' => $this->request->getPost('cashier_account'),
+            'password' => $this->request->getPost('cashier_password'),
+            'name' => $this->request->getPost('cashier_name'),
+            'email' => $this->request->getPost('cashier_email'),
+            'phone' => $this->request->getPost('cashier_phone'),
+            'address' => $this->request->getPost('cashier_address'),
+            'gender' => $this->request->getPost('cashier_gender'),
+            'birthday' => $this->request->getPost('cashier_birthday'),
+            'role' => 'thu ngân',
+            'status' => $this->request->getPost('cashier_status') ?? 'Đang làm việc',
+        ];
 
-        // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d'))) {
-            $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
-        }
-
-        if (empty($birthday)) {
-            $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
-        }
-
-        // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errors['cashier_email'] = 'Email không đúng định dạng.';
-        }
-
-        // Kiểm tra mật khẩu
-        if (strlen($password) < 6) {
-            $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-        }
-
-        // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone)) {
-            $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-        }
-
-        // Nếu có lỗi, trả về cùng thông báo
+        // Gọi hàm validate riêng
+        $errors = $this->validateCashier($info);
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
-        $TaiKhoanModel = new TaiKhoanModel();
-        $ThuNganModel = new ThuNganModel();
+        // Gọi factory method theo vai trò
+        $factory = getFactoryByRole('thu ngân', $info);
+        if (!$factory) {
+            return redirect()->back()->with('error', 'Không xác định được vai trò người dùng.');
+        }
 
-        $MaTK = $TaiKhoanModel->insert([
-            'TenTK' => $this->request->getPost('cashier_account'),
-            'MatKhau' => $this->request->getPost('cashier_password'),
-            'Email' => $this->request->getPost('cashier_email'),
-            'HoTen' => $this->request->getPost('cashier_name'),
-            'SoDienThoai' => $this->request->getPost('cashier_phone'),
-            'DiaChi' => $this->request->getPost('cashier_address'),
-            'GioiTinh' => $this->request->getPost('cashier_gender'),
-            'NgaySinh' => $this->request->getPost('cashier_birthday'),
-            'MaVT' => 4, // Mã vai trò thu ngân
-        ]);
+        $cashier = $factory->createUser();
+        if (!$cashier->createAndSave()) {
+            return redirect()->back()->with('error', 'Tạo tài khoản thu ngân thất bại.');
+        }
 
-        // Lưu thông tin thu ngân
-        $ThuNganModel->insert([
-            'MaTK' => $MaTK,
-            'TinhTrang' => $this->request->getPost('cashier_status') ?? 'Đang làm việc',
-        ]);
+        log_message('info', 'Tài khoản thu ngân được tạo: ' . $cashier->getInfo() . ' - Vai trò: ' . $cashier->getRole());
 
         return redirect()->to('director/employee/cashier/list')->with('success', 'Thêm thu ngân thành công!');
     }
+
+    protected function validateCashier($info)
+    {
+        $errors = [];
+
+        if (empty($info['gender'])) {
+            $errors['cashier_gender'] = 'Vui lòng chọn giới tính.';
+        }
+
+        if (empty($info['birthday'])) {
+            $errors['cashier_birthday'] = 'Vui lòng nhập ngày sinh.';
+        } elseif (strtotime($info['birthday']) > strtotime(date('Y-m-d'))) {
+            $errors['cashier_birthday'] = 'Ngày sinh không hợp lệ.';
+        }
+
+        if (!filter_var($info['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['cashier_email'] = 'Email không đúng định dạng.';
+        }
+
+        if (strlen($info['password']) < 6) {
+            $errors['cashier_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
+
+        if (!preg_match('/^\d{10}$/', $info['phone'])) {
+            $errors['cashier_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
+
+        return $errors;
+    }
+
+
 
     public function employeeCashierUpdate($MaTN)
     {

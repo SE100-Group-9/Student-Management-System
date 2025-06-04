@@ -34,7 +34,7 @@ $routes->post('director/title/list', 'DirectorController::updateRule');
 $routes->get('director/title/add', 'DirectorController::titleAdd');
 $routes->post('director/title/add', 'DirectorController::addTitle');
 $routes->get('director/title/update/(:num)', 'DirectorController::titleUpdate/$1');
-$routes->post('director/title/update', 'DirectorController::updateTitle');  
+$routes->post('director/title/update', 'DirectorController::updateTitle');
 $routes->get('director/title/delete/(:num)', 'DirectorController::titleDelete/$1');
 
 // Director - Quản lý lớp học
@@ -112,7 +112,7 @@ $routes->post('cashier/profile', 'CashierController::updateProfile');
 
 $routes->get('cashier/invoice/list', 'CashierController::listInvoice');
 $routes->get('cashier/invoice/add', 'CashierController::addInvoice');
-$routes->get('cashier/payment/add/(:num)', 'CashierController::addPaymentForm/$1'); 
+$routes->get('cashier/payment/add/(:num)', 'CashierController::addPaymentForm/$1');
 $routes->post('cashier/payment/add/(:num)', 'CashierController::addPayment/$1');
 $routes->get('cashier/payment/list/(:num)', 'CashierController::listPayment/$1');
 $routes->get('cashier/payment/delete/(:num)', 'CashierController::deletePayment/$1');
