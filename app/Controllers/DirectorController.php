@@ -23,9 +23,54 @@ use App\Models\HoaDonModel;
 use App\Models\ViPhamModel;
 use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
+use DesignPatterns\Creational\FactoryMethod\StudentFactory;
+
 
 class DirectorController extends Controller
 {
+
+    private function validateCommonFields($data, $prefix)
+    {
+        $errors = [];
+
+        if (empty($data[$prefix . '_gender']))
+            $errors[$prefix . '_gender'] = 'Vui lòng chọn giới tính.';
+
+        if (empty($data[$prefix . '_birthday']))
+            $errors[$prefix . '_birthday'] = 'Vui lòng nhập ngày sinh.';
+        else if (strtotime($data[$prefix . '_birthday']) > strtotime(date('Y-m-d')))
+            $errors[$prefix . '_birthday'] = 'Ngày sinh không hợp lệ.';
+
+        if (!filter_var($data[$prefix . '_email'], FILTER_VALIDATE_EMAIL))
+            $errors[$prefix . '_email'] = 'Email không đúng định dạng.';
+
+        if (strlen($data[$prefix . '_password']) < 6)
+            $errors[$prefix . '_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+
+        if (!preg_match('/^\d{10}$/', $data[$prefix . '_phone']))
+            $errors[$prefix . '_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+
+        return $errors;
+    }
+
+
+    // public function addUser($role)
+    // {
+    //     $normalizedRole = strtolower($role);
+
+    //     switch ($normalizedRole) {
+    //         case 'học sinh':
+    //             return $this->addStudent();
+    //         case 'giáo viên':
+    //             return $this->addEmployeeTeacher();
+    //         case 'giám thị':
+    //             return $this->addEmployeeSupervisor();
+    //         case 'thu ngân':
+    //             return $this->addEmployeeCashier();
+    //         default:
+    //             return redirect()->back()->with('error', 'Vai trò không hợp lệ.');
+    //     }
+    // }
 
     public function staticsConduct()
     {
@@ -271,70 +316,153 @@ class DirectorController extends Controller
         return view('director/student/add', ['newMaHS' => $newMaHS]);
     }
 
+    // public function addStudent()
+    // {
+    //     $errors = [];
+    //     // Lấy dữ liệu từ form
+    //     $birthday = $this->request->getPost('student_birthday');
+    //     $email = $this->request->getPost('student_email');
+    //     $password = $this->request->getPost('student_password');
+    //     $phone = $this->request->getPost('student_phone');
+    //     $gender = $this->request->getPost('student_gender');
+    //     //Kiểm tra giới tính
+    //     if (empty($gender))
+    //         $errors['student_gender'] = 'Vui lòng chọn giới tính.';
+
+    //     // Kiểm tra ngày sinh
+    //     if (strtotime($birthday) > strtotime(date('Y-m-d')))
+    //         $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
+
+    //     if (empty($birthday))
+    //         $errors['student_birthday'] = 'Vui lòng nhập ngày sinh.';
+
+    //     // Kiểm tra email
+    //     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+    //         $errors['student_email'] = 'Email không đúng định dạng.';
+
+    //     // Kiểm tra mật khẩu
+    //     if (strlen($password) < 6)
+    //         $errors['student_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+
+    //     // Kiểm tra số điện thoại
+    //     if (!preg_match('/^\d{10}$/', $phone))
+    //         $errors['student_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+
+    //     // Nếu có lỗi, trả về cùng thông báo
+    //     if (!empty($errors)) {
+    //         return redirect()->back()->withInput()->with('errors', $errors);
+    //     }
+
+    //     $TaiKhoanModel = new TaiKhoanModel();
+    //     $HocSinhModel = new HocSinhModel();
+    //     $HocSinhLopModel = new HocSinhLopModel();
+
+    //     $MaTK = $TaiKhoanModel->insert([
+    //         'TenTK' => $this->request->getPost('student_account'),
+    //         'MatKhau' => $this->request->getPost('student_password'),
+    //         'HoTen' => $this->request->getPost('student_name'),
+    //         'Email' => $this->request->getPost('student_email'),
+    //         'SoDienThoai' => $this->request->getPost('student_phone'),
+    //         'DiaChi' => $this->request->getPost('student_address'),
+    //         'GioiTinh' => $this->request->getPost('student_gender'),
+    //         'NgaySinh' => $this->request->getPost('student_birthday'),
+    //         'MaVT' => 3, // Mã vai trò học sinh
+    //     ]);
+    //     // Lưu thông tin học sinh
+    //     $MaHS = $HocSinhModel->insert([
+    //         'MaTK' => $MaTK,
+    //         'DanToc' => $this->request->getPost('student_nation'),
+    //         'NoiSinh' => $this->request->getPost('student_country'),
+    //         'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
+    //     ]);
+
+    //     return redirect()->to('director/student/list')->with('success', 'Thêm học sinh mới thành công!');
+    // }
+
     public function addStudent()
     {
-        $errors = [];
-        // Lấy dữ liệu từ form
-        $birthday = $this->request->getPost('student_birthday');
-        $email = $this->request->getPost('student_email');
-        $password = $this->request->getPost('student_password');
-        $phone = $this->request->getPost('student_phone');
-        $gender = $this->request->getPost('student_gender');
-        //Kiểm tra giới tính
-        if (empty($gender))
-            $errors['student_gender'] = 'Vui lòng chọn giới tính.';
+        log_message('info', 'Tài khoản mới được tạo: ');
+        $info = [
+            'account' => $this->request->getPost('student_account'),
+            'password' => $this->request->getPost('student_password'),
+            'name' => $this->request->getPost('student_name'),
+            'email' => $this->request->getPost('student_email'),
+            'phone' => $this->request->getPost('student_phone'),
+            'address' => $this->request->getPost('student_address'),
+            'gender' => $this->request->getPost('student_gender'),
+            'birthday' => $this->request->getPost('student_birthday'),
+            'nation' => $this->request->getPost('student_nation'),
+            'country' => $this->request->getPost('student_country'),
+            'status' => 'Mới tiếp nhận'
+        ];
 
-        // Kiểm tra ngày sinh
-        if (strtotime($birthday) > strtotime(date('Y-m-d')))
-            $errors['student_birthday'] = 'Ngày sinh không hợp lệ.';
-
-        if (empty($birthday))
-            $errors['student_birthday'] = 'Vui lòng nhập ngày sinh.';
-
-        // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-            $errors['student_email'] = 'Email không đúng định dạng.';
-
-        // Kiểm tra mật khẩu
-        if (strlen($password) < 6)
-            $errors['student_password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
-
-        // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
-            $errors['student_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
-
-        // Nếu có lỗi, trả về cùng thông báo
+        // Gọi hàm validate nội bộ
+        $errors = $this->validateStudent($info);
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
         }
 
+        // Factory method tạo học sinh
+        $factory = getFactoryByRole('học sinh', $info);
+        if (!$factory) {
+            return redirect()->back()->with('error', 'Không xác định được vai trò người dùng.');
+        }
 
+        $student = $factory->createUser();
+        if (!$student->createAndSave()) {
+            return redirect()->back()->with('error', 'Tạo tài khoản thất bại.');
+        }
 
-        $TaiKhoanModel = new TaiKhoanModel();
-        $HocSinhModel = new HocSinhModel();
-        $HocSinhLopModel = new HocSinhLopModel();
+        log_message('info', 'Tài khoản mới được tạo: ' . $student->getInfo() . ' - Vai trò: ' . $student->getRole());
 
-        $MaTK = $TaiKhoanModel->insert([
-            'TenTK' => $this->request->getPost('student_account'),
-            'MatKhau' => $this->request->getPost('student_password'),
-            'HoTen' => $this->request->getPost('student_name'),
-            'Email' => $this->request->getPost('student_email'),
-            'SoDienThoai' => $this->request->getPost('student_phone'),
-            'DiaChi' => $this->request->getPost('student_address'),
-            'GioiTinh' => $this->request->getPost('student_gender'),
-            'NgaySinh' => $this->request->getPost('student_birthday'),
-            'MaVT' => 3, // Mã vai trò học sinh
-        ]);
-        // Lưu thông tin học sinh
-        $MaHS = $HocSinhModel->insert([
-            'MaTK' => $MaTK,
-            'DanToc' => $this->request->getPost('student_nation'),
-            'NoiSinh' => $this->request->getPost('student_country'),
-            'TinhTrang' => $this->request->getPost('student_status') ?? 'Mới tiếp nhận',
-        ]);
-
-        return redirect()->to('director/student/list')->with('success', 'Thêm học sinh mới thành công!');
+        return redirect()->to('/director/student/list')->with('success', 'Tạo tài khoản học sinh thành công.');
     }
+
+    private function validateStudent(array $data): array
+    {
+        $errors = [];
+
+        if (empty($data['account'])) {
+            $errors['account'] = 'Tài khoản không được để trống.';
+        }
+
+        if (empty($data['password']) || strlen($data['password']) < 6) {
+            $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+        }
+
+        if (empty($data['name'])) {
+            $errors['name'] = 'Họ tên không được để trống.';
+        }
+
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Email không hợp lệ.';
+        }
+
+        if (!preg_match('/^[0-9]{10,11}$/', $data['phone'])) {
+            $errors['phone'] = 'Số điện thoại không hợp lệ.';
+        }
+
+        if (empty($data['gender'])) {
+            $errors['gender'] = 'Vui lòng chọn giới tính.';
+        }
+
+        if (empty($data['birthday'])) {
+            $errors['birthday'] = 'Ngày sinh không được để trống.';
+        }
+
+        // Tuỳ chọn: kiểm tra quốc gia, dân tộc
+        if (empty($data['nation'])) {
+            $errors['nation'] = 'Vui lòng nhập dân tộc.';
+        }
+
+        if (empty($data['country'])) {
+            $errors['country'] = 'Vui lòng nhập quốc tịch.';
+        }
+
+        return $errors;
+    }
+
+
 
     public function studentUpdate($id = null)
     {
