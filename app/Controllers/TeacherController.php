@@ -18,6 +18,9 @@ use App\Models\DiemModel;
 use App\Models\HanhKiemModel;
 use App\Models\CTPTTModel;
 use App\Models\ThamSoModel;
+use System\DesignPatterns\Behavioral\Observer\GradeService;
+use System\DesignPatterns\Behavioral\Observer\StudentObserver;
+use System\DesignPatterns\Behavioral\Observer\TeacherObserver;
 
 class TeacherController extends Controller
 {
@@ -443,81 +446,115 @@ class TeacherController extends Controller
         ]);
     }
 
+
     public function enterScore()
     {
         $DiemModel = new DiemModel();
-
         $scores = $this->request->getPost('scores');
         $MaTK = session('MaTK');
         $MaGV = (new GiaoVienModel())->getTeacherInfo($MaTK)['MaGV'];
         $year = $this->request->getPost('year');
         $semester = preg_replace('/\D/', '', $this->request->getPost('semester'));
         $TenMH = $this->request->getPost('subject');
-
-        // Lấy MaMH từ TenMH
         $MaMH = (new MonHocModel())->getSubjectID($TenMH)['MaMH'];
 
-        log_message('debug', 'Scores: ' . print_r($scores, true));
-        log_message('debug', 'Year: ' . $year);
-        log_message('debug', 'Semester: ' . $semester);
-
-        $errors = []; // Mảng lưu lỗi
+        $errors = [];
+        $gradeService = new GradeService();
 
         if ($scores && is_array($scores)) {
-            foreach ($scores as $MaHocSinh => $score) {
-                $Diem15P_1 = $score['Diem15P_1'] ?? null;
-                $Diem15P_2 = $score['Diem15P_2'] ?? null;
+            foreach ($scores as $MaHS => $score) {
+                $Diem15P_1   = $score['Diem15P_1'] ?? null;
+                $Diem15P_2   = $score['Diem15P_2'] ?? null;
                 $Diem1Tiet_1 = $score['Diem1Tiet_1'] ?? null;
                 $Diem1Tiet_2 = $score['Diem1Tiet_2'] ?? null;
-                $DiemCK = $score['DiemCK'] ?? null;
+                $DiemCK      = $score['DiemCK'] ?? null;
 
                 $invalidScores = [];
 
-                // Kiểm tra từng giá trị điểm, chỉ kiểm tra nếu khác null và không rỗng
-                if ($Diem15P_1 !== null && $Diem15P_1 !== '' && (!is_numeric($Diem15P_1) || $Diem15P_1 < 0 || $Diem15P_1 > 10)) {
-                    $invalidScores[] = "Điểm 15 phút lần 1: $Diem15P_1";
+                foreach (['Diem15P_1', 'Diem15P_2', 'Diem1Tiet_1', 'Diem1Tiet_2', 'DiemCK'] as $field) {
+                    $value = $$field;
+                    if (!is_null($value) && (!is_numeric($value) || $value < 0 || $value > 10)) {
+                        $invalidScores[] = "$field: $value";
+                    }
                 }
-                if ($Diem15P_2 !== null && $Diem15P_2 !== '' && (!is_numeric($Diem15P_2) || $Diem15P_2 < 0 || $Diem15P_2 > 10)) {
-                    $invalidScores[] = "Điểm 15 phút lần 2: $Diem15P_2";
-                }
-                if ($Diem1Tiet_1 !== null && $Diem1Tiet_1 !== '' && (!is_numeric($Diem1Tiet_1) || $Diem1Tiet_1 < 0 || $Diem1Tiet_1 > 10)) {
-                    $invalidScores[] = "Điểm 1 tiết lần 1: $Diem1Tiet_1";
-                }
-                if ($Diem1Tiet_2 !== null && $Diem1Tiet_2 !== '' && (!is_numeric($Diem1Tiet_2) || $Diem1Tiet_2 < 0 || $Diem1Tiet_2 > 10)) {
-                    $invalidScores[] = "Điểm 1 tiết lần 2: $Diem1Tiet_2";
-                }
-                if ($DiemCK !== null && $DiemCK !== '' && (!is_numeric($DiemCK) || $DiemCK < 0 || $DiemCK > 10)) {
-                    $invalidScores[] = "Điểm cuối kỳ: $DiemCK";
-                }
+
                 if (!empty($invalidScores)) {
-                    $errors[$MaHocSinh] = "Học sinh $MaHocSinh có điểm không hợp lệ! " . implode(', ', $invalidScores);
+                    $errors[$MaHS] = "Học sinh $MaHS có điểm không hợp lệ: " . implode(', ', $invalidScores);
                     continue;
                 }
 
-                // Kiểm tra và cập nhật điểm
-                if ($MaHocSinh && $MaGV && $year && $semester) {
-                    $DiemModel->insertOrUpdateScore(
-                        $MaHocSinh,
-                        $MaGV,
-                        $MaMH,
-                        $Diem15P_1,
-                        $Diem15P_2,
-                        $Diem1Tiet_1,
-                        $Diem1Tiet_2,
-                        $DiemCK,
-                        $semester,
-                        $year
-                    );
+                // ✅ So sánh điểm cũ và mới
+                $existing = $DiemModel->where([
+                    'MaHS' => $MaHS,
+                    'MaGV' => $MaGV,
+                    'MaMH' => $MaMH,
+                    'HocKy' => $semester,
+                    'NamHoc' => $year,
+                ])->first();
+
+                $newData = [
+                    'Diem15P_1' => $Diem15P_1,
+                    'Diem15P_2' => $Diem15P_2,
+                    'Diem1Tiet_1' => $Diem1Tiet_1,
+                    'Diem1Tiet_2' => $Diem1Tiet_2,
+                    'DiemCK' => $DiemCK,
+                ];
+
+                $hasChanges = false;
+                foreach ($newData as $field => $value) {
+                    if ($existing === null || $existing[$field] != $value) {
+                        $hasChanges = true;
+                        break;
+                    }
                 }
+
+                if (!$hasChanges) {
+                    continue; // ❌ Không thay đổi => bỏ qua
+                }
+
+                // ✅ Cập nhật điểm
+                $DiemModel->insertOrUpdateScore(
+                    $MaHS,
+                    $MaGV,
+                    $MaMH,
+                    $Diem15P_1,
+                    $Diem15P_2,
+                    $Diem1Tiet_1,
+                    $Diem1Tiet_2,
+                    $DiemCK,
+                    $semester,
+                    $year
+                );
+
+                // ✅ Thêm observer đúng học sinh/giáo viên thay đổi
+                $studentMail = (new TaiKhoanModel())->find(
+                    (new HocSinhModel())->find($MaHS)['MaTK']
+                )['Email'];
+
+                $teacherMail = (new TaiKhoanModel())->find(
+                    (new GiaoVienModel())->find($MaGV)['MaTK']
+                )['Email'];
+
+                $gradeService->addObserver(new StudentObserver($MaHS, $studentMail));
+                $gradeService->addObserver(new TeacherObserver($MaHS, $teacherMail));
+
+                $gradeService->updateGrade([
+                    'MaHS' => $MaHS,
+                    'MaGV' => $MaGV,
+                    'MaMH' => $MaMH,
+                    'HocKy' => $semester,
+                    'NamHoc' => $year,
+                ]);
             }
+
             if (!empty($errors)) {
-                // Ghi lại lỗi và báo cho người dùng
                 session()->setFlashdata('errors', $errors);
                 return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật điểm. Vui lòng kiểm tra lại.');
             }
 
             return redirect()->back()->with('success', 'Cập nhật điểm thành công!');
         }
+
         return redirect()->back()->with('error', 'Không có dữ liệu cập nhật.');
     }
 
@@ -553,11 +590,13 @@ class TeacherController extends Controller
         $phone = $this->request->getPost('teacher_phone');
 
         // Kiểm tra email
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['teacher_email'] = 'Email không hợp lệ';
+        }
         // Kiểm tra số điện thoại
-        if (!preg_match('/^\d{10}$/', $phone))
+        if (!preg_match('/^\d{10}$/', $phone)) {
             $errors['director_phone'] = 'Số điện thoại phải có đúng 10 chữ số.';
+        }
         // Nếu có lỗi, trả về cùng thông báo
         if (!empty($errors)) {
             return redirect()->back()->withInput()->with('errors', $errors);
