@@ -20,6 +20,7 @@ use App\Models\DiemModel;
 use App\Models\HanhKiemModel;
 use App\Models\ThamSoModel;
 use App\Models\HoaDonModel;
+use App\Models\HocSinhModelUseManualSingleton;
 use App\Models\ViPhamModel;
 use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
@@ -739,9 +740,266 @@ class DirectorController extends Controller
         return view('director/student/perserved');
     }
 
+    // public function studentRecord()
+    // {
+    //     $HocSinhModel = new HocSinhModel();
+    //     $LopModel = new LopModel();
+    //     $DiemModel = new DiemModel();
+    //     $PhanCongModel = new PhanCongModel();
+    //     $HocSinhLopModel = new HocSinhLopModel();
+    //     $HanhKiemModel = new HanhKiemModel();
+
+    //     // Lấy danh sách năm học lớp học
+    //     $yearList = $HocSinhLopModel->getYearList();
+    //     $classList = $LopModel->findColumn('TenLop');
+
+    //     // Nhận giá trị năm học, học kỳ và lớp học từ query string
+    //     $selectedYear = $this->request->getVar('year') ?? $yearList[0];
+    //     //Nhận giá trị học kỳ sau khi chuyển từ text sang số
+    //     $selectedSemesterText = $this->request->getVar('semester') ?? 'Học kỳ 1';
+    //     $selectedSemester = null;
+    //     if ($selectedSemesterText === 'Học kỳ 1') {
+    //         $selectedSemester = 1;
+    //     } elseif ($selectedSemesterText === 'Học kỳ 2') {
+    //         $selectedSemester = 2;
+    //     } else {
+    //         $selectedSemester = 0;
+    //     }
+    //     $selectedClass = $this->request->getVar('class') ?? $classList[0];
+
+    //     // Nếu chọn Học kỳ 1
+    //     if ($selectedSemester === 1) {
+    //         $studentList = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass);
+
+    //         $student = [];
+
+    //         foreach ($studentList as $student) {
+    //             $MaHS = $student['MaHS'];
+
+    //             // Khởi tạo dữ liệu học sinh nếu chưa có
+    //             if (!isset($students[$MaHS])) {
+    //                 $students[$MaHS] = [
+    //                     'MaHS' => $MaHS,
+    //                     'HoTen' => $student['HoTen'],
+    //                     'TenLop' => $student['TenLop'],
+    //                     'Diem' => [],
+    //                     'DiemHK' => $student['DiemHK']
+    //                 ];
+    //             }
+
+    //             // Lưu điểm của từng môn học
+    //             if ($student['MaMH']) {
+    //                 $students[$MaHS]['Diem'][$student['MaMH']] = [
+    //                     'Diem15P_1' => $student['Diem15P_1'],
+    //                     'Diem15P_2' => $student['Diem15P_2'],
+    //                     'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+    //                     'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+    //                     'DiemCK' => $student['DiemCK'],
+    //                 ];
+    //             }
+    //         }
+
+    //         // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và học lực, danh hiệu
+    //         foreach ($students as &$student) {
+    //             $DiemTrungBinh = null;
+    //             $TongDiemTB = 0;
+    //             $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
+    //             $SoMonDuCotDiem = 0; // Số môn học có điểm
+
+    //             foreach ($student['Diem'] as $MaMH => $Diem) {
+    //                 $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
+
+    //                 // Lưu điểm trung bình môn học vào mảng
+    //                 $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBMonHoc;
+
+    //                 if ($DiemTBMonHoc !== null) {
+    //                     $TongDiemTB += $DiemTBMonHoc;
+    //                     $SoMonDuCotDiem++;
+    //                 }
+    //             }
+    //             // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
+    //             if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+    //                 $DiemTrungBinh = round($TongDiemTB / $SoMon, 1);
+    //             }
+    //             $student['DiemTrungBinh'] = $DiemTrungBinh;
+
+    //             // Xếp loại học lực
+    //             $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinh);
+
+    //             // Xếp loại danh hiệu
+    //             $DanhHieuModel = new DanhHieuModel();
+    //             $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinh, $student['DiemHK']);
+    //             $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+    //         }
+    //     }
+
+    //     // Nếu chọn Học kỳ 2
+    //     if ($selectedSemester === 2) {
+    //         $studentList = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass);
+
+    //         $student = [];
+
+    //         foreach ($studentList as $student) {
+    //             $MaHS = $student['MaHS'];
+
+    //             // Khởi tạo dữ liệu học sinh nếu chưa có
+    //             if (!isset($students[$MaHS])) {
+    //                 $students[$MaHS] = [
+    //                     'MaHS' => $MaHS,
+    //                     'HoTen' => $student['HoTen'],
+    //                     'TenLop' => $student['TenLop'],
+    //                     'Diem' => [],
+    //                     'DiemHK' => $student['DiemHK']
+    //                 ];
+    //             }
+
+    //             // Lưu điểm của từng môn học
+    //             if ($student['MaMH']) {
+    //                 $students[$MaHS]['Diem'][$student['MaMH']] = [
+    //                     'Diem15P_1' => $student['Diem15P_1'],
+    //                     'Diem15P_2' => $student['Diem15P_2'],
+    //                     'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+    //                     'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+    //                     'DiemCK' => $student['DiemCK'],
+    //                 ];
+    //             }
+    //         }
+
+    //         // Tính toán điểm trung bình từng môn, điểm trung bình học kỳ và học lực, danh hiệu
+    //         foreach ($students as &$student) {
+    //             $DiemTrungBinh = null;
+    //             $TongDiemTB = 0;
+    //             $SoMon = count($PhanCongModel->getSubjectList($selectedYear, $selectedSemester, $selectedClass)); // Số môn học trong học kỳ
+    //             $SoMonDuCotDiem = 0; // Số môn học có điểm
+
+    //             foreach ($student['Diem'] as $MaMH => $Diem) {
+    //                 $DiemTBMonHoc = $DiemModel->getAverageScore($Diem);
+
+    //                 // Lưu điểm trung bình môn học vào mảng
+    //                 $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBMonHoc;
+
+    //                 if ($DiemTBMonHoc !== null) {
+    //                     $TongDiemTB += $DiemTBMonHoc;
+    //                     $SoMonDuCotDiem++;
+    //                 }
+    //             }
+    //             // Tính điểm trung bình học kỳ nếu có đủ cột điểm của tất cả môn
+    //             if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+    //                 $DiemTrungBinh = round($TongDiemTB / $SoMon, 1);
+    //             }
+    //             $student['DiemTrungBinh'] = $DiemTrungBinh;
+
+    //             // Xếp loại học lực
+    //             $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinh);
+
+    //             // Xếp loại danh hiệu
+    //             $DanhHieuModel = new DanhHieuModel();
+    //             $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinh, $student['DiemHK']);
+    //             $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+    //         }
+    //     }
+
+
+    //     // Trường hợp "Cả năm"
+    //     if ($selectedSemester === 0) {
+    //         $studentList1 = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass); // Học kỳ 1
+    //         $studentList2 = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass); // Học kỳ 2
+
+    //         foreach ([$studentList1, $studentList2] as $key => $studentList) {
+    //             foreach ($studentList as $student) {
+    //                 $MaHS = $student['MaHS'];
+
+    //                 // Khởi tạo dữ liệu học sinh nếu chưa có
+    //                 if (!isset($students[$MaHS])) {
+    //                     $students[$MaHS] = [
+    //                         'MaHS' => $MaHS,
+    //                         'HoTen' => $student['HoTen'],
+    //                         'TenLop' => $student['TenLop'],
+    //                         'Diem' => [],
+    //                         'DiemHK' => ['HocKy1' => null, 'HocKy2' => null],
+    //                     ];
+    //                 }
+
+    //                 // Lưu điểm hạnh kiểm
+    //                 $students[$MaHS]['DiemHK']['HocKy' . ($key + 1)] = $student['DiemHK'];
+
+    //                 // Lưu điểm của từng môn học
+    //                 if ($student['MaMH']) {
+    //                     $students[$MaHS]['Diem'][$student['MaMH']]['HocKy' . ($key + 1)] = [
+    //                         'Diem15P_1' => $student['Diem15P_1'],
+    //                         'Diem15P_2' => $student['Diem15P_2'],
+    //                         'Diem1Tiet_1' => $student['Diem1Tiet_1'],
+    //                         'Diem1Tiet_2' => $student['Diem1Tiet_2'],
+    //                         'DiemCK' => $student['DiemCK'],
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         // Tính toán điểm trung bình cả năm
+    //         foreach ($students as &$student) {
+    //             $TongDiemTB = 0;
+    //             $SoMon = count($PhanCongModel->getSubjectList($selectedYear, 1, $selectedClass)); // Số môn học
+    //             $SoMonDuCotDiem = 0;
+
+    //             foreach ($student['Diem'] as $MaMH => $DiemHocKy) {
+    //                 $DiemTBHocKy1 = isset($DiemHocKy['HocKy1']) ? $DiemModel->getAverageScore($DiemHocKy['HocKy1']) : null;
+    //                 $DiemTBHocKy2 = isset($DiemHocKy['HocKy2']) ? $DiemModel->getAverageScore($DiemHocKy['HocKy2']) : null;
+
+    //                 $DiemTBCaNam = null;
+    //                 if ($DiemTBHocKy1 !== null && $DiemTBHocKy2 !== null) {
+    //                     $DiemTBCaNam = round(($DiemTBHocKy1 + 2 * $DiemTBHocKy2) / 3, 1);
+    //                 }
+
+    //                 $student['Diem'][$MaMH]['DiemTBMonHoc'] = $DiemTBCaNam;
+
+    //                 if ($DiemTBCaNam !== null) {
+    //                     $TongDiemTB += $DiemTBCaNam;
+    //                     $SoMonDuCotDiem++;
+    //                 }
+    //             }
+
+    //             $DiemTrungBinhCaNam = null;
+    //             if ($SoMonDuCotDiem === $SoMon && $SoMon > 0) {
+    //                 $DiemTrungBinhCaNam = round($TongDiemTB / $SoMon, 1);
+    //             }
+
+    //             $student['DiemTrungBinh'] = $DiemTrungBinhCaNam;
+
+    //             // Xếp loại học lực
+    //             $student['HocLuc'] = $DiemModel->getAcademicPerformance($DiemTrungBinhCaNam);
+
+    //             // Xếp loại danh hiệu
+    //             $DanhHieuModel = new DanhHieuModel();
+    //             $DiemHKCaNam = round(($student['DiemHK']['HocKy1'] + $student['DiemHK']['HocKy2']) / 2, 1);
+    //             $student['DiemHK'] = $DiemHKCaNam;
+    //             $DanhHieu = $DanhHieuModel->getAcademicTitle($DiemTrungBinhCaNam, $DiemHKCaNam);
+    //             $student['DanhHieu'] = $DanhHieu ? $DanhHieu['TenDH'] : null;
+    //         }
+    //     }
+
+    //     // Lấy danh sách học sinh theo năm học, học kỳ và lớp học
+    //     $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
+
+
+
+    //     log_message('info', 'Student List: ' . print_r($students, true));
+
+    //     return view('director/student/record', [
+    //         'studentList' => $students,
+    //         'yearList' => $yearList,
+    //         'classList' => $classList,
+    //         'selectedYear' => $selectedYear,
+    //         'selectedSemesterText' => $selectedSemesterText,
+    //         'selectedClass' => $selectedClass,
+    //     ]);
+    // }
+
+
     public function studentRecord()
     {
-        $HocSinhModel = new HocSinhModel();
+        // Thay thế bằng lớp học sinh sử dụng Singleton thủ công
+        $HocSinhModel = new HocSinhModelUseManualSingleton();
         $LopModel = new LopModel();
         $DiemModel = new DiemModel();
         $PhanCongModel = new PhanCongModel();
@@ -901,8 +1159,9 @@ class DirectorController extends Controller
 
         // Trường hợp "Cả năm"
         if ($selectedSemester === 0) {
+            
             $studentList1 = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass); // Học kỳ 1
-            $studentList2 = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass); // Học kỳ 2
+            $studentList2 = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass); // Học kỳ 2 <= Sử dụng lại kết nối
 
             foreach ([$studentList1, $studentList2] as $key => $studentList) {
                 foreach ($studentList as $student) {
@@ -978,11 +1237,11 @@ class DirectorController extends Controller
         }
 
         // Lấy danh sách học sinh theo năm học, học kỳ và lớp học
-        $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
+        // $studentList = $HocSinhModel->getStudentList($selectedYear, $selectedSemester, $selectedClass);
 
 
 
-        log_message('info', 'Student List: ' . print_r($students, true));
+        //log_message('info', 'Student List: ' . print_r($students, true));
 
         return view('director/student/record', [
             'studentList' => $students,

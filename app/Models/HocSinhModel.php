@@ -4,6 +4,23 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+/**
+ * HocSinhModel
+ *
+ * Model này kế thừa từ CodeIgniter\Model, do đó không cần tự tạo kết nối database.
+ * Khi gọi $this->db trong Model, CodeIgniter sẽ tự động gọi \Config\Database::connect().
+ *
+ * \Config\Database::connect() hoạt động theo cơ chế Singleton:
+ *    - Mỗi nhóm kết nối (connection group) chỉ được khởi tạo một lần duy nhất.
+ *    - Tất cả các model trong hệ thống sẽ dùng lại connection này (shared resource).
+ *
+ * Điều này đồng nghĩa:
+ *    - Mặc dù không gọi trực tiếp DatabaseConnectionManager::getInstance()
+ *    - Nhưng vẫn đang áp dụng đúng **Singleton Pattern** cho kết nối cơ sở dữ liệu.
+ *
+ * @see \Config\Database::connect()
+ */
+
 class HocSinhModel extends Model
 {
     protected $table      = 'hocsinh';
@@ -76,19 +93,22 @@ class HocSinhModel extends Model
 
 
     
-    public function isValidStudentCode($MaHS) {
+    public function isValidStudentCode($MaHS)
+    {
         $SQL = "SELECT COUNT(*) AS count FROM hocsinh WHERE MaHS = ?";
         $result = $this->db->query($SQL, [$MaHS])->getRowArray();
         return !empty($result['count']) && $result['count'] > 0;
     }
 
-    public function isValidStudentName($MaHS, $HoTen) {
+    public function isValidStudentName($MaHS, $HoTen)
+    {
         $SQL = "SELECT COUNT(*) AS count FROM hocsinh JOIN taikhoan ON hocsinh.MaTK = taikhoan.MaTK WHERE MaHS = ? AND HoTen = ?";
         $result = $this->db->query($SQL, [$MaHS, $HoTen])->getRowArray();
         return !empty($result['count']) && $result['count'] > 0;
     }
 
-    public function getCurrentStudent() {
+    public function getCurrentStudent()
+    {
         $StudentModel = new HocSinhModel();
 
         // Lấy thông tin tài khoản hiện tại
@@ -103,9 +123,10 @@ class HocSinhModel extends Model
         return  $Student;
     }
 
-    public function getStudentRank($MaHS, $MaLop, $HocKi, $NamHoc, $DTB) {
+    public function getStudentRank($MaHS, $MaLop, $HocKi, $NamHoc, $DTB)
+    {
         // Truy vấn để lấy danh sách học sinh trong lớp, xếp theo điểm trung bình giảm dần
-            $SQL = "SELECT 
+        $SQL = "SELECT 
             hs.MaHS,
             tk.HoTen,
             dtb.DTB,
@@ -129,16 +150,17 @@ class HocSinhModel extends Model
         // Tìm vị trí của học sinh hiện tại dựa trên mã học sinh
         $rank = "Chưa xếp hạng"; // Giá trị mặc định
         foreach ($result as $row) {
-        if ($row['MaHS'] == $MaHS) {
-            $rank = $row['XepHang']; // Gán thứ hạng
-            break;
+            if ($row['MaHS'] == $MaHS) {
+                $rank = $row['XepHang']; // Gán thứ hạng
+                break;
             }
         }
         // Trả về thứ hạng
         return $rank;
     }
 
-    public function getCurrentClass($MaHS, $NamHoc) {
+    public function getCurrentClass($MaHS, $NamHoc)
+    {
         $SQL = "SELECT MaLop FROM hocsinh_lop WHERE MaHS = ? AND NamHoc = ?";
         $result = $this->db->query($SQL, [$MaHS, $NamHoc])->getRowArray();
         // Kiểm tra nếu kết quả là null
