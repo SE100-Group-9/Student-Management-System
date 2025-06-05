@@ -25,28 +25,30 @@ use App\Models\ThanhToanModel;
 use PhpCsFixer\Tokenizer\CT;
 use DesignPatterns\Creational\FactoryMethod\StudentFactory;
 use System\DesignPatterns\Behavioral\State\StudentStateManager;
+
+require_once APPPATH . '../system/DesignPatterns/Creational/FactoryMethod/FactoryMethod.php';
 use function DesignPatterns\Creational\FactoryMethod\getFactoryByRole;
 
 class DirectorController extends Controller
 {
 
-    // public function addUser($role)
-    // {
-    //     $normalizedRole = strtolower($role);
+    public function addUser($role)
+    {
+        $normalizedRole = strtolower($role);
 
-    //     switch ($normalizedRole) {
-    //         case 'học sinh':
-    //             return $this->addStudent();
-    //         case 'giáo viên':
-    //             return $this->addEmployeeTeacher();
-    //         case 'giám thị':
-    //             return $this->addEmployeeSupervisor();
-    //         case 'thu ngân':
-    //             return $this->addEmployeeCashier();
-    //         default:
-    //             return redirect()->back()->with('error', 'Vai trò không hợp lệ.');
-    //     }
-    // }
+        switch ($normalizedRole) {
+            case 'học sinh':
+                return $this->addStudent();
+            case 'giáo viên':
+                return $this->addEmployeeTeacher();
+            case 'giám thị':
+                return $this->addEmployeeSupervisor();
+            case 'thu ngân':
+                return $this->addEmployeeCashier();
+            default:
+                return redirect()->back()->with('error', 'Vai trò không hợp lệ.');
+        }
+    }
 
     public function staticsConduct()
     {
@@ -275,7 +277,9 @@ class DirectorController extends Controller
         ]);
     }
 
-    public function exportStudentList() {}
+    public function exportStudentList()
+    {
+    }
 
     public function studentAdd()
     {

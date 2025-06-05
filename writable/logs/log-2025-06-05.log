@@ -22,3 +22,149 @@ INFO - 2025-06-05 00:38:34 --> 👨‍🏫 [TEACHER] Giáo viên nhận thông b
 INFO - 2025-06-05 00:38:34 --> 📢 [STUDENT] HS0062 (hocsinh62@gmail.com) được thông báo điểm: {"MaDiem":"577","MaHS":"HS0062","MaGV":"GV0001","MaMH":"1","Diem15P_1":"8","Diem15P_2":"8","Diem1Tiet_1":"8","Diem1Tiet_2":"8","DiemCK":"8","HocKy":"1","NamHoc":"2024-2025","NhanXet":"Ti\u1ebfn b\u1ed9 \u1ed5n \u0111\u1ecbnh, c\u1ea7n duy tr\u00ec"}
 INFO - 2025-06-05 00:38:34 --> 👨‍🏫 [TEACHER] Giáo viên nhận thông báo điểm học sinh HS0062 (giaovien1@gmail.com): {"MaDiem":"577","MaHS":"HS0062","MaGV":"GV0001","MaMH":"1","Diem15P_1":"8","Diem15P_2":"8","Diem1Tiet_1":"8","Diem1Tiet_2":"8","DiemCK":"8","HocKy":"1","NamHoc":"2024-2025","NhanXet":"Ti\u1ebfn b\u1ed9 \u1ed5n \u0111\u1ecbnh, c\u1ea7n duy tr\u00ec"}
 INFO - 2025-06-05 00:38:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:16 --> Performance Statistics: Array
+(
+    [summary] => Array
+        (
+            [Giỏi] => Array
+                (
+                    [current] => 37
+                    [previous] => 9
+                )
+
+            [Khá] => Array
+                (
+                    [current] => 21
+                    [previous] => 6
+                )
+
+            [Trung bình] => Array
+                (
+                    [current] => 12
+                    [previous] => 4
+                )
+
+            [Yếu] => Array
+                (
+                    [current] => 0
+                    [previous] => 1
+                )
+
+        )
+
+    [changes] => Array
+        (
+            [Giỏi] => 311.11
+            [Khá] => 250
+            [Trung bình] => 200
+            [Yếu] => -100
+        )
+
+)
+
+INFO - 2025-06-05 03:18:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:18:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:19:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:19:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:20:06 --> Bắt đầu tạo tài khoản giáo viên mới.
+INFO - 2025-06-05 03:20:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:20:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:20:26 --> Bắt đầu tạo tài khoản giáo viên mới.
+CRITICAL - 2025-06-05 03:20:26 --> Error: Call to undefined function DesignPatterns\Creational\FactoryMethod\getFactoryByRole()
+[Method: POST, Route: director/employee/teacher/add]
+in APPPATH\Controllers\DirectorController.php on line 2069.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->addEmployeeTeacher()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-05 03:25:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:25:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:26:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:26:11 --> Performance Statistics: Array
+(
+    [summary] => Array
+        (
+            [Giỏi] => Array
+                (
+                    [current] => 37
+                    [previous] => 9
+                )
+
+            [Khá] => Array
+                (
+                    [current] => 21
+                    [previous] => 6
+                )
+
+            [Trung bình] => Array
+                (
+                    [current] => 12
+                    [previous] => 4
+                )
+
+            [Yếu] => Array
+                (
+                    [current] => 0
+                    [previous] => 1
+                )
+
+        )
+
+    [changes] => Array
+        (
+            [Giỏi] => 311.11
+            [Khá] => 250
+            [Trung bình] => 200
+            [Yếu] => -100
+        )
+
+)
+
+INFO - 2025-06-05 03:26:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:26:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:26:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:26:36 --> Bắt đầu tạo tài khoản giáo viên mới.
+CRITICAL - 2025-06-05 03:26:36 --> Error: Call to undefined function DesignPatterns\Creational\FactoryMethod\getFactoryByRole()
+[Method: POST, Route: director/employee/teacher/add]
+in APPPATH\Controllers\DirectorController.php on line 2069.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\DirectorController->addEmployeeTeacher()
+ 2 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\DirectorController))
+ 3 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+INFO - 2025-06-05 03:27:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:27:29 --> Bắt đầu tạo tài khoản giáo viên mới.
+INFO - 2025-06-05 03:27:29 --> Tài khoản giáo viên được tạo: Giáo viên: Nguyễn Thị Thu Hiền - Vai trò: Giáo viên
+INFO - 2025-06-05 03:27:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:27:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:28:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:28:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:30:45 --> Bắt đầu tạo tài khoản thu ngân mới.
+INFO - 2025-06-05 03:30:45 --> Tài khoản thu ngân được tạo: Thủ quỹ: Nguyễn Thúy Kiều - Vai trò: Thủ quỹ
+INFO - 2025-06-05 03:30:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:30:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:31:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:31:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:08 --> Tài khoản mới được tạo: 
+INFO - 2025-06-05 03:32:08 --> Tài khoản mới được tạo: Học sinh: Phạm Tấn Nghĩa - Vai trò: Học sinh
+INFO - 2025-06-05 03:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:32:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:33:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:33:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:33:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:34:12 --> Bắt đầu tạo tài khoản giám thị mới.
+INFO - 2025-06-05 03:34:12 --> Tài khoản giám thị được tạo: Giám thị: Nguyễn Văn Đậu - Vai trò: Giám thị
+INFO - 2025-06-05 03:34:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2025-06-05 03:34:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
