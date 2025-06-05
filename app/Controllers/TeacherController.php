@@ -21,6 +21,8 @@ use App\Models\ThamSoModel;
 use System\DesignPatterns\Behavioral\Observer\GradeService;
 use System\DesignPatterns\Behavioral\Observer\StudentObserver;
 use System\DesignPatterns\Behavioral\Observer\TeacherObserver;
+use DesignPatterns\ignPatterns\Structural\Proxy\{Student, Teacher, GradeBook, GradeBookProxy};
+
 
 class TeacherController extends Controller
 {
@@ -447,6 +449,117 @@ class TeacherController extends Controller
     }
 
 
+    // public function enterScore()
+    // {
+    //     $DiemModel = new DiemModel();
+    //     $scores = $this->request->getPost('scores');
+    //     $MaTK = session('MaTK');
+    //     $MaGV = (new GiaoVienModel())->getTeacherInfo($MaTK)['MaGV'];
+    //     $year = $this->request->getPost('year');
+    //     $semester = preg_replace('/\D/', '', $this->request->getPost('semester'));
+    //     $TenMH = $this->request->getPost('subject');
+    //     $MaMH = (new MonHocModel())->getSubjectID($TenMH)['MaMH'];
+
+    //     $errors = [];
+    //     $gradeService = new GradeService();
+
+    //     if ($scores && is_array($scores)) {
+    //         foreach ($scores as $MaHS => $score) {
+    //             $Diem15P_1   = $score['Diem15P_1'] ?? null;
+    //             $Diem15P_2   = $score['Diem15P_2'] ?? null;
+    //             $Diem1Tiet_1 = $score['Diem1Tiet_1'] ?? null;
+    //             $Diem1Tiet_2 = $score['Diem1Tiet_2'] ?? null;
+    //             $DiemCK      = $score['DiemCK'] ?? null;
+
+    //             $invalidScores = [];
+
+    //             foreach (['Diem15P_1', 'Diem15P_2', 'Diem1Tiet_1', 'Diem1Tiet_2', 'DiemCK'] as $field) {
+    //                 $value = $$field;
+    //                 if (!is_null($value) && (!is_numeric($value) || $value < 0 || $value > 10)) {
+    //                     $invalidScores[] = "$field: $value";
+    //                 }
+    //             }
+
+    //             if (!empty($invalidScores)) {
+    //                 $errors[$MaHS] = "Học sinh $MaHS có điểm không hợp lệ: " . implode(', ', $invalidScores);
+    //                 continue;
+    //             }
+
+    //             // ✅ So sánh điểm cũ và mới
+    //             $existing = $DiemModel->where([
+    //                 'MaHS' => $MaHS,
+    //                 'MaGV' => $MaGV,
+    //                 'MaMH' => $MaMH,
+    //                 'HocKy' => $semester,
+    //                 'NamHoc' => $year,
+    //             ])->first();
+
+    //             $newData = [
+    //                 'Diem15P_1' => $Diem15P_1,
+    //                 'Diem15P_2' => $Diem15P_2,
+    //                 'Diem1Tiet_1' => $Diem1Tiet_1,
+    //                 'Diem1Tiet_2' => $Diem1Tiet_2,
+    //                 'DiemCK' => $DiemCK,
+    //             ];
+
+    //             $hasChanges = false;
+    //             foreach ($newData as $field => $value) {
+    //                 if ($existing === null || $existing[$field] != $value) {
+    //                     $hasChanges = true;
+    //                     break;
+    //                 }
+    //             }
+
+    //             if (!$hasChanges) {
+    //                 continue; // ❌ Không thay đổi => bỏ qua
+    //             }
+
+    //             // ✅ Cập nhật điểm
+    //             $DiemModel->insertOrUpdateScore(
+    //                 $MaHS,
+    //                 $MaGV,
+    //                 $MaMH,
+    //                 $Diem15P_1,
+    //                 $Diem15P_2,
+    //                 $Diem1Tiet_1,
+    //                 $Diem1Tiet_2,
+    //                 $DiemCK,
+    //                 $semester,
+    //                 $year
+    //             );
+
+    //             // ✅ Thêm observer đúng học sinh/giáo viên thay đổi
+    //             $studentMail = (new TaiKhoanModel())->find(
+    //                 (new HocSinhModel())->find($MaHS)['MaTK']
+    //             )['Email'];
+
+    //             $teacherMail = (new TaiKhoanModel())->find(
+    //                 (new GiaoVienModel())->find($MaGV)['MaTK']
+    //             )['Email'];
+
+    //             $gradeService->addObserver(new StudentObserver($MaHS, $studentMail));
+    //             $gradeService->addObserver(new TeacherObserver($MaHS, $teacherMail));
+
+    //             $gradeService->updateGrade([
+    //                 'MaHS' => $MaHS,
+    //                 'MaGV' => $MaGV,
+    //                 'MaMH' => $MaMH,
+    //                 'HocKy' => $semester,
+    //                 'NamHoc' => $year,
+    //             ]);
+    //         }
+
+    //         if (!empty($errors)) {
+    //             session()->setFlashdata('errors', $errors);
+    //             return redirect()->back()->with('error', 'Có lỗi xảy ra khi cập nhật điểm. Vui lòng kiểm tra lại.');
+    //         }
+
+    //         return redirect()->back()->with('success', 'Cập nhật điểm thành công!');
+    //     }
+
+    //     return redirect()->back()->with('error', 'Không có dữ liệu cập nhật.');
+    // }
+
     public function enterScore()
     {
         $DiemModel = new DiemModel();
@@ -460,6 +573,10 @@ class TeacherController extends Controller
 
         $errors = [];
         $gradeService = new GradeService();
+
+        // ✅ Tạo đối tượng Teacher hiện tại để dùng cho Proxy
+        $teacherName = (new TaiKhoanModel())->find($MaTK)['HoTen'];
+        $currentTeacher = new \DesignPatterns\Structural\Proxy\Teacher($teacherName);
 
         if ($scores && is_array($scores)) {
             foreach ($scores as $MaHS => $score) {
@@ -480,6 +597,23 @@ class TeacherController extends Controller
 
                 if (!empty($invalidScores)) {
                     $errors[$MaHS] = "Học sinh $MaHS có điểm không hợp lệ: " . implode(', ', $invalidScores);
+                    continue;
+                }
+
+                // ✅ Kiểm tra quyền qua Proxy trước khi cập nhật
+                $studentData = (new HocSinhModel())->find($MaHS);
+                $studentTK = (new TaiKhoanModel())->find($studentData['MaTK']);
+                $studentName = $studentTK['HoTen'];
+
+                // Tạm thời giả định tất cả học sinh đều có 1 giáo viên duy nhất là giáo viên hiện tại (có thể mở rộng)
+                $student = new \DesignPatterns\Structural\Proxy\Student($studentName, [$currentTeacher]);
+                $grades = []; // không cần lấy thật, chỉ để tạo đối tượng
+                $gradeBook = new \DesignPatterns\Structural\Proxy\GradeBook($studentName, $grades);
+                $proxy = new \DesignPatterns\Structural\Proxy\GradeBookProxy($gradeBook, $student);
+
+                // Nếu bị từ chối quyền thì bỏ qua học sinh này
+                if ($proxy->getGrades($currentTeacher) === "Access Denied: Bạn không có quyền xem điểm học sinh này.") {
+                    $errors[$MaHS] = "Bạn không có quyền nhập điểm cho học sinh $studentName.";
                     continue;
                 }
 
@@ -526,10 +660,8 @@ class TeacherController extends Controller
                     $year
                 );
 
-                // ✅ Thêm observer đúng học sinh/giáo viên thay đổi
-                $studentMail = (new TaiKhoanModel())->find(
-                    (new HocSinhModel())->find($MaHS)['MaTK']
-                )['Email'];
+                // ✅ Thêm observer
+                $studentMail = $studentTK['Email'];
 
                 $teacherMail = (new TaiKhoanModel())->find(
                     (new GiaoVienModel())->find($MaGV)['MaTK']
@@ -557,8 +689,6 @@ class TeacherController extends Controller
 
         return redirect()->back()->with('error', 'Không có dữ liệu cập nhật.');
     }
-
-
 
 
     public function enterStudent()

@@ -28,28 +28,13 @@ use DesignPatterns\Creational\FactoryMethod\StudentFactory;
 use System\DesignPatterns\Behavioral\State\StudentStateManager;
 
 require_once APPPATH . '../system/DesignPatterns/Creational/FactoryMethod/FactoryMethod.php';
+
 use function DesignPatterns\Creational\FactoryMethod\getFactoryByRole;
+use DesignPatterns\Behavioral\Iterator\StudentCollection;
+
 
 class DirectorController extends Controller
 {
-
-    public function addUser($role)
-    {
-        $normalizedRole = strtolower($role);
-
-        switch ($normalizedRole) {
-            case 'học sinh':
-                return $this->addStudent();
-            case 'giáo viên':
-                return $this->addEmployeeTeacher();
-            case 'giám thị':
-                return $this->addEmployeeSupervisor();
-            case 'thu ngân':
-                return $this->addEmployeeCashier();
-            default:
-                return redirect()->back()->with('error', 'Vai trò không hợp lệ.');
-        }
-    }
 
     public function staticsConduct()
     {
@@ -278,9 +263,7 @@ class DirectorController extends Controller
         ]);
     }
 
-    public function exportStudentList()
-    {
-    }
+    public function exportStudentList() {}
 
     public function studentAdd()
     {
@@ -1159,7 +1142,7 @@ class DirectorController extends Controller
 
         // Trường hợp "Cả năm"
         if ($selectedSemester === 0) {
-            
+
             $studentList1 = $HocSinhModel->getStudentList($selectedYear, 1, $selectedClass); // Học kỳ 1
             $studentList2 = $HocSinhModel->getStudentList($selectedYear, 2, $selectedClass); // Học kỳ 2 <= Sử dụng lại kết nối
 
